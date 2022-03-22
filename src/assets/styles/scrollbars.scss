@@ -1,53 +1,65 @@
 ::-webkit-scrollbar {
-    width: 0.5rem;
-
-    &:horizontal {
-        height: 0.5rem;
-    }
-
-    &:not(:horizontal) {
-        width: 0.5rem;
-    }
+    width: 17px;
 }
 
 ::-webkit-scrollbar-track {
-
-    &:horizontal {
-        border-bottom: 0.25rem solid rgba($black, .1);
-    }
-
-    &:not(:horizontal) {
-        border-right: 0.25rem solid rgba($black, .1);
-    }
+    background-image: url("../../assets/flash/scrollbar/background.png");
+    pointer-events: all;
+    width: 17px;
 }
 
 ::-webkit-scrollbar-thumb {
+    background-image: url("../../assets/flash/scrollbar/thumb_top.png"),
+    url("../../assets/flash/scrollbar/thumb_bottom.png"),
+    url("../../assets/flash/scrollbar/thumb_middle.png");
+    background-repeat: no-repeat, no-repeat, repeat-y;
+    background-position: 0 0, bottom, 0 7px;
+    width: 17px;
+    pointer-events: all;
 
-    &:horizontal {
-        border-bottom: 0.25rem solid rgba($primary, .4);
-
-        &:hover {
-            border-bottom: 0.25rem solid rgba($primary, .8);
-        }
-    
-        &:active {
-            border-bottom: 0.25rem solid $secondary;
-        }
+    &:hover {
+        background-image: url("../../assets/flash/scrollbar/thumb_top.png"),
+        url("../../assets/flash/scrollbar/thumb_bottom.png"),
+        url("../../assets/flash/scrollbar/thumb_middle_hover.png");
     }
 
-    &:not(:horizontal) {
-        border-right: 0.25rem solid rgba($primary, .4);
-
-        &:hover {
-            border-right: 0.25rem solid rgba($primary, .8);
-        }
-
-        &:active {
-            border-right: 0.25rem solid $secondary;
-        }
+    &:active {
+        background-image: url("../../assets/flash/scrollbar/thumb_top_active.png"),
+        url("../../assets/flash/scrollbar/thumb_bottom_active.png"),
+        url("../../assets/flash/scrollbar/thumb_middle_active.png");
     }
 }
 
 ::-webkit-scrollbar-corner {
     background: rgba($black, .1);
+}
+
+::-webkit-scrollbar-button:vertical:start:decrement {
+    background-image: url("../../assets/flash/scrollbar/up.png");
+    height: 16px;
+    display: block;
+    pointer-events: all;
+
+    &:hover {
+        background-image: url("../../assets/flash/scrollbar/up_hover.png");
+    }
+
+    &:active {
+        background-image: url("../../assets/flash/scrollbar/up_active.png");
+    }
+}
+
+::-webkit-scrollbar-button:vertical:end:increment {
+    background-image: url("../../assets/flash/scrollbar/down.png");
+    height: 16px;
+    display: block;
+    pointer-events: all;
+
+    &:hover {
+        background-image: url("../../assets/flash/scrollbar/down_hover.png");
+    }
+
+    &:active {
+        background-image: url("../../assets/flash/scrollbar/down_active.png");
+    }
 }
