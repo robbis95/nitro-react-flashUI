@@ -93,3 +93,72 @@
     color: #2b577b;
     font-size: var(--bs-body-font-size);
 }
+
+.nav-icons {
+    color: #7dd8f6;
+}
+
+.minus-icon {
+    background-image: url(../../assets/flash/navigator/minus.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+}
+
+.plus-icon {
+    background-image: url(../../assets/flash/navigator/plus.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+}
+
+.nav-avatar-icon {
+    background-image: url(../../assets/flash/navigator/avatar_icon.png);
+    background-repeat: no-repeat;
+    height: 8px;
+    width: 7px;
+}
+
+.nav-thumbnail {
+    background-image: url(../../assets/flash/navigator/thumbnail_bg.png);
+    background-repeat: no-repeat;
+    height: 146px;
+    width: 122px;
+}
+
+.nav-create-room {
+    background-image: url(../../assets/flash/navigator/create_room.png);
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 189px;
+    float: left;
+    cursor: pointer;
+}
+
+.nav-random-room {
+    background-image: url(../../assets/flash/navigator/random_room.png);
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 189px;
+    float: right;
+    margin-left: 15px;
+    cursor: pointer;
+
+}
+
+.nav-bottom {
+    max-height: 80px;
+    min-height: 80px;
+}
+
+.nav-bottom-buttons {
+    bottom: 18px;
+    left: 10px;
+}
+
+.nav-bottom-buttons-text {
+    font-size: 12px;
+
+    padding-top: 22px;
+    margin-left: 86px;
+}
