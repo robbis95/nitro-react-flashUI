@@ -1,5 +1,38 @@
 .nitro-mod-tools {
     width: $nitro-mod-tools-width;
+
+}
+
+.roomtoolicon {
+    background-image: url(../../assets/flash/modtools/room.png);
+    width: 16px;
+    height: 17px;
+}
+
+.chatlogicon {
+    background-image: url(../../assets/flash/modtools/chatlog.png);
+    width: 17px;
+    height: 21px;
+
+}
+
+.usericon {
+    background-image: url(../../assets/flash/modtools/userinfo.png);
+    width: 18px;
+    height: 19px;
+}
+
+.ticketicon {
+    background-image: url(../../assets/flash/modtools/tickets.png);
+    width: 12px;
+    height: 16px;
+}
+
+.mod-header {
+    color: #000;
+    padding: 9px 0px 0px 10px;
+    font-size: 12px;
+    height: 25px;
 }
 
 .nitro-mod-tools-room {
@@ -37,6 +70,16 @@
 
 .nitro-mod-tools-user-visits {
     min-width: 300px;
+
+    .user-visits {
+        min-height: 200px;
+
+        .roomvisits-container {
+            div.room-visit {
+            }
+        }
+        
+    }
 }
 
 .nitro-mod-tools-chatlog {
@@ -61,7 +104,6 @@
 
     .log-container {
         min-height: 200px;
-        height: 100%;
 
         .log-entry-container {
 

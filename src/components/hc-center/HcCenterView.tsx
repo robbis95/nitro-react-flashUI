@@ -215,18 +215,17 @@ export const HcCenterView: FC<{}> = props =>
     );
 
     return (
-        <NitroCardView theme="primary-slim" className="nitro-hc-center">
+        <NitroCardView theme="primary" className="nitro-hc-center">
             <NitroCardHeaderView headerText={ LocalizeText('generic.hccenter') } onCloseClick={ () => setIsVisible(false) } />
-            <Flex position="relative" className="bg-muted p-2">
+            <Flex position="relative" className="bg-muted p-2 hc-logo">
                 <Column gap={ 1 }>
-                    <div className="hc-logo" />
                     <Flex>
                         <Button variant="success" onClick={ event => { CreateLinkEvent('catalog/open/' + GetConfiguration('hc.center')['catalog.buy']) } }>
                             { LocalizeText((clubStatus === ClubStatus.ACTIVE) ? 'hccenter.btn.extend' : 'hccenter.btn.buy') }
                         </Button>
                     </Flex>
                 </Column>
-                <Base position="absolute" className="end-0 p-4 top-0 habbo-avatar">
+                <Base position="absolute" className="end-0 p-4 top-3 habbo-avatar">
                     <LayoutAvatarImageView figure={ userFigure } direction={ 4 } scale={ 2 } />
                 </Base>
             </Flex>

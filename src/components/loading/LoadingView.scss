@@ -1,91 +1,63 @@
 .nitro-loading {
     position: relative;
-    background: $primary;
+    background: #09161f;
 
-    .connecting-duck {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        right: 0;
-        left: 0;
-        background: url('../../assets/images/loading/connecting-duck-spritesheet.png') no-repeat top left;
-        width: 235px;
-        height: 127px;
-        animation: 1.5s connecting-duck infinite step-end;
-        transform: scale(0.5);
-
-        &.01 {
-            background-position: 0 0;
-        }
-
-        &.02 {
-            background-position: 0 -132px;
-            width: 280px;
-            height: 151px;
-        }
-
-        &.03 {
-            background-position: 0 -288px;
-            width: 326px;
-            height: 174px;
-        }
-
-        &.04 {
-            background-position: 0 -467px;
-        }
-
-        &.05 {
-            background-position: 0 -599px;
-            width: 280px;
-            height: 151px;
-        }
-
-        &.06 {
-            background-position: 0 -755px;
-            width: 326px;
-            height: 174px;
-        }
-
-        &.07 {
-            background-position: 0 -934px;
-            width: 190px;
-            height: 104px;
-        }
+    .percent {
+        font-size: 17px;
+        color: #999999;
     }
 
-    .nitro-logo {
-        width: 47px;
-        height: 65px;
-        background: transparent url('https://assets.nitrodev.co/logos/react-loader.png') no-repeat center;
-        z-index: 1;
+    .loading-stories {
+        background-image: url(../../assets/flash/loadingscreen/background.png);
+        width: 500px;
+        height: 434px;
+        position: relative;
+
+        .loadingPhoto {
+            width: 320px;
+            height: 320px;
+            top: 51px;
+            left: 94px;
+
+            @for $i from 1 through 30 {
+                &[data-image="#{$i}"] {
+                    background-image: url(../../assets/flash/loadingscreen/image-#{$i}.png);
+                }
+            }
+        }
+
+        .imageOverlay {
+            background-image: url(../../assets/flash/loadingscreen/overlay.png);
+            width: 500px;
+            height: 434px;
+        }
     }
 
     .nitro-loading-bar {
-        border:1px solid white;
-        padding:3px;
-        height:30px;
-        border-radius: 8px;
+        border: 1px solid white;
+        padding: 3px;
+        height: 25px;
+        width: 400px;
+        border-radius: 3px;
         position: relative;
         display: flex;
         flex-direction: column;
 
         &::before {
-            content:'';
+            content: "";
             position: absolute;
             inset: 0;
-            margin:3px;
+            margin: 3px;
             border-radius: 4px;
-            background:darken($primary,15);
+            background: #000;
             z-index: 0;
         }
 
         .nitro-loading-bar-inner {
-            height:100%;
+            height: 100%;
             z-index: 4;
-            border-radius: 4px;
             transition: all 1s;
-            background: repeating-linear-gradient($tertiary, $tertiary 50%, $quaternary 50%, $quaternary 100%);
+            background: linear-gradient(#bfd1d9 50%, #93acb7 50%);
         }
     }
 }

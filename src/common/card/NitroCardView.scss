@@ -1,5 +1,5 @@
 $nitro-card-header-height: 33px;
-$nitro-card-tabs-height: 33px;
+$nitro-card-tabs-height: 35px;
 
 .nitro-card {
     resize: both;
@@ -10,83 +10,82 @@ $nitro-card-tabs-height: 33px;
     }
 
     &.theme-primary {
-        border: $border-width solid $border-color;
+
 
         .nitro-card-header {
-            min-height: 33px;
-            max-height: 33px;
-            background: $primary;
+            border-image-source: url("../../assets/flash/boxes/card/top.png");
+            border-image-slice: 7 fill;
+            border-image-width: 7px;
+            border-image-repeat: repeat repeat;
+            color: #fff;
+            height: 34px;
+            line-height: 34px;
 
             .nitro-card-header-text {
                 color: $white;
-                text-shadow: 0px 4px 4px rgba($black, 0.25);
-                @include font-size($h4-font-size);
             }
 
             .nitro-card-header-close {
                 cursor: pointer;
-                padding: 1px 3px;
-                line-height: 1;
-                border-radius: $border-radius;
-                box-shadow: 0 0 0 1.6px $white;
-                border: 2px solid #921911;
-                background: repeating-linear-gradient(
-                    rgba(245, 80, 65, 1),
-                    rgba(245, 80, 65, 1) 50%,
-                    rgba(194, 48, 39, 1) 50%,
-                    rgba(194, 48, 39, 1) 100%
-                );
-        
-                &:hover {
-                    filter: brightness(1.2);
-                }
-        
-                &:active {
-                    filter: brightness(0.8);
+                background-image: url("../../assets/flash/boxes/card/close.png");
+                width: 19px;
+                height: 20px;
+
+                    &:hover {
+                    background-image: url("../../assets/flash/boxes/card/close_hover.png");
+
+                    &:active {
+                    background-image: url("../../assets/flash/boxes/card/close_click.png");
+                    }
+
                 }
             }
         }
 
         .nitro-card-tabs {
-            background-color: $secondary;
-
-            .nav-item {
-                padding: $nav-link-padding-y $nav-link-padding-x;
-                background-color: $muted;
-                color: $black;
-                z-index: 1;
-                margin-bottom: -1px;
-
-                &.active {
-                    background-color: $light;
-                    border-color: $border-color $border-color $light !important;
-                    border-bottom: 1px solid black;
-
-                    &:before {
-                        background: $white;
-                    }
-                }
-
-                &:before {
-                    content: "";
-                    position: absolute;
-                    width: 93%;
-                    height: 3px;
-                    border-radius: 0.25rem;
-                    top: 1.5px;
-                    left: 0;
-                    right: 0;
-                    margin: auto;
-                    background: #c2c9d1;
-                    z-index: 1;
-                }
-            }
+            background-color: #feffff;
         }
 
         .content-area {
-            background-color: $light;
+            border-image-source: url("../../assets/flash/boxes/card/body.png");
+            border-image-slice: 33 7 8 7 fill;
+            border-image-width: 0px 7px 8px 7px;
+            border-image-repeat: repeat repeat;
         }
     }
+
+    // MOD TOOL
+
+&.theme-primary-modtool {
+    border-image-source: url("../../assets/flash/boxes/card/mod_window.png");
+    border-image-slice: 6 6 6 6 fill;
+    border-image-width: 6px 6px 6px 6px;
+    border-image-repeat: repeat repeat;
+
+    .nitro-card-header {
+
+        .nitro-card-header-text {
+            color: $black;
+            min-height: 21px;
+        }
+
+        .nitro-card-header-close {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            margin-top: 10px;
+            background-image: url("../../assets/flash/boxes/card/mod_close.png");
+
+            &:hover {
+                filter: brightness(1.2);
+            }
+    
+            &:active {
+                filter: brightness(0.8);
+            }
+        }
+    }
+}
 
     &.theme-primary-slim {
         border: $border-width solid $border-color;
@@ -100,7 +99,6 @@ $nitro-card-tabs-height: 33px;
             box-shadow: 0 2px white;
             width: 100%;
             margin: 0;
-            padding-top:2px;
             
             &:before {
                 position: absolute;
@@ -114,8 +112,6 @@ $nitro-card-tabs-height: 33px;
 
             .nitro-card-header-text {
                 color: $white;
-                text-shadow: 0px 4px 4px rgba($black, 0.25);
-                @include font-size($h5-font-size);
                 min-height: 21px;
             }
 
@@ -145,7 +141,7 @@ $nitro-card-tabs-height: 33px;
         }
 
         .nitro-card-tabs {
-            background-color: $secondary;
+            background-color: #feffff;
         }
 
         .content-area {
@@ -179,10 +175,15 @@ $nitro-card-tabs-height: 33px;
 }
 
 .nitro-card-tabs {
-    height: 100%;
     min-height: $nitro-card-tabs-height;
     max-height: $nitro-card-tabs-height;
-    border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+    border-bottom: $nav-tabs-border-width solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.nav-tabs {
+    margin-left: 10px;
 }
 
 .nitro-card-accordion-set {

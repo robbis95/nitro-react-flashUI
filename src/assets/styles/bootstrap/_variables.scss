@@ -911,7 +911,8 @@ $input-focus-color:                     $input-color !default;
 $input-focus-width:                     $input-btn-focus-width !default;
 $input-focus-box-shadow:                $input-btn-focus-box-shadow !default;
 
-$input-placeholder-color:               $gray-600 !default;
+$input-placeholder-color:               #a5a6a5 !default;
+$input-placeholder-font-family:         UbuntuItalics !default;
 $input-plaintext-color:                 $body-color !default;
 
 $input-height-border:                   $input-border-width * 2 !default;
@@ -1122,7 +1123,7 @@ $zindex-tooltip:                    1080 !default;
 // scss-docs-start nav-variables
 $nav-link-padding-y:                .2rem !default;
 $nav-link-padding-x:                .8rem !default;
-$nav-link-font-size:                14px !default;
+$nav-link-font-size:                13px !default;
 $nav-link-font-weight:              null !default;
 $nav-link-color:                    $black !default;
 $nav-link-hover-color:              null !default;

@@ -46,30 +46,19 @@
 
     .nav-link {
         position: relative;
-        margin-bottom: -$nav-tabs-border-width;
-        background-color: $nav-tabs-link-bg;
-        border: $nav-tabs-border-width solid $nav-tabs-border-color;
-        @include border-top-radius($nav-tabs-border-radius);
+        border-image-source: url("../../../assets/flash/boxes/card/tabs.png");
+        border-image-slice:7 7 7 7 fill;
+        border-image-width:7px 7px 7px 7px;
+        border-image-outset:0px 0px 0px 0px;
+        border-image-repeat:repeat repeat;
+        margin-bottom: -2px;
+        margin-left: -2px;
 
         &.active {
-            &:before {
-                background: #ffffff;
-            }
+            border-image-source: url("../../../assets/flash/boxes/card/tabs_active.png");
+            margin-right: 1px;
         }
 
-        &:before {
-            content: "";
-            position: absolute;
-            width: 93%;
-            height: 3px;
-            border-radius: $border-radius;
-            top: 1.5px;
-            left: 0;
-            right: 0;
-            margin: auto;
-            background: #c2c9d1;
-            z-index: 1;
-        }
 
         &:hover,
         &:focus {
@@ -85,12 +74,6 @@
         }
     }
 
-    .nav-link.active,
-    .nav-item.show .nav-link {
-        color: $nav-tabs-link-active-color;
-        background-color: $nav-tabs-link-active-bg;
-        border-color: $nav-tabs-link-active-border-color;
-    }
 
     .dropdown-menu {
         // Make dropdown border overlap tab border
