@@ -15,7 +15,6 @@
     background-repeat: no-repeat, no-repeat, repeat-y;
     background-position: 0 0, bottom, 0 7px;
     width: 17px;
-    pointer-events: all;
 
     &:hover {
         background-image: url("../../assets/flash/scrollbar/thumb_top.png"),
@@ -30,15 +29,10 @@
     }
 }
 
-::-webkit-scrollbar-corner {
-    background: rgba($black, .1);
-}
-
 ::-webkit-scrollbar-button:vertical:start:decrement {
     background-image: url("../../assets/flash/scrollbar/up.png");
     height: 16px;
     display: block;
-    pointer-events: all;
 
     &:hover {
         background-image: url("../../assets/flash/scrollbar/up_hover.png");
@@ -53,7 +47,6 @@
     background-image: url("../../assets/flash/scrollbar/down.png");
     height: 16px;
     display: block;
-    pointer-events: all;
 
     &:hover {
         background-image: url("../../assets/flash/scrollbar/down_hover.png");
