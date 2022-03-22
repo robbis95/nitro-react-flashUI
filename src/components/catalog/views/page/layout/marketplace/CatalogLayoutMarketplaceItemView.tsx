@@ -67,7 +67,7 @@ export const CatalogLayoutMarketplaceItemView: FC<MarketplaceItemViewProps> = pr
     }, [offerData]);
 
     return (
-        <LayoutGridItem center={ false } column={ false } alignItems="center" className="p-1">
+        <LayoutGridItem shrink center={ false } column={ false } alignItems="center" className="p-1">
             <LayoutImage imageUrl={ getImageUrlForOffer() } fit={ false } style={ { width: 50, height: 50 } } />
             <Column grow gap={ 0 }>
                 <Text fontWeight="bold">{ getMarketplaceOfferTitle }</Text>
@@ -84,15 +84,15 @@ export const CatalogLayoutMarketplaceItemView: FC<MarketplaceItemViewProps> = pr
             </Column>
             <Column gap={ 1 }>
                 { ((type === OWN_OFFER) && (offerData.status !== MarketPlaceOfferState.SOLD)) &&
-                    <Button variant="secondary" size="sm" onClick={ () => onClick(offerData) }>
+                    <Button variant="secondary" onClick={ () => onClick(offerData) }>
                         { LocalizeText('catalog.marketplace.offer.pick') }
                     </Button> }
                 { type === PUBLIC_OFFER &&
                     <>
-                        <Button variant="secondary" size="sm" onClick={ () => onClick(offerData) }>
+                        <Button variant="secondary" onClick={ () => onClick(offerData) }>
                             { LocalizeText('buy') }
                         </Button>
-                        <Button variant="secondary" size="sm" disabled>
+                        <Button variant="secondary" disabled>
                             { LocalizeText('catalog.marketplace.view_more') }
                         </Button>
                     </> }

@@ -1,6 +1,5 @@
 import { HabboWebTools, RoomEnterEffect } from '@nitrots/nitro-renderer';
-import { CreateLinkEvent, GetConfiguration, GetNitroInstance, LocalizeText } from '..';
-import { CatalogPageName } from '../../components/catalog/common/CatalogPageName';
+import { CreateLinkEvent, GetConfiguration, GetNitroInstance, LocalizeText, PlaySound } from '..';
 import { NotificationAlertEvent, NotificationConfirmEvent } from '../../events';
 import { NotificationBubbleEvent } from '../../events/notification-center/NotificationBubbleEvent';
 import { DispatchUiEvent } from '../../hooks';
@@ -59,7 +58,7 @@ export class NotificationUtilities
     {
         let imageUrl = options.get('image');
 
-        if(!imageUrl) imageUrl = GetConfiguration<string>('image.library.notifications.url', '').replace('%image', type.replace(/\./g, '_'));
+        if(!imageUrl) imageUrl = GetConfiguration<string>('image.library.notifications.url', '').replace('%image%', type.replace(/\./g, '_'));
 
         return LocalizeText(imageUrl);
     }
@@ -86,6 +85,8 @@ export class NotificationUtilities
         {
             this.simpleAlert(message, NotificationAlertType.EVENT, linkUrl, linkTitle, title, image);
         }
+
+        if(options.get('sound')) PlaySound(options.get('sound'));
     }
 
     public static showSingleBubble(message: string, type: string, imageUrl: string = null, internalLink: string = null): void
@@ -99,7 +100,7 @@ export class NotificationUtilities
     {
         if(numGifts <= 0) return;
 
-        this.showSingleBubble(numGifts.toString(), NotificationBubbleType.CLUBGIFT, null, ('catalog/open/' + CatalogPageName.CLUB_GIFTS));
+        this.showSingleBubble(numGifts.toString(), NotificationBubbleType.CLUBGIFT, null, ('catalog/open/' + GetConfiguration('hc.center')['catalog.gifts']));
     }
 
     public static handleMOTD(messages: string[]): void
@@ -127,6 +128,11 @@ export class NotificationUtilities
         if(!type || !type.length) type = NotificationAlertType.DEFAULT;
 
         DispatchUiEvent(new NotificationAlertEvent([ this.cleanText(message) ], type, clickUrl, clickUrlText, title, imageUrl));
+    }
+
+    public static showNitroAlert(): void
+    {
+        DispatchUiEvent(new NotificationAlertEvent(null, NotificationAlertType.NITRO));
     }
 
     public static showModeratorMessage(message: string, url: string = null, showHabboWay: boolean = true): void

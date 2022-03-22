@@ -1,8 +1,14 @@
 import { RemoveAllRightsMessageComposer, RoomTakeRightsComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback } from 'react';
-import { LocalizeText, SendMessageComposer } from '../../../../../api';
-import { Button, Column, Flex, Grid, Text, UserProfileIconView } from '../../../../../common';
-import { NavigatorRoomSettingsTabViewProps } from './NavigatorRoomSettingsTabViewProps.types';
+import { LocalizeText, SendMessageComposer } from '../../../../api';
+import { Button, Column, Flex, Grid, Text, UserProfileIconView } from '../../../../common';
+import RoomSettingsData from '../../common/RoomSettingsData';
+
+interface NavigatorRoomSettingsTabViewProps
+{
+    roomSettingsData: RoomSettingsData;
+    handleChange: (field: string, value: string | number | boolean) => void;
+}
 
 export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabViewProps> = props =>
 {
@@ -23,22 +29,24 @@ export const NavigatorRoomSettingsRightsTabView: FC<NavigatorRoomSettingsTabView
     }, [ roomSettingsData, handleChange ]);
 
     return (
-        <Grid overflow="auto">
+        <Grid>
             <Column size={ 6 }>
                 <Text bold>
                     { LocalizeText('navigator.flatctrls.userswithrights', [ 'displayed', 'total' ], [ roomSettingsData.usersWithRights.size.toString(), roomSettingsData.usersWithRights.size.toString() ]) }
                 </Text>
-                <Column fullWidth className="bg-white rounded list-container p-2" overflow="auto" gap={ 1 }>
-                    { Array.from(roomSettingsData.usersWithRights.entries()).map(([id, name], index) =>
-                        {
-                            return (
-                                <Flex key={ index } alignItems="center" gap={ 1 } overflow="hidden">
-                                    <UserProfileIconView userName={ name } />
-                                    <Text pointer grow key={index} onClick={ event => removeUserRights(id) }> { name }</Text>
-                                </Flex>
-                            );
-                        }) }
-                </Column>
+                <Flex overflow="hidden" className="bg-white rounded list-container p-2">
+                    <Column fullWidth overflow="auto" gap={ 1 }>
+                        { Array.from(roomSettingsData.usersWithRights.entries()).map(([id, name], index) =>
+                            {
+                                return (
+                                    <Flex key={ index } shrink alignItems="center" gap={ 1 } overflow="hidden">
+                                        <UserProfileIconView userName={ name } />
+                                        <Text pointer grow key={index} onClick={ event => removeUserRights(id) }> { name }</Text>
+                                    </Flex>
+                                );
+                            }) }
+                    </Column>
+                </Flex>
                 <Button variant="danger" disabled={ !roomSettingsData.usersWithRights.size } onClick={ removeAllRights } >
                     { LocalizeText('navigator.flatctrls.clear') }
                 </Button>

@@ -37,7 +37,7 @@ export const AvatarEditorView: FC<{}> = props =>
     const [ isWardrobeVisible, setIsWardrobeVisible ] = useState(false);
     const [ lastFigure, setLastFigure ] = useState<string>(null);
     const [ lastGender, setLastGender ] = useState<string>(null);
-    const [ needsReset, setNeedsReset ] = useState(false);
+    const [ needsReset, setNeedsReset ] = useState(true);
     const [ isInitalized, setIsInitalized ] = useState(false);
 
     const maxWardrobeSlots = useMemo(() => GetConfiguration<number>('avatar.wardrobe.max.slots', 10), []);
@@ -180,14 +180,7 @@ export const AvatarEditorView: FC<{}> = props =>
                 setIsVisible(false);
                 return;
             case 'toggle':
-                setIsVisible(prevValue =>
-                    {
-                        const flag = !prevValue;
-
-                        if(flag) setNeedsReset(true);
-                        
-                        return flag;
-                    });
+                setIsVisible(prevValue => !prevValue);
                 return;
         }
     }, []);
@@ -278,6 +271,16 @@ export const AvatarEditorView: FC<{}> = props =>
         setNeedsReset(false);
     }, [ isVisible, isInitalized, needsReset, loadAvatarInEditor ]);
 
+    useEffect(() =>
+    {
+        if(isVisible) return;
+
+        return () =>
+        {
+            setNeedsReset(true);
+        }
+    }, [ isVisible ]);
+
     if(!isVisible || !figureData) return null;
 
     return (
@@ -310,17 +313,17 @@ export const AvatarEditorView: FC<{}> = props =>
                         <AvatarEditorFigurePreviewView figureData={ figureData } />
                         <Column grow gap={ 1 }>
                             <ButtonGroup>
-                                <Button variant="secondary" size="sm" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
+                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
                                     <FontAwesomeIcon icon="undo" />
                                 </Button>
-                                <Button variant="secondary" size="sm" onClick={ event => processAction(AvatarEditorAction.ACTION_CLEAR) }>
+                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_CLEAR) }>
                                     <FontAwesomeIcon icon="trash" />
                                 </Button>
-                                <Button variant="secondary" size="sm" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
+                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
                                     <FontAwesomeIcon icon="dice" />
                                 </Button>
                             </ButtonGroup>
-                            <Button className="w-100" variant="success" size="sm" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
+                            <Button className="w-100" variant="success" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
                                 { LocalizeText('avatareditor.save') }
                             </Button>
                         </Column>

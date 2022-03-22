@@ -1,4 +1,4 @@
-import { MouseEventType } from '@nitrots/nitro-renderer';
+import { NitroLogger } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { AddEventLinkTracker, GetConfiguration, NotificationUtilities, RemoveLinkEventTracker } from '../../api';
 import { Base, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
@@ -14,30 +14,27 @@ export const NitropediaView: FC<{}> = props =>
     
     const openPage = useCallback(async (link: string) =>
     {
-        const response = await fetch(link);
-
-        if(!response) return;
-
-        const text = await response.text();
-
-        const splitData = text.split(NEW_LINE_REGEX);
-        
-        BatchUpdates(() =>
+        try
         {
-            setHeader(splitData.shift());
-            setContent(splitData.join(''));
-        });
-    }, []);
+            const response = await fetch(link);
 
-    const onClick = useCallback((event: MouseEvent) =>
-    {
-        if(!(event.target instanceof HTMLAnchorElement)) return;
-        
-        event.preventDefault();
+            if(!response) return;
+    
+            const text = await response.text();
+    
+            const splitData = text.split(NEW_LINE_REGEX);
             
-        const link = event.target.href;
+            BatchUpdates(() =>
+            {
+                setHeader(splitData.shift());
+                setContent(splitData.join(''));
+            });
+        }
 
-        NotificationUtilities.openUrl(link);
+        catch (error)
+        {
+            NitroLogger.error(`Failed to fetch ${ link }`);
+        }
     }, []);
 
     const onLinkReceived = useCallback((link: string) =>
@@ -62,19 +59,31 @@ export const NitropediaView: FC<{}> = props =>
 
     useEffect(() =>
     {
-        const element = elementRef.current;
+        const handle = (event: MouseEvent) =>
+            {
+                if(!(event.target instanceof HTMLAnchorElement)) return;
 
-        if(!element) return;
-        
-        element.addEventListener(MouseEventType.MOUSE_CLICK, onClick);
+                event.preventDefault();
 
-        return () => element.removeEventListener(MouseEventType.MOUSE_CLICK, onClick);
-    }, [ onClick, content ]);
+                const link = event.target.href;
+
+                if(!link || !link.length) return;
+
+                NotificationUtilities.openUrl(link);
+            }
+
+        document.addEventListener('click', handle);
+
+        return () =>
+        {
+            document.removeEventListener('click', handle);
+        }
+    }, []);
 
     if(!content) return null;
 
     return (
-        <NitroCardView className="nitropedia">
+        <NitroCardView className="nitropedia" theme="primary-slim">
             <NitroCardHeaderView headerText={header} onCloseClick={() => setContent(null)}/>
             <NitroCardContentView>
                 <Base fit innerRef={ elementRef } className="text-black" dangerouslySetInnerHTML={{ __html: content }} />

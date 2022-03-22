@@ -1,11 +1,11 @@
 import { RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useState } from 'react';
-import { CreateRoomSession, LocalizeText } from '../../../../api';
-import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
-import { Button } from '../../../../common/Button';
-import { Column } from '../../../../common/Column';
-import { Text } from '../../../../common/Text';
-import { UpdateDoorStateEvent } from '../../../../events';
+import { CreateRoomSession, LocalizeText } from '../../../api';
+import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../common';
+import { Button } from '../../../common/Button';
+import { Column } from '../../../common/Column';
+import { Text } from '../../../common/Text';
+import { UpdateDoorStateEvent } from '../../../events';
 
 export interface NavigatorRoomPasswordViewProps
 {
@@ -49,9 +49,9 @@ export const NavigatorRoomPasswordView: FC<NavigatorRoomPasswordViewProps> = pro
                     <Text>{ LocalizeText('navigator.password.enter') }</Text>
                     <input type="password" className="form-control form-control-sm" onChange={ event => setPassword(event.target.value) } />
                 </Column>
-                <Button variant="success" size="sm" onClick={ tryEntering }>
+                <Button variant="success" onClick={ tryEntering }>
                     { LocalizeText('navigator.password.button.try') }</Button>
-                <Button variant="danger" size="sm" onClick={ close }>
+                <Button variant="danger" onClick={ close }>
                         { LocalizeText('generic.cancel') }
                     </Button>
             </NitroCardContentView>

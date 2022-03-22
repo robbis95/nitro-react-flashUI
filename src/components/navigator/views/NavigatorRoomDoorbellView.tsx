@@ -1,11 +1,11 @@
 import { RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC } from 'react';
-import { CreateRoomSession, GoToDesktop, LocalizeText } from '../../../../api';
-import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
-import { Button } from '../../../../common/Button';
-import { Column } from '../../../../common/Column';
-import { Text } from '../../../../common/Text';
-import { UpdateDoorStateEvent } from '../../../../events';
+import { CreateRoomSession, GoToDesktop, LocalizeText } from '../../../api';
+import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../common';
+import { Button } from '../../../common/Button';
+import { Column } from '../../../common/Column';
+import { Text } from '../../../common/Text';
+import { UpdateDoorStateEvent } from '../../../events';
 
 export interface NavigatorRoomDoorbellViewProps
 {
@@ -50,10 +50,10 @@ export const NavigatorRoomDoorbellView: FC<NavigatorRoomDoorbellViewProps> = pro
                 </Column>
                 <Column gap={ 1 }>
                     { (state === UpdateDoorStateEvent.START_DOORBELL) &&
-                        <Button variant="success" size="sm" onClick={ ring }>
+                        <Button variant="success" onClick={ ring }>
                             { LocalizeText('navigator.doorbell.button.ring') }
                         </Button> }
-                    <Button variant="danger" size="sm" onClick={ close }>
+                    <Button variant="danger" onClick={ close }>
                         { LocalizeText('generic.cancel') }
                     </Button>
                 </Column>

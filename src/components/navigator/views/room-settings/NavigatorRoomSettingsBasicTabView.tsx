@@ -1,26 +1,36 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoomDeleteComposer } from '@nitrots/nitro-renderer';
-import { FC, useState } from 'react';
-import { LocalizeText, NotificationUtilities, SendMessageComposer } from '../../../../../api';
-import { Base, Flex, Text } from '../../../../../common';
-import { GetMaxVisitorsList } from '../../../common/RoomSettingsUtils';
-import { useNavigatorContext } from '../../../NavigatorContext';
-import { NavigatorRoomSettingsTabViewProps } from './NavigatorRoomSettingsTabViewProps.types';
+import { FC } from 'react';
+import { CreateLinkEvent, LocalizeText, NotificationUtilities, SendMessageComposer } from '../../../../api';
+import { Base, Flex, Text } from '../../../../common';
+import RoomSettingsData from '../../common/RoomSettingsData';
+import { GetMaxVisitorsList } from '../../common/RoomSettingsUtils';
+import { useNavigatorContext } from '../../NavigatorContext';
 
 const DESC_MAX_LENGTH = 255;
 
+interface NavigatorRoomSettingsTabViewProps
+{
+    roomSettingsData: RoomSettingsData;
+    handleChange: (field: string, value: string | number | boolean) => void;
+    close: () => void;
+}
+
+
 export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewProps> = props =>
 {
-    const { roomSettingsData = null, handleChange = null } = props;
-    const [ maxVisitorsList, setMaxVisitorsList ] = useState(GetMaxVisitorsList());
-    const { navigatorState = null } = useNavigatorContext();
-    const { categories = null } = navigatorState;
+    const { roomSettingsData = null, handleChange = null, close = null } = props;
+    const { categories = null } = useNavigatorContext();
 
     const deleteRoom = () =>
     {
         NotificationUtilities.confirm(LocalizeText('navigator.roomsettings.deleteroom.confirm.message'), () =>
         {
             SendMessageComposer(new RoomDeleteComposer(roomSettingsData.roomId));
+
+            if(close) close();
+
+            CreateLinkEvent('navigator/search/myworld_view');
         },
         null, null, null, LocalizeText('navigator.roomsettings.deleteroom.confirm.title'));
     }
@@ -38,19 +48,13 @@ export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewP
             <Flex alignItems="center" gap={ 1 }>
                 <Text className="col-3">{ LocalizeText('navigator.category') }</Text>
                 <select className="form-select form-select-sm" value={ roomSettingsData.categoryId } onChange={ event => handleChange('category', event.target.value) }>
-                    { categories && categories.map(category =>
-                        {
-                            return <option key={ category.id } value={ category.id }>{ LocalizeText(category.name) }</option>
-                        }) }
+                    { categories && categories.map(category => <option key={ category.id } value={ category.id }>{ LocalizeText(category.name) }</option>) }
                 </select>
             </Flex>
             <Flex alignItems="center" gap={ 1 }>
                 <Text className="col-3">{ LocalizeText('navigator.maxvisitors') }</Text>
                 <select className="form-select form-select-sm" value={ roomSettingsData.userCount } onChange={ event => handleChange('max_visitors', event.target.value) }>
-                    { maxVisitorsList && maxVisitorsList.map(value =>
-                        {
-                            return <option key={ value } value={ value }>{ value }</option>
-                        }) }
+                    { GetMaxVisitorsList && GetMaxVisitorsList.map(value => <option key={ value } value={ value }>{ value }</option>) }
                 </select>
             </Flex>
             <Flex alignItems="center" gap={ 1 }>

@@ -1,8 +1,8 @@
 import { Dispose, DropBounce, EaseOut, FigureUpdateEvent, JumpBy, Motions, NitroToolbarAnimateIconEvent, PerkAllowancesMessageEvent, PerkEnum, Queue, UserInfoDataParser, UserInfoEvent, Wait } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useState } from 'react';
-import { CreateLinkEvent, GetRoomSession, GetRoomSessionManager, GetSessionDataManager, GetUserProfile, GoToDesktop, OpenMessengerChat } from '../../api';
+import { CreateLinkEvent, GetSessionDataManager, GetUserProfile, OpenMessengerChat, VisitDesktop } from '../../api';
 import { Base, Flex, LayoutAvatarImageView, LayoutItemCountView, TransitionAnimation, TransitionAnimationTypes } from '../../common';
-import { AchievementsUIEvent, AchievementsUIUnseenCountEvent, FriendsEvent, FriendsMessengerIconEvent, FriendsRequestCountEvent, GuideToolEvent, InventoryEvent, ModToolsEvent, NavigatorEvent, UnseenItemTrackerUpdateEvent, UserSettingsUIEvent } from '../../events';
+import { AchievementsUIEvent, AchievementsUIUnseenCountEvent, FriendsEvent, FriendsMessengerIconEvent, FriendsRequestCountEvent, GuideToolEvent, InventoryEvent, ModToolsEvent, UnseenItemTrackerUpdateEvent, UserSettingsUIEvent } from '../../events';
 import { BatchUpdates, DispatchUiEvent, UseMessageEventHook, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
 import { ToolbarViewItems } from './common/ToolbarViewItems';
 import { ToolbarMeView } from './ToolbarMeView';
@@ -135,7 +135,7 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
         switch(item)
         {
             case ToolbarViewItems.NAVIGATOR_ITEM:
-                DispatchUiEvent(new NavigatorEvent(NavigatorEvent.TOGGLE_NAVIGATOR));
+                CreateLinkEvent('navigator/toggle');
                 return;
             case ToolbarViewItems.INVENTORY_ITEM:
                 DispatchUiEvent(new InventoryEvent(InventoryEvent.TOGGLE_INVENTORY));
@@ -178,14 +178,6 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
         }
     }, []);
 
-    const visitDesktop = useCallback(() =>
-    {
-        if(!GetRoomSession()) return;
-
-        GoToDesktop();
-        GetRoomSessionManager().removeSession(-1);
-    }, []);
-
     return (
         <>
             <TransitionAnimation type={ TransitionAnimationTypes.FADE_IN } inProp={ isMeExpanded } timeout={ 300 }>
@@ -200,7 +192,7 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
                                 <LayoutItemCountView count={ unseenAchievementCount } /> }
                         </Flex>
                         { isInRoom &&
-                            <Base pointer className="navigation-item icon icon-habbo" onClick={ visitDesktop } /> }
+                            <Base pointer className="navigation-item icon icon-habbo" onClick={ event => VisitDesktop() } /> }
                         { !isInRoom &&
                             <Base pointer className="navigation-item icon icon-house" onClick={ event => CreateLinkEvent('navigator/goto/home') } /> }
                         <Base pointer className="navigation-item icon icon-rooms" onClick={ event => handleToolbarItemClick(ToolbarViewItems.NAVIGATOR_ITEM) } />

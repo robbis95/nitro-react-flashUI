@@ -11,8 +11,11 @@
     "widget.dimmer.colorwheel": false,
     "avatar.wardrobe.max.slots": 10,
     "user.badges.max.slots": 5,
+    "camera.publish.disabled": false,
     "hc.disabled": false,
+    "badge.descriptions.enabled": true,
     "hotelview": {
+        "show.avatar": true,
         "widgets": {
             "slot.1.widget": "promoarticle",
             "slot.1.conf": "",
@@ -30,13 +33,13 @@
             "slot.7.conf": ""
         },
         "images": {
-            "background": "${asset.url}images/reception/stretch_blue.png",
+            "background": "${asset.url}/images/reception/stretch_blue.png",
             "background.colour": "#6eadc8",
-            "sun": "${asset.url}images/reception/sun.png",
-            "drape": "${asset.url}images/reception/drape.png",
-            "left": "${asset.url}images/reception/ts.png",
-            "right": "${asset.url}images/reception/US_right.png",
-            "right.repeat": "${asset.url}images/reception/US_top_right.png"
+            "sun": "${asset.url}/images/reception/sun.png",
+            "drape": "${asset.url}/images/reception/drape.png",
+            "left": "${asset.url}/images/reception/ts.png",
+            "right": "${asset.url}/images/reception/US_right.png",
+            "right.repeat": "${asset.url}/images/reception/US_top_right.png"
         }
     },
     "achievements.unseen.ignored": [
@@ -58,6 +61,10 @@
         "payday.habbopage": "hcpayday",
         "catalog.buy": "habbo_club",
         "catalog.gifts": "club_gifts"
+    },
+    "respect.options": {
+        "enabled": false,
+        "sound": "sound_respect_received"
     },
     "currency.display.number.short": false,
     "currency.asset.icon.url": "${images.url}/wallet/%type%.png",
