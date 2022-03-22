@@ -57,11 +57,11 @@ export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = pro
     const gridHasTwoColumns = (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS);
     
     return (
-        <Column className="bg-white rounded border border-muted" gap={ 0 }>
+        <Column className="bg-white" gap={ 0 }>
             <Flex fullWidth alignItems="center" justifyContent="between" className="px-2 py-1">
                 <Flex grow pointer alignItems="center" gap={ 1 } onClick={ event => setIsExtended(prevValue => !prevValue) }>
                     <FontAwesomeIcon icon={ isExtended ? 'minus' : 'plus' } className="text-secondary" />
-                    <Text>{ LocalizeText(getResultTitle()) }</Text>
+                    <div className="nav-category">{ LocalizeText(getResultTitle()) }</div>
                 </Flex>
                 <FontAwesomeIcon icon={ ((displayMode === NavigatorSearchResultViewDisplayMode.LIST) ? 'th' : (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) ? 'bars' : null) } className="text-secondary" onClick={ toggleDisplayMode } />
             </Flex> {isExtended && 

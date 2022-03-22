@@ -4,21 +4,20 @@
 
     .navigator-grid {
 
-        .navigator-item {
-
-            .badge {
-                width: 35px;
-                min-width: 35px;
-            }
-        }
 
         &:not(.two-columns) {
 
             .navigator-item {
     
                 &:nth-child(odd) {
-                    background-color: $grid-active-bg-color;
+                    background-color: #daecfd;
                 }
+
+                &:nth-child(even) {
+                    background-color: #fff;
+                }
+
+                
             }
         }
     
@@ -58,4 +57,39 @@
             background-color: $grid-active-bg-color;
         }
     }
+}
+
+
+.badge-empty {
+    background-image: url(../../assets/flash/navigator/badge_empty.png);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 19px;
+}
+
+.badge-success {
+    background-image: url(../../assets/flash/navigator/badge_success.png);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 19px;
+}
+
+.badge-danger {
+    background-image: url(../../assets/flash/navigator/badge_danger.png);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 19px;
+}
+
+.badge-warning {
+    background-image: url(../../assets/flash/navigator/badge_warning.png);
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 19px;
+}
+
+.nav-category {
+    font-size: 12px;
+    color: #2b577b;
+    font-size: var(--bs-body-font-size);
 }

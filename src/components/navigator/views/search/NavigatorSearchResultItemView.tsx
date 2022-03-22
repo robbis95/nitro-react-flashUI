@@ -21,19 +21,19 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
     {
         const num: number = (100 * (roomData.userCount / roomData.maxUserCount));
 
-        let bg = 'bg-primary';
+        let bg = 'badge-empty';
 
         if(num >= 92)
         {
-            bg = 'bg-danger';
+            bg = 'badge-danger';
         }
         else if(num >= 50)
         {
-            bg = 'bg-warning';
+            bg = 'badge-warning';
         }
         else if(num > 0)
         {
-            bg = 'bg-success';
+            bg = 'badge-success';
         }
 
         return bg;
@@ -68,7 +68,7 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
         <Column pointer overflow="hidden" alignItems="center" onClick={ visitRoom } gap={ 0 } className="navigator-item p-1 bg-light rounded-3 small mb-1 flex-column border border-muted" {...rest}>
             <LayoutRoomThumbnailView roomId={roomData.roomId} customUrl={roomData.officialRoomPicRef} className="d-flex flex-column align-items-center justify-content-end mb-1">
                 <LayoutBadgeImageView badgeCode={roomData.groupBadgeCode} isGroup={true} className={ 'position-absolute top-0 start-0 m-1' } />
-                <Flex center className={ 'badge p-1 position-absolute m-1 ' + getUserCounterColor() } gap={ 1 }>
+                <Flex center className={ 'p-1 position-absolute m-1 fw-bold ' + getUserCounterColor() } gap={ 1 }>
                     <FontAwesomeIcon icon="user" />
                     { roomData.userCount }
                 </Flex>
@@ -87,8 +87,8 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
     );
 
     return (
-        <Flex pointer overflow="hidden" alignItems="center" onClick={ visitRoom } gap={ 2 } className="navigator-item px-2 py-1 small" { ...rest }>
-            <Flex center className={ 'badge p-1 ' + getUserCounterColor() } gap={ 1 }>
+        <Flex pointer overflow="hidden" alignItems="center" onClick={ visitRoom } gap={ 2 } className="navigator-item px-2 small" { ...rest }>
+            <Flex center className={ 'p-1 fw-bold ' + getUserCounterColor() } gap={ 1 }>
                 <FontAwesomeIcon icon="user" />
                 { roomData.userCount }
             </Flex>
