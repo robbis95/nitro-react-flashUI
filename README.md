@@ -1,13 +1,21 @@
-# Nitro React
+# FlashUI (Nitro React client)
 
-## Prerequisites
+A modified UI for the Nitro react client from Billsonnn.
+
+Installation process is the same as for setting up the normal client.
+
+If you encounter any issues, please contact-me on the discord channel [here.](https://discord.gg/KGYG5V2vf3)
+
+## Nitro Client installation
+
+Requirements:
 
 -   You must have [git](https://git-scm.com/) installed
 -   You must have [NodeJS](https://nodejs.org/) >= 16.13 installed
 -   We recommend you use [Yarn](https://yarnpkg.com/) over [npm](https://npmjs.com/)
     -   `npm i yarn -g`
 
-## Installation
+Installation:
 
 -   First you should open terminal and navigate to the folder where you want to clone Nitro
 -   Clone Nitro
@@ -25,12 +33,12 @@
         -   Update `camera.url, thumbnails.url, url.prefix, habbopages.url`
     -   You can override any variable by passing it to `NitroConfig` in the index.html
 
-## Usage
+Usage:
 
 -   To use Nitro you need `.nitro` assets generated, see [nitro-converter](https://git.krews.org/nitro/nitro-converter) for instructions
 -   See [Morningstar Websockets](https://git.krews.org/nitro/ms-websockets) for instructions on configuring websockets on your server
 
-### Development
+Development mode:
 
 Run Nitro in development mode when you are editing the files, this way you can see the changes in your browser instantly
 
@@ -38,7 +46,7 @@ Run Nitro in development mode when you are editing the files, this way you can s
 yarn start
 ```
 
-### Production
+Build for production:
 
 To build a production version of Nitro just run the following command
 
