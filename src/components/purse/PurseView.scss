@@ -1,10 +1,14 @@
 .nitro-purse-container {
     font-size: $font-size-sm;
     pointer-events: all;
+    margin-top: -5px;
+    font-size: 12px;
+    font-weight: 700;
 
     .nitro-purse {
-        background-color: rgba($dark, 0.95);
-        box-shadow: inset 0px 5px lighten(rgba($dark, 0.6), 2.5), inset 0 -4px darken(rgba($dark, 0.6), 4);
+        border-image-source: url(../../assets/flash/purse/purse-bg.png);
+        border-image-slice:7 7 7 7 fill;
+        border-image-width:7px 7px 7px 7px;
     
         .nitro-purse-subscription {
             background-color: rgba($light, 0.1);
