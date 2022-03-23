@@ -1,6 +1,8 @@
 .nitro-navigator {
-    width: $navigator-width;
     height: $navigator-height;
+    min-width: $navigator-width;
+    max-width: $navigator-width;
+    min-height: $navigator-min-height;
 
     .navigator-grid {
 
