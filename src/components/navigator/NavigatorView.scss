@@ -162,3 +162,16 @@
     padding-top: 22px;
     margin-left: 86px;
 }
+
+
+// Room Creator
+
+.nitro-room-creator {
+    width: $nitro-room-creator-width;
+    height: $nitro-room-creator-height;
+
+    .content-area {
+        font-family: Goldfish;
+        font-size: 9px;
+    }
+}

@@ -2,7 +2,7 @@
 import { HabboClubLevelEnum, RoomCreateComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { GetClubMemberLevel, GetConfiguration, LocalizeText, SendMessageComposer } from '../../../api';
-import { Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, Text } from '../../../common';
+import { Button, Column, Flex, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
 import { BatchUpdates } from '../../../hooks';
 import { IRoomModel, RoomModels } from '../common/RoomModels';
 import { useNavigatorContext } from '../NavigatorContext';
@@ -17,6 +17,8 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     const [ tradesSetting, setTradesSetting ] = useState<number>(0);
     const [ selectedModelName, setSelectedModelName ] = useState<string>(RoomModels[0].name);
     const { categories = null } = useNavigatorContext();
+    const [ isVisible, setIsVisible ] = useState(false);
+
 
     const getRoomModelImage = (name: string) => GetConfiguration<string>('images.url') + `/navigator/models/model_${ name }.png`;
 
@@ -54,16 +56,18 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     }, [ categories ]);
 
     return (
-        <Column overflow="hidden">
-            <Grid overflow="hidden">
+        <NitroCardView className="nitro-room-creator" theme="primary">
+        <NitroCardHeaderView headerText={ LocalizeText('navigator.createroom.title') } onCloseClick={ event => { setIsVisible(false); } } />
+        <NitroCardContentView>
+            <Flex gap={ 2 }>
                 <Column size={ 6 } gap={ 1 } overflow="auto">
                     <Column gap={ 1 }>
                         <Text>{ LocalizeText('navigator.createroom.roomnameinfo') }</Text>
                         <input type="text" className="form-control form-control-sm" maxLength={ 60 } onChange={ event => setName(event.target.value) } placeholder={ LocalizeText('navigator.createroom.roomnameinfo') } />
                     </Column>
-                    <Column grow gap={ 1 }>
+                    <Column gap={ 1 }>
                         <Text>{ LocalizeText('navigator.createroom.roomdescinfo') }</Text>
-                        <textarea className="flex-grow-1 form-control form-control-sm w-100" maxLength={255} onChange={event => setDescription(event.target.value)} placeholder={ LocalizeText('navigator.createroom.roomdescinfo') } />
+                        <textarea className="form-control form-control-sm w-100" maxLength={255} onChange={event => setDescription(event.target.value)} placeholder={ LocalizeText('navigator.createroom.roomdescinfo') } />
                     </Column>
                     <Column gap={ 1 }>
                         <Text>{ LocalizeText('navigator.category') }</Text>
@@ -91,8 +95,9 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                             <option value="2">{ LocalizeText('navigator.roomsettings.trade_allowed') }</option>
                         </select>
                     </Column>
+                    <Button fullWidth variant={ (!name || (name.length < 3)) ? 'danger' : 'success' } onClick={ createRoom } disabled={ (!name || (name.length < 3)) }>{ LocalizeText('navigator.createroom.create') }</Button>
                 </Column>
-                <Column size={ 6 } gap={ 1 } overflow="auto">
+                <Column size={ 4 } gap={ 1 } overflow="auto">
                     {
                         RoomModels.map((model, index )=>
                             {
@@ -100,14 +105,14 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                                     <Flex fullHeight center overflow="hidden">
                                         <img alt="" src={ getRoomModelImage(model.name) } />
                                     </Flex>
-                                    <Text bold>{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
+                                    <Text>{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
                                     { model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
                                 </LayoutGridItem>);
                             })
                     }
                 </Column>
-            </Grid>
-            <Button fullWidth variant={ (!name || (name.length < 3)) ? 'danger' : 'success' } onClick={ createRoom } disabled={ (!name || (name.length < 3)) }>{ LocalizeText('navigator.createroom.create') }</Button>
-        </Column>
+            </Flex>
+            </NitroCardContentView>
+        </NitroCardView>
     );
 }

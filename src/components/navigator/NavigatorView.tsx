@@ -390,11 +390,7 @@ export const NavigatorView: FC<{}> = (props) => {
                     className="nitro-navigator"
                 >
                     <NitroCardHeaderView
-                        headerText={LocalizeText(
-                            isCreatorOpen
-                                ? "navigator.createroom.title"
-                                : "navigator.title"
-                        )}
+                        headerText={LocalizeText("navigator.title")}
                         onCloseClick={(event) => setIsVisible(false)}
                     />
                     <NitroCardTabsView>
