@@ -107,7 +107,7 @@
     }
 
     .friend-bar-item {
-        width: 130px;
+        width: 127px;
         margin: 0 3px;
         z-index: 0;
         position: relative;
@@ -115,13 +115,37 @@
         text-align: left;
     
         &.friend-bar-item-active {
-            margin-bottom:21px;
+            margin-bottom:28px;
+        }
+
+        &.find-friends {
+            border-image-source: url(../../assets/flash/toolbar/findfriend-bg.png);
+            border-image-slice:17 17 17 17 fill;
+            border-image-width:17px 17px 17px 17px;
+            border-image-repeat:repeat repeat;
+            height: 36px;
+        }
+
+        &.find-friends-active {
+            border-image-source: url(../../assets/flash/toolbar/friend-bg.png);
+            border-image-slice:17 17 17 17 fill;
+            border-image-width:17px 17px 17px 17px;
+            border-image-repeat:repeat repeat;
+            min-height: 36px;
+        }
+
+        .friend-bar-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        //    white-space: nowrap;
+            font-size: 13px;
+            line-height: 1;
         }
     
         .friend-bar-item-head {
             &.avatar {
-                top: -30px;
-                left: -30px;
+                top: -31px;
+                left: -23px;
             }
             &.group {
                 top: -5px;
@@ -133,8 +157,8 @@
     
         &.friend-bar-search {
             .friend-bar-item-head {
-                top: -3px;
-                left: 5px;
+                top: -2px;
+                left: 6px;
                 width: 31px;
                 height: 34px;
                 background-image: url('../../assets/images/toolbar/friend-search.png');

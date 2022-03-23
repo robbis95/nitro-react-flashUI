@@ -2,7 +2,7 @@ import { Dispose, DropBounce, EaseOut, FigureUpdateEvent, JumpBy, Motions, Nitro
 import { FC, useCallback, useState } from 'react';
 import { CreateLinkEvent, GetSessionDataManager, GetUserProfile, OpenMessengerChat, VisitDesktop } from '../../api';
 import { Base, Flex, LayoutAvatarImageView, LayoutItemCountView, TransitionAnimation, TransitionAnimationTypes } from '../../common';
-import { AchievementsUIUnseenCountEvent, FriendsEvent, FriendsMessengerIconEvent, FriendsRequestCountEvent, GuideToolEvent, InventoryEvent, ModToolsEvent, UnseenItemTrackerUpdateEvent, UserSettingsUIEvent } from '../../events';
+import { AchievementsUIUnseenCountEvent, FriendsEvent, FriendsMessengerIconEvent, FriendsRequestCountEvent, GuideToolEvent, InventoryEvent, UnseenItemTrackerUpdateEvent, UserSettingsUIEvent } from '../../events';
 import { BatchUpdates, DispatchUiEvent, UseMessageEventHook, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
 import { ToolbarViewItems } from './common/ToolbarViewItems';
 import { ToolbarMeView } from './ToolbarMeView';
@@ -28,7 +28,6 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
     const [ unseenInventoryCount, setUnseenInventoryCount ] = useState(0);
     const [ unseenAchievementCount, setUnseenAchievementCount ] = useState(0);
     const [ unseenFriendRequestCount, setFriendRequestCount ] = useState(0);
-    const isMod = GetSessionDataManager().isModerator;
 
     const onUserInfoEvent = useCallback((event: UserInfoEvent) =>
     {
@@ -153,9 +152,6 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
                 CreateLinkEvent('avatar-editor/toggle');
                 setMeExpanded(false);
                 return;
-            case ToolbarViewItems.MOD_TOOLS_ITEM:
-                DispatchUiEvent(new ModToolsEvent(ModToolsEvent.TOGGLE_MOD_TOOLS));
-                return;
             case ToolbarViewItems.ACHIEVEMENTS_ITEM:
                 CreateLinkEvent('achievements/toggle');
                 setMeExpanded(false);
@@ -186,11 +182,6 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
                 <Flex gap={ 2 } alignItems="center">
                     <Flex alignItems="center" gap={ 2 }>
-                        <Flex center pointer className={ 'navigation-item item-avatar ' + (isMeExpanded ? 'active ' : '') } onClick={ event => setMeExpanded(!isMeExpanded) }>
-                            <LayoutAvatarImageView figure={ userFigure } direction={ 2 } />
-                            { (unseenAchievementCount > 0) &&
-                                <LayoutItemCountView count={ unseenAchievementCount } /> }
-                        </Flex>
                         { isInRoom &&
                             <Base pointer className="navigation-item icon icon-habbo" onClick={ event => VisitDesktop() } /> }
                         { !isInRoom &&
@@ -201,10 +192,13 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
                             { (unseenInventoryCount > 0) &&
                                 <LayoutItemCountView count={ unseenInventoryCount } /> }
                         </Base>
+                        <Flex center pointer className={ 'navigation-item item-avatar ' + (isMeExpanded ? 'active ' : '') } onClick={ event => setMeExpanded(!isMeExpanded) }>
+                            <LayoutAvatarImageView figure={ userFigure } direction={ 2 } />
+                            { (unseenAchievementCount > 0) &&
+                                <LayoutItemCountView count={ unseenAchievementCount } /> }
+                        </Flex>
                         { isInRoom &&
                             <Base pointer className="navigation-item icon icon-camera" onClick={ event => handleToolbarItemClick(ToolbarViewItems.CAMERA_ITEM) } /> }
-                        { isMod &&
-                            <Base pointer className="navigation-item icon icon-modtools" onClick={ event => handleToolbarItemClick(ToolbarViewItems.MOD_TOOLS_ITEM) } /> }
                     </Flex>
                     <Flex alignItems="center" id="toolbar-chat-input-container" />
                 </Flex>
