@@ -258,12 +258,6 @@ export const NavigatorView: FC<{}> = props =>
                                     </NitroCardTabsItemView>
                                 );
                             })}
-                        <NitroCardTabsItemView
-                            isActive={isCreatorOpen}
-                            onClick={(event) => setCreatorOpen(true)}
-                        >
-                            <FontAwesomeIcon icon="plus" />
-                        </NitroCardTabsItemView>
                     </NitroCardTabsView>
                     <NitroCardContentView position="relative">
                         {isLoading && (
