@@ -220,7 +220,7 @@ export const HcCenterView: FC<{}> = props =>
             <Flex position="relative" className="bg-muted p-2 hc-logo">
                 <Column gap={ 1 }>
                     <Flex>
-                        <Button variant="success" onClick={ event => { CreateLinkEvent('catalog/open/' + GetConfiguration('hc.center')['catalog.buy']) } }>
+                        <Button variant="success" onClick={ event => { CreateLinkEvent('catalog/open/' + GetConfiguration('catalog.links')['hc.buy_hc']) } }>
                             { LocalizeText((clubStatus === ClubStatus.ACTIVE) ? 'hccenter.btn.extend' : 'hccenter.btn.buy') }
                         </Button>
                     </Flex>
@@ -272,7 +272,7 @@ export const HcCenterView: FC<{}> = props =>
                             <h4 className="mb-1">{LocalizeText('hccenter.gift.title')}</h4>
                             <div dangerouslySetInnerHTML={{ __html: unclaimedGifts > 0 ? LocalizeText('hccenter.unclaimedgifts', ['unclaimedgifts'], [unclaimedGifts.toString()]) : LocalizeText('hccenter.gift.info') }}></div>
                         </div>
-                        <button className="btn btn-primary btn-lg align-self-center ms-auto" onClick={() => { CreateLinkEvent('catalog/open/' + GetConfiguration('hc.center')['catalog.gifts']) }}>{LocalizeText(clubStatus === ClubStatus.ACTIVE ? 'hccenter.btn.gifts.redeem' : 'hccenter.btn.gifts.view')}</button>
+                        <button className="btn btn-primary btn-lg align-self-center ms-auto" onClick={() => { CreateLinkEvent('catalog/open/' + GetConfiguration('catalog.links')['hc.hc_gifts']) }}>{LocalizeText(clubStatus === ClubStatus.ACTIVE ? 'hccenter.btn.gifts.redeem' : 'hccenter.btn.gifts.view')}</button>
                     </div>
                 }
                 {GetConfiguration('hc.center')['benefits.info'] &&
