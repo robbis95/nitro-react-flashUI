@@ -176,8 +176,36 @@
     width: $nitro-room-creator-width;
     height: $nitro-room-creator-height;
 
+    .room-creator-form-name {
+        height: 20px;
+        border: 1px solid grey;
+    }
+
+    .room-creator-form-desc {
+        height: 60px;
+        border: 1px solid grey;
+    }
+
+    .headline {
+        font-family: Goldfish-Bold;
+    }
+
     .content-area {
         font-family: Goldfish;
         font-size: 9px;
+    }
+
+    .room-creator-info {
+        width: 240px;
+    }
+
+    .form-select {
+        width: 100%;
+    }
+
+    .room-creator-grid-item {
+        border-image-source: url(../../assets/flash/navigator/room-creator/room-bg.png);
+        border-image-slice:6 6 6 6;
+        border-image-width:6px 6px 6px 6px;
     }
 }

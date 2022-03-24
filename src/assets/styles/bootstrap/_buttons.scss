@@ -114,3 +114,22 @@
 .btn-sm {
   @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
 }
+
+.btn-flash {
+  border-image-source: url("../../../assets/flash/buttons/button.png"); 
+  border-image-slice: 4 4 4 4 fill;
+  border-image-width: 4px 4px 4px 4px;
+  min-height: 22px;
+  color: #000;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    border-image-source: url("../../../assets/flash/buttons/button_hover.png"); 
+  }
+
+  &:active {
+    border-image-source: url("../../../assets/flash/buttons/button_active.png"); 
+
+  }
+}
