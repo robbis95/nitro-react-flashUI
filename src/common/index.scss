@@ -198,7 +198,9 @@
 
 .nitro-notification-bubble {
     pointer-events: all;
-    padding: 7px 7px;
+    padding: 6px 5px;
+    background-color: rgba($dark,.95);
+    box-shadow: inset 0px 5px lighten(rgba($dark,.6),2.5), inset 0 -4px darken(rgba($dark,.6),4);
     font-size: $font-size-sm;
 
     .bubble-image-container {
@@ -566,12 +568,6 @@
         text-shadow: 0px 4px 4px rgba($black, 0.25);
         z-index: 2;
     }
-}
-
-.nitro-notification {
-    border-image-source: url(../assets/flash/purse/purse-bg.png);
-    border-image-slice:7 7 7 7 fill;
-    border-image-width:7px 7px 7px 7px;
 }
 
 @import './card/NitroCardView';

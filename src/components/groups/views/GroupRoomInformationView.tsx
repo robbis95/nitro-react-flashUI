@@ -131,7 +131,7 @@ export const GroupRoomInformationView: FC<{}> = props =>
                             <Text variant="white">{ groupInformation.title }</Text>
                         </Flex>
                         { (groupInformation.type !== GroupType.PRIVATE || isRealOwner) && 
-                            <Button fullWidth className="btn-flash fw-bold" disabled={ (groupInformation.membershipType === GroupMembershipType.REQUEST_PENDING) } onClick={ handleButtonClick }>
+                            <Button fullWidth variant="success" disabled={ (groupInformation.membershipType === GroupMembershipType.REQUEST_PENDING) } onClick={ handleButtonClick }>
                                 { LocalizeText(getButtonText()) }
                             </Button>
                             }

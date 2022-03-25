@@ -12,7 +12,7 @@ export const NotificationClubGiftBubbleView: FC<NotificationClubGiftBubbleViewPr
     const { item = null, close = null, ...rest } = props;
 
     return (
-        <LayoutNotificationBubbleView fadesOut={ false } className="flex-column nitro-notification club-gift" close={ close } { ...rest }>
+        <LayoutNotificationBubbleView fadesOut={ false } className="flex-column club-gift" close={ close } { ...rest }>
             <div className="d-flex align-items-center gap-2 mb-2">
                 <LayoutCurrencyIcon type="hc" className="flex-shrink-0" />
                 <span className="ms-1">{ LocalizeText('notifications.text.club_gift') }</span>
