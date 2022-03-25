@@ -14,7 +14,7 @@ export const NotificationDefaultBubbleView: FC<NotificationDefaultBubbleViewProp
     const htmlText = item.message.replace(/\r\n|\r|\n/g, '<br />');
 
     return (
-        <LayoutNotificationBubbleView close={ close } gap={ 2 } alignItems="center" onClick={ event => (item.linkUrl && item.linkUrl.length && NotificationUtilities.openUrl(item.linkUrl)) } { ...rest }>
+        <LayoutNotificationBubbleView close={ close } gap={ 2 } className="nitro-notification" alignItems="center" onClick={ event => (item.linkUrl && item.linkUrl.length && NotificationUtilities.openUrl(item.linkUrl)) } { ...rest }>
             <Flex center className="bubble-image-container">
                 { (item.iconUrl && item.iconUrl.length) &&
                     <img className="no-select" src={ item.iconUrl } alt="" /> }

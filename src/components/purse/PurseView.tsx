@@ -172,7 +172,7 @@ export const PurseView: FC<{}> = props =>
     return (
         <PurseContextProvider value={ { purse } }>
             <Column alignItems="end" className="nitro-purse-container" gap={ 1 }>
-                <Flex className="nitro-purse p-1">
+                <Flex className="nitro-notification p-1">
                     <Grid fullWidth gap={ 1 }>
                         <Column justifyContent="center" size={ hcDisabled ? 10 : 6 } gap={ 0 }>
                             <CurrencyView type={ -1 } amount={ purse.credits } short={ currencyDisplayNumberShort } />
