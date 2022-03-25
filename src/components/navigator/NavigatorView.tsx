@@ -64,8 +64,6 @@ export const NavigatorView: FC<{}> = props =>
 
     const sendSearch = useCallback((searchValue: string, contextCode: string) =>
     {
-        setCreatorOpen(false);
-
             SendMessageComposer(
                 new NavigatorSearchComposer(contextCode, searchValue)
             );
@@ -235,7 +233,7 @@ export const NavigatorView: FC<{}> = props =>
             <NavigatorMessageHandler />
             { isVisible &&
                 <NitroCardView uniqueKey="navigator" className="nitro-navigator">
-                    <NitroCardHeaderView headerText={ LocalizeText(isCreatorOpen ? 'navigator.createroom.title' : 'navigator.title') } onCloseClick={ event => setIsVisible(false) } />
+                    <NitroCardHeaderView headerText={ LocalizeText('navigator.title') } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardTabsView>
                         {topLevelContexts &&
                             topLevelContexts.length > 0 &&
@@ -244,9 +242,7 @@ export const NavigatorView: FC<{}> = props =>
                                     <NitroCardTabsItemView
                                         key={index}
                                         isActive={
-                                            topLevelContext === context &&
-                                            !isCreatorOpen
-                                        }
+                                            topLevelContext === context                                        }
                                         onClick={(event) =>
                                             sendSearch("", context.code)
                                         }
@@ -267,7 +263,6 @@ export const NavigatorView: FC<{}> = props =>
                                 className="top-0 start-0 z-index-1 bg-muted opacity-0-5"
                             />
                         )}
-                        {!isCreatorOpen && (
                             <>
                                 <NavigatorSearchView sendSearch={sendSearch} />
                                 <Column overflow="auto">
@@ -282,7 +277,6 @@ export const NavigatorView: FC<{}> = props =>
                                         )}
                                 </Column>
                             </>
-                        )}
                         {isCreatorOpen && <NavigatorRoomCreatorView />}
                         <div className="nav-bottom">
                             <div className="nav-bottom-buttons position-absolute">

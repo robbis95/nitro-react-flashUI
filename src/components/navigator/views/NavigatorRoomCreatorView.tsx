@@ -19,7 +19,6 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     const { categories = null } = useNavigatorContext();
     const [ isVisible, setIsVisible ] = useState(false);
 
-
     const getRoomModelImage = (name: string) => GetConfiguration<string>('images.url') + `/navigator/models/model_${ name }.png`;
 
     const selectModel = (model: IRoomModel, index: number) =>
