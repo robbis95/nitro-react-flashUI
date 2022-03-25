@@ -9,7 +9,8 @@ const NEW_LINE_REGEX = /\n\r|\n|\r/mg;
 export const NitropediaView: FC<{}> = props =>
 {
     const [ content, setContent ] = useState<string>(null);
-    const [ header, setHeader ] = useState<string>('');
+    const [ header, setHeader] = useState<string>('');
+    const [ dimensions, setDimensions ] = useState<{ width: number, height: number}>(null);
     const elementRef = useRef<HTMLDivElement>(null);
     
     const openPage = useCallback(async (link: string) =>
@@ -21,12 +22,26 @@ export const NitropediaView: FC<{}> = props =>
             if(!response) return;
     
             const text = await response.text();
-    
             const splitData = text.split(NEW_LINE_REGEX);
-            
+            const line = splitData.shift().split('|');
+
             BatchUpdates(() =>
             {
-                setHeader(splitData.shift());
+                setHeader(line[0]);
+
+                setDimensions(prevValue =>
+                    {
+                        if(line[1] && (line[1].split(';').length === 2))
+                        {
+                            return {
+                                width: parseInt(line[1].split(';')[0]),
+                                height: parseInt(line[1].split(';')[1])
+                            }
+                        }
+
+                        return null;
+                    });
+
                 setContent(splitData.join(''));
             });
         }
@@ -83,8 +98,8 @@ export const NitropediaView: FC<{}> = props =>
     if(!content) return null;
 
     return (
-        <NitroCardView className="nitropedia" theme="primary-slim">
-            <NitroCardHeaderView headerText={header} onCloseClick={() => setContent(null)}/>
+        <NitroCardView className="nitropedia" theme="primary-slim" style={ dimensions ? { width: dimensions.width, height: dimensions.height } : {} }>
+            <NitroCardHeaderView headerText={header} onCloseClick={ () => setContent(null) }/>
             <NitroCardContentView>
                 <Base fit innerRef={ elementRef } className="text-black" dangerouslySetInnerHTML={{ __html: content }} />
             </NitroCardContentView>
