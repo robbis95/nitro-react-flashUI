@@ -11,7 +11,7 @@ interface NitroCardHeaderViewProps extends ColumnProps
 
 export const NitroCardHeaderView: FC<NitroCardHeaderViewProps> = props =>
 {
-    const { headerText = null, noCloseButton = false, onCloseClick = null, justifyContent = 'center', alignItems = 'center', classNames = [], children = null, ...rest } = props;
+    const { headerText = null, noCloseButton = false, onCloseClick = null, classNames = [], children = null, ...rest } = props;
 
     const getClassNames = useMemo(() =>
     {
@@ -30,8 +30,8 @@ export const NitroCardHeaderView: FC<NitroCardHeaderViewProps> = props =>
 
     return (
         <Column center position="relative" classNames={ getClassNames } { ...rest }>
-            <Flex fullWidth center>
-                <span className="nitro-card-header-text fw-bold fs-6">{ headerText }</span>
+            <Flex fullWidth className="nitro-card-header-holder">
+                <span className="nitro-card-header-text fw-bold">{ headerText }</span>
                 <Base position="absolute" className="end-2 nitro-card-header-close" onMouseDownCapture={ onMouseDown } onClick={ onCloseClick }>
                 </Base>
             </Flex>

@@ -181,7 +181,8 @@
         overflow: hidden;
 
         .avatar-image {
-            margin-top: 90px;
+            margin-top: 40px;
+            transform: scale(0.5);
         }
     }
 
@@ -214,6 +215,7 @@
 
     .chat-messages {
         overflow-y: auto;
+        min-height: 130px;
 
         .message-avatar {
             position: relative;

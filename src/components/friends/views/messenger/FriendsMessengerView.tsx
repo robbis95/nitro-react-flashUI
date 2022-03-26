@@ -253,13 +253,11 @@ export const FriendsMessengerView: FC<{}> = props =>
     if(!isVisible) return null;
 
     return (
-        <NitroCardView className="nitro-friends-messenger" uniqueKey="nitro-friends-messenger" theme="primary-slim">
+        <NitroCardView className="nitro-friends-messenger" uniqueKey="nitro-friends-messenger" theme="primary-modtool">
             <NitroCardHeaderView headerText={LocalizeText('messenger.window.title', ['OPEN_CHAT_COUNT'], [visibleThreads.length.toString()])} onCloseClick={event => setIsVisible(false)} />
             <NitroCardContentView>
-                <Grid overflow="hidden">
-                    <Column size={ 4 }>
-                        <Text bold>{ LocalizeText('toolbar.icon.label.messenger') }</Text>
-                        <Column fullHeight overflow="auto">
+                    <Column fullWidth size={ 4 }>
+                        <div className="d-flex h-100 overflow-auto gap-2">
                             { visibleThreads && (visibleThreads.length > 0) && visibleThreads.map((thread, index) =>
                             {
                                 const messageThreadIndex = messageThreads.indexOf(thread);
@@ -271,18 +269,17 @@ export const FriendsMessengerView: FC<{}> = props =>
                                         <Flex fullWidth alignItems="center" gap={ 1 }>
                                             <Flex alignItems="center" className="friend-head px-1">
                                                 { (thread.participant.id > 0) &&
-                                                    <LayoutAvatarImageView figure={ thread.participant.figure } headOnly={ true } direction={ 3 } /> }
+                                                    <LayoutAvatarImageView figure={ thread.participant.figure } headOnly={ true } direction={ 2 } /> }
                                                 { (thread.participant.id <= 0) &&
                                                     <LayoutBadgeImageView isGroup={ true } badgeCode={ thread.participant.figure } /> }
                                             </Flex>
-                                            <Text truncate grow>{ thread.participant.name }</Text>
                                         </Flex>
                                     </LayoutGridItem>
                                 );
                             })}
-                        </Column>
+                        </div>
                     </Column>
-                    <Column size={ 8 } overflow="hidden">
+                    <Column size={ 8 } overflow="hidden" className="w-100">
                         { visibleThreads && (visibleThreads.length > 0) && (activeThreadIndex >= 0) &&
                             <>
                                 <Text bold center>{ LocalizeText('messenger.window.separator', [ 'FRIEND_NAME' ], [ messageThreads[activeThreadIndex].participant.name ]) }</Text>
@@ -317,7 +314,6 @@ export const FriendsMessengerView: FC<{}> = props =>
                                 </Flex>
                             </> }
                     </Column>
-                </Grid>
             </NitroCardContentView>
         </NitroCardView>
     );
