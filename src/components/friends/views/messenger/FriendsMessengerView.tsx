@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FollowFriendMessageComposer, ILinkEventTracker, NewConsoleMessageEvent, RoomInviteErrorEvent, RoomInviteEvent, SendMessageComposer as SendMessageComposerPacket } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, NotificationAlertType, NotificationUtilities, PlaySound, RemoveLinkEventTracker, SendMessageComposer, SoundNames } from '../../../../api';
-import { Base, Button, ButtonGroup, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, LayoutGridItem, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
+import { Button, ButtonGroup, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
 import { FriendsMessengerIconEvent } from '../../../../events';
 import { BatchUpdates, DispatchUiEvent, UseMessageEventHook } from '../../../../hooks';
@@ -305,20 +304,18 @@ export const FriendsMessengerView: FC<{}> = props =>
                                             {LocalizeText('messenger.window.button.report')}
                                         </button>
                                     </Flex>
-                                    <Button onClick={ event => closeThread(activeThreadIndex) }>
-                                        <FontAwesomeIcon icon="times" />
-                                    </Button>
+                                    <button className="clear" onClick={ event => closeThread(activeThreadIndex) }/>
                                 </Flex>
-                                <Column fit className="bg-muted p-2 rounded chat-messages">
+                                <Column fit className="chat-messages">
                                     <Column innerRef={ messagesBox } overflow="auto">
                                         <FriendsMessengerThreadView thread={ messageThreads[activeThreadIndex] } />
                                     </Column>
                                 </Column>
                                 <Flex gap={ 1 }>
-                                    <input type="text" className="form-control form-control-sm" maxLength={ 255 } placeholder={ LocalizeText('messenger.window.input.default', [ 'FRIEND_NAME' ], [ messageThreads[activeThreadIndex].participant.name ]) } value={ messageText } onChange={ event => setMessageText(event.target.value) } onKeyDown={ onKeyDown } />
-                                    <Button variant="success" onClick={ sendMessage }>
+                                    <input type="text" className="chat-input-form form-control-sm" maxLength={ 255 } placeholder={ LocalizeText('messenger.window.input.default', [ 'FRIEND_NAME' ], [ messageThreads[activeThreadIndex].participant.name ]) } value={ messageText } onChange={ event => setMessageText(event.target.value) } onKeyDown={ onKeyDown } />
+                                    <button className="messenger-button chat-submit fw-bold px-3" onClick={ sendMessage }>
                                         { LocalizeText('widgets.chatinput.say') }
-                                    </Button>
+                                    </button>
                                 </Flex>
                             </> }
                     </Column>

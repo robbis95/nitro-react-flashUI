@@ -40,8 +40,8 @@ export const FriendsMessengerThreadGroup: FC<FriendsMessengerThreadGroupProps> =
                             <div className="d-flex gap-2 w-100 justify-content-start">
                                 <Base key={ index } className="w-100 text-break">
                                     { chat.type === MessengerThreadChat.SECURITY_NOTIFICATION &&
-                                        <Base className="bg-light rounded mb-2 d-flex gap-2 px-2 py-1 small text-muted align-items-center">
-                                            <Base className="nitro-friends-spritesheet icon-warning flex-shrink-0" />
+                                        <Base className="thread-message mb-2 d-flex gap-2 px-2 py-1 align-items-center">
+                                            <Base className="nitro-friends-spritesheet icon-warning flex-shrink-0 px-3" />
                                             <Base>{ chat.message }</Base>
                                         </Base> }
                                     { chat.type === MessengerThreadChat.ROOM_INVITE &&
@@ -67,7 +67,7 @@ export const FriendsMessengerThreadGroup: FC<FriendsMessengerThreadGroupProps> =
                     <LayoutAvatarImageView figure={ getGroupChatData(group.chats[0].extraData).figure } direction={ 2} />
                 }
                 </Base>
-            <Base className={ 'bg-light text-black border-radius mb-2 rounded py-1 px-2 messages-group-' + (isOwnChat ? 'right' : 'left') }>
+            <Base className={ 'message-bubble text-black mt-2 py-1 px-2 messages-group-' + (isOwnChat ? 'right' : 'left') }>
                 <Base className='fw-bold'>
                     { (isOwnChat) && GetSessionDataManager().userName }
                     { (!isOwnChat) && ((group.type === GroupType.GROUP_CHAT) ? getGroupChatData(group.chats[0].extraData).username : thread.participant.name)

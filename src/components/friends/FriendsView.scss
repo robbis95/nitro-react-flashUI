@@ -43,7 +43,7 @@
     
     &.icon-warning {
         width: 23px; height: 21px;
-        background-position: -5px -5px;
+        background-position: 0px -5px;
     }
     
     &.icon-accept {
@@ -175,6 +175,9 @@
 .nitro-friends-messenger {
     width: $messenger-width;
     height: $messenger-height;
+    resize: none;
+    font-size: 10px;
+
 
     button {
         border: 0px solid transparent;
@@ -195,19 +198,54 @@
         height: 20px;
     }
 
+    .clear {
+        background-image: url('../../assets/flash/boxes/card/mod_close.png');
+        background-repeat: no-repeat;
+        width: 20px;
+        height: 20px;
+    }
+
+    .chat-input-form {
+        font-size: 12px;
+        width: 100%;
+        border-image-source: url('../../assets/flash/messenger/chatform.png');
+        border-image-slice:10 10 10 10 fill;
+        border-image-width:10px 10px 10px 10px;
+        border-image-repeat:repeat repeat;
+        background: transparent;
+        height: 27px;
+        position: absolute;
+        width: 270px;
+        bottom: 14px;
+        outline: 0px;
+    }
+
+    .thread-message {
+        border-image-source: url('../../assets/flash/messenger/chatform.png');
+        border-image-slice:10 10 10 10 fill;
+        border-image-width:10px 10px 10px 10px;
+        border-image-repeat:repeat repeat;
+        color: #000;
+        font-size: 11px;
+    }
+
+    .chat-submit {
+        position: absolute;
+        right: 12px;
+        bottom: 17px;
+    }
+
     .messenger-button {
         border-image-source: url(../../assets/flash/messenger/button.png);
         border-image-slice:6 6 6 6 fill;
         border-image-width:6px 6px 6px 6px;
         border-image-repeat:stretch stretch;
         height: 20px;
-        font-size: 10px;
         text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
     }
 
     .nitro-messenger-header-text {
         color: #5d5d5c;
-        font-size: 10px;
         text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
         margin-bottom: 0px;
         background-color: #e2e2e1;
@@ -271,8 +309,8 @@
 
     .chat-messages {
         overflow-y: auto;
-        max-height: 184px;
-        min-height: 184px;
+        max-height: 200px;
+        min-height: 200px;
 
         .message-avatar {
             position: relative;
@@ -287,19 +325,26 @@
             }
         }
 
+        .message-bubble {
+            border-image-source: url('../../assets/flash/messenger/message_bubble.png');
+            border-image-slice:5 5 5 5 fill;
+            border-image-width:5px 5px 5px 5px;
+            border-image-repeat:repeat repeat;
+            width: 100%;
+            font-size: 12px;
+        }
+
         .messages-group-left {
             position: relative;
             
             &:before {
                 position: absolute;
                 content: ' ';
-                width: 0;
-                height: 0;
-                border-right: 8px solid rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
-                border-top: 8px solid transparent;
-                border-bottom: 8px solid transparent;
-                top: 10px;
-                left: -8px;
+                width: 5px;
+                height: 10px;
+                background-image: url('../../assets/flash/messenger/pointer.png');
+                top: 15px;
+                left: -5px;
             }
         }
 
@@ -309,13 +354,11 @@
             &:before {
                 position: absolute;
                 content: ' ';
-                width: 0;
-                height: 0;
-                border-left: 8px solid rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
-                border-top: 8px solid transparent;
-                border-bottom: 8px solid transparent;
-                top: 10px;
-                right: -8px;
+                width: 5px;
+                height: 10px;
+                background-image: url('../../assets/flash/messenger/pointer_right.png');
+                top: 15px;
+                right: -5px;
             }
         }
     }
