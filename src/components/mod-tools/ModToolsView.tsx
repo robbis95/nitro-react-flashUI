@@ -1,4 +1,4 @@
-import { RoomEngineObjectEvent, RoomObjectCategory } from '@nitrots/nitro-renderer';
+import { RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useReducer, useState } from 'react';
 import { GetRoomSession, GetSessionDataManager } from '../../api';
 import { Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
@@ -54,7 +54,7 @@ export const ModToolsView: FC<{}> = props =>
 
         const userData = roomSession.userDataManager.getUserDataByIndex(event.objectId);
 
-        if(!userData) return;
+        if(!userData || userData.type !== RoomObjectType.USER) return;
 
         setSelectedUser({ userId: userData.webID, username: userData.name });
     }, []);
