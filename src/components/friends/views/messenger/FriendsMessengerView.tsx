@@ -3,6 +3,7 @@ import { FollowFriendMessageComposer, ILinkEventTracker, NewConsoleMessageEvent,
 import { FC, KeyboardEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, NotificationAlertType, NotificationUtilities, PlaySound, RemoveLinkEventTracker, SendMessageComposer, SoundNames } from '../../../../api';
 import { Base, Button, ButtonGroup, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, LayoutGridItem, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
+import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
 import { FriendsMessengerIconEvent } from '../../../../events';
 import { BatchUpdates, DispatchUiEvent, UseMessageEventHook } from '../../../../hooks';
 import { MessengerThread } from '../../common/MessengerThread';
@@ -273,7 +274,7 @@ export const FriendsMessengerView: FC<{}> = props =>
                                 const messageThreadIndex = messageThreads.indexOf(thread);
 
                                 return (
-                                    <LayoutGridItem key={ index } itemActive={ (activeThreadIndex === messageThreadIndex) } onClick={ event => setActiveThreadIndex(messageThreadIndex) }>
+                                    <LayoutMessengerGrid key={ index } itemActive={ (activeThreadIndex === messageThreadIndex) } onClick={ event => setActiveThreadIndex(messageThreadIndex) }>
                                         { thread.unread &&
                                             <LayoutItemCountView count={ thread.unreadCount } /> }
                                         <Flex fullWidth alignItems="center" gap={ 1 }>
@@ -284,7 +285,7 @@ export const FriendsMessengerView: FC<{}> = props =>
                                                     <LayoutBadgeImageView isGroup={ true } badgeCode={ thread.participant.figure } /> }
                                             </Flex>
                                         </Flex>
-                                    </LayoutGridItem>
+                                    </LayoutMessengerGrid>
                                 );
                             })}
                         </div>
@@ -292,20 +293,17 @@ export const FriendsMessengerView: FC<{}> = props =>
                     <Column size={ 8 } overflow="hidden" className="w-100">
                         { visibleThreads && (visibleThreads.length > 0) && (activeThreadIndex >= 0) &&
                             <>
-                                <Text bold center>{ LocalizeText('messenger.window.separator', [ 'FRIEND_NAME' ], [ messageThreads[activeThreadIndex].participant.name ]) }</Text>
+                                <div className="messenger-line">
+                                <p className="nitro-messenger-header-text fw-bold">{ LocalizeText('messenger.window.separator', [ 'FRIEND_NAME' ], [ messageThreads[activeThreadIndex].participant.name ]) }</p></div>
                                 <Flex alignItems="center" justifyContent="between" gap={ 1 }>
                                     <Flex gap={ 1 }>
-                                        <ButtonGroup>
-                                            <Button onClick={ followFriend }>
-                                                <Base className="nitro-friends-spritesheet icon-follow" />
-                                            </Button>
-                                            <Button onClick={ openProfile }>
-                                                <Base className="nitro-friends-spritesheet icon-profile-sm" />
-                                            </Button>
+                                        <ButtonGroup className="gap-1">
+                                            <button className="follow" onClick={ followFriend } />
+                                            <button className="profile" onClick={ openProfile } />
                                         </ButtonGroup>
-                                        <Button variant="danger" onClick={ openProfile }>
+                                        <button className="messenger-button fw-bold px-3" onClick={ openProfile }>
                                             {LocalizeText('messenger.window.button.report')}
-                                        </Button>
+                                        </button>
                                     </Flex>
                                     <Button onClick={ event => closeThread(activeThreadIndex) }>
                                         <FontAwesomeIcon icon="times" />

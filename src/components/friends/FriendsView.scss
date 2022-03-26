@@ -176,8 +176,59 @@
     width: $messenger-width;
     height: $messenger-height;
 
-    .layout-grid-item {
-        height: 50px;
+    button {
+        border: 0px solid transparent;
+        background-color: transparent;
+    }
+
+    .follow {
+        background-image: url('../../assets/flash/messenger/button_follow.png');
+        background-repeat: no-repeat;
+        width: 21px;
+        height: 20px;
+    }
+
+    .profile {
+        background-image: url('../../assets/flash/messenger/button_profile.png');
+        background-repeat: no-repeat;
+        width: 30px;
+        height: 20px;
+    }
+
+    .messenger-button {
+        border-image-source: url(../../assets/flash/messenger/button.png);
+        border-image-slice:6 6 6 6 fill;
+        border-image-width:6px 6px 6px 6px;
+        border-image-repeat:stretch stretch;
+        height: 20px;
+        font-size: 10px;
+        text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
+    }
+
+    .nitro-messenger-header-text {
+        color: #5d5d5c;
+        font-size: 10px;
+        text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
+        margin-bottom: 0px;
+        background-color: #e2e2e1;
+        display: inline-block;
+        padding-right: 5px;
+    }
+
+    .messenger-line {
+        background-image: url('../../assets/flash/messenger/line.png');
+        background-repeat: repeat-x;
+        background-position: 0 10px;
+    }
+
+    .layout-grid-item-messenger {
+        height: 39px;
+        width: 39px;
+
+        &.active {
+            border-image-source: url('../../assets/flash/messenger/avatar_head_bg.png');
+            border-image-slice:13 13 13 13 fill;border-image-width:13px 13px 13px 13px;border-image-outset:0px 0px 0px 0px;border-image-repeat:repeat repeat;
+        }
     }
 
     .friend-head {
@@ -186,7 +237,7 @@
         overflow: hidden;
 
         .avatar-image {
-            margin-top: 40px;
+            margin-top: 20px;
             transform: scale(0.5);
         }
     }
@@ -220,7 +271,8 @@
 
     .chat-messages {
         overflow-y: auto;
-        min-height: 130px;
+        max-height: 184px;
+        min-height: 184px;
 
         .message-avatar {
             position: relative;
