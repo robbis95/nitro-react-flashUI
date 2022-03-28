@@ -92,7 +92,7 @@ export const FriendsListView: FC<FriendsListViewProps> = props =>
 
     return (
         <>
-            <NitroCardView className="nitro-friends" uniqueKey="nitro-friends" theme="primary-slim">
+            <NitroCardView className="nitro-friends" uniqueKey="nitro-friends" theme="friendlist">
                 <NitroCardHeaderView headerText={ LocalizeText('friendlist.friends') } onCloseClick={ onCloseClick } />
                 <NitroCardContentView overflow="hidden" gap={ 1 } className="text-black p-0">
                     <NitroCardAccordionView fullHeight overflow="hidden">

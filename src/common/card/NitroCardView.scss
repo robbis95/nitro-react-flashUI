@@ -136,6 +136,67 @@ $nitro-card-tabs-height: 35px;
         }
     }
 
+        // FRIENDLIST
+
+        &.theme-friendlist {
+            border-image-source: url("../../assets/flash/friendlist/friendlist_bg.png");
+            border-image-slice: 10 10 10 10 fill;
+            border-image-width: 10px 10px 10px 10px;
+            border-image-repeat: repeat repeat;
+            font-family: Goldfish;
+            font-size: 9px;
+
+            .nitro-card-accordion-set-header {
+                font-family: Goldfish-Bold;
+                border: 1px solid #000;
+            }
+
+            .nitro-card-accordion-set-content {
+                background: #fff;
+                border-right: 1px solid #000;
+                border-left: 1px solid #000;
+            }
+        
+            .nitro-card-header {
+                min-height: 25px;
+                max-height: 25px;
+                
+                .nitro-card-header-holder {
+                    background-image: url(../../assets/flash/friendlist/friendlist_header.png);
+                    background-repeat: repeat-x;
+                    justify-content: center;
+                    margin-top: 6px;
+                }
+        
+                .nitro-card-header-text {
+                    color: $white;
+                    min-height: 15px;
+                    font-size: 9px;
+                    font-family: Goldfish-Bold;
+                    background: #418db0;
+                    padding: 3px 10px 6px 10px;
+                }
+        
+                .nitro-card-header-close {
+                    cursor: pointer;
+                    width: 15px;
+                    height: 15px;
+                    background-image: url("../../assets/flash/friendlist/friendlist_close.png");
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-color: #418cb0;
+
+                    &:hover {
+                        background-image: url("../../assets/flash/friendlist/friendlist_close_hover.png");
+                    }
+
+                    &:active {
+                        background-image: url("../../assets/flash/friendlist/friendlist_close_active.png");
+                    }
+                }
+            }
+        }
+
     &.theme-primary-slim {
         border: $border-width solid $border-color;
 
