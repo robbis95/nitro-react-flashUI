@@ -17,7 +17,7 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
 
     const onClick = () =>
     {
-        closeAll();
+        
         
         setIsOpen(prevValue => !prevValue);
     }

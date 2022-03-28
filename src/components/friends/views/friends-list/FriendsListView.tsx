@@ -96,14 +96,16 @@ export const FriendsListView: FC<FriendsListViewProps> = props =>
                 <NitroCardHeaderView headerText={ LocalizeText('friendlist.friends') } onCloseClick={ onCloseClick } />
                 <NitroCardContentView overflow="hidden" gap={ 1 } className="text-black p-0">
                     <NitroCardAccordionView fullHeight overflow="hidden">
+                        <NitroCardAccordionSetView className="friend-headers" headerText={ LocalizeText('friendlist.friends')} isExpanded={ true }>
                         <NitroCardAccordionSetView headerText={ LocalizeText('friendlist.friends') + ` (${onlineFriends.length})` } isExpanded={ true }>
                             <FriendsListGroupView list={ onlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
                         </NitroCardAccordionSetView>
                         <NitroCardAccordionSetView headerText={ LocalizeText('friendlist.friends.offlinecaption') + ` (${offlineFriends.length})` }>
                             <FriendsListGroupView list={ offlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
                         </NitroCardAccordionSetView>
-                        <FriendsListRequestView headerText={ LocalizeText('friendlist.tab.friendrequests') + ` (${ friendRequests.length })` } isExpanded={ true } requests={ friendRequests } />
-                        <FriendsSearchView headerText={ LocalizeText('people.search.title') } />
+                        </NitroCardAccordionSetView>
+                        <FriendsListRequestView className="friend-headers" headerText={ LocalizeText('friendlist.tab.friendrequests') + ` (${ friendRequests.length })` } isExpanded={ true } requests={ friendRequests } />
+                        <FriendsSearchView className="search-headers" headerText={ LocalizeText('people.search.title') } />
                     </NitroCardAccordionView>
                     { selectedFriendsIds && selectedFriendsIds.length > 0 &&
                         <Flex gap={ 1 } className="p-1">

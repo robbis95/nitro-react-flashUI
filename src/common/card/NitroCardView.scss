@@ -148,13 +148,29 @@ $nitro-card-tabs-height: 35px;
 
             .nitro-card-accordion-set-header {
                 font-family: Goldfish-Bold;
+            }
+
+            .search-headers {
+                font-family: Goldfish;
+                color: #fff;
+                background: linear-gradient(180deg, #6b6b6b 50%, #555555 50%);   
                 border: 1px solid #000;
+                -webkit-box-shadow: inset 0px 1px 0px 0px #555555; 
+                box-shadow: inset 0px 1px 0px 0px #555555;
+                background-size: 1px 18px;
+            }
+
+            .friend-headers {
+                font-family: Goldfish;
+                background: linear-gradient(180deg, rgba(138,218,255,1) 50%, rgba(89,191,255,1) 50%);   
+                border: 1px solid #000;
+                -webkit-box-shadow: inset 0px 1px 0px 0px #59bfff; 
+                box-shadow: inset 0px 1px 0px 0px #59bfff;
+                background-size: 1px 18px;
             }
 
             .nitro-card-accordion-set-content {
                 background: #fff;
-                border-right: 1px solid #000;
-                border-left: 1px solid #000;
             }
         
             .nitro-card-header {
@@ -302,10 +318,6 @@ $nitro-card-tabs-height: 35px;
         height: 100%;
         overflow: hidden;
         background: rgba($white, 0.5);
-        border-bottom: 1px solid rgba($black, 0.2);
-    }
-
-    .nitro-card-accordion-set-header {
         border-bottom: 1px solid rgba($black, 0.2);
     }
 }
