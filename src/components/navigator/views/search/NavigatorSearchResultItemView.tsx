@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC, MouseEvent } from 'react';
-import { CreateRoomSession, GetSessionDataManager, TryVisitRoom } from '../../../../api';
+import { CreateRoomSession, DoorStateType, GetSessionDataManager, TryVisitRoom } from '../../../../api';
 import { Column, Flex, LayoutBadgeImageView, LayoutGridItemProps, LayoutRoomThumbnailView, Text } from '../../../../common';
-import { DoorStateType } from '../../common/DoorStateType';
 import { useNavigatorContext } from '../../NavigatorContext';
 import { NavigatorSearchResultItemInfoView } from './NavigatorSearchResultItemInfoView';
 
@@ -18,7 +17,7 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
     const { roomData = null, children = null, thumbnail = false, ...rest } = props;
     const { setDoorData = null } = useNavigatorContext();
 
-    function getUserCounterColor(): string
+    const getUserCounterColor = () =>
     {
         const num: number = (100 * (roomData.userCount / roomData.maxUserCount));
 
