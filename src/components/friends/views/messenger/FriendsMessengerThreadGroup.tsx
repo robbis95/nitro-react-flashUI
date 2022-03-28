@@ -68,7 +68,7 @@ export const FriendsMessengerThreadGroup: FC<FriendsMessengerThreadGroupProps> =
                 }
                 </Base>
             <Base className={ 'message-bubble text-black mt-2 py-1 px-2 messages-group-' + (isOwnChat ? 'right' : 'left') }>
-                <Base className='fw-bold'>
+                <Base className='fw-bold username'>
                     { (isOwnChat) && GetSessionDataManager().userName }
                     { (!isOwnChat) && ((group.type === GroupType.GROUP_CHAT) ? getGroupChatData(group.chats[0].extraData).username : thread.participant.name)
                     }

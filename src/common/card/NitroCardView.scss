@@ -102,6 +102,40 @@ $nitro-card-tabs-height: 35px;
     }
 }
 
+    // MESSENGER
+
+    &.theme-messenger {
+        border-image-source: url("../../assets/flash/boxes/card/mod_window.png");
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        border-image-repeat: repeat repeat;
+    
+        .nitro-card-header {
+    
+            min-height: 25px;
+            max-height: 25px;
+            justify-content: left;
+    
+    
+            .nitro-card-header-text {
+                color: $black;
+                min-height: 21px;
+                font-size: 10px;
+                padding-top: 10px;
+                text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
+            }
+    
+            .nitro-card-header-close {
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                margin-top: 10px;
+                background-image: url("../../assets/flash/messenger/close.png");
+
+            }
+        }
+    }
+
     &.theme-primary-slim {
         border: $border-width solid $border-color;
 
