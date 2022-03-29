@@ -172,6 +172,85 @@ $nitro-card-tabs-height: 35px;
             .nitro-card-accordion-set-content {
                 background: #fff;
             }
+
+            .friend-tab:nth-of-type(odd) {
+                background: #eeeeee;
+            }
+
+            .friendlist-bottom {
+                height: 30px;
+            }
+
+            .friend-active-tab {
+                border-image-source: url("../../assets/flash/friendlist/friend_active_bg.png");
+                border-image-slice: 7 7 7 7 fill;
+                border-image-width: 7px 7px 7px 7px;
+                border-image-repeat: repeat repeat;
+                max-height: 30px;
+                width: 100%
+            }
+
+            .friend-follow-icon {
+                background-image: url(../../assets/flash/friendlist/follow_friend.png);
+                background-repeat: no-repeat;
+                width: 32px;
+                height: 22px;
+
+                &.active {
+                    background-image: url(../../assets/flash/friendlist/follow_friend_active.png);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-image: url(../../assets/flash/friendlist/follow_friend_hover.png);
+                    }
+
+                    &:active {
+                        background-image: url(../../assets/flash/friendlist/follow_friend_clicked.png);
+                    }
+                }
+            }
+
+            .friend-delete-icon {
+                background-image: url(../../assets/flash/friendlist/delete_friend.png);
+                background-repeat: no-repeat;
+                width: 23px;
+                height: 22px;
+                position: absolute;
+                right: 9px;
+
+                &.active {
+                    background-image: url(../../assets/flash/friendlist/delete_friend_active.png);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-image: url(../../assets/flash/friendlist/delete_friend_hover.png);
+                    }
+
+                    &:active {
+                        background-image: url(../../assets/flash/friendlist/delete_friend_clicked.png);
+                    }
+                }
+            }
+
+            .friend-profile-icon {
+                background-image: url(../../assets/flash/friendlist/profile_friend.png);
+                background-repeat: no-repeat;
+                width: 27px;
+                height: 22px;
+
+                &.active {
+                    background-image: url(../../assets/flash/friendlist/profile_friend_active.png);
+                    cursor: pointer;
+
+                    &:hover {
+                        background-image: url(../../assets/flash/friendlist/profile_friend_hover.png);
+                    }
+
+                    &:active {
+                        background-image: url(../../assets/flash/friendlist/profile_friend_clicked.png);
+                    }
+                }
+            }
         
             .nitro-card-header {
                 min-height: 25px;
@@ -318,6 +397,5 @@ $nitro-card-tabs-height: 35px;
         height: 100%;
         overflow: hidden;
         background: rgba($white, 0.5);
-        border-bottom: 1px solid rgba($black, 0.2);
     }
 }

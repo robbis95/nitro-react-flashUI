@@ -75,7 +75,7 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
                 <FontAwesomeIcon icon={ isOpen ? 'caret-up' : 'caret-down' } />
             </Flex>
             { isOpen &&
-                <Column fullHeight overflow="auto" gap={ 0 } className="nitro-card-accordion-set-content">
+                <Column fullHeight overflow="auto" gap={ 0 } className="nitro-card-accordion-set-content p-1">
                     { children }
                 </Column> }
         </Column>
