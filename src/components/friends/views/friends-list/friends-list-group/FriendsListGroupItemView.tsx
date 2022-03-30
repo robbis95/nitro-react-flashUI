@@ -62,7 +62,7 @@ export const FriendsListGroupItemView: FC<FriendsListGroupItemViewProps> = props
     if(!friend) return null;
 
     return (
-        <NitroCardAccordionItemView justifyContent="between" className={ `friend-tab px-2 py-1 ${ selected && 'bg-primary text-white' }` } onClick={ selectFriend } { ...rest }>
+        <NitroCardAccordionItemView justifyContent="between" className={ `friend-tab px-2 py-1 ${ selected && 'friend-active text-white' }` } onClick={ selectFriend } { ...rest }>
             <Flex alignItems="center" gap={ 1 }>
                 <Base onClick={ event => event.stopPropagation() }>
                     <UserProfileIconView userId={ friend.id } />
