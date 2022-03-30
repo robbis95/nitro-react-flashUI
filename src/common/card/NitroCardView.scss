@@ -146,9 +146,15 @@ $nitro-card-tabs-height: 35px;
             font-family: Goldfish;
             font-size: 9px;
 
+            .nitro-card-accordion-set-content {
+
+                color: #000;
+
             .nitro-card-accordion-set-header {
                 font-family: Goldfish-Bold;
             }
+
+        }
 
             .search-headers {
                 font-family: Goldfish;
@@ -158,12 +164,24 @@ $nitro-card-tabs-height: 35px;
                 -webkit-box-shadow: inset 0px 1px 0px 0px #555555; 
                 box-shadow: inset 0px 1px 0px 0px #555555;
                 background-size: 1px 18px;
+                margin-top: -1px;
+            }
+
+            .friend-req-headers {
+                font-family: Goldfish;
+                color: #fff;
+                background: linear-gradient(180deg, #f09837 50%, #dc8530 50%);   
+                border: 1px solid #000;
+                -webkit-box-shadow: inset 0px 1px 0px 0px #dc8530; 
+                box-shadow: inset 0px 1px 0px 0px #dc8530;
+                background-size: 1px 18px;
             }
 
             .friend-headers {
                 font-family: Goldfish;
                 background: linear-gradient(180deg, rgba(138,218,255,1) 50%, rgba(89,191,255,1) 50%);   
                 border: 1px solid #000;
+                border-bottom: none;
                 -webkit-box-shadow: inset 0px 1px 0px 0px #59bfff; 
                 box-shadow: inset 0px 1px 0px 0px #59bfff;
                 background-size: 1px 18px;

@@ -3,13 +3,13 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Column, ColumnProps, Flex, Text } from '../..';
 import { useNitroCardAccordionContext } from './NitroCardAccordionContext';
 
-export interface NitroCardAccordionSetViewProps extends ColumnProps
+export interface NitroCardAccordionSetInnerViewProps extends ColumnProps
 {
     headerText: string;
     isExpanded?: boolean;
 }
 
-export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = props =>
+export const NitroCardAccordionSetInnerView: FC<NitroCardAccordionSetInnerViewProps> = props =>
 {
     const { headerText = '', isExpanded = false, gap = 0, classNames = [], children = null, ...rest } = props;
     const [ isOpen, setIsOpen ] = useState(false);
@@ -17,7 +17,6 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
 
     const onClick = () =>
     {
-        closeAll();
         
         setIsOpen(prevValue => !prevValue);
     }
@@ -71,7 +70,7 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
     return (
         <Column classNames={ getClassNames } gap={ gap } { ...rest }>
             <Flex pointer justifyContent="between" className="nitro-card-accordion-set-header px-2 py-1" onClick={ onClick }>
-                <div className="friend-header-text d-inline">{ headerText }</div>
+                <Text>{ headerText }</Text>
                 <FontAwesomeIcon icon={ isOpen ? 'caret-up' : 'caret-down' } />
             </Flex>
             { isOpen &&
