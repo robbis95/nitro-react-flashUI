@@ -36,6 +36,15 @@
     }
 }
 
+.catalog-header {
+    height: 120px;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    background-color: #092c3a;
+    margin-top: -1px;
+    z-index: 1;
+}
+
 .nitro-catalog-navigation-grid-container {
     border-color: #B6BEC5 !important;
     background-color: #CDD3D9;

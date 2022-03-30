@@ -20,10 +20,7 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
     const { currentOffer = null } = useCatalogContext();
 
     return (
-        <Grid>
-            <Column size={ 7 } overflow="hidden">
-                <CatalogItemGridWidgetView />
-            </Column>
+        <div>
             <Column center={ !currentOffer } size={ 5 } overflow="hidden">
                 { !currentOffer &&
                     <>
@@ -49,6 +46,9 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
                         </Column>
                     </> }
             </Column>
-        </Grid>
+            <Column size={ 7 } overflow="hidden">
+                <CatalogItemGridWidgetView />
+            </Column>
+        </div>
     );
 }
