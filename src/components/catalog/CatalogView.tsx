@@ -1,7 +1,7 @@
 import { CatalogPublishedMessageEvent, FrontPageItem, GetCatalogIndexComposer, GetCatalogPageComposer, GetClubGiftInfo, GetGiftWrappingConfigurationComposer, ILinkEventTracker, RoomPreviewer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { AddEventLinkTracker, GetRoomEngine, LocalizeText, NotificationAlertType, NotificationUtilities, PlaySound, RemoveLinkEventTracker, SendMessageComposer, SoundNames } from '../../api';
-import { Column, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import { Column, Grid, LayoutImage, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
 import { CatalogPurchasedEvent } from '../../events';
 import { BatchUpdates, UseMessageEventHook, UseUiEvent } from '../../hooks';
 import { CatalogContextProvider } from './CatalogContext';
@@ -16,6 +16,7 @@ import { IPurchasableOffer } from './common/IPurchasableOffer';
 import { IPurchaseOptions } from './common/IPurchaseOptions';
 import { RequestedPage } from './common/RequestedPage';
 import { SearchResult } from './common/SearchResult';
+import { CatalogIconView } from './views/catalog-icon/CatalogIconView';
 import { CatalogGiftView } from './views/gift/CatalogGiftView';
 import { CatalogNavigationView } from './views/navigation/CatalogNavigationView';
 import { GetCatalogLayout } from './views/page/layout/GetCatalogLayout';
@@ -433,6 +434,15 @@ export const CatalogView: FC<{}> = props =>
                                 );
                             }) }
                     </NitroCardTabsView>
+                    <div className="catalog-header">
+                    <div className="catalog-header-content">
+                    {currentPage && rootNode && <img src={getNodeById(pageId, rootNode).iconId + ".png"} />}
+                    {currentPage && rootNode && <p className="catalog-header-title fw-bold">{getNodeById(pageId, rootNode).localization}</p>}
+                        <p className="catalog-header-desc">{currentPage && currentPage.localization.getText(0)}</p>
+                    </div>
+                    <div className="catalog-header-image" style={{ backgroundImage: `url(${currentPage && currentPage.localization.getImage(0)})` }}>
+                    </div>
+                    </div>
                     <NitroCardContentView>
                         <Grid>
                             { !navigationHidden &&

@@ -40,9 +40,44 @@
     height: 120px;
     border-right: 1px solid #000;
     border-left: 1px solid #000;
-    background-color: #092c3a;
+    background-color: #0e4258;
     margin-top: -1px;
     z-index: 1;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 0px 3px #ffffff40;
+    position: relative;
+
+    .catalog-header-content {
+        position: absolute;
+    }
+
+    .catalog-header-image {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50%;
+        width:100%;
+        height: 100%;
+        opacity: .1;
+        filter: grayscale(1);
+        }
+
+    .catalog-header-icon {
+        width: 85px;
+        float: left;
+    }
+
+    .catalog-header-title {
+        font-size: 15px;
+        height: 3px;
+        padding-left: 80px;
+        margin-top: -5px;
+    }
+
+    .catalog-header-desc {
+        font-size: 12px;
+        padding-left: 80px;
+        padding-right: 10px;
+    }
 }
 
 .nitro-catalog-navigation-grid-container {
