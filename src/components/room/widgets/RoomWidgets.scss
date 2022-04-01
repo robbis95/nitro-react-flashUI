@@ -100,6 +100,13 @@
     height: $nitro-doorbell-height;
 }
 
+.toggle-roomtool {
+    height: 125px;
+    width: 20px;
+    margin-left: -5px;
+    padding-left: 10px;
+}
+
 @import './avatar-info/AvatarInfoWidgetView';
 @import './chat/ChatWidgetView';
 @import './chat-input/ChatInputView';

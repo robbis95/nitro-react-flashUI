@@ -3,50 +3,30 @@
 //
 
 .btn {
-  display: inline-block;
-  font-family: $btn-font-family;
-  font-weight: $btn-font-weight;
-  line-height: $btn-line-height;
-  color: $body-color;
-  text-align: center;
-  text-decoration: if($link-decoration == none, null, none);
-  white-space: $btn-white-space;
-  vertical-align: middle;
-  cursor: if($enable-button-pointers, pointer, null);
-  user-select: none;
-  background-color: transparent;
-  border: $btn-border-width solid transparent;
-  @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-border-radius);
-  @include transition($btn-transition);
+  border-image-source: url("../../../assets/flash/buttons/button.png"); 
+  border-image-slice: 4 4 4 4 fill;
+  border-image-width: 4px 4px 4px 4px;
+  padding: .375rem .75rem;
+  min-height: 22px;
+  color: #000;
+  font-size: 13px;
+  cursor: pointer;
 
   &:hover {
-    color: $body-color;
-    text-decoration: if($link-hover-decoration == underline, none, null);
+    border-image-source: url("../../../assets/flash/buttons/button_hover.png"); 
   }
 
-  .btn-check:focus + &,
-  &:focus {
-    outline: 0;
-    box-shadow: $btn-focus-box-shadow;
-  }
+  &:active {
+    border-image-source: url("../../../assets/flash/buttons/button_active.png"); 
 
-  .btn-check:checked + &,
-  .btn-check:active + &,
-  &:active,
-  &.active {
-    @include box-shadow($btn-active-box-shadow);
-
-    &:focus {
-      @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
-    }
   }
 
   &:disabled,
   &.disabled,
   fieldset:disabled & {
     pointer-events: none;
-    opacity: $btn-disabled-opacity;
-    @include box-shadow(none);
+    border-image-source: url("../../../assets/flash/buttons/button_inactive.png"); 
+    color: #b1b1ac;
   }
 }
 
@@ -56,17 +36,22 @@
 //
 
 // scss-docs-start btn-variant-loops
-@each $color, $value in $theme-colors {
-  .btn-#{$color} {
-    @include button-variant($value, $value);
+
+.btn-success {
+  border-image-source: url("../../../assets/flash/buttons/button_success.png");
+  color: #fff;
+  font-family: ubuntuBold;
+
+  &:hover {
+    border-image-source: url("../../../assets/flash/buttons/button_success_hover.png");
   }
+
+  &:active {
+    border-image-source: url("../../../assets/flash/buttons/button_success_active.png");
+  }
+
 }
 
-@each $color, $value in $theme-colors {
-  .btn-outline-#{$color} {
-    @include button-outline-variant($value);
-  }
-}
 // scss-docs-end btn-variant-loops
 
 
@@ -107,29 +92,23 @@
 // Button Sizes
 //
 
-.btn-lg {
-  @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg);
-}
-
-.btn-sm {
-  @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm);
-}
-
-.btn-flash {
-  border-image-source: url("../../../assets/flash/buttons/button.png"); 
-  border-image-slice: 4 4 4 4 fill;
-  border-image-width: 4px 4px 4px 4px;
-  min-height: 22px;
-  color: #000;
-  font-size: 13px;
+.btn-toggle {
+  border-image-source: url("../../../assets/flash/buttons/toggle_bg.png");
+  border-image-slice: 6 6 6 6 fill;
+  border-image-width: 6px 6px 6px 6px;
   cursor: pointer;
 
-  &:hover {
-    border-image-source: url("../../../assets/flash/buttons/button_hover.png"); 
-  }
+  .toggle-icon {
+    background-repeat: no-repeat;
+    width: 6px;
+    height: 8px;
 
-  &:active {
-    border-image-source: url("../../../assets/flash/buttons/button_active.png"); 
+    &.left {
+      background-image: url("../../../assets/flash/buttons/toggle_left.png");
+    }
 
+    &.right {
+      background-image: url("../../../assets/flash/buttons/toggle_right.png");
+    }
   }
 }
