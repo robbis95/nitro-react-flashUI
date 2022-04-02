@@ -1,6 +1,6 @@
 import { RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useReducer, useRef, useState } from 'react';
-import { GetRoomSession } from '../../api';
+import { GetRoomSession, GetSessionDataManager } from '../../api';
 import { Base, Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
 import { ModToolsEvent, ModToolsOpenRoomChatlogEvent, ModToolsOpenRoomInfoEvent, ModToolsOpenUserInfoEvent } from '../../events';
 import { DispatchUiEvent, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
@@ -22,6 +22,8 @@ export const ModToolsView: FC<{}> = props =>
     const [ modToolsState, dispatchModToolsState ] = useReducer(ModToolsReducer, initialModTools);
     const { currentRoomId = null, openRooms = null, openRoomChatlogs = null, openUserChatlogs = null, openUserInfo = null } = modToolsState;
     const elementRef = useRef<HTMLDivElement>(null);
+    const isMod = GetSessionDataManager().isModerator;
+
 
     const onModToolsEvent = useCallback((event: ModToolsEvent) =>
     {
