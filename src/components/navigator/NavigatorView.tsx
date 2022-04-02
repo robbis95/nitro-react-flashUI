@@ -3,7 +3,7 @@ import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, L
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { AddEventLinkTracker, DoorStateType, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
 import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
-import { BatchUpdates, UseRoomSessionManagerEvent, useSharedNavigatorData } from '../../hooks';
+import { UseRoomSessionManagerEvent, useSharedNavigatorData } from '../../hooks';
 import { NavigatorContextProvider } from './NavigatorContext';
 import { NavigatorMessageHandler } from './NavigatorMessageHandler';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
@@ -37,10 +37,8 @@ export const NavigatorView: FC<{}> = props =>
         switch(event.type)
         {
             case RoomSessionEvent.CREATED:
-                BatchUpdates(() => {
-                    setIsVisible(false);
-                    setCreatorOpen(false);
-                });
+                setIsVisible(false);
+                setCreatorOpen(false);
                 return;
         }
     }, []);
@@ -49,23 +47,24 @@ export const NavigatorView: FC<{}> = props =>
 
     const sendSearch = useCallback((searchValue: string, contextCode: string) =>
     {
-            SendMessageComposer(
-                new NavigatorSearchComposer(contextCode, searchValue)
-            );
+        setCreatorOpen(false);
 
-            setIsLoading(true);
-        },
-        []
-    );
+        SendMessageComposer(new NavigatorSearchComposer(contextCode, searchValue));
 
-    const reloadCurrentSearch = useCallback(() => {
-        if (!isReady) {
+        setIsLoading(true);
+    }, []);
+
+    const reloadCurrentSearch = useCallback(() =>
+    {
+        if(!isReady)
+        {
             setNeedsSearch(true);
-
+            
             return;
         }
 
-        if (pendingSearch.current) {
+        if(pendingSearch.current)
+        {
             sendSearch(pendingSearch.current.value, pendingSearch.current.code);
 
             pendingSearch.current = null;
@@ -73,143 +72,138 @@ export const NavigatorView: FC<{}> = props =>
             return;
         }
 
-        if (searchResult) {
+        if(searchResult)
+        {
             sendSearch(searchResult.data, searchResult.code);
 
             return;
         }
 
-        if (!topLevelContext) return;
+        if(!topLevelContext) return;
+        
+        sendSearch('', topLevelContext.code);
+    }, [ isReady, searchResult, topLevelContext, sendSearch ]);
 
-        sendSearch("", topLevelContext.code);
-    }, [isReady, searchResult, topLevelContext, sendSearch]);
+    const linkReceived = useCallback((url: string) =>
+    {
+        const parts = url.split('/');
 
-    const linkReceived = useCallback(
-        (url: string) => {
-            const parts = url.split("/");
+        if(parts.length < 2) return;
 
-            if (parts.length < 2) return;
-
-            switch (parts[1]) {
-                case "show": {
-                    BatchUpdates(() => {
-                        setIsVisible(true);
-                        setNeedsSearch(true);
-                    });
-                    return;
-                }
-                case "hide":
+        switch(parts[1])
+        {
+            case 'show': {
+                setIsVisible(true);
+                setNeedsSearch(true);
+                return;
+            }
+            case 'hide':
+                setIsVisible(false);
+                return;
+            case 'toggle': {
+                if(isVisible)
+                {
                     setIsVisible(false);
-                    return;
-                case "toggle": {
-                    if (isVisible) {
-                        setIsVisible(false);
 
-                        return;
-                    }
-
-                    BatchUpdates(() => {
-                        setIsVisible(true);
-                        setNeedsSearch(true);
-                    });
                     return;
                 }
-                case "toggle-room-info":
-                    setRoomInfoOpen((value) => !value);
-                    return;
-                case "toggle-room-link":
-                    setRoomLinkOpen((value) => !value);
-                    return;
-                case "goto":
-                    if (parts.length <= 2) return;
 
-                    switch (parts[2]) {
-                        case "home":
-                            if (navigatorData.homeRoomId <= 0) return;
+                setIsVisible(true);
+                setNeedsSearch(true);
+                return;
+            }
+            case 'toggle-room-info':
+                setRoomInfoOpen(value => !value);
+                return;
+            case 'toggle-room-link':
+                setRoomLinkOpen(value => !value);
+                return;
+            case 'goto':
+                if(parts.length <= 2) return;
 
-                            TryVisitRoom(navigatorData.homeRoomId);
-                            break;
-                        default: {
-                            const roomId = parseInt(parts[2]);
+                switch(parts[2])
+                {
+                    case 'home':
+                        if(navigatorData.homeRoomId <= 0) return;
 
-                            TryVisitRoom(roomId);
-                        }
+                        TryVisitRoom(navigatorData.homeRoomId);
+                        break;
+                    default: {
+                        const roomId = parseInt(parts[2]);
+
+                        TryVisitRoom(roomId);
                     }
-                    return;
-                case "create":
-                    BatchUpdates(() => {
-                        setIsVisible(true);
-                        setCreatorOpen(true);
-                    });
-                    return;
-                case "search":
-                    if (parts.length > 2) {
-                        const topLevelContextCode = parts[2];
+                }
+                return;
+            case 'create':
+                setIsVisible(true);
+                setCreatorOpen(true);
+                return;
+            case 'search':
+                if(parts.length > 2)
+                {
+                    const topLevelContextCode = parts[2];
 
-                        let searchValue = "";
+                    let searchValue = '';
 
-                        if (parts.length > 3) searchValue = parts[3];
+                    if(parts.length > 3) searchValue = parts[3];
 
-                        pendingSearch.current = {
-                            value: searchValue,
-                            code: topLevelContextCode,
-                        };
+                    pendingSearch.current = { value: searchValue, code: topLevelContextCode };
 
-                    BatchUpdates(() =>
-                    {
-                        setIsVisible(true);
-                        setNeedsSearch(true);
-                    });
+                    setIsVisible(true);
+                    setNeedsSearch(true);
                 }
                 return;
         } 
     }, [ isVisible, navigatorData ]);
 
-    useEffect(() => {
+    useEffect(() =>
+    {
         const linkTracker: ILinkEventTracker = {
             linkReceived,
-            eventUrlPrefix: "navigator/",
+            eventUrlPrefix: 'navigator/'
         };
 
         AddEventLinkTracker(linkTracker);
 
         return () => RemoveLinkEventTracker(linkTracker);
-    }, [linkReceived]);
+    }, [ linkReceived ]);
 
-    useEffect(() => {
-        if (!searchResult) return;
+    useEffect(() =>
+    {
+        if(!searchResult) return;
 
         setIsLoading(false);
-    }, [searchResult]);
+    }, [ searchResult ]);
 
-    useEffect(() => {
-        if (!isVisible || !isReady || !needsSearch) return;
+    useEffect(() =>
+    {
+        if(!isVisible || !isReady || !needsSearch) return;
 
         reloadCurrentSearch();
 
         setNeedsSearch(false);
-    }, [isVisible, isReady, needsSearch, reloadCurrentSearch]);
+    }, [ isVisible, isReady, needsSearch, reloadCurrentSearch ]);
 
-    useEffect(() => {
-        if (isReady || !topLevelContext) return;
+    useEffect(() =>
+    {
+        if(isReady || !topLevelContext) return;
 
         setIsReady(true);
-    }, [isReady, topLevelContext]);
+    }, [ isReady, topLevelContext ]);
 
-    useEffect(() => {
-        if (!isVisible || !needsInit) return;
+    useEffect(() =>
+    {
+        if(!isVisible || !needsInit) return;
 
         SendMessageComposer(new NavigatorInitComposer());
 
         setNeedsInit(false);
-    }, [isVisible, needsInit]);
+    }, [ isVisible, needsInit ]);
 
-    useEffect(() => {
-        LegacyExternalInterface.addCallback(
-            HabboWebTools.OPENROOM,
-            (k: string, _arg_2: boolean = false, _arg_3: string = null) =>
-                SendMessageComposer(new ConvertGlobalRoomIdMessageComposer(k))
-        );
+    useEffect(() =>
+    {
+        LegacyExternalInterface.addCallback(HabboWebTools.OPENROOM, (k: string, _arg_2: boolean = false, _arg_3: string = null) => SendMessageComposer(new ConvertGlobalRoomIdMessageComposer(k)));
     }, []);
 
     return (
@@ -217,51 +211,31 @@ export const NavigatorView: FC<{}> = props =>
             <NavigatorMessageHandler />
             { isVisible &&
                 <NitroCardView uniqueKey="navigator" className="nitro-navigator">
-                    <NitroCardHeaderView headerText={ LocalizeText('navigator.title') } onCloseClick={ event => setIsVisible(false) } />
+                    <NitroCardHeaderView headerText={ LocalizeText(isCreatorOpen ? 'navigator.createroom.title' : 'navigator.title') } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardTabsView>
-                        {topLevelContexts &&
-                            topLevelContexts.length > 0 &&
-                            topLevelContexts.map((context, index) => {
-                                return (
-                                    <NitroCardTabsItemView
-                                        key={index}
-                                        isActive={
-                                            topLevelContext === context                                        }
-                                        onClick={(event) =>
-                                            sendSearch("", context.code)
-                                        }
-                                    >
-                                        {LocalizeText(
-                                            "navigator.toplevelview." +
-                                                context.code
-                                        )}
-                                    </NitroCardTabsItemView>
-                                );
-                            })}
+                        { topLevelContexts && (topLevelContexts.length > 0) && topLevelContexts.map((context, index) =>
+                        {
+                            return (
+                                <NitroCardTabsItemView key={ index } isActive={ ((topLevelContext === context) && !isCreatorOpen) } onClick={ event => sendSearch('', context.code) }>
+                                    { LocalizeText(('navigator.toplevelview.' + context.code)) }
+                                </NitroCardTabsItemView>
+                            );
+                        }) }
+                        <NitroCardTabsItemView isActive={ isCreatorOpen } onClick={ event => setCreatorOpen(true) }>
+                            <FontAwesomeIcon icon="plus" />
+                        </NitroCardTabsItemView>
                     </NitroCardTabsView>
-                    <NitroCardContentView position="relative">
-                        {isLoading && (
-                            <Base
-                                fit
-                                position="absolute"
-                                className="top-0 start-0 z-index-1 bg-muted opacity-0-5"
-                            />
-                        )}
+                    <NitroCardContentView position='relative'>
+                        { isLoading &&
+                            <Base fit position="absolute" className="top-0 start-0 z-index-1 bg-muted opacity-0-5" /> }
+                        { !isCreatorOpen &&
                             <>
-                                <NavigatorSearchView sendSearch={sendSearch} />
+                                <NavigatorSearchView sendSearch={ sendSearch } />
                                 <Column overflow="auto">
-                                    {searchResult &&
-                                        searchResult.results.map(
-                                            (result, index) => (
-                                                <NavigatorSearchResultView
-                                                    key={index}
-                                                    searchResult={result}
-                                                />
-                                            )
-                                        )}
+                                    { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
                                 </Column>
-                            </>
-                        {isCreatorOpen && <NavigatorRoomCreatorView />}
+                            </> }
+                        { isCreatorOpen && <NavigatorRoomCreatorView /> }
                         <div className="nav-bottom">
                             <div className="nav-bottom-buttons position-absolute">
                                 <div
@@ -289,4 +263,4 @@ export const NavigatorView: FC<{}> = props =>
             <NavigatorRoomSettingsView />
         </NavigatorContextProvider>
     );
-};
+}

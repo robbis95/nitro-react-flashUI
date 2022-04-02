@@ -3,7 +3,6 @@ import { HabboClubLevelEnum, RoomCreateComposer } from '@nitrots/nitro-renderer'
 import { FC, useEffect, useState } from 'react';
 import { GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, RoomModels, SendMessageComposer } from '../../../api';
 import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
-import { BatchUpdates } from '../../../hooks';
 import { useNavigatorContext } from '../NavigatorContext';
 
 export const NavigatorRoomCreatorView: FC<{}> = props =>
@@ -40,11 +39,8 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
 
             for(let i = 10; i <= 100; i = i + 10) list.push(i);
 
-            BatchUpdates(() =>
-            {
-                setMaxVisitorsList(list);
-                setVisitorsCount(list[0]);
-            });
+            setMaxVisitorsList(list);
+            setVisitorsCount(list[0]);
         }
     }, [ maxVisitorsList ]);
 
@@ -71,18 +67,18 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                         <Text className="headline">{ LocalizeText('navigator.category') }</Text>
                         <select className="form-select form-select-sm" onChange={ event => setCategory(Number(event.target.value)) }>
                             { categories && (categories.length > 0) && categories.map(category =>
-                                {
-                                    return <option key={ category.id } value={ category.id }>{ LocalizeText(category.name) }</option>
-                                }) }
+                            {
+                                return <option key={ category.id } value={ category.id }>{ LocalizeText(category.name) }</option>
+                            }) }
                         </select>
                     </Column>
                     <Column gap={ 1 }>
                         <Text className="headline">{ LocalizeText('navigator.maxvisitors') }</Text>
                         <select className="form-select form-select-sm" onChange={ event => setVisitorsCount(Number(event.target.value)) }>
                             { maxVisitorsList && maxVisitorsList.map(value =>
-                                {
-                                    return <option key={ value } value={ value }>{ value }</option>
-                                }) }
+                            {
+                                return <option key={ value } value={ value }>{ value }</option>
+                            }) }
                         </select>
                     </Column>
                     <Column gap={ 1 }>
@@ -98,15 +94,15 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                 <AutoGrid className="room-creator-grid w-100" columnCount={ 2 } columnMinWidth={ 100 } columnMinHeight={ 50 } overflow="unset">
                     {
                         RoomModels.map((model, index )=>
-                            {
-                                return (<LayoutGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="room-creator-grid-item" disabled={ (GetClubMemberLevel() < model.clubLevel) }>
-                                    <Flex fullHeight center overflow="hidden">
-                                        <img alt="" src={ getRoomModelImage(model.name) } />
-                                    </Flex>
-                                    <Text>{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
-                                    { model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
-                                </LayoutGridItem>);
-                            })
+                        {
+                            return (<LayoutGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="p-1" disabled={ (GetClubMemberLevel() < model.clubLevel) }>
+                                <Flex fullHeight center overflow="hidden">
+                                    <img alt="" src={ getRoomModelImage(model.name) } />
+                                </Flex>
+                                <Text bold>{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
+                                { model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
+                            </LayoutGridItem>);
+                        })
                     }
                 </AutoGrid>
             </div>

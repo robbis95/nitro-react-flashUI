@@ -1,13 +1,9 @@
 import { FC, useEffect, useState } from 'react';
-import { LocalizeText } from '../../../../../api';
-import { AutoGrid, AutoGridProps } from '../../../../../common/AutoGrid';
-import { Button } from '../../../../../common/Button';
-import { ButtonGroup } from '../../../../../common/ButtonGroup';
-import { BatchUpdates } from '../../../../../hooks';
+import { LocalizeText, ProductTypeEnum } from '../../../../../api';
+import { AutoGrid, AutoGridProps, Button, ButtonGroup } from '../../../../../common';
 import { useCatalogContext } from '../../../CatalogContext';
 import { IPurchasableOffer } from '../../../common/IPurchasableOffer';
 import { Offer } from '../../../common/Offer';
-import { ProductTypeEnum } from '../../../common/ProductTypeEnum';
 import { CatalogGridOfferView } from '../common/CatalogGridOfferView';
 
 interface CatalogSpacesWidgetViewProps extends AutoGridProps
@@ -55,12 +51,9 @@ export const CatalogSpacesWidgetView: FC<CatalogSpacesWidgetViewProps> = props =
             }
         }
 
-        BatchUpdates(() =>
-        {
-            setGroupedOffers(groupedOffers);
-            setSelectedGroupIndex(0);
-            setSelectedOfferForGroup([ groupedOffers[0][0], groupedOffers[1][0], groupedOffers[2][0] ]);
-        });
+        setGroupedOffers(groupedOffers);
+        setSelectedGroupIndex(0);
+        setSelectedOfferForGroup([ groupedOffers[0][0], groupedOffers[1][0], groupedOffers[2][0] ]);
     }, [ currentPage ]);
 
     useEffect(() =>
@@ -76,14 +69,14 @@ export const CatalogSpacesWidgetView: FC<CatalogSpacesWidgetViewProps> = props =
         if((selectedGroupIndex === -1) || !selectedOfferForGroup || !currentOffer) return;
 
         setPurchaseOptions(prevValue =>
-            {
-                const newValue = { ...prevValue };
+        {
+            const newValue = { ...prevValue };
                 
-                newValue.extraData = selectedOfferForGroup[selectedGroupIndex].product.extraParam;
-                newValue.extraParamRequired = true;
+            newValue.extraData = selectedOfferForGroup[selectedGroupIndex].product.extraParam;
+            newValue.extraParamRequired = true;
 
-                return newValue;
-            });
+            return newValue;
+        });
     }, [ currentOffer, selectedGroupIndex, selectedOfferForGroup, setPurchaseOptions ]);
 
     if(!groupedOffers || (selectedGroupIndex === -1)) return null;
@@ -101,13 +94,13 @@ export const CatalogSpacesWidgetView: FC<CatalogSpacesWidgetViewProps> = props =
                     const setSelectedOffer = () =>
                     {
                         setSelectedOfferForGroup(prevValue =>
-                            {
-                                const newValue = [ ...prevValue ];
+                        {
+                            const newValue = [ ...prevValue ];
 
-                                newValue[selectedGroupIndex] = offer;
+                            newValue[selectedGroupIndex] = offer;
 
-                                return newValue;
-                            });
+                            return newValue;
+                        });
                     }
 
                     return <CatalogGridOfferView key={ index } itemActive={ (currentOffer && (currentOffer === offer)) } offer={ offer } onClick={ setSelectedOffer } />;
