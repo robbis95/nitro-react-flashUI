@@ -2,8 +2,8 @@ import { Dispose, DropBounce, EaseOut, FigureUpdateEvent, JumpBy, Motions, Nitro
 import { FC, useCallback, useState } from 'react';
 import { CreateLinkEvent, GetSessionDataManager, GetUserProfile, OpenMessengerChat, VisitDesktop } from '../../api';
 import { Base, Flex, LayoutAvatarImageView, LayoutItemCountView, TransitionAnimation, TransitionAnimationTypes } from '../../common';
-import { AchievementsUIUnseenCountEvent, FriendsEvent, FriendsMessengerIconEvent, FriendsRequestCountEvent, GuideToolEvent, InventoryEvent, UnseenItemTrackerUpdateEvent, UserSettingsUIEvent } from '../../events';
-import { BatchUpdates, DispatchUiEvent, UseMessageEventHook, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
+import { AchievementsUIUnseenCountEvent, FriendsEvent, FriendsMessengerIconEvent, FriendsRequestCountEvent, GuideToolEvent, ModToolsEvent, UserSettingsUIEvent } from '../../events';
+import { DispatchUiEvent, useInventoryUnseenTracker, UseMessageEventHook, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
 import { ToolbarViewItems } from './common/ToolbarViewItems';
 import { ToolbarMeView } from './ToolbarMeView';
 
@@ -25,19 +25,17 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
     const [ isMeExpanded, setMeExpanded ] = useState(false);
     const [ useGuideTool, setUseGuideTool ] = useState(false);
     const [ chatIconType, setChatIconType ] = useState(CHAT_ICON_HIDDEN);
-    const [ unseenInventoryCount, setUnseenInventoryCount ] = useState(0);
     const [ unseenAchievementCount, setUnseenAchievementCount ] = useState(0);
     const [ unseenFriendRequestCount, setFriendRequestCount ] = useState(0);
+    const { getFullCount = null } = useInventoryUnseenTracker();
+    const isMod = GetSessionDataManager().isModerator;
 
     const onUserInfoEvent = useCallback((event: UserInfoEvent) =>
     {
         const parser = event.getParser();
 
-        BatchUpdates(() =>
-        {
-            setUserInfo(parser.userInfo);
-            setUserFigure(parser.userInfo.figure);
-        });
+        setUserInfo(parser.userInfo);
+        setUserFigure(parser.userInfo.figure);
     }, []);
 
     UseMessageEventHook(UserInfoEvent, onUserInfoEvent);
@@ -66,13 +64,6 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
     }, []);
 
     UseUiEvent(FriendsMessengerIconEvent.UPDATE_ICON, onFriendsMessengerIconEvent);
-
-    const onUnseenItemTrackerUpdateEvent = useCallback((event: UnseenItemTrackerUpdateEvent) =>
-    {
-        setUnseenInventoryCount(event.count);
-    }, []);
-
-    UseUiEvent(UnseenItemTrackerUpdateEvent.UPDATE_COUNT, onUnseenItemTrackerUpdateEvent);
 
     const onAchievementsUIUnseenCountEvent = useCallback((event: AchievementsUIUnseenCountEvent) =>
     {
@@ -137,7 +128,7 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
                 CreateLinkEvent('navigator/toggle');
                 return;
             case ToolbarViewItems.INVENTORY_ITEM:
-                DispatchUiEvent(new InventoryEvent(InventoryEvent.TOGGLE_INVENTORY));
+                CreateLinkEvent('inventory/toggle');
                 return;
             case ToolbarViewItems.CATALOG_ITEM:
                 CreateLinkEvent('catalog/toggle');
@@ -173,6 +164,8 @@ export const ToolbarView: FC<ToolbarViewProps> = props =>
                 return;
         }
     }, []);
+
+    const unseenInventoryCount = getFullCount();
 
     return (
         <>

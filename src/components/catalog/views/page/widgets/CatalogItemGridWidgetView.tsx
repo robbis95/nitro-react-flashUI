@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { AutoGrid, AutoGridProps } from '../../../../../common/AutoGrid';
+import { ProductTypeEnum } from '../../../../../api';
+import { AutoGrid, AutoGridProps } from '../../../../../common';
 import { useCatalogContext } from '../../../CatalogContext';
 import { IPurchasableOffer } from '../../../common/IPurchasableOffer';
-import { ProductTypeEnum } from '../../../common/ProductTypeEnum';
 import { CatalogGridOfferView } from '../common/CatalogGridOfferView';
 
 interface CatalogItemGridWidgetViewProps extends AutoGridProps
@@ -28,13 +28,13 @@ export const CatalogItemGridWidgetView: FC<CatalogItemGridWidgetViewProps> = pro
         if(offer.product && (offer.product.productType === ProductTypeEnum.WALL))
         {
             setPurchaseOptions(prevValue =>
-                {
-                    const newValue = { ...prevValue };
+            {
+                const newValue = { ...prevValue };
     
-                    newValue.extraData = (offer.product.extraParam || null);
+                newValue.extraData = (offer.product.extraParam || null);
     
-                    return newValue;
-                });
+                return newValue;
+            });
         }
     }
 

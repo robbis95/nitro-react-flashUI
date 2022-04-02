@@ -1,7 +1,7 @@
 import { RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useReducer, useState } from 'react';
-import { GetRoomSession, GetSessionDataManager } from '../../api';
-import { Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
+import { FC, useCallback, useReducer, useRef, useState } from 'react';
+import { GetRoomSession } from '../../api';
+import { Base, Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
 import { ModToolsEvent, ModToolsOpenRoomChatlogEvent, ModToolsOpenRoomInfoEvent, ModToolsOpenUserInfoEvent } from '../../events';
 import { DispatchUiEvent, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
 import { ISelectedUser } from './common/ISelectedUser';
@@ -17,12 +17,11 @@ import { ModToolsUserView } from './views/user/ModToolsUserView';
 export const ModToolsView: FC<{}> = props =>
 {
     const [ isVisible, setIsVisible ] = useState(false);
-    const [ selectedUser, setSelectedUser] = useState<ISelectedUser>(null);
+    const [ selectedUser, setSelectedUser ] = useState<ISelectedUser>(null);
     const [ isTicketsVisible, setIsTicketsVisible ] = useState(false);
     const [ modToolsState, dispatchModToolsState ] = useReducer(ModToolsReducer, initialModTools);
     const { currentRoomId = null, openRooms = null, openRoomChatlogs = null, openUserChatlogs = null, openUserInfo = null } = modToolsState;
-    const isMod = GetSessionDataManager().isModerator;
-
+    const elementRef = useRef<HTMLDivElement>(null);
 
     const onModToolsEvent = useCallback((event: ModToolsEvent) =>
     {
@@ -180,48 +179,48 @@ export const ModToolsView: FC<{}> = props =>
                 return;
             }
         }
-    }, [openRooms, currentRoomId, openRoomChatlogs, selectedUser, openUserInfo, openUserChatlogs]);
+    }, [ openRooms, currentRoomId, openRoomChatlogs, selectedUser, openUserInfo, openUserChatlogs ]);
 
     return (
         <ModToolsContextProvider value={ { modToolsState, dispatchModToolsState } }>
             <ModToolsMessageHandler />
-            { isMod &&
-                <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools" windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
+            { isVisible &&
+                <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools" windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-slim" >
                     <NitroCardHeaderView headerText={ 'Mod Tools' } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardContentView className="text-black" gap={ 1 }>
-                        <Button gap={ 1 } onClick={ event => handleClick('toggle_room') } disabled={ !currentRoomId }>
-                            <div className="roomtoolicon" /> Room Tool
+                        <Button gap={ 1 } onClick={ event => handleClick('toggle_room') } disabled={ !currentRoomId } className="position-relative">
+                            <Base className="icon icon-small-room position-absolute start-1"/> Room Tool
                         </Button>
-                        <Button gap={ 1 } onClick={ event => handleClick('toggle_room_chatlog') } disabled={ !currentRoomId }>
-                        <div className="chatlogicon" /> Chatlog Tool
+                        <Button innerRef={ elementRef } gap={ 1 } onClick={ event => handleClick('toggle_room_chatlog') } disabled={ !currentRoomId } className="position-relative">
+                            <Base className="icon icon-chat-history position-absolute start-1"/> Chatlog Tool
                         </Button>
-                        <Button gap={ 1 } onClick={ () => handleClick('toggle_user_info') } disabled={ !selectedUser }>
-                        <div className="usericon" /> User: { selectedUser ? selectedUser.username : '' }
+                        <Button gap={ 1 } onClick={ () => handleClick('toggle_user_info') } disabled={ !selectedUser } className="position-relative">
+                            <Base className="icon icon-user position-absolute start-1"/> User: { selectedUser ? selectedUser.username : '' }
                         </Button>
-                        <Button gap={ 1 } onClick={ () => setIsTicketsVisible(value => !value) }>
-                        <div className="ticketicon" /> Report Tool
+                        <Button gap={ 1 } onClick={ () => setIsTicketsVisible(value => !value) } className="position-relative">
+                            <Base className="icon icon-tickets position-absolute start-1"/> Report Tool
                         </Button>
                     </NitroCardContentView>
                 </NitroCardView> }
             { openRooms && openRooms.map(roomId =>
-                {
-                    return <ModToolsRoomView key={ roomId } roomId={ roomId } onCloseClick={ () => handleClick('close_room', roomId.toString()) } />;
-                }) 
+            {
+                return <ModToolsRoomView key={ roomId } roomId={ roomId } onCloseClick={ () => handleClick('close_room', roomId.toString()) } />;
+            }) 
             }
             { openRoomChatlogs && openRoomChatlogs.map(roomId =>
-                {
-                    return <ModToolsChatlogView key={ roomId } roomId={ roomId } onCloseClick={ () => handleClick('close_room_chatlog', roomId.toString()) } />;
-                })
+            {
+                return <ModToolsChatlogView key={ roomId } roomId={ roomId } onCloseClick={ () => handleClick('close_room_chatlog', roomId.toString()) } />;
+            })
             }
             { openUserInfo && openUserInfo.map(userId =>
-                {
-                    return <ModToolsUserView key={userId} userId={userId} onCloseClick={ () => handleClick('close_user_info', userId.toString())}/>
-                })
+            {
+                return <ModToolsUserView key={userId} userId={userId} onCloseClick={ () => handleClick('close_user_info', userId.toString())}/>
+            })
             }
             { openUserChatlogs && openUserChatlogs.map(userId =>
-                {
-                    return <ModToolsUserChatlogView key={userId} userId={userId} onCloseClick={ () => handleClick('close_user_chatlog', userId.toString())}/>
-                })
+            {
+                return <ModToolsUserChatlogView key={userId} userId={userId} onCloseClick={ () => handleClick('close_user_chatlog', userId.toString())}/>
+            })
             }
             
             { isTicketsVisible && <ModToolsTicketsView onCloseClick={ () => setIsTicketsVisible(false) } /> }
