@@ -4,7 +4,7 @@ import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeTex
 import { Button, ButtonGroup, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
 import { FriendsMessengerIconEvent } from '../../../../events';
-import { BatchUpdates, DispatchUiEvent, UseMessageEventHook } from '../../../../hooks';
+import { DispatchUiEvent, UseMessageEventHook } from '../../../../hooks';
 import { MessengerThread } from '../../common/MessengerThread';
 import { MessengerThreadChat } from '../../common/MessengerThreadChat';
 import { useFriendsContext } from '../../FriendsContext';
@@ -12,29 +12,29 @@ import { FriendsMessengerThreadView } from './FriendsMessengerThreadView';
 
 export const FriendsMessengerView: FC<{}> = props =>
 {
-    const [isVisible, setIsVisible] = useState(false);
-    const [messageThreads, setMessageThreads] = useState<MessengerThread[]>([]);
-    const [activeThreadIndex, setActiveThreadIndex] = useState(-1);
-    const [hiddenThreadIndexes, setHiddenThreadIndexes] = useState<number[]>([]);
-    const [messageText, setMessageText] = useState('');
-    const [updateValue, setUpdateValue] = useState({});
+    const [ isVisible, setIsVisible ] = useState(false);
+    const [ messageThreads, setMessageThreads ] = useState<MessengerThread[]>([]);
+    const [ activeThreadIndex, setActiveThreadIndex ] = useState(-1);
+    const [ hiddenThreadIndexes, setHiddenThreadIndexes ] = useState<number[]>([]);
+    const [ messageText, setMessageText ] = useState('');
+    const [ updateValue, setUpdateValue ] = useState({});
     const { friends = [] } = useFriendsContext();
     const messagesBox = useRef<HTMLDivElement>();
 
     const followFriend = useCallback(() =>
     {
         SendMessageComposer(new FollowFriendMessageComposer(messageThreads[activeThreadIndex].participant.id));
-    }, [messageThreads, activeThreadIndex]);
+    }, [ messageThreads, activeThreadIndex ]);
 
     const openProfile = useCallback(() =>
     {
         GetUserProfile(messageThreads[activeThreadIndex].participant.id);
-    }, [messageThreads, activeThreadIndex]);
+    }, [ messageThreads, activeThreadIndex ]);
 
     const getFriend = useCallback((userId: number) =>
     {
         return ((friends.find(friend => (friend.id === userId))) || null);
-    }, [friends]);
+    }, [ friends ]);
 
     const visibleThreads = useMemo(() =>
     {
@@ -44,7 +44,7 @@ export const FriendsMessengerView: FC<{}> = props =>
 
             return true;
         });
-    }, [messageThreads, hiddenThreadIndexes]);
+    }, [ messageThreads, hiddenThreadIndexes ]);
 
     const getMessageThreadWithIndex = useCallback<(userId: number) => [number, MessengerThread]>((userId: number) =>
     {
@@ -62,7 +62,7 @@ export const FriendsMessengerView: FC<{}> = props =>
                     {
                         setHiddenThreadIndexes(prevValue =>
                         {
-                            const newIndexes = [...prevValue];
+                            const newIndexes = [ ...prevValue ];
 
                             newIndexes.splice(hiddenIndex, 1);
 
@@ -70,34 +70,34 @@ export const FriendsMessengerView: FC<{}> = props =>
                         });
                     }
 
-                    return [i, thread];
+                    return [ i, thread ];
                 }
             }
         }
 
         const friend = getFriend(userId);
 
-        if(!friend) return [-1, null];
+        if(!friend) return [ -1, null ];
 
         const thread = new MessengerThread(friend);
-        const newThreads = [...messageThreads, thread];
+        const newThreads = [ ...messageThreads, thread ];
 
         setMessageThreads(newThreads);
 
-        return [(newThreads.length - 1), thread];
-    }, [messageThreads, hiddenThreadIndexes, getFriend]);
+        return [ (newThreads.length - 1), thread ];
+    }, [ messageThreads, hiddenThreadIndexes, getFriend ]);
 
     const onNewConsoleMessageEvent = useCallback((event: NewConsoleMessageEvent) =>
     {
         const parser = event.getParser();
-        const [threadIndex, thread] = getMessageThreadWithIndex(parser.senderId);
+        const [ threadIndex, thread ] = getMessageThreadWithIndex(parser.senderId);
 
         if((threadIndex === -1) || !thread) return;
 
         thread.addMessage(parser.senderId, parser.messageText, parser.secondsSinceSent, parser.extraData);
 
-        setMessageThreads(prevValue => [...prevValue]);
-    }, [getMessageThreadWithIndex]);
+        setMessageThreads(prevValue => [ ...prevValue ]);
+    }, [ getMessageThreadWithIndex ]);
 
     UseMessageEventHook(NewConsoleMessageEvent, onNewConsoleMessageEvent);
 
@@ -105,14 +105,14 @@ export const FriendsMessengerView: FC<{}> = props =>
     {
         const parser = event.getParser();
 
-        const [threadIndex, thread] = getMessageThreadWithIndex(parser.senderId);
+        const [ threadIndex, thread ] = getMessageThreadWithIndex(parser.senderId);
 
         if((threadIndex === -1) || !thread) return;
 
         thread.addMessage(null, parser.messageText, 0, null, MessengerThreadChat.ROOM_INVITE);
 
-        setMessageThreads(prevValue => [...prevValue]);
-    }, [getMessageThreadWithIndex]);
+        setMessageThreads(prevValue => [ ...prevValue ]);
+    }, [ getMessageThreadWithIndex ]);
 
     UseMessageEventHook(RoomInviteEvent, onRoomInviteEvent);
 
@@ -142,19 +142,16 @@ export const FriendsMessengerView: FC<{}> = props =>
 
         thread.addMessage(GetSessionDataManager().userId, messageText, 0, null, MessengerThreadChat.CHAT);
 
-        BatchUpdates(() =>
-        {
-            setMessageThreads(prevValue => [...prevValue]);
-            setMessageText('');
-        });
-    }, [messageThreads, activeThreadIndex, messageText]);
+        setMessageThreads(prevValue => [ ...prevValue ]);
+        setMessageText('');
+    }, [ messageThreads, activeThreadIndex, messageText ]);
 
     const onKeyDown = useCallback((event: KeyboardEvent<HTMLInputElement>) =>
     {
         if(event.key !== 'Enter') return;
 
         sendMessage();
-    }, [sendMessage]);
+    }, [ sendMessage ]);
 
     const linkReceived = useCallback((url: string) =>
     {
@@ -169,22 +166,19 @@ export const FriendsMessengerView: FC<{}> = props =>
             return;
         }
 
-        const [threadIndex] = getMessageThreadWithIndex(parseInt(parts[2]));
+        const [ threadIndex ] = getMessageThreadWithIndex(parseInt(parts[2]));
 
         if(threadIndex === -1) return;
 
-        BatchUpdates(() =>
-        {
-            setActiveThreadIndex(threadIndex);
-            setIsVisible(true);
-        });
-    }, [getMessageThreadWithIndex]);
+        setActiveThreadIndex(threadIndex);
+        setIsVisible(true);
+    }, [ getMessageThreadWithIndex ]);
 
     const closeThread = useCallback((threadIndex: number) =>
     {
         setHiddenThreadIndexes(prevValue =>
         {
-            const values = [...prevValue];
+            const values = [ ...prevValue ];
 
             if(values.indexOf(threadIndex) === -1) values.push(threadIndex);
 
@@ -202,19 +196,19 @@ export const FriendsMessengerView: FC<{}> = props =>
         AddEventLinkTracker(linkTracker);
 
         return () => RemoveLinkEventTracker(linkTracker);
-    }, [linkReceived]);
+    }, [ linkReceived ]);
 
     useEffect(() =>
     {
         if(!isVisible) return;
 
         if(activeThreadIndex === -1) setActiveThreadIndex(0);
-    }, [isVisible, activeThreadIndex]);
+    }, [ isVisible, activeThreadIndex ]);
 
     useEffect(() =>
     {
         if(hiddenThreadIndexes.indexOf(activeThreadIndex) >= 0) setActiveThreadIndex(0);
-    }, [activeThreadIndex, hiddenThreadIndexes]);
+    }, [ activeThreadIndex, hiddenThreadIndexes ]);
 
     useEffect(() =>
     {
@@ -230,7 +224,7 @@ export const FriendsMessengerView: FC<{}> = props =>
             activeThread.setRead();
             setUpdateValue({});
         }
-    }, [isVisible, messageThreads, activeThreadIndex]);
+    }, [ isVisible, messageThreads, activeThreadIndex ]);
 
     useEffect(() =>
     {
@@ -258,13 +252,13 @@ export const FriendsMessengerView: FC<{}> = props =>
         if(isUnread) PlaySound(SoundNames.MESSENGER_MESSAGE_RECEIVED);
 
         DispatchUiEvent(new FriendsMessengerIconEvent(FriendsMessengerIconEvent.UPDATE_ICON, isUnread ? FriendsMessengerIconEvent.UNREAD_ICON : FriendsMessengerIconEvent.SHOW_ICON));
-    }, [visibleThreads, updateValue]);
+    }, [ visibleThreads, updateValue ]);
 
     if(!isVisible) return null;
 
     return (
-        <NitroCardView className="nitro-friends-messenger" uniqueKey="nitro-friends-messenger" theme="messenger">
-            <NitroCardHeaderView headerText={LocalizeText('messenger.window.title', ['OPEN_CHAT_COUNT'], [visibleThreads.length.toString()])} onCloseClick={event => setIsVisible(false)} />
+        <NitroCardView className="nitro-friends-messenger" uniqueKey="nitro-friends-messenger" theme="primary-slim">
+            <NitroCardHeaderView headerText={LocalizeText('messenger.window.title', [ 'OPEN_CHAT_COUNT' ], [ visibleThreads.length.toString() ])} onCloseClick={event => setIsVisible(false)} />
             <NitroCardContentView>
                     <Column fullWidth size={ 4 }>
                         <div className="d-flex h-100 overflow-auto gap-2">
