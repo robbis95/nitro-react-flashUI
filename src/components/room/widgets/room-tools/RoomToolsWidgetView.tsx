@@ -74,11 +74,22 @@ export const RoomToolsWidgetView: FC<{}> = props =>
             </div>
             {show && (
             <><Column center className="nitro-room-tools p-2">
-                    <Base pointer title={LocalizeText('room.settings.button.text')} className="icon icon-cog" onClick={() => handleToolClick('settings')} />
-                    <Base pointer title={LocalizeText('room.zoom.button.text')} onClick={() => handleToolClick('zoom')} className={'icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn })} />
-                    <Base pointer title={LocalizeText('room.chathistory.button.text')} onClick={() => handleToolClick('chat_history')} className="icon icon-chat-history" />
+                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('settings')}>
+                    <Base pointer title={LocalizeText('room.settings.button.text')} className="float-start icon icon-cog" />
+                    <p>{LocalizeText('room.settings.button.text')}</p>
+                    </div>
+                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('zoom')}>
+                    <Base pointer title={LocalizeText('room.zoom.button.text')} className={'float-start icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn })} />
+                    <p>{LocalizeText('room.zoom.button.text')}</p>
+                    </div>
+                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('chat_history')}>
+                    <Base pointer title={LocalizeText('room.chathistory.button.text')} className="icon icon-chat-history float-start" />
+                    <p>{LocalizeText('room.chathistory.button.text')}</p></div>
                     {navigatorData.canRate &&
-                        <Base pointer title={LocalizeText('room.like.button.text')} onClick={() => handleToolClick('like_room')} className="icon icon-like-room" />}
+                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('like_room')}>
+                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon icon-like-room float-start" />
+                        <p>{LocalizeText('room.like.button.text')}</p>
+                        </div>}
                 </Column></>
             )}
             <Column justifyContent="center">
