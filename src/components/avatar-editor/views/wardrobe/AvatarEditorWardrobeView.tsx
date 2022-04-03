@@ -71,7 +71,7 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
     }, [ savedFigures, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
 
     return (
-        <AutoGrid columnCount={ 5 } columnMinWidth={ 80 } columnMinHeight={ 140 }>
+        <AutoGrid columnCount={ 5 } columnMinWidth={ 40 } columnMinHeight={ 140 }>
             { figures }
         </AutoGrid>
     );

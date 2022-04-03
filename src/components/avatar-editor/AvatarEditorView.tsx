@@ -34,7 +34,7 @@ export const AvatarEditorView: FC<{}> = props =>
     const [ figureSetIds, setFigureSetIds ] = useState<number[]>([]);
     const [ boundFurnitureNames, setBoundFurnitureNames ] = useState<string[]>([]);
     const [ savedFigures, setSavedFigures ] = useState<[ IAvatarFigureContainer, string ][]>([]);
-    const [ isWardrobeVisible, setIsWardrobeVisible ] = useState(false);
+    const [ isWardrobeVisible, setIsWardrobeVisible ] = useState(true);
     const [ lastFigure, setLastFigure ] = useState<string>(null);
     const [ lastGender, setLastGender ] = useState<string>(null);
     const [ needsReset, setNeedsReset ] = useState(true);
@@ -303,11 +303,8 @@ export const AvatarEditorView: FC<{}> = props =>
             </NitroCardTabsView>
             <NitroCardContentView>
                 <Grid>
-                    <Column size={ 9 } overflow="hidden">
-                        { (activeCategory && !isWardrobeVisible) &&
-                            <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } /> }
-                        { isWardrobeVisible &&
-                            <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } /> }
+                    <Column size={ 6 } overflow="hidden">
+                            <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } />
                     </Column>
                     <Column size={ 3 } overflow="hidden">
                         <AvatarEditorFigurePreviewView figureData={ figureData } />
@@ -327,6 +324,9 @@ export const AvatarEditorView: FC<{}> = props =>
                                 { LocalizeText('avatareditor.save') }
                             </Button>
                         </Column>
+                    </Column>
+                    <Column size={ 3 } overflow="hidden">
+                            <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } />
                     </Column>
                 </Grid>
             </NitroCardContentView>
