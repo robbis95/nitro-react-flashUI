@@ -55,7 +55,7 @@ export const FriendsListGroupItemView: FC<{ friend: MessengerFriend, selected: b
     if(!friend) return null;
 
     return (
-        <NitroCardAccordionItemView justifyContent="between" className={ `px-2 py-1 ${ selected && 'bg-primary text-white' }` } onClick={ event => selectFriend(friend.id) }>
+        <NitroCardAccordionItemView justifyContent="between" className={ `friend-tab px-2 py-1 ${ selected && 'bg-primary text-white' }` } onClick={ event => selectFriend(friend.id) }>
             <Flex alignItems="center" gap={ 1 }>
                 <Base onClick={ event => event.stopPropagation() }>
                     <UserProfileIconView userId={ friend.id } />
