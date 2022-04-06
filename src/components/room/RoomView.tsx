@@ -1,6 +1,6 @@
 import { EventDispatcher, IRoomSession, NitroRectangle, RoomGeometry, RoomVariableEnum, Vector3d } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useRef, useState } from 'react';
-import { DispatchMouseEvent, DispatchTouchEvent, DoorbellWidgetHandler, FriendRequestHandler, FurniChooserWidgetHandler, FurnitureContextMenuWidgetHandler, FurnitureCreditWidgetHandler, FurnitureCustomStackHeightWidgetHandler, FurnitureDimmerWidgetHandler, FurnitureExternalImageWidgetHandler, FurnitureInternalLinkHandler, FurnitureMannequinWidgetHandler, FurniturePresentWidgetHandler, FurnitureRoomLinkHandler, FurnitureYoutubeDisplayWidgetHandler, GetNitroInstance, GetRoomEngine, InitializeRoomInstanceRenderingCanvas, IRoomWidgetHandlerManager, PollWidgetHandler, RoomWidgetAvatarInfoHandler, RoomWidgetChatHandler, RoomWidgetChatInputHandler, RoomWidgetHandlerManager, RoomWidgetInfostandHandler, RoomWidgetRoomToolsHandler, RoomWidgetUpdateRoomViewEvent, UserChooserWidgetHandler, WordQuizWidgetHandler } from '../../api';
+import { DispatchMouseEvent, DispatchTouchEvent, FurniChooserWidgetHandler, FurnitureContextMenuWidgetHandler, FurnitureCreditWidgetHandler, FurnitureCustomStackHeightWidgetHandler, FurnitureDimmerWidgetHandler, FurnitureExternalImageWidgetHandler, FurnitureInternalLinkHandler, FurnitureMannequinWidgetHandler, FurniturePresentWidgetHandler, FurnitureRoomLinkHandler, FurnitureYoutubeDisplayWidgetHandler, GetNitroInstance, GetRoomEngine, InitializeRoomInstanceRenderingCanvas, IRoomWidgetHandlerManager, PollWidgetHandler, RoomWidgetAvatarInfoHandler, RoomWidgetChatHandler, RoomWidgetChatInputHandler, RoomWidgetHandlerManager, RoomWidgetInfostandHandler, RoomWidgetRoomToolsHandler, RoomWidgetUpdateRoomViewEvent, UserChooserWidgetHandler, WordQuizWidgetHandler } from '../../api';
 import { Base } from '../../common';
 import { RoomColorView } from './RoomColorView';
 import { RoomContextProvider } from './RoomContext';
@@ -38,10 +38,8 @@ export const RoomView: FC<RoomViewProps> = props =>
         widgetHandlerManager.registerHandler(new RoomWidgetChatInputHandler());
         widgetHandlerManager.registerHandler(new RoomWidgetChatHandler());
         widgetHandlerManager.registerHandler(new UserChooserWidgetHandler());
-        widgetHandlerManager.registerHandler(new DoorbellWidgetHandler());
         widgetHandlerManager.registerHandler(new WordQuizWidgetHandler());
         widgetHandlerManager.registerHandler(new PollWidgetHandler());
-        widgetHandlerManager.registerHandler(new FriendRequestHandler());
 
         widgetHandlerManager.registerHandler(new FurniChooserWidgetHandler());
         widgetHandlerManager.registerHandler(new FurnitureContextMenuWidgetHandler());
@@ -57,7 +55,7 @@ export const RoomView: FC<RoomViewProps> = props =>
 
         setWidgetHandler(widgetHandlerManager);
 
-        GetNitroInstance().renderer.resize(window.innerWidth, window.innerHeight);
+        GetNitroInstance().renderer.resize((window.innerWidth * window.devicePixelRatio), (window.innerHeight * window.devicePixelRatio));
 
         const canvasId = 1;
 
@@ -97,19 +95,27 @@ export const RoomView: FC<RoomViewProps> = props =>
 
         if(!canvas) return;
 
-        canvas.onclick          = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
-        canvas.onmousemove      = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
-        canvas.onmousedown      = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
-        canvas.onmouseup        = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
+        if(window.devicePixelRatio !== 1)
+        {
+            let scaleValue = (1 / window.devicePixelRatio);
 
-        canvas.ontouchstart     = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
-        canvas.ontouchmove      = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
-        canvas.ontouchend       = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
-        canvas.ontouchcancel    = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
+            canvas.style.transform = `scale(${ scaleValue })`;
+            canvas.style.transformOrigin = 'top left';
+        }
+
+        canvas.onclick = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
+        canvas.onmousemove = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
+        canvas.onmousedown = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
+        canvas.onmouseup = event => DispatchMouseEvent(roomSession.roomId, canvasId, event);
+
+        canvas.ontouchstart = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
+        canvas.ontouchmove = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
+        canvas.ontouchend = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
+        canvas.ontouchcancel = event => DispatchTouchEvent(roomSession.roomId, canvasId, event);
 
         window.onresize = () =>
         {
-            GetNitroInstance().renderer.resize(window.innerWidth, window.innerHeight);
+            GetNitroInstance().renderer.resize((window.innerWidth * window.devicePixelRatio), (window.innerHeight * window.devicePixelRatio));
             
             InitializeRoomInstanceRenderingCanvas(roomSession.roomId, canvasId, GetNitroInstance().width, GetNitroInstance().height);
 

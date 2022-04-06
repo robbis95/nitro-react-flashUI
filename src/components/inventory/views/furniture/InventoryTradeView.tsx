@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IObjectData, TradingListAddItemComposer, TradingListAddItemsComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { FurniCategory, GroupItem, IFurnitureItem, LocalizeText, NotificationAlertType, NotificationUtilities, SendMessageComposer, TradeState } from '../../../../api';
+import { FurniCategory, getGuildFurniType, GroupItem, IFurnitureItem, LocalizeText, NotificationAlertType, NotificationUtilities, SendMessageComposer, TradeState } from '../../../../api';
 import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutGridItem, Text } from '../../../../common';
 import { useInventoryTrade } from '../../../../hooks';
-import { getGuildFurniType } from '../../../../hooks/inventory/common/TradingUtilities';
 import { InventoryFurnitureSearchView } from './InventoryFurnitureSearchView';
 
 interface InventoryTradeViewProps
@@ -161,9 +160,9 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                             return (
                                 <LayoutGridItem key={ index } className={ !count ? 'opacity-0-5 ' : '' } itemImage={ item.iconUrl } itemCount={ count } itemActive={ (groupItem === item) } itemUniqueNumber={ item.stuffData.uniqueNumber } onClick={ event => (count && setGroupItem(item)) }>
                                     { ((count > 0) && (groupItem === item)) &&
-                                            <Button position="absolute" variant="success" className="trade-button bottom-1 end-1" onClick={ event => attemptItemOffer(1) }>
-                                                <FontAwesomeIcon icon="chevron-right" />
-                                            </Button> }
+                                    <Button position="absolute" variant="success" className="trade-button bottom-1 end-1" onClick={ event => attemptItemOffer(1) }>
+                                        <FontAwesomeIcon icon="chevron-right" />
+                                    </Button> }
                                 </LayoutGridItem>
                             );
                         }) }
@@ -190,9 +189,9 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                 return (
                                     <LayoutGridItem key={ i } itemActive={ (ownGroupItem === item) } itemImage={ item.iconUrl } itemCount={ item.getTotalCount() } itemUniqueNumber={ item.stuffData.uniqueNumber } onClick={ event => setOwnGroupItem(item) }>
                                         { (ownGroupItem === item) &&
-                                                <Button position="absolute" variant="danger" className="trade-button bottom-1 start-1" onClick={ event => removeItem(item) }>
-                                                    <FontAwesomeIcon icon="chevron-left" />
-                                                </Button> }
+                                        <Button position="absolute" variant="danger" className="trade-button bottom-1 start-1" onClick={ event => removeItem(item) }>
+                                            <FontAwesomeIcon icon="chevron-left" />
+                                        </Button> }
                                     </LayoutGridItem>
                                 );
                             }) }

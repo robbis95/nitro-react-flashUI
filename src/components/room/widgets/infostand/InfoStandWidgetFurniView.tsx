@@ -188,7 +188,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 
         while(i < furniKeys.length)
         {
-            const key   = furniKeys[i];
+            const key = furniKeys[i];
             const value = furniValues[i];
 
             data = (data + (key + '=' + value + '\t'));
@@ -204,7 +204,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         if(!action || (action === '')) return;
 
         let messageType: string = null;
-        let objectData: string  = null;
+        let objectData: string = null;
 
         switch(action)
         {
@@ -369,7 +369,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                 { canUse &&
                     <Button variant="dark" onClick={ event => processButtonAction('use') }>
                         { LocalizeText('infostand.button.use') }
-                    </Button>}
+                    </Button> }
                 { ((furniKeys.length > 0 && furniValues.length > 0) && (furniKeys.length === furniValues.length)) &&
                     <Button variant="dark" onClick={ () => processButtonAction('save_branding_configuration') }>
                         { LocalizeText('save') }

@@ -55,13 +55,13 @@ export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = pro
                     <FontAwesomeIcon icon={ isExtended ? 'minus' : 'plus' } className="nav-icons" />
                     <div className="nav-category"> { LocalizeText(getResultTitle()) }</div>
                 </Flex>
-                <FontAwesomeIcon icon={ ((displayMode === NavigatorSearchResultViewDisplayMode.LIST) ? 'th' : (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) ? 'bars' : null) } className="nav-icons" onClick={ toggleDisplayMode } />
-            </Flex> {isExtended && 
+                <FontAwesomeIcon icon={ ((displayMode === NavigatorSearchResultViewDisplayMode.LIST) ? 'th' : (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) ? 'bars' : null) } className="text-secondary" onClick={ toggleDisplayMode } />
+            </Flex> { isExtended && 
                 <>
                     {
-                        gridHasTwoColumns ? <AutoGrid columnCount={3} {...rest} columnMinWidth={110} columnMinHeight={130} className="mx-2">
-                            {searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView key={index} roomData={room} thumbnail={ true } />) }
-                        </AutoGrid> : <Grid columnCount={ 1 } className='navigator-grid' gap={ 0 }>
+                        gridHasTwoColumns ? <AutoGrid columnCount={ 3 } { ...rest } columnMinWidth={ 110 } columnMinHeight={ 130 } className="mx-2">
+                            { searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView key={ index } roomData={ room } thumbnail={ true } />) }
+                        </AutoGrid> : <Grid columnCount={ 1 } className="navigator-grid" gap={ 0 }>
                             { searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView key={ index } roomData={ room } />) }
                         </Grid>
                     }

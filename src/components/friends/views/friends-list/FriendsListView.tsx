@@ -1,30 +1,21 @@
-import { RemoveFriendComposer, SendRoomInviteComposer } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useMemo, useState } from 'react';
-import { LocalizeText, SendMessageComposer } from '../../../../api';
+import { ILinkEventTracker, RemoveFriendComposer, SendRoomInviteComposer } from '@nitrots/nitro-renderer';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { AddEventLinkTracker, LocalizeText, MessengerFriend, RemoveLinkEventTracker, SendMessageComposer } from '../../../../api';
 import { Button, Flex, NitroCardAccordionSetView, NitroCardAccordionView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
-import { NitroCardAccordionSetInnerView } from '../../../../common/card/accordion/NitroCardAccordionSetInnerView';
-import { MessengerFriend } from '../../common/MessengerFriend';
-import { MessengerRequest } from '../../common/MessengerRequest';
+import { useFriends } from '../../../../hooks';
 import { FriendsListGroupView } from './friends-list-group/FriendsListGroupView';
 import { FriendsListRequestView } from './friends-list-request/FriendsListRequestView';
-import { FriendsRemoveConfirmationView } from './FriendsRemoveConfirmationView';
-import { FriendsRoomInviteView } from './FriendsRoomInviteView';
-import { FriendsSearchView } from './FriendsSearchView';
+import { FriendsRemoveConfirmationView } from './FriendsListRemoveConfirmationView';
+import { FriendsRoomInviteView } from './FriendsListRoomInviteView';
+import { FriendsSearchView } from './FriendsListSearchView';
 
-interface FriendsListViewProps
+export const FriendsListView: FC<{}> = props =>
 {
-    onCloseClick: () => void;
-    onlineFriends: MessengerFriend[];
-    offlineFriends: MessengerFriend[];
-    friendRequests: MessengerRequest[];
-}
-
-export const FriendsListView: FC<FriendsListViewProps> = props =>
-{
-    const { onlineFriends = [], offlineFriends = [], friendRequests = [], onCloseClick = null } = props;
+    const [ isVisible, setIsVisible ] = useState(false);
     const [ selectedFriendsIds, setSelectedFriendsIds ] = useState<number[]>([]);
     const [ showRoomInvite, setShowRoomInvite ] = useState<boolean>(false);
     const [ showRemoveFriendsConfirmation, setShowRemoveFriendsConfirmation ] = useState<boolean>(false);
+    const { onlineFriends = [], offlineFriends = [], requests = [], requestFriend = null } = useFriends();
 
     const removeFriendsText = useMemo(() =>
     {
@@ -91,37 +82,63 @@ export const FriendsListView: FC<FriendsListViewProps> = props =>
         setShowRemoveFriendsConfirmation(false);
     }
 
+    useEffect(() =>
+    {
+        const linkTracker: ILinkEventTracker = {
+            linkReceived: (url: string) =>
+            {
+                const parts = url.split('/');
+
+                if(parts.length < 2) return;
+        
+                switch(parts[1])
+                {
+                    case 'show':
+                        setIsVisible(true);
+                        return;
+                    case 'hide':
+                        setIsVisible(false);
+                        return;
+                    case 'toggle':
+                        setIsVisible(prevValue => !prevValue);
+                        return;
+                    case 'request':
+                        if(parts.length < 4) return;
+
+                        requestFriend(parseInt(parts[2]), parts[3]);
+                }
+            },
+            eventUrlPrefix: 'friends/'
+        };
+
+        AddEventLinkTracker(linkTracker);
+
+        return () => RemoveLinkEventTracker(linkTracker);
+    }, [ requestFriend ]);
+
+    if(!isVisible) return null;
+
     return (
         <>
-            <NitroCardView className="nitro-friends" uniqueKey="nitro-friends" theme="friendlist">
-                <NitroCardHeaderView headerText={ LocalizeText('friendlist.friends') } onCloseClick={ onCloseClick } />
+            <NitroCardView className="nitro-friends" uniqueKey="nitro-friends" theme="primary-slim">
+                <NitroCardHeaderView headerText={ LocalizeText('friendlist.friends') } onCloseClick={ event => setIsVisible(false) } />
                 <NitroCardContentView overflow="hidden" gap={ 1 } className="text-black p-0">
                     <NitroCardAccordionView fullHeight overflow="hidden">
-                        <NitroCardAccordionSetView className="friend-headers" headerText={ LocalizeText('friendlist.friends')} isExpanded={ true }>
-                        <NitroCardAccordionSetInnerView headerText={ LocalizeText('friendlist.friends') + ` (${onlineFriends.length})` } isExpanded={ true }>
+                        <NitroCardAccordionSetView headerText={ LocalizeText('friendlist.friends') + ` (${ onlineFriends.length })` } isExpanded={ true }>
                             <FriendsListGroupView list={ onlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
-                        </NitroCardAccordionSetInnerView>
-                        <NitroCardAccordionSetInnerView headerText={ LocalizeText('friendlist.friends.offlinecaption') + ` (${offlineFriends.length})` } isExpanded={ true }>
-                            <FriendsListGroupView list={ offlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
-                        </NitroCardAccordionSetInnerView>
-                        { selectedFriendsIds && selectedFriendsIds.length === 0 &&
-                        <Flex gap={ 1 } className="friend-active-tab p-1">
-                            <div className="friend-follow-icon" />
-                            <div className="friend-profile-icon" />
-                            <div className="friend-delete-icon" />
-                        </Flex> } 
-                        { selectedFriendsIds && selectedFriendsIds.length > 0 &&
-                        <Flex gap={ 1 } className="friend-active-tab p-1">
-                            <div className="friend-follow-icon active" onClick={ () => setShowRoomInvite(true) } />
-                            <div className="friend-profile-icon active" />
-                            <div className="friend-delete-icon active" onClick={ event => setShowRemoveFriendsConfirmation(true) } />
-                        </Flex> } 
                         </NitroCardAccordionSetView>
-                        <FriendsListRequestView className="friend-req-headers" headerText={ LocalizeText('friendlist.tab.friendrequests') + ` (${ friendRequests.length })` } requests={ friendRequests } />
-                        <FriendsSearchView className="search-headers" headerText={ LocalizeText('people.search.title') } />
+                        <NitroCardAccordionSetView headerText={ LocalizeText('friendlist.friends.offlinecaption') + ` (${ offlineFriends.length })` }>
+                            <FriendsListGroupView list={ offlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
+                        </NitroCardAccordionSetView>
+                        <FriendsListRequestView headerText={ LocalizeText('friendlist.tab.friendrequests') + ` (${ requests.length })` } isExpanded={ true } />
+                        <FriendsSearchView headerText={ LocalizeText('people.search.title') } />
                     </NitroCardAccordionView>
+                    { selectedFriendsIds && selectedFriendsIds.length > 0 &&
+                        <Flex gap={ 1 } className="p-1">
+                            <Button fullWidth onClick={ () => setShowRoomInvite(true) }>{ LocalizeText('friendlist.tip.invite') }</Button>
+                            <Button fullWidth variant="danger" onClick={ event => setShowRemoveFriendsConfirmation(true) }>{ LocalizeText('generic.delete') }</Button>
+                        </Flex> } 
                 </NitroCardContentView>
-                <div className="friendlist-bottom p-1"></div>
             </NitroCardView>
             { showRoomInvite &&
                 <FriendsRoomInviteView selectedFriendsIds={ selectedFriendsIds } onCloseClick={ () => setShowRoomInvite(false) } sendRoomInvite={ sendRoomInvite } /> }
