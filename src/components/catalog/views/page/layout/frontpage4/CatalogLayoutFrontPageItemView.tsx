@@ -28,7 +28,7 @@ export const CatalogLayoutFrontPageItemView: FC<CatalogLayoutFrontPageItemViewPr
 
     return (
         <LayoutBackgroundImage imageUrl={ imageUrl } classNames={ getClassNames } position={ position } fullHeight={ fullHeight } pointer={ pointer } overflow={ overflow } { ...rest }>
-            <Text position="absolute" variant="white" className="bg-dark rounded p-2 m-2 bottom-0">
+            <Text position="absolute" variant="white" className="nitro-front-page-item-text p-2 m-2 bottom-0">
                 { item.itemName }
             </Text>
             { children }

@@ -158,6 +158,15 @@
     }
 }
 
+.nitro-front-page-item-text {
+    border-image-source: url(../../assets/flash/catalogue/cata_feature_text_bg.png);
+    border-image-slice: 6 6 6 6 fill; 
+    border-image-width: 6px 6px 6px 6px;
+    width: 96%;
+    font-family: Ubuntubold;
+    font-size: 16px;
+}
+
 .voucher-box {
     border-image-source: url(../../assets/flash/catalogue/voucer_bg.png);
     border-image-slice: 6 6 6 6 fill; 
