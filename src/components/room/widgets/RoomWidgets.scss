@@ -4,14 +4,23 @@
     left: 0;
 
     .nitro-room-tools {
-        background: rgba($dark,.95);
-        box-shadow: inset 0px 5px lighten(rgba($dark,.6),2.5), inset 0 -4px darken(rgba($dark,.6),4);
-        border-top-right-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
+        border-image-source: url('../../../assets/flash/boxes/card/room_info_bg.png');
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
         transition: all .2s ease;
         z-index: 2;
-        margin-left: -5px;
+        margin-left: -10px;
         width: 150px;
+
+        p {
+            color: #9f9f9e;
+            font-size: 13px;
+            text-decoration: underline;
+        }
+
+        .icon-width {
+            min-width: 25px;
+        }
     
         .list-group-item {
             background: transparent;
@@ -111,6 +120,7 @@
 }
 
 .room-tool-item {
+    height: 20px;
     cursor: pointer;
 }
 

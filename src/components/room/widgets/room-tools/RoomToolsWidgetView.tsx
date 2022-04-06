@@ -77,21 +77,21 @@ export const RoomToolsWidgetView: FC<{}> = props =>
                 <div className={'toggle-icon ' + classNames({ 'right': !show, 'left': show })} />
             </div>
             {show && (
-            <><Column center className="nitro-room-tools p-2">
+            <><Column gap={ 1 } center className="nitro-room-tools p-2 px-3">
                     <div className="w-100 room-tool-item" onClick={() => handleToolClick('settings')}>
-                    <Base pointer title={LocalizeText('room.settings.button.text')} className="float-start icon icon-cog" />
+                    <Base pointer title={LocalizeText('room.settings.button.text')} className="icon-width float-start icon icon-cog" />
                     <p>{LocalizeText('room.settings.button.text')}</p>
                     </div>
                     <div className="w-100 room-tool-item" onClick={() => handleToolClick('zoom')}>
-                    <Base pointer title={LocalizeText('room.zoom.button.text')} className={'float-start icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn })} />
+                    <Base pointer title={LocalizeText('room.zoom.button.text')} className={'icon-width float-start icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn })} />
                     <p>{LocalizeText('room.zoom.button.text')}</p>
                     </div>
                     <div className="w-100 room-tool-item" onClick={() => handleToolClick('chat_history')}>
-                    <Base pointer title={LocalizeText('room.chathistory.button.text')} className="icon icon-chat-history float-start" />
+                    <Base pointer title={LocalizeText('room.chathistory.button.text')} className="icon-width icon icon-chat-history float-start" />
                     <p>{LocalizeText('room.chathistory.button.text')}</p></div>
                     {navigatorData.canRate &&
                     <div className="w-100 room-tool-item" onClick={() => handleToolClick('like_room')}>
-                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon icon-like-room float-start" />
+                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-like-room float-start" />
                         <p>{LocalizeText('room.like.button.text')}</p>
                         </div>}
                 </Column></>
