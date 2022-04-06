@@ -1,69 +1,99 @@
-import { FC, useCallback, useState } from 'react';
-import { RoomWidgetUpdateFriendRequestEvent } from '../../../../api';
-import { UseEventDispatcherHook } from '../../../../hooks';
+import { RoomObjectCategory, RoomObjectUserType } from '@nitrots/nitro-renderer';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { MessengerRequest, RoomWidgetUpdateRoomObjectEvent } from '../../../../api';
+import { UseEventDispatcherHook, useFriends } from '../../../../hooks';
 import { useRoomContext } from '../../RoomContext';
 import { FriendRequestDialogView } from './FriendRequestDialogView';
 
 export const FriendRequestWidgetView: FC<{}> = props =>
 {
-    const [ friendRequests, setFriendRequests ] = useState<{ requestId: number, userId: number, userName: string }[]>([]);
-    const { eventDispatcher = null } = useRoomContext();
+    const [ displayedRequests, setDisplayedRequests ] = useState<{ roomIndex: number, request: MessengerRequest }[]>([]);
+    const [ dismissedRequestIds, setDismissedRequestIds ] = useState<number[]>([]);
+    const { roomSession = null, eventDispatcher = null } = useRoomContext();
+    const { requests = [] } = useFriends();
 
-    const showFriendRequest = useCallback((requestId: number, userId: number, userName: string) =>
+    const hideFriendRequest = (userId: number) =>
     {
-        const index = friendRequests.findIndex(value => (value.userId === userId));
-
-        if(index >= 0) return;
-
-        setFriendRequests(prevValue =>
+        setDismissedRequestIds(prevValue =>
         {
+            if(prevValue.indexOf(userId) >= 0) return prevValue;
+
             const newValue = [ ...prevValue ];
 
-            newValue.push({ requestId, userId, userName });
+            newValue.push(userId);
 
             return newValue;
         });
-    }, [ friendRequests ]);
+    }
 
-    const hideFriendRequest = useCallback((requestId: number) =>
+    const onRoomWidgetUpdateRoomObjectEvent = useCallback((event: RoomWidgetUpdateRoomObjectEvent) =>
     {
-        const index = friendRequests.findIndex(value => (value.requestId === requestId));
+        if(event.category !== RoomObjectCategory.UNIT) return;
+        
+        const userData = roomSession.userDataManager.getUserDataByIndex(event.id);
 
-        if(index === -1) return;
-
-        setFriendRequests(prevValue =>
+        if(userData && (userData.type === RoomObjectUserType.getTypeNumber(RoomObjectUserType.USER)))
         {
-            const newValue = [ ...prevValue ];
+            if(event.type === RoomWidgetUpdateRoomObjectEvent.USER_ADDED)
+            {
+                const request = requests.find(request => (request.requesterUserId === userData.webID));
+
+                if(!request || displayedRequests.find(request => (request.request.requesterUserId === userData.webID))) return;
+
+                const newValue = [ ...displayedRequests ];
+
+                newValue.push({ roomIndex: userData.roomIndex, request });
+
+                setDisplayedRequests(newValue);
+            }
+
+            return;
+        }
+
+        if(event.type === RoomWidgetUpdateRoomObjectEvent.USER_REMOVED)
+        {
+            const index = displayedRequests.findIndex(request => (request.roomIndex === event.id));
+
+            if(index === -1) return;
+
+            const newValue = [ ...displayedRequests ];
 
             newValue.splice(index, 1);
 
-            return newValue;
-        });
-    }, [ friendRequests ]);
-
-    const onRoomWidgetUpdateFriendRequestEvent = useCallback((event: RoomWidgetUpdateFriendRequestEvent) =>
-    {
-        switch(event.type)
-        {
-            case RoomWidgetUpdateFriendRequestEvent.SHOW_FRIEND_REQUEST:
-                showFriendRequest(event.requestId, event.userId, event.userName);
-                return;
-            case RoomWidgetUpdateFriendRequestEvent.HIDE_FRIEND_REQUEST:
-                hideFriendRequest(event.requestId);
-                return;
+            setDisplayedRequests(newValue);
         }
-    }, [ showFriendRequest, hideFriendRequest ]);
+    }, [ roomSession, requests, displayedRequests ]);
 
-    UseEventDispatcherHook(RoomWidgetUpdateFriendRequestEvent.SHOW_FRIEND_REQUEST, eventDispatcher, onRoomWidgetUpdateFriendRequestEvent);
-    UseEventDispatcherHook(RoomWidgetUpdateFriendRequestEvent.HIDE_FRIEND_REQUEST, eventDispatcher, onRoomWidgetUpdateFriendRequestEvent);
+    UseEventDispatcherHook(RoomWidgetUpdateRoomObjectEvent.USER_ADDED, eventDispatcher, onRoomWidgetUpdateRoomObjectEvent);
+    UseEventDispatcherHook(RoomWidgetUpdateRoomObjectEvent.USER_REMOVED, eventDispatcher, onRoomWidgetUpdateRoomObjectEvent);
 
-    if(!friendRequests.length) return null;
+    useEffect(() =>
+    {
+        if(!requests || !requests.length) return;
+
+        const newDisplayedRequests: { roomIndex: number, request: MessengerRequest }[] = [];
+
+        for(const request of requests)
+        {
+            const userData = roomSession.userDataManager.getUserData(request.requesterUserId);
+
+            if(!userData) continue;
+
+            newDisplayedRequests.push({ roomIndex: userData.roomIndex, request });
+        }
+
+        setDisplayedRequests(newDisplayedRequests);
+    }, [ roomSession, requests ]);
+
+    if(!requests.length) return null;
 
     return (
         <>
-            { friendRequests.map((request, index) =>
+            { displayedRequests.map((request, index) =>
             {
-                return <FriendRequestDialogView key={ index } { ...request } close={ () => hideFriendRequest(request.userId) } />
+                if(dismissedRequestIds.indexOf(request.request.requesterUserId) >= 0) return null;
+
+                return <FriendRequestDialogView key={ index } roomIndex={ request.roomIndex } request={ request.request } hideFriendRequest={ hideFriendRequest } />;
             }) }
         </>
     );
