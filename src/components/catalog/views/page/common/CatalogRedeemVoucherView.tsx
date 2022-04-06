@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RedeemVoucherMessageComposer, VoucherRedeemErrorMessageEvent, VoucherRedeemOkMessageEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useState } from 'react';
 import { LocalizeText, NotificationUtilities, SendMessageComposer } from '../../../../../api';
-import { Button, Flex } from '../../../../../common';
+import { Button, Column, Flex, Text } from '../../../../../common';
 import { UseMessageEventHook } from '../../../../../hooks';
 
 export interface CatalogRedeemVoucherViewProps
@@ -53,11 +53,14 @@ export const CatalogRedeemVoucherView: FC<CatalogRedeemVoucherViewProps> = props
     UseMessageEventHook(VoucherRedeemErrorMessageEvent, onVoucherRedeemErrorMessageEvent);
 
     return (
-        <Flex gap={ 1 }>
-            <input type="text" className="form-control form-control-sm" placeholder={ text } value={ voucher } onChange={ event => setVoucher(event.target.value) } />
+        <Column className="voucher-box p-2" gap={ 1 }>
+            <Text>{ text }</Text>
+            <Flex className="voucher-form" gap={ 5 }>
+            <input type="text" className="form-control form-control-sm" value={ voucher } onChange={ event => setVoucher(event.target.value) } />
             <Button variant="primary" onClick={ redeemVoucher } disabled={ isWaiting }>
-                <FontAwesomeIcon icon="tag" />
+                {LocalizeText('redeem')}
             </Button>
-        </Flex>
+            </Flex>
+        </Column>
     );
 }

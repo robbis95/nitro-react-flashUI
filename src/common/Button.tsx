@@ -12,7 +12,7 @@ export interface ButtonProps extends FlexProps
 
 export const Button: FC<ButtonProps> = props =>
 {
-    const { variant = 'primary', size = 'sm', active = false, disabled = false, classNames = [], ...rest } = props;
+    const { variant = 'primary', size = '', active = false, disabled = false, classNames = [], ...rest } = props;
 
     const getClassNames = useMemo(() =>
     {

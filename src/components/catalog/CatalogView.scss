@@ -157,3 +157,14 @@
         background-color: transparent;
     }
 }
+
+.voucher-box {
+    border-image-source: url(../../assets/flash/catalogue/voucer_bg.png);
+    border-image-slice: 6 6 6 6 fill; 
+    border-image-width: 6px 6px 6px 6px;
+    font-size: 13px;
+}
+
+.voucher-form {
+    height: 24px;
+}
