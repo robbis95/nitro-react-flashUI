@@ -33,7 +33,7 @@
     }
 
     &:not(.name-only) {
-        min-width: 125px;
+        min-width: 45px;
 
         &:after {
             content: "";
@@ -54,11 +54,15 @@
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         color: $white;
-        min-width: 117px;
         height: 27px;
-        max-height: 27px;
         font-size: 12px;
         margin-top: -6px;
+        padding-top: 0.25rem;
+        }
+
+        .menu-bottom-closed {
+            height: 25px;
+            padding-top: 0px;
         }
 
     .menu-header {
@@ -81,7 +85,7 @@
     .menu-list-split-3 {
 
         .menu-item {
-            margin-right: 2px;
+            margin-right: -1px;
 
             &:nth-child(3n+3) {
                 margin-right: unset;

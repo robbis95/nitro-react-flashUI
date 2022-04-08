@@ -292,7 +292,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }</Column>)}
-                <ContextMenuBottomView className={'cursor-pointer '} onClick={() => setHide(!hide)}>
+                <ContextMenuBottomView className={'cursor-pointer ' + classNames({ 'menu-bottom-closed': hide })} onClick={() => setHide(!hide)}>
                     <div className={'icon icon-context-menu-arrow-' + classNames({ 'down': !hide, 'up': hide })} />
                 </ContextMenuBottomView>
         </ContextMenuView>

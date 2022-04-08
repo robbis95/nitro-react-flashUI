@@ -7,7 +7,7 @@ export const ContextMenuBottomView: FC<FlexProps> = props =>
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'menu-bottom', 'pt-1' ];
+        const newClassNames: string[] = [ 'menu-bottom' ];
 
         if(classNames.length) newClassNames.push(...classNames);
 
