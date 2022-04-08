@@ -2,13 +2,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AvatarAction, AvatarExpressionEnum, RoomControllerLevel, RoomObjectCategory } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useMemo, useState } from 'react';
 import { CreateLinkEvent, GetCanStandUp, GetCanUseExpression, GetOwnPosture, GetUserProfile, HasHabboClub, HasHabboVip, IsRidingHorse, LocalizeText, RoomWidgetAvatarExpressionMessage, RoomWidgetChangePostureMessage, RoomWidgetDanceMessage, RoomWidgetMessage, RoomWidgetUpdateDecorateModeEvent, RoomWidgetUpdateInfostandUserEvent, RoomWidgetUserActionMessage } from '../../../../api';
-import { Flex, LayoutCurrencyIcon } from '../../../../common';
+import { Column, Flex, LayoutCurrencyIcon } from '../../../../common';
 import { HelpNameChangeEvent } from '../../../../events';
 import { DispatchUiEvent } from '../../../../hooks';
 import { useRoomContext } from '../../RoomContext';
+import { ContextMenuBottomView } from '../context-menu/ContextMenuBottomView';
 import { ContextMenuHeaderView } from '../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../context-menu/ContextMenuListItemView';
 import { ContextMenuView } from '../context-menu/ContextMenuView';
+import classNames from 'classnames';
 
 interface AvatarInfoWidgetOwnAvatarViewProps
 {
@@ -28,6 +30,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
     const { userData = null, isDancing = false, close = null } = props;
     const [ mode, setMode ] = useState((isDancing && HasHabboClub()) ? MODE_CLUB_DANCES : MODE_NORMAL);
     const { roomSession = null, eventDispatcher = null, widgetHandler = null } = useRoomContext();
+    const [ hide, setHide ] = useState(false);
 
     const processAction = useCallback((name: string) =>
     {
@@ -122,9 +125,12 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
 
     return (
         <ContextMenuView objectId={ userData.roomIndex } category={ RoomObjectCategory.UNIT } userType={ userData.userType } close={ close }>
+            {!hide && (
             <ContextMenuHeaderView className="cursor-pointer" onClick={ event => GetUserProfile(userData.webID) }>
                 { userData.name }
-            </ContextMenuHeaderView>
+            </ContextMenuHeaderView>)}
+            {!hide && (
+            <Column gap={ 0 }>
             { (mode === MODE_NORMAL) &&
                 <>
                     { userData.allowNameChange &&
@@ -140,7 +146,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                     </ContextMenuListItemView>
                     { (HasHabboClub() && !isRidingHorse) &&
                         <ContextMenuListItemView onClick={ event => processAction('dance_menu') }>
-                            <FontAwesomeIcon icon="chevron-right" className="right" />
                             { LocalizeText('widget.memenu.dance') }
                         </ContextMenuListItemView> }
                     { (!isDancing && !HasHabboClub() && !isRidingHorse) &&
@@ -152,11 +157,9 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                             { LocalizeText('widget.memenu.dance.stop') }
                         </ContextMenuListItemView> }
                     <ContextMenuListItemView onClick={ event => processAction('expressions') }>
-                        <FontAwesomeIcon icon="chevron-right" className="right" />
                         { LocalizeText('infostand.link.expressions') }
                     </ContextMenuListItemView>
                     <ContextMenuListItemView onClick={ event => processAction('signs') }>
-                        <FontAwesomeIcon icon="chevron-right" className="right" />
                         { LocalizeText('infostand.show.signs') }
                     </ContextMenuListItemView>
                     { (userData.carryItem > 0) &&
@@ -183,7 +186,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         { LocalizeText('widget.memenu.dance4') }
                     </ContextMenuListItemView>
                     <ContextMenuListItemView onClick={ event => processAction('back') }>
-                        <FontAwesomeIcon icon="chevron-left" className="left" />
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }
@@ -215,7 +217,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         { LocalizeText('widget.memenu.idle') }
                     </ContextMenuListItemView>
                     <ContextMenuListItemView onClick={ event => processAction('back') }>
-                        <FontAwesomeIcon icon="chevron-left" className="left" />
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }
@@ -288,10 +289,12 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         </ContextMenuListItemView>
                     </Flex>
                     <ContextMenuListItemView onClick={ event => processAction('back') }>
-                        <FontAwesomeIcon icon="chevron-left" className="left" />
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
-                </> }
+                </> }</Column>)}
+                <ContextMenuBottomView className={'cursor-pointer '} onClick={() => setHide(!hide)}>
+                    <div className={'icon icon-context-menu-arrow-' + classNames({ 'down': !hide, 'up': hide })} />
+                </ContextMenuBottomView>
         </ContextMenuView>
     );
 }

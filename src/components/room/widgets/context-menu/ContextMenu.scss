@@ -1,8 +1,5 @@
 .nitro-context-menu {
     padding: 2px;
-    background-color: $gable-green;
-    border: 2px solid rgba($white, 0.5);
-    border-radius: $border-radius;
     font-size: $font-size-sm;
     z-index: $context-menu-zindex;
     pointer-events: all;
@@ -13,11 +10,26 @@
     }
 
     &.name-only {
-        background-color: rgba($black, 0.5);
-        padding: 1px 8px;
+        border-image-source: url(../../../../assets/flash/room/name_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        padding: 6px 18px;
         width: unset;
         text-align: center;
-        font-size: 18px;
+        font-size: 12px;
+
+        &:after {
+            content: "";
+            background-image: url(../../../../assets/flash/room/pointer_after.png);
+            background-repeat: no-repeat;
+            width: 11px;
+            height: 9px;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
     }
 
     &:not(.name-only) {
@@ -25,29 +37,46 @@
 
         &:after {
             content: "";
+            background-image: url(../../../../assets/flash/room/context_pointer_after.png);
+            background-repeat: no-repeat;
+            width: 11px;
+            height: 9px;
             position: absolute;
-            bottom: -7px;
+            bottom: -4px;
             left: 0;
             right: 0;
             margin: auto;
-            height: 10px;
-            width: 10px;
-            transform: rotate(45deg);
-            border-color: transparent rgba($white, 0.5) rgba($white, 0.5) transparent;
-            border-style: solid;
-            border-width: 5px;
         }
     }
 
-    .menu-header {
-        background-color: $william;
+    .menu-bottom {
+        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
         color: $white;
         min-width: 117px;
-        height: 25px;
-        max-height: 25px;
-        font-size: 16px;
-        margin-bottom: 2px;
-    }
+        height: 27px;
+        max-height: 27px;
+        font-size: 12px;
+        margin-top: -6px;
+        }
+
+    .menu-header {
+        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        color: $white;
+        min-width: 117px;
+        height: 30px;
+        max-height: 30px;
+        font-size: 12px;
+        margin-bottom: -6px;
+        font-family: Ubuntubold;
+
+        &:hover {
+            color: #47a3cc;
+        }
+        }
 
     .menu-list-split-3 {
 
@@ -62,9 +91,11 @@
 
     .menu-item {
         position: relative;
-        margin-bottom: 2px;
+        border-bottom: 1px solid #4f4c48;
         padding: 3px;
         overflow: hidden;
+        border-right: 1px solid #000000;
+        border-left: 1px solid #000000;
 
         &:last-child {
             margin-bottom: 0;
@@ -79,11 +110,13 @@
             height: 24px;
             max-height: 24px;
             padding: 3px;
-            background: $bg-mirage-split-background;
+            background: repeating-linear-gradient(#2a2725, #2a2725 50%, #262321 50%, #262321 100%);            
             cursor: pointer;
+            font-size: 11px;
 
             &:not(.disabled):hover {
-                background: $bg-cello-split-background;
+                background: repeating-linear-gradient(#47a3cc, #47a3cc 50%, #4296bc 50%, #4296bc 100%);
+                text-decoration: underline;            
             }
 
             .fas,

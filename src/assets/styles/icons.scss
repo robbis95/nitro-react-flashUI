@@ -434,6 +434,26 @@
         height: 20px;
     }
 
+    &.icon-context-menu-arrow-down {
+        background: url(../flash/room/context_menu_arrow.png);
+        width: 10px;
+        height: 5px;
+
+        &:hover {
+            background: url(../flash/room/context_menu_arrow_hover.png);
+        }
+    }
+
+    &.icon-context-menu-arrow-up {
+        background: url(../flash/room/context_menu_arrow_up.png);
+        width: 10px;
+        height: 5px;
+
+        &:hover {
+            background: url(../flash/room/context_menu_arrow_up_hover.png);
+        }
+    }
+
     &.icon-group-favorite {
         background: url('../images/groups/icons/group_favorite.png');
         width: 14px;
