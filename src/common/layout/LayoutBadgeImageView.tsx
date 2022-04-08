@@ -92,9 +92,9 @@ export const LayoutBadgeImageView: FC<LayoutBadgeImageViewProps> = props =>
         if(!GetConfiguration('badge.descriptions.enabled', true)) return null;
 
         return (
-            <Base className="badge-information text-black py-1 px-2 small">
-                <div className="fw-bold mb-1">{ title }</div>
-                <div>{ description }</div>
+            <Base className="badge-information text-black pt-2 px-2 pb-4">
+                <div className="mb-1 pb-1">{ title }</div>
+                <div className="badge-desc">{ description }</div>
             </Base>
         );
     };

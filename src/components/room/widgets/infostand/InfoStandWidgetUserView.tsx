@@ -135,15 +135,15 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                     <Flex alignItems="center" justifyContent="between">
                         <Flex alignItems="center" gap={ 1 }>
                             <UserProfileIconView userId={ userData.webID } />
-                            <Text variant="white" small wrap>{ userData.name }</Text>
+                            <Text variant="white" wrap>{ userData.name }</Text>
                         </Flex>
-                        <FontAwesomeIcon icon="times" className="cursor-pointer" onClick={ close } />
+                        <i className="infostand-close" onClick={ close } />
                     </Flex>
                     <hr className="m-0" />
                 </Column>
                 <Column gap={ 1 }>
                     <Flex gap={ 1 }>
-                        <Column fullWidth className="body-image" onClick={ event => GetUserProfile(userData.webID) }>
+                        <Column fullWidth className="body-image infostand-thumb-bg" onClick={ event => GetUserProfile(userData.webID) }>
                             <LayoutAvatarImageView figure={ userData.figure } direction={ 4 } />
                         </Column>
                         <Column grow gap={ 0 }>
@@ -177,17 +177,17 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                     <hr className="m-0" />
                 </Column>
                 <Column gap={ 1 }>
-                    <Flex alignItems="center" className="bg-light-dark rounded py-1 px-2">
+                    <Flex alignItems="center" className="infostand-thumb-bg py-1 px-2">
                         { (userData.type !== RoomWidgetUpdateInfostandUserEvent.OWN_USER) &&
                             <Flex grow alignItems="center" className="motto-content">
-                                <Text fullWidth pointer wrap textBreak small variant="white">{ motto }</Text>
+                                <Text fullWidth pointer wrap textBreak variant="white">{ motto }</Text>
                             </Flex> }
                         { userData.type === RoomWidgetUpdateInfostandUserEvent.OWN_USER &&
                             <Flex grow alignItems="center" gap={ 2 }>
                                 <FontAwesomeIcon icon="pencil-alt" className="small" />
                                 <Flex grow alignItems="center" className="motto-content">
                                     { !isEditingMotto &&
-                                        <Text fullWidth pointer wrap textBreak small variant="white" onClick={ event => setIsEditingMotto(true) }>{ motto }&nbsp;</Text> }
+                                        <Text fullWidth pointer wrap textBreak variant="white" onClick={ event => setIsEditingMotto(true) }>{ motto }&nbsp;</Text> }
                                     { isEditingMotto &&
                                         <input type="text" className="motto-input" maxLength={ GetConfiguration<number>('motto.max.length', 38) } value={ motto } onChange={ event => setMotto(event.target.value) } onBlur={ onMottoBlur } onKeyDown={ onMottoKeyDown } autoFocus={ true } /> }
                                 </Flex>
@@ -196,13 +196,13 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                     <hr className="m-0" />
                 </Column>
                 <Column gap={ 1 }>
-                    <Text variant="white" small wrap>
+                    <Text variant="white" wrap>
                         { LocalizeText('infostand.text.achievement_score') + ' ' + userData.achievementScore }
                     </Text>
                     { (userData.carryItem > 0) &&
                         <>
                             <hr className="m-0" />
-                            <Text variant="white" small wrap>
+                            <Text variant="white" wrap>
                                 { LocalizeText('infostand.text.handitem', [ 'item' ], [ LocalizeText('handitem' + userData.carryItem) ]) }
                             </Text>
                         </> }

@@ -12,8 +12,11 @@
         max-width: 190px;
         z-index: $infostand-zindex;
 	    pointer-events: auto;
-        background: rgba($dark,.95);
-        box-shadow: inset 0px 5px lighten(rgba($dark,.6),2.5), inset 0 -4px darken(rgba($dark,.6),4);
+        border-image-source: url(../../../../assets/flash/buttons/toggle_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        font-family: Goldfish-Bold;
+        font-size: 9px;
 
         .form-control-sm {
             height: 25px;
@@ -21,11 +24,23 @@
             padding: 0.1rem 0.25rem;
         }
 
+        .infostand-thumb-bg {
+            border-image-source: url(../../../../assets/flash/infostand/thumb_bg.png);
+            border-image-slice: 6 6 6 6 fill;
+            border-image-width: 6px 6px 6px 6px;
+        }
+
+        .infostand-close {
+            background: url(../../../../assets/flash/infostand/info_close.png);
+            width: 13px;
+            height: 13px;
+            cursor: pointer;
+        }
+
         .body-image {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: rgba($light-dark, 1);
             width: 100%;
             max-width: 68px;
             border-radius: $border-radius;
@@ -53,6 +68,7 @@
 
         .motto-content {
             min-height: 18px;
+            font-family: Goldfish;
         }
 
         .motto-input {
@@ -66,6 +82,7 @@
             position: relative;
             background: transparent;
             resize: none;
+            font-size: 9px;
 
             &:focus {
                 font-style: italic;
