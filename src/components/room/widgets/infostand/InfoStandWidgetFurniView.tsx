@@ -261,12 +261,12 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 
     return (
         <Column gap={ 1 } alignItems="end">
-            <Column className="nitro-infostand rounded">
+            <Column className="nitro-infostand">
                 <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                            <Text variant="white" small wrap>{ furniData.name }</Text>
-                            <FontAwesomeIcon icon="times" className="cursor-pointer" onClick={ close } />
+                            <Text variant="white" wrap>{ furniData.name }</Text>
+                            <i className="infostand-close" onClick={ close } />
                         </Flex>
                         <hr className="m-0" />
                     </Column>
@@ -286,19 +286,19 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                         <hr className="m-0" />
                     </Column>
                     <Column gap={ 1 }>
-                        <Text fullWidth wrap textBreak variant="white" small>{ furniData.description }</Text>
+                        <Text fullWidth wrap textBreak variant="white">{ furniData.description }</Text>
                         <hr className="m-0" />
                     </Column>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" gap={ 1 }>
                             <UserProfileIconView userId={ furniData.ownerId } />
-                            <Text variant="white" small wrap>
+                            <Text variant="white" wrap>
                                 { LocalizeText('furni.owner', [ 'name' ], [ furniData.ownerName ]) }
                             </Text>
                         </Flex>
                         { (furniData.purchaseOfferId > 0) &&
                             <Flex>
-                                <Text variant="white" small underline pointer onClick={ event => processButtonAction('buy_one') }>
+                                <Text variant="white" underline pointer onClick={ event => processButtonAction('buy_one') }>
                                     { LocalizeText('infostand.button.buy') }
                                 </Text>
                             </Flex> }
@@ -307,7 +307,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                         { isCrackable &&
                             <>
                                 <hr className="m-0" />
-                                <Text variant="white" small wrap>{ LocalizeText('infostand.crackable_furni.hits_remaining', [ 'hits', 'target' ], [ crackableHits.toString(), crackableTarget.toString() ]) }</Text>
+                                <Text variant="white" wrap>{ LocalizeText('infostand.crackable_furni.hits_remaining', [ 'hits', 'target' ], [ crackableHits.toString(), crackableTarget.toString() ]) }</Text>
                             </> }
                         { furniData.groupId > 0 &&
                             <>
@@ -320,7 +320,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                         { godMode &&
                             <>
                                 <hr className="m-0" />
-                                { canSeeFurniId && <Text small wrap variant="white">ID: { furniData.id }</Text> }
+                                { canSeeFurniId && <Text wrap variant="white">ID: { furniData.id }</Text> }
                                 { (furniKeys.length > 0) &&
                                     <>
                                         <hr className="m-0"/>
@@ -329,7 +329,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                                             {
                                                 return (
                                                     <Flex key={ index } alignItems="center" gap={ 1 }>
-                                                        <Text small wrap align="end" variant="white" className="col-4">{ key }</Text>
+                                                        <Text wrap align="end" variant="white" className="col-4">{ key }</Text>
                                                         <input type="text" className="form-control form-control-sm" value={ furniValues[index] } onChange={ event => onFurniSettingChange(index, event.target.value) }/>
                                                     </Flex>);
                                             }) }
@@ -353,29 +353,29 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                     </Column>
                 </Column>
             </Column>
-            <Flex gap={ 1 } justifyContent="end">
+            <Flex gap={ 2 } justifyContent="end">
                 { canMove &&
-                    <Button variant="dark" onClick={ event => processButtonAction('move') }>
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('move') }>
                         { LocalizeText('infostand.button.move') }
                     </Button> }
                 { canRotate &&
-                    <Button variant="dark" onClick={ event => processButtonAction('rotate') }>
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('rotate') }>
                         { LocalizeText('infostand.button.rotate') }
                     </Button> }
                 { (pickupMode !== PICKUP_MODE_NONE) &&
-                    <Button variant="dark" onClick={ event => processButtonAction('pickup') }>
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('pickup') }>
                         { LocalizeText((pickupMode === PICKUP_MODE_EJECT) ? 'infostand.button.eject' : 'infostand.button.pickup') }
                     </Button> }
                 { canUse &&
-                    <Button variant="dark" onClick={ event => processButtonAction('use') }>
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('use') }>
                         { LocalizeText('infostand.button.use') }
                     </Button> }
                 { ((furniKeys.length > 0 && furniValues.length > 0) && (furniKeys.length === furniValues.length)) &&
-                    <Button variant="dark" onClick={ () => processButtonAction('save_branding_configuration') }>
+                    <Button className="infostand-buttons px-2" onClick={ () => processButtonAction('save_branding_configuration') }>
                         { LocalizeText('save') }
                     </Button> }
                 { ((customKeys.length > 0 && customValues.length > 0) && (customKeys.length === customValues.length)) &&
-                    <Button variant="dark" onClick={ () => processButtonAction('save_custom_variables') }>
+                    <Button className="infostand-buttons px-2" onClick={ () => processButtonAction('save_custom_variables') }>
                         { LocalizeText('save') }
                     </Button> }
             </Flex>

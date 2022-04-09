@@ -112,3 +112,22 @@
     }
   }
 }
+
+.infostand-buttons {
+  border-image-source: url(../../flash/room/infostand_buttons.png);
+  border-image-slice: 3 3 3 3 fill;
+  border-image-width: 3px 3px 3px 3px;
+  font-family: Goldfish;
+  font-size: 9px;
+  color: #ffffff;
+  height: 25px;
+  margin-top: 5px;
+
+  &:hover {
+    border-image-source: url(../../flash/room/infostand_buttons_hover.png);
+  }
+
+  &:active {
+    border-image-source: url(../../flash/room/infostand_buttons_active.png);
+  }
+}
