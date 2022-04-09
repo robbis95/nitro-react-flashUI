@@ -44,11 +44,11 @@ export const ChatInputStyleSelectorView: FC<ChatInputStyleSelectorViewProps> = p
 
     return (
         <>
-            <Base pointer className="chatstyles-selector" onClick={ toggleSelector } />
+            <Base pointer className="chatstyles-selector cursor-pointer" onClick={ toggleSelector } />
             <Overlay show={ selectorVisible } target={ target } placement="top">
                 <Popover className="nitro-chat-style-selector-container">
                     <NitroCardContentView overflow="hidden" className="bg-transparent bubble-window">
-                        <Grid columnCount={ 3 } overflow="auto">
+                        <Grid gap={ 1 } columnCount={ 3 } overflow="auto">
                             { chatStyleIds && (chatStyleIds.length > 0) && chatStyleIds.map((styleId) =>
                             {
                                 return (
