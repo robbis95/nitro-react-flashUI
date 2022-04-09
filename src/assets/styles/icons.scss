@@ -621,6 +621,12 @@
         height: 19px;
     }
 
+    &.icon-profile-house {
+        background-image: url(../flash/infostand/house_icon.png);
+        width: 11px;
+        height: 10px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }

@@ -134,8 +134,8 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                 <Column gap={ 1 }>
                     <Flex alignItems="center" justifyContent="between">
                         <Flex alignItems="center" gap={ 1 }>
-                            <UserProfileIconView userId={ userData.webID } />
-                            <Text variant="white" wrap>{ userData.name }</Text>
+                            <i className="icon icon-profile-house cursor-pointer" onClick={ event => GetUserProfile(userData.webID) }/>
+                            <Text variant="white" className="infostand-name" onClick={ event => GetUserProfile(userData.webID) }>{ userData.name }</Text>
                         </Flex>
                         <i className="infostand-close" onClick={ close } />
                     </Flex>
@@ -184,7 +184,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                             </Flex> }
                         { userData.type === RoomWidgetUpdateInfostandUserEvent.OWN_USER &&
                             <Flex grow alignItems="center" gap={ 2 }>
-                                <FontAwesomeIcon icon="pencil-alt" className="small" />
+                                <i className="icon pencil-icon" />
                                 <Flex grow alignItems="center" className="motto-content">
                                     { !isEditingMotto &&
                                         <Text fullWidth pointer wrap textBreak variant="white" onClick={ event => setIsEditingMotto(true) }>{ motto }&nbsp;</Text> }

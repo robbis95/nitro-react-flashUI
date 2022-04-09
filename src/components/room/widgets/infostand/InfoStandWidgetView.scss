@@ -98,3 +98,11 @@
         height: 18px;
     }
 }
+
+.infostand-name {
+    cursor: pointer;
+
+    &:hover {
+        color: #91c2ff !important;
+    }
+}
