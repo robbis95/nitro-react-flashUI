@@ -74,6 +74,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             <TransitionAnimation type={ TransitionAnimationTypes.FADE_IN } inProp={ isMeExpanded } timeout={ 300 }>
                 <ToolbarMeView useGuideTool={ useGuideTool } unseenAchievementCount={ getTotalUnseen } setMeExpanded={ setMeExpanded } />
             </TransitionAnimation>
+            <Flex alignItems="center" id="toolbar-chat-input-container" />
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
                 <Flex gap={ 2 } alignItems="center">
                     <Flex alignItems="center" gap={ 2 }>
@@ -97,7 +98,6 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                         { isMod &&
                             <Base pointer className="navigation-item icon icon-modtools" onClick={ event => DispatchUiEvent(new ModToolsEvent(ModToolsEvent.TOGGLE_MOD_TOOLS)) } /> }
                     </Flex>
-                    <Flex alignItems="center" id="toolbar-chat-input-container" />
                 </Flex>
                 <Flex alignItems="center" gap={ 2 }>
                     <Flex gap={ 2 }>
