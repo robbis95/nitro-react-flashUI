@@ -379,9 +379,9 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }
-                <ContextMenuBottomView className="cursor-pointer" onClick={ event => GetUserProfile(userData.webID) }>
-                { userData.name }
-            </ContextMenuBottomView>
+                <ContextMenuBottomView className={'cursor-pointer ' }>
+                    <div className={'icon icon-context-menu-arrow-down'} />
+                </ContextMenuBottomView>
         </ContextMenuView>
     );
 }
