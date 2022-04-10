@@ -34,11 +34,11 @@
             content: "";
             z-index: 2;
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background-color: $white;
+            top: 2px;
+            left: 2px;
+            height: 1px;
+            width: 9px;
+            background-color: #fff;
             opacity: 0.1;
         }
     }

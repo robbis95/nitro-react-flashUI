@@ -334,3 +334,36 @@
         }
     }
 }
+
+.choose-clothing {
+    width: 298px;
+}
+
+.color-picker-frame {
+    border-image-source: url(../../assets/flash/avatareditor/color_frame.png);
+    border-image-slice: 6 6 6 6 fill;
+    border-image-width: 6px 6px 6px 6px;
+    width: 13px;
+    height: 19px;
+    border-radius: 4px;
+
+    &.active {
+        border-image-source: url(../../assets/flash/avatareditor/color_frame_active.png);
+        height: 21px;
+        margin-top: -2px;
+    }
+
+    &:hover {
+        border-image-source: url(../../assets/flash/avatareditor/color_frame_active.png);
+        height: 21px;
+        margin-top: -2px;
+    }
+}
+
+.hc-icon {
+    background-image: url(../../assets/flash/avatareditor/hc_icon.png);
+    height: 9px;
+    width: 10px;
+    bottom: 2px;
+    left: 2px;
+}
