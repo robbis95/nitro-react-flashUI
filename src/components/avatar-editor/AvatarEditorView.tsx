@@ -286,7 +286,7 @@ export const AvatarEditorView: FC<{}> = props =>
     return (
         <NitroCardView uniqueKey="avatar-editor" className="nitro-avatar-editor">
             <NitroCardHeaderView headerText={ LocalizeText('avatareditor.title') } onCloseClick={ event => setIsVisible(false) } />
-            <NitroCardTabsView>
+            <NitroCardTabsView className="avatar-editor-tabs">
                 { categories && (categories.size > 0) && Array.from(categories.keys()).map(category =>
                 {
                     const isActive = (activeCategory && (activeCategory.name === category));
@@ -310,17 +310,11 @@ export const AvatarEditorView: FC<{}> = props =>
                         <AvatarEditorFigurePreviewView figureData={ figureData } />
                         <Column grow gap={ 1 }>
                             <ButtonGroup>
-                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
-                                    <FontAwesomeIcon icon="undo" />
-                                </Button>
-                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_CLEAR) }>
-                                    <FontAwesomeIcon icon="trash" />
-                                </Button>
                                 <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
                                     <FontAwesomeIcon icon="dice" />
                                 </Button>
                             </ButtonGroup>
-                            <Button className="w-100" variant="success" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
+                            <Button className="w-100 fw-bold" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
                                 { LocalizeText('avatareditor.save') }
                             </Button>
                         </Column>

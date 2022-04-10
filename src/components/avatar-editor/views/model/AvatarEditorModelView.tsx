@@ -57,14 +57,14 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
     return (
         <Grid>
             <Column className="choose-clothing overflow-auto">
-            <Flex justifyContent="center" gap={ 2 }>
+            <Flex justifyContent="center" gap={ 4 }>
                 { model.canSetGender &&
                     <>
-                        <Flex center pointer className="category-item" gap={ 1 } onClick={ event => setGender(FigureData.MALE) }>
+                        <Flex center pointer className="category-item" gap={ 3 } onClick={ event => setGender(FigureData.MALE) }>
                             <AvatarEditorIcon icon="male" selected={ (gender === FigureData.MALE) } />
                             <Text bold>{ LocalizeText('avatareditor.generic.boy') }</Text>
                         </Flex>
-                        <Flex center pointer className="category-item" gap={ 1 } onClick={ event => setGender(FigureData.FEMALE) }>
+                        <Flex center pointer className="category-item" gap={ 3 } onClick={ event => setGender(FigureData.FEMALE) }>
                             <AvatarEditorIcon icon="female" selected={ (gender === FigureData.FEMALE) } />
                             <Text bold>{ LocalizeText('avatareditor.generic.girl') }</Text>
                         </Flex>

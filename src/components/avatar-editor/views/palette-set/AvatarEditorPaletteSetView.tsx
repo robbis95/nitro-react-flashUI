@@ -27,7 +27,7 @@ export const AvatarEditorPaletteSetView: FC<AvatarEditorPaletteSetViewProps> = p
     }, [ model, category, paletteSet, paletteIndex ]);
 
     return (
-        <AutoGrid gap={ 1 } columnCount={ 5 } columnMinWidth={ 13 } className="p-1">
+        <AutoGrid gap={ 1 } columnCount={ 5 } columnMinWidth={ 11 } className="p-1">
             { (paletteSet.length > 0) && paletteSet.map((item, index) =>
                 <AvatarEditorPaletteSetItem key={ index } colorItem={ item } onClick={ event => selectColor(item) } />) }
         </AutoGrid>
