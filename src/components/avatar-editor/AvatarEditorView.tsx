@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AvatarEditorFigureCategory, FigureSetIdsMessageEvent, GetWardrobeMessageComposer, IAvatarFigureContainer, ILinkEventTracker, UserFigureComposer, UserWardrobePageEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { AddEventLinkTracker, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
-import { NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import { Flex, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
 import { Button } from '../../common/Button';
 import { ButtonGroup } from '../../common/ButtonGroup';
 import { Column } from '../../common/Column';
@@ -306,14 +306,12 @@ export const AvatarEditorView: FC<{}> = props =>
                     <Column size={ 6 } overflow="hidden">
                             <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } />
                     </Column>
-                    <Column size={ 3 } overflow="hidden">
+                    <Column size={ 3 } overflow="hidden" className="pb-3">
                         <AvatarEditorFigurePreviewView figureData={ figureData } />
                         <Column grow gap={ 1 }>
-                            <ButtonGroup>
-                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
-                                    <FontAwesomeIcon icon="dice" />
-                                </Button>
-                            </ButtonGroup>
+                            <Flex className="randomize-container cursor-pointer" position="absolute">
+                                    <i className="icon randomize-icon" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) } />
+                            </Flex>
                             <Button className="w-100 fw-bold" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
                                 { LocalizeText('avatareditor.save') }
                             </Button>
