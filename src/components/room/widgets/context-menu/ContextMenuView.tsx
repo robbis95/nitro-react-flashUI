@@ -171,5 +171,5 @@ export const ContextMenuView: FC<ContextMenuViewProps> = props =>
         return () => clearTimeout(timeout);
     }, [ fades ]);
 
-    return <Base innerRef={ elementRef } position={ position } classNames={ getClassNames } style={ getStyle } onMouseOver={ event => setIsFrozen(true) } onMouseOut={ event => setIsFrozen(false) } { ...rest } />;
+    return <Base innerRef={ elementRef } position={ position } classNames={ getClassNames } style={ getStyle } { ...rest } />;
 }
