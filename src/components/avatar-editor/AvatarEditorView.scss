@@ -213,15 +213,22 @@
 }
 
 .nitro-avatar-editor-wardrobe-figure-preview {
-    background-color: $pale-sky;
+    border-image-source: url(../../assets/flash/avatareditor/wardrobe_user_bg.png);
+    border-image-slice: 4 4 4 4 fill;
+    border-image-width: 4px 4px 4px 4px;
+    height: 50px;
+    width: 100px;
+    background-color: transparent;
     overflow: hidden;
     z-index: 1;
 
     .avatar-image {
         position: absolute;
-        bottom: -15px;
+        top: -28px;
+        left: -35px;
         margin: 0 auto;
         z-index: 4;
+        -webkit-transform: scale(0.5);
     }
 
     .avatar-shadow {
@@ -235,19 +242,6 @@
         border-radius: 100%;
         background-color: rgba(0, 0, 0, 0.20);
         z-index: 2;
-    }
-
-    &:after {
-        position: absolute;
-        content: '';
-        top: 75%;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        border-radius: 50%;
-        background-color: $pale-sky;
-        box-shadow: 0 0 8px 2px rgba($white,.6);
-        transform: scale(2);
     }
 
     .button-container {
@@ -386,4 +380,10 @@
         &:hover {
             background-image: url(../../assets/flash/avatareditor/randomize.png);
         }
+    }
+
+    .avatar-wardrobe {
+        border-image-source: url(../../assets/flash/avatareditor/wardrobe_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
     }

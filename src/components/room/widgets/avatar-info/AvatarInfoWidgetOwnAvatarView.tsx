@@ -31,7 +31,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
     const [ mode, setMode ] = useState((isDancing && HasHabboClub()) ? MODE_CLUB_DANCES : MODE_NORMAL);
     const { roomSession = null, eventDispatcher = null, widgetHandler = null } = useRoomContext();
     const [ hide, setHide ] = useState(false);
-
+    
     const processAction = useCallback((name: string) =>
     {
         let message: RoomWidgetMessage = null;
@@ -292,7 +292,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }</Column>)}
-                <ContextMenuBottomView className={'cursor-pointer ' + classNames({ 'menu-bottom-closed': hide })} onClick={() => setHide(!hide)}>
+                <ContextMenuBottomView className={'cursor-pointer ' + classNames({ 'menu-bottom-closed': hide })} onClick={() => setHide(prevhideValue => !prevhideValue)}>
                     <div className={'icon icon-context-menu-arrow-' + classNames({ 'down': !hide, 'up': hide })} />
                 </ContextMenuBottomView>
         </ContextMenuView>
