@@ -4,6 +4,7 @@
     position: fixed;
     bottom:65px;
     left: 30vw;
+    right: 30vw;
     height: 38px;
     border-image-source: url(../../../../assets/flash/room/chatinput.png);
     border-image-slice:8 8 8 8 fill;
@@ -11,7 +12,6 @@
     background: #e4e4e4;
     border-radius: 9px;
     padding-right: 10px;
-    width: 500px;
     overflow: hidden;
     z-index: 31;
 
