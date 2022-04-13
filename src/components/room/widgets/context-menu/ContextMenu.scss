@@ -32,9 +32,11 @@
         }
     }
 
-    &:not(.name-only) {
-        min-width: 45px;
+    &:not(.name-only):not(.menu-hidden) {
+        min-width: 125px;
+    }
 
+    &:not(.name-only) {
         &:after {
             content: "";
             background-image: url(../../../../assets/flash/room/context_pointer_after.png);
@@ -81,6 +83,22 @@
             color: #47a3cc;
         }
         }
+
+    &.menu-hidden {
+        .menu-footer {
+            padding-top:2px;
+            padding-bottom:0;
+        }
+    }
+
+    .menu-footer {
+        color: $white;
+        font-size: 16px;
+        width:100%;
+        min-width: 25px;
+        padding-bottom:2px;
+        cursor: pointer;
+    }
 
     .menu-list-split-3 {
 
