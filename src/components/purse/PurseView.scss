@@ -6,16 +6,38 @@
     font-weight: 700;
 
     .nitro-purse {
-    
-        .nitro-purse-subscription {
-            background-color: rgba($light, 0.1);
+
+        .club-text {
+
+            color: #54b7bb;
+            
+            &:hover {
+                filter: brightness(150%);
+            }
         }
     
-        .nitro-purse-button {
-            padding: 3px 2px;
+        .nitro-purse-subscription {
+            border-image-source: url(../../assets/flash/purse/hc_bg.png);
+            border-image-slice: 7 7 7 7 fill;
+            border-image-width: 7px 7px 7px 7px;
+        }
     
-            &:hover {
-                background-color: rgba($light, 0.1);
+        .nitro-purse-right-button {
+            border-image-slice: 4 4 4 4 fill;
+            border-image-width: 4px 4px 4px 4px;
+            width: 60px;
+            height: 20px;
+            
+            &.help {
+                border-image-source: url(../../assets/flash/purse/help_button.png)
+            }
+
+            &.disconnect {
+                border-image-source: url(../../assets/flash/purse/disconnect_button.png)
+            }
+
+            &.settings {
+                border-image-source: url(../../assets/flash/purse/settings_button.png)
             }
         }
     }
