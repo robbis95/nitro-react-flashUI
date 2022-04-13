@@ -16,7 +16,7 @@ export const LayoutNotificationBubbleView: FC<LayoutNotificationBubbleViewProps>
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'nitro-notification-bubble', 'rounded' ];
+        const newClassNames: string[] = [ 'nitro-notification', 'p-2' ];
 
         if(classNames.length) newClassNames.push(...classNames);
 

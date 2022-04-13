@@ -131,3 +131,26 @@
     border-image-source: url(../../flash/room/infostand_buttons_active.png);
   }
 }
+
+.notification-buttons {
+  border-image-source: url(../../flash/room/infostand_buttons.png);
+  border-image-slice: 3 3 3 3 fill;
+  border-image-width: 3px 3px 3px 3px;
+  color: #ffffff;
+  height: 25px;
+  font-size: 13px;
+  padding: 0;
+  border-radius: 13px;
+
+  &:hover {
+    border-image-source: url(../../flash/room/infostand_buttons_hover.png);
+  }
+
+  &:active {
+    border-image-source: url(../../flash/room/infostand_buttons_active.png);
+  }
+}
+
+.notification-text-link {
+  font-size: 13px;
+}

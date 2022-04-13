@@ -5,7 +5,6 @@ import { CreateLinkEvent, GetOwnRoomObject, GetUserProfile, LocalizeText, RoomWi
 import { Base, Flex } from '../../../../common';
 import { useFriends } from '../../../../hooks';
 import { useRoomContext } from '../../RoomContext';
-import { ContextMenuBottomView } from '../context-menu/ContextMenuBottomView';
 import { ContextMenuHeaderView } from '../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../context-menu/ContextMenuListItemView';
 import { ContextMenuView } from '../context-menu/ContextMenuView';
@@ -379,9 +378,6 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }
-                <ContextMenuBottomView className={'cursor-pointer ' }>
-                    <div className={'icon icon-context-menu-arrow-down'} />
-                </ContextMenuBottomView>
         </ContextMenuView>
     );
 }

@@ -116,25 +116,27 @@ export const GroupRoomInformationView: FC<{}> = props =>
     if(!groupInformation) return null;
 
     return (
-        <Base className="nitro-notification-bubble rounded">
+        <Base className="nitro-notification-bubble">
             <Column>
-                <Flex alignItems="center" justifyContent="between" pointer onClick={ event => setIsOpen(value => !value) }>
-                    <Text variant="white">{ LocalizeText('group.homeroominfo.title') }</Text>
-                    <FontAwesomeIcon icon={ isOpen ? 'chevron-up' : 'chevron-down' } />
+                <Flex className="grouproom-header" alignItems="center" justifyContent="between" pointer onClick={ event => setIsOpen(value => !value) }>
+                    <Text bold small className="header-text p-1" variant="white">{ LocalizeText('group.homeroominfo.title') }</Text>
+                    <i className={ isOpen ? 'arrow-down' : 'arrow-left' } />
                 </Flex>
                 { isOpen &&
                     <>
+                    <Column className="px-2 pb-2">
                         <Flex pointer alignItems="center" gap={ 2 } onClick={ event => GetGroupInformation(groupInformation.id) }>
                             <Base className="group-badge">
                                 <LayoutBadgeImageView badgeCode={ groupInformation.badge } isGroup={ true } />
                             </Base>
-                            <Text variant="white">{ groupInformation.title }</Text>
+                            <Text bold variant="white">{ groupInformation.title }</Text>
                         </Flex>
                         { (groupInformation.type !== GroupType.PRIVATE || isRealOwner) && 
                             <Button fullWidth className="btn-flash fw-bold" disabled={ (groupInformation.membershipType === GroupMembershipType.REQUEST_PENDING) } onClick={ handleButtonClick }>
                                 { LocalizeText(getButtonText()) }
                             </Button>
                         }
+                    </Column>
                     </> }
             </Column>
         </Base>
