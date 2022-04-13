@@ -128,7 +128,7 @@
             border-image-slice:17 17 17 17 fill;
             border-image-width:17px 17px 17px 17px;
             border-image-repeat:repeat repeat;
-            height: 36px;
+            min-height: 36px;
             color: #fff;
         }
 
@@ -146,6 +146,7 @@
         //    white-space: nowrap;
             font-size: 13px;
             line-height: 1;
+            color: #fff;
         }
     
         .friend-bar-item-head {
