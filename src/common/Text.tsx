@@ -22,7 +22,7 @@ export interface TextProps extends BaseProps<HTMLDivElement>
 
 export const Text: FC<TextProps> = props =>
 {
-    const { variant = 'black', fontWeight = null, fontSize = 0, align = null, bold = false, underline = false, italics = false, truncate = false, center = false, textEnd = false, small = false, wrap = false, noWrap = false, textBreak = false, ...rest } = props;
+    const { variant = null, fontWeight = null, fontSize = 0, align = null, bold = false, underline = false, italics = false, truncate = false, center = false, textEnd = false, small = false, wrap = false, noWrap = false, textBreak = false, ...rest } = props;
 
     const getClassNames = useMemo(() =>
     {
@@ -30,7 +30,7 @@ export const Text: FC<TextProps> = props =>
 
         if(variant) newClassNames.push('text-' + variant);
 
-        if(bold) newClassNames.push('fw-bold');
+        if(bold) newClassNames.push('font-bold');
 
         if(fontWeight) newClassNames.push('fw-' + fontWeight);
 
