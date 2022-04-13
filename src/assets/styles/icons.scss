@@ -436,6 +436,7 @@
 
     &.icon-context-menu-arrow-down {
         background: url(../flash/room/context_menu_arrow.png);
+        background-repeat: no-repeat;
         width: 10px;
         height: 5px;
 
@@ -446,11 +447,14 @@
 
     &.icon-context-menu-arrow-up {
         background: url(../flash/room/context_menu_arrow_up.png);
+        background-repeat: no-repeat;
         width: 10px;
         height: 5px;
+        padding-bottom: 10px;
 
         &:hover {
             background: url(../flash/room/context_menu_arrow_up_hover.png);
+            background-repeat: no-repeat;
         }
     }
 

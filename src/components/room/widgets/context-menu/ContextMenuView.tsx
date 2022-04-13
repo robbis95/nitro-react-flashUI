@@ -185,7 +185,7 @@ export const ContextMenuView: FC<ContextMenuViewProps> = props =>
         COLLAPSED = !COLLAPSED;
         setCollapsed(COLLAPSED)
     }
-    return <Base innerRef={ elementRef } position={ position } classNames={ getClassNames } style={ getStyle } onMouseOver={ event => setIsFrozen(true) } onMouseOut={ event => setIsFrozen(false) } { ...rest }>
+    return <Base innerRef={ elementRef } position={ position } classNames={ getClassNames } style={ getStyle } { ...rest }>
         { !(collapsable && COLLAPSED) && children }
         { collapsable && <ContextMenuCaretView onClick={ () => toggleCollapse() } collapsed={ collapsed } /> }
     </Base>;

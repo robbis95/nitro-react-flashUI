@@ -12,7 +12,7 @@ export const ContextMenuCaretView: FC<CaretViewProps> = props =>
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'menu-footer' ];
+        const newClassNames: string[] = [ 'menu-bottom' ];
 
         if(classNames.length) newClassNames.push(...classNames);
 
@@ -20,6 +20,6 @@ export const ContextMenuCaretView: FC<CaretViewProps> = props =>
     }, [ classNames ]);
 
     return <Flex justifyContent={ justifyContent } alignItems={ alignItems } classNames={ getClassNames } { ...rest }>
-        <FontAwesomeIcon icon={ !collapsed ? 'caret-down' : 'caret-up' } className="align-self-center" />
+        <i className={!collapsed ? 'icon icon-context-menu-arrow-down' : 'icon icon-context-menu-arrow-up' } />
     </Flex>
 }

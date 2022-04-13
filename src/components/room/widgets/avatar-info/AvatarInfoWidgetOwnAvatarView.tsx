@@ -6,7 +6,6 @@ import { Column, Flex, LayoutCurrencyIcon } from '../../../../common';
 import { HelpNameChangeEvent } from '../../../../events';
 import { DispatchUiEvent } from '../../../../hooks';
 import { useRoomContext } from '../../RoomContext';
-import { ContextMenuBottomView } from '../context-menu/ContextMenuBottomView';
 import { ContextMenuHeaderView } from '../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../context-menu/ContextMenuListItemView';
 import { ContextMenuView } from '../context-menu/ContextMenuView';
@@ -128,7 +127,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
             
             <ContextMenuHeaderView className="cursor-pointer" onClick={ event => GetUserProfile(userData.webID) }>
                 { userData.name }
-            </ContextMenuHeaderView>)
+            </ContextMenuHeaderView>
             {!hide && (
             <Column gap={ 0 }>
             { (mode === MODE_NORMAL) &&
@@ -292,9 +291,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         { LocalizeText('generic.back') }
                     </ContextMenuListItemView>
                 </> }</Column>)}
-                <ContextMenuBottomView className={'cursor-pointer ' + classNames({ 'menu-bottom-closed': hide })} onClick={() => setHide(prevhideValue => !prevhideValue)}>
-                    <div className={'icon icon-context-menu-arrow-' + classNames({ 'down': !hide, 'up': hide })} />
-                </ContextMenuBottomView>
         </ContextMenuView>
     );
 }
