@@ -124,11 +124,11 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
     const isRidingHorse = IsRidingHorse();
 
     return (
-        <ContextMenuView objectId={ userData.roomIndex } category={ RoomObjectCategory.UNIT } userType={ userData.userType } close={ close }>
-            {!hide && (
+        <ContextMenuView objectId={ userData.roomIndex } category={ RoomObjectCategory.UNIT } userType={ userData.userType } close={ close } collapsable={ true }>
+            
             <ContextMenuHeaderView className="cursor-pointer" onClick={ event => GetUserProfile(userData.webID) }>
                 { userData.name }
-            </ContextMenuHeaderView>)}
+            </ContextMenuHeaderView>)
             {!hide && (
             <Column gap={ 0 }>
             { (mode === MODE_NORMAL) &&
