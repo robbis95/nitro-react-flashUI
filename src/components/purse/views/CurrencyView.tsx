@@ -18,7 +18,7 @@ export const CurrencyView: FC<CurrencyViewProps> = props =>
     {
         return (
             <Flex justifyContent="end" pointer gap={ 1 } className="nitro-purse-button rounded">
-                <Text truncate textEnd variant="white" grow>{ short ? LocalizeShortNumber(amount) : LocalizeFormattedNumber(amount) }</Text>
+                <Text bold truncate textEnd variant="white" grow>{ short ? LocalizeShortNumber(amount) : LocalizeFormattedNumber(amount) }</Text>
                 <LayoutCurrencyIcon type={ type } />
             </Flex>);
     }, [ amount, short, type ]);

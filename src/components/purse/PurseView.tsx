@@ -71,11 +71,11 @@ export const PurseView: FC<{}> = props =>
                     { !hcDisabled &&
                         <Column center pointer size={ 4 } gap={ 1 } className="nitro-purse-subscription" onClick={ event => CreateLinkEvent('habboUI/open/hccenter') }>
                             <LayoutCurrencyIcon className="club-text" type="hc" />
-                            <Text className="club-text">{ getClubText }</Text>
+                            <Text bold className="club-text">{ getClubText }</Text>
                         </Column> }
                     <Column justifyContent="center" size={ 2 } gap={ 1 }>
                         <Flex center pointer className="nitro-purse-right-button help p-1" onClick={ event => CreateLinkEvent('help/show') }>
-                            <Text bold small>{LocalizeText('help.button.cfh')}</Text>
+                            <Text small>{LocalizeText('help.button.cfh')}</Text>
                         </Flex>
                         <Flex center pointer className="nitro-purse-right-button disconnect p-1" onClick={ event => CreateLinkEvent('disconnect') }>
                         <i className="icon icon-purse-disconnect"/>

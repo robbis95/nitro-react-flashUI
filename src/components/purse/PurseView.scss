@@ -3,7 +3,6 @@
     pointer-events: all;
     margin-top: -5px;
     font-size: 12px;
-    font-weight: 700;
 
     .nitro-purse {
 
@@ -27,7 +26,7 @@
             border-image-width: 4px 4px 4px 4px;
             width: 60px;
             height: 20px;
-            
+
             &.help {
                 border-image-source: url(../../assets/flash/purse/help_button.png)
             }
