@@ -34,7 +34,7 @@ export const UserContainerView: FC<UserContainerViewProps> = props =>
             </Column>
             <Column>
                 <Column gap={ 0 }>
-                    <Text bold>{ userProfile.username }</Text>
+                    <Text bold small>{ userProfile.username }</Text>
                     <Text italics textBreak small>{ userProfile.motto }&nbsp;</Text>
                 </Column>
                 <Column gap={ 1 }>
@@ -60,7 +60,7 @@ export const UserContainerView: FC<UserContainerViewProps> = props =>
                             <>
                                 <i className="icon icon-pf-tick" />
                                 { isOwnProfile &&
-                                    <Text>{ LocalizeText('extendedprofile.me') }</Text> }
+                                    <Text bold small>{ LocalizeText('extendedprofile.me') }</Text> }
                                 { userProfile.isMyFriend &&
                                     <Text>{ LocalizeText('extendedprofile.friend') }</Text> }
                                 { (requestSent || userProfile.requestSent) &&

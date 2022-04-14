@@ -40,7 +40,7 @@ export const Text: FC<TextProps> = props =>
 
         if(underline) newClassNames.push('text-decoration-underline');
 
-        if(italics) newClassNames.push('fst-italic');
+        if(italics) newClassNames.push('font-italic');
 
         if(truncate) newClassNames.push('text-truncate');
 

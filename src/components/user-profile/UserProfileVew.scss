@@ -1,6 +1,31 @@
 .user-profile {
     width: $user-profile-width;
-    height: $user-profile-height;
+    min-height: $user-profile-height;
+    color: $black;
+
+    .profile-grey-bg {
+        border-image-source: url(../../assets/flash/profile/grey-bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+    }
+
+    .profile-white-bg {
+        border-image-source: url(../../assets/flash/profile/white_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+    }
+
+    .profile-grey-bg-border {
+        border-image-source: url(../../assets/flash/profile/grey_bg_border.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        max-height: 240px;
+    }
+
+    .badge-text {
+        margin-left: auto; 
+        margin-right: 0;
+    }
 
     .user-container {
         border-right: 1px solid gray;

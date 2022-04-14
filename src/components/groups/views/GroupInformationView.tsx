@@ -101,7 +101,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
     if(!groupInformation) return null;
 
     return (
-        <Grid overflow={ overflow } { ...rest }>
+        <Grid className="profile-grey-bg-border p-2" overflow={ overflow } { ...rest }>
             <Column center size={ 3 } overflow="hidden">
                 <Flex alignItems="center" overflow="hidden" className="group-badge">
                     <LayoutBadgeImageView badgeCode={ groupInformation.badge } isGroup={ true } scale={ 2 } />
@@ -128,7 +128,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
                         </Flex>
                         <Text small>{ LocalizeText('group.created', [ 'date', 'owner' ], [ groupInformation.createdAt, groupInformation.ownerName ]) }</Text>
                     </Column>
-                    <Text small overflow="auto" className="group-description">{ groupInformation.description }</Text>
+                    <Text small textBreak overflow="auto" className="group-description">{ groupInformation.description }</Text>
                 </Column>
                 <Column>
                     <Column gap={ 1 }>

@@ -93,13 +93,19 @@ export const UserProfileView: FC<{}> = props =>
     if(!userProfile) return null;
 
     return (
-        <NitroCardView uniqueKey="nitro-user-profile" theme="primary-slim" className="user-profile">
+        <NitroCardView uniqueKey="nitro-user-profile" theme="primary" className="user-profile">
             <NitroCardHeaderView headerText={ LocalizeText('extendedprofile.caption') } onCloseClick={ onClose } />
             <NitroCardContentView overflow="hidden">
                 <Grid fullHeight={ false } gap={ 2 }>
                     <Column size={ 7 } gap={ 1 } className="user-container pe-2">
                         <UserContainerView userProfile={ userProfile } />
-                        <Grid columnCount={ 5 } fullHeight className="bg-muted rounded px-2 py-1">
+                        { userProfile.id === GetSessionDataManager().userId &&
+                        <Flex className="p-0">
+                            <Text small underline className="cursor-pointer" onClick={ event => CreateLinkEvent(`avatar-editor/toggle`) }>Change Clothes</Text>
+                            <Text className="cursor-pointer badge-text" small underline onClick={ event => CreateLinkEvent(`inventory/toggle`) }>Change Badges</Text>
+                        </Flex>
+                        }
+                        <Grid columnCount={ 5 } fullHeight className="profile-grey-bg p-1">
                             <BadgesContainerView fullWidth center badges={ userBadges } />
                         </Grid>
                     </Column>
@@ -111,7 +117,7 @@ export const UserProfileView: FC<{}> = props =>
                 <Flex alignItems="center" className="rooms-button-container px-2 py-1">
                     <Flex alignItems="center" gap={ 1 } onClick={ event => CreateLinkEvent(`navigator/search/hotel_view/owner:${ userProfile.username }`) }>
                         <i className="icon icon-rooms" />
-                        <Text bold underline pointer>{ LocalizeText('extendedprofile.rooms') }</Text>
+                        <Text bold small underline pointer>{ LocalizeText('extendedprofile.rooms') }</Text>
                     </Flex>
                 </Flex>
                 <GroupsContainerView fullWidth itsMe={ userProfile.id === GetSessionDataManager().userId } groups={ userProfile.groups } onLeaveGroup={ onLeaveGroup } />
