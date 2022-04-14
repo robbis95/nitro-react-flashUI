@@ -1,6 +1,10 @@
 .nitro-mod-tools {
     width: $nitro-mod-tools-width;
-
+    color: #000;
+    height: 170px;
+    font-size: 10px;
+    padding-top: 10px;
+    text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
 }
 
 .roomtoolicon {
@@ -75,8 +79,7 @@
         min-height: 200px;
 
         .roomvisits-container {
-            div.room-visit {
-            }
+
         }
         
     }

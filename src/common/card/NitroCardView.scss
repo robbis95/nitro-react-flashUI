@@ -80,7 +80,7 @@ $nitro-card-tabs-height: 35px;
             color: $black;
             min-height: 21px;
             font-size: 10px;
-            padding-top: 10px;
+            margin-top: 3px;
             text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
         }
 
@@ -88,7 +88,6 @@ $nitro-card-tabs-height: 35px;
             cursor: pointer;
             width: 20px;
             height: 20px;
-            margin-top: 10px;
             background-image: url("../../assets/flash/boxes/card/mod_close.png");
 
             &:hover {

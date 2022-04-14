@@ -2,6 +2,7 @@ import { RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType } from '@nitr
 import { FC, useCallback, useReducer, useRef, useState } from 'react';
 import { GetRoomSession, GetSessionDataManager } from '../../api';
 import { Base, Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
+import { ButtonModtool } from '../../common/ButtonModtool';
 import { ModToolsEvent, ModToolsOpenRoomChatlogEvent, ModToolsOpenRoomInfoEvent, ModToolsOpenUserInfoEvent } from '../../events';
 import { DispatchUiEvent, UseRoomEngineEvent, UseUiEvent } from '../../hooks';
 import { ISelectedUser } from './common/ISelectedUser';
@@ -189,19 +190,19 @@ export const ModToolsView: FC<{}> = props =>
             { isMod &&
                 <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools " windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
                     <NitroCardHeaderView headerText={ 'Mod Tools' } onCloseClick={ event => setIsVisible(false) } />
-                    <NitroCardContentView className="text-black" gap={ 1 }>
-                        <Button gap={ 1 } onClick={ event => handleClick('toggle_room') } disabled={ !currentRoomId } className="position-relative">
-                            <Base className="icon icon-small-room position-absolute start-1"/> Room Tool
-                        </Button>
-                        <Button innerRef={ elementRef } gap={ 1 } onClick={ event => handleClick('toggle_room_chatlog') } disabled={ !currentRoomId } className="position-relative">
+                    <NitroCardContentView className="text-black pb-3 pt-2" gap={ 3 }>
+                        <ButtonModtool gap={ 1 } onClick={ event => handleClick('toggle_room') } disabled={ !currentRoomId } className="position-relative">
+                            <Base className="icon icon-small-room position-absolute start-1"/> Room tool
+                        </ButtonModtool>
+                        <ButtonModtool innerRef={ elementRef } gap={ 1 } onClick={ event => handleClick('toggle_room_chatlog') } disabled={ !currentRoomId } className="position-relative">
                             <Base className="icon icon-chat-history position-absolute start-1"/> Chatlog Tool
-                        </Button>
-                        <Button gap={ 1 } onClick={ () => handleClick('toggle_user_info') } disabled={ !selectedUser } className="position-relative">
+                        </ButtonModtool>
+                        <ButtonModtool gap={ 1 } onClick={ () => handleClick('toggle_user_info') } disabled={ !selectedUser } className="position-relative">
                             <Base className="icon icon-user position-absolute start-1"/> User: { selectedUser ? selectedUser.username : '' }
-                        </Button>
-                        <Button gap={ 1 } onClick={ () => setIsTicketsVisible(value => !value) } className="position-relative">
+                        </ButtonModtool>
+                        <ButtonModtool gap={ 1 } onClick={ () => setIsTicketsVisible(value => !value) } className="position-relative">
                             <Base className="icon icon-tickets position-absolute start-1"/> Report Tool
-                        </Button>
+                        </ButtonModtool>
                     </NitroCardContentView>
                 </NitroCardView> }
             { openRooms && openRooms.map(roomId =>
