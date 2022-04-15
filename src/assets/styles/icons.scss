@@ -357,7 +357,7 @@
     &.icon-zoom-less {
         background: url('../images/icons/zoom-less.png');
         background-repeat: no-repeat;
-        min-width: 12px;
+        width: 12px;
         height: 22px;
     }
 
@@ -366,6 +366,13 @@
         background-repeat: no-repeat;
         min-width: 20px;
         height: 22px;
+    }
+
+    &.icon-link-room {
+        background: url('../flash/room-info/link_icon.png');
+        background-repeat: no-repeat;
+        min-width: 16px;
+        height: 14px;
     }
 
     &.icon-arrows {

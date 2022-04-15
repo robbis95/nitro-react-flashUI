@@ -3,7 +3,7 @@ import { RoomMuteComposer, RoomSettingsComposer, RoomStaffPickComposer, Security
 import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
 import { CreateLinkEvent, GetGroupInformation, GetSessionDataManager, LocalizeText, SendMessageComposer } from '../../../api';
-import { Button, Column, Flex, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text, UserProfileIconView } from '../../../common';
+import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text, UserProfileIconView } from '../../../common';
 import { RoomWidgetThumbnailEvent } from '../../../events';
 import { DispatchUiEvent } from '../../../hooks';
 import { useNavigatorContext } from '../NavigatorContext';
@@ -93,33 +93,29 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
     if(!navigatorData.enteredGuestRoom) return null;
     
     return (
-        <NitroCardView className="nitro-room-info" theme="primary-slim">
+        <NitroCardView className="nitro-room-info" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('navigator.roomsettings.roominfo') } onCloseClick={ () => processAction('close') } />
             <NitroCardContentView className="text-black">
                 { navigatorData.enteredGuestRoom &&
                     <>
                         <Flex gap={ 2 } overflow="hidden">
-                            <LayoutRoomThumbnailView roomId={ navigatorData.enteredGuestRoom.roomId } customUrl={ navigatorData.enteredGuestRoom.officialRoomPicRef }>
-                                { hasPermission('settings') && <i className="icon icon-camera-small position-absolute b-0 r-0 m-1 cursor-pointer top-0" onClick={ () => processAction('open_room_thumbnail_camera') } /> }
-                            </LayoutRoomThumbnailView>
                             <Column grow gap={ 1 } overflow="hidden">
                                 <Flex gap={ 1 }>
                                     <Column grow gap={ 1 }>
                                         <Flex gap={ 1 }>
-                                            <i onClick={ () => processAction('set_home_room') } className={ 'flex-shrink-0 icon icon-house-small cursor-pointer' + classNames({ ' gray': navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId }) } />
-                                            <Text bold>{ navigatorData.enteredGuestRoom.roomName }</Text>
+                                            <Text small bold>{ navigatorData.enteredGuestRoom.roomName }</Text>
                                         </Flex>
                                         { navigatorData.enteredGuestRoom.showOwner &&
                                             <Flex alignItems="center" gap={ 1 }>
-                                                <Text variant="muted">{ LocalizeText('navigator.roomownercaption') }</Text>
+                                                <Text small variant="muted">{ LocalizeText('navigator.roomownercaption') }</Text>
                                                 <Flex alignItems="center" gap={ 1 }>
                                                     <UserProfileIconView userId={ navigatorData.enteredGuestRoom.ownerId } />
-                                                    <Text>{ navigatorData.enteredGuestRoom.ownerName }</Text>
+                                                    <Text small>{ navigatorData.enteredGuestRoom.ownerName }</Text>
                                                 </Flex>
                                             </Flex> }
                                         <Flex alignItems="center" gap={ 1 }>
-                                            <Text variant="muted">{ LocalizeText('navigator.roomrating') }</Text>
-                                            <Text>{ navigatorData.currentRoomRating }</Text>
+                                            <Text small variant="muted">{ LocalizeText('navigator.roomrating') }</Text>
+                                            <Text small>{ navigatorData.currentRoomRating }</Text>
                                         </Flex>
                                         { (navigatorData.enteredGuestRoom.tags.length > 0) &&
                                             <Flex alignItems="center" gap={ 1 }>
@@ -130,19 +126,27 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                                             </Flex> }
                                     </Column>
                                     <Column alignItems="center" gap={ 1 }>
-                                        { hasPermission('settings') &&
-                                            <i className="icon icon-cog cursor-pointer" title={ LocalizeText('navigator.room.popup.info.room.settings') } onClick={ event => processAction('open_room_settings') } /> }
-                                        <FontAwesomeIcon icon="link" title={ LocalizeText('navigator.embed.caption') } className="cursor-pointer" onClick={ event => CreateLinkEvent('navigator/toggle-room-link') } />
+                                    <i onClick={ () => processAction('set_home_room') } className={ 'flex-shrink-0 icon icon-house-small cursor-pointer' + classNames({ ' gray': navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId }) } />
                                     </Column>
                                 </Flex>
-                                <Text overflow="auto" style={ { maxHeight: 50 } }>{ navigatorData.enteredGuestRoom.description }</Text>
+                                <Text small overflow="auto" style={ { maxHeight: 50 } }>{ navigatorData.enteredGuestRoom.description }</Text>
+                            <Flex justifyContent="center">
+                                <LayoutRoomThumbnailView roomId={ navigatorData.enteredGuestRoom.roomId } customUrl={ navigatorData.enteredGuestRoom.officialRoomPicRef }>
+                                { hasPermission('settings') && <i className="icon icon-camera-small position-absolute b-0 r-0 m-1 cursor-pointer top-0" onClick={ () => processAction('open_room_thumbnail_camera') } /> }
+                                </LayoutRoomThumbnailView>
+                            </Flex>
                                 { (navigatorData.enteredGuestRoom.habboGroupId > 0) &&
-                                    <Flex pointer alignItems="center" gap={ 1 } onClick={ () => processAction('open_group_info') }>
+                                    <Flex pointer alignItems="center" gap={ 2 } onClick={ () => processAction('open_group_info') }>
                                         <LayoutBadgeImageView className="flex-none" badgeCode={ navigatorData.enteredGuestRoom.groupBadgeCode } isGroup={ true } />
-                                        <Text underline>
+                                        <Text small underline>
                                             { LocalizeText('navigator.guildbase', [ 'groupName' ], [ navigatorData.enteredGuestRoom.groupName ]) }
                                         </Text>
-                                    </Flex> }
+                                    </Flex>
+                                     }
+                        <Flex gap={ 1 } className="w-100 room-tool-item" onClick={() => processAction('toggle_room_link')}>
+                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-link-room float-start" />
+                        <Text underline small >{LocalizeText('navigator.embed.caption')}</Text>
+                    </Flex>
                             </Column>
                         </Flex>
                         <Column gap={ 1 }>
@@ -155,6 +159,9 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                             </Button>
                             { hasPermission('settings') &&
                             <>
+                                <Button onClick={ () => processAction('open_room_settings') }>
+                                    { LocalizeText('navigator.room.popup.info.room.settings') }
+                                </Button>
                                 <Button onClick={ () => processAction('toggle_mute') }>
                                     { LocalizeText(isRoomMuted ? 'navigator.muteall_on' : 'navigator.muteall_off') }
                                 </Button>

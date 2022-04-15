@@ -16,7 +16,7 @@ export const RoomToolsWidgetView: FC<{}> = props =>
     const [ isOpen, setIsOpen ] = useState<boolean>(false);
     const [ navigatorData, setNavigatorData ] = useSharedNavigatorData();
     const { roomSession = null, widgetHandler = null } = useRoomContext();
-    const [ show, setShow ] = useState(false);
+    const [ show, setShow ] = useState(true);
 
     const handleToolClick = (action: string) =>
     {
@@ -73,31 +73,37 @@ export const RoomToolsWidgetView: FC<{}> = props =>
     }, [ roomName, roomOwner, roomTags ]);
     
     return (
-        <Flex className="nitro-room-tools-container">
+        <Flex gap={ 2 } className="nitro-room-tools-container">
             <div className="btn-toggle toggle-roomtool d-flex align-items-center" onClick={() => setShow(!show)}>
                 <div className={'toggle-icon ' + classNames({ 'right': !show, 'left': show })} />
             </div>
             {show && (
-            <><Column gap={ 1 } center className="nitro-room-tools p-2 px-3">
-                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('settings')}>
+            <><Column gap={ 1 } center className="nitro-room-tools p-3 px-4">
+                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('settings')}>
                     <Base pointer title={LocalizeText('room.settings.button.text')} className="icon-width float-start icon icon-cog" />
-                    <p>{LocalizeText('room.settings.button.text')}</p>
-                    </div>
-                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('zoom')}>
+                    <Text underline small >{LocalizeText('room.settings.button.text')}</Text>
+                    </Flex>
+                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('zoom')}>
                     <Base pointer title={LocalizeText('room.zoom.button.text')} className={'icon-width float-start icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn })} />
-                    <p>{LocalizeText('room.zoom.button.text')}</p>
-                    </div>
-                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('chat_history')}>
+                    <Text underline small >{LocalizeText('room.zoom.button.text')}</Text>
+                    </Flex>
+                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('chat_history')}>
                     <Base pointer title={LocalizeText('room.chathistory.button.text')} className="icon-width icon icon-chat-history float-start" />
-                    <p>{LocalizeText('room.chathistory.button.text')}</p></div>
+                    <Text underline small >{LocalizeText('room.chathistory.button.text')}</Text></Flex>
                     {navigatorData.canRate &&
-                    <div className="w-100 room-tool-item" onClick={() => handleToolClick('like_room')}>
+                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('like_room')}>
                         <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-like-room float-start" />
-                        <p>{LocalizeText('room.like.button.text')}</p>
-                        </div>}
-                </Column></>
-            )}
-            <Column justifyContent="center">
+                        <Text underline small >{LocalizeText('room.like.button.text')}</Text>
+                        </Flex>
+                        }
+                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('toggle_room_link')}>
+                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-link-room float-start" />
+                        <Text underline small >{LocalizeText('navigator.embed.caption')}</Text>
+                    </Flex>
+                    
+                </Column>
+                
+                <Column justifyContent="center">
                         <TransitionAnimation type={TransitionAnimationTypes.SLIDE_LEFT} inProp={isOpen} timeout={300}>
                             <Column center gap={ 2 }>
                                 <Column className="nitro-room-tools-info rounded py-2 px-3">
@@ -112,7 +118,8 @@ export const RoomToolsWidgetView: FC<{}> = props =>
                                 </Column>
                             </Column>
                         </TransitionAnimation>
-                    </Column>
+                    </Column></>
+            )}
         </Flex>
     );
 }

@@ -9,14 +9,9 @@
         border-image-width: 6px 6px 6px 6px;
         transition: all .2s ease;
         z-index: 2;
-        margin-left: -10px;
-        width: 150px;
-
-        p {
-            color: #9f9f9e;
-            font-size: 13px;
-            text-decoration: underline;
-        }
+        margin-left: -20px;
+        min-width: 150px;
+        color: #9f9f9e;
 
         .icon-width {
             min-width: 25px;
@@ -112,7 +107,7 @@
 }
 
 .toggle-roomtool {
-    min-height: 125px;
+    min-height: 95px;
     width: 20px;
     margin-left: -5px;
     padding-left: 10px;
