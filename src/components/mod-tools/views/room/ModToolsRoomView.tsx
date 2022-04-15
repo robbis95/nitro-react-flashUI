@@ -19,6 +19,7 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
     const [ loadedRoomId, setLoadedRoomId ] = useState(null);
 
     const [ name, setName ] = useState(null);
+    const [ desc, setDesc ] = useState(null);
     const [ ownerId, setOwnerId ] = useState(null);
     const [ ownerName, setOwnerName ] = useState(null);
     const [ ownerInRoom, setOwnerInRoom ] = useState(false);
@@ -38,6 +39,7 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
 
         setLoadedRoomId(parser.data.flatId);
         setName(parser.data.room.name);
+        setDesc(parser.data.room.desc);
         setOwnerId(parser.data.ownerId);
         setOwnerName(parser.data.ownerName);
         setOwnerInRoom(parser.data.ownerInRoom);
@@ -76,21 +78,25 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
     }, [ roomId, infoRequested, setInfoRequested ]);
 
     return (
-        <NitroCardView className="nitro-mod-tools-room" theme="primary-slim" windowPosition={ DraggableWindowPosition.TOP_LEFT }>
-            <NitroCardHeaderView headerText={ 'Room Info' + (name ? ': ' + name : '') } onCloseClick={ event => onCloseClick() } />
+        <NitroCardView className="nitro-mod-tools-room" theme="modtool-windows" windowPosition={ DraggableWindowPosition.TOP_CENTER }>
+            <NitroCardHeaderView headerText={ 'Room Info' } onCloseClick={ event => onCloseClick() } />
             <NitroCardContentView className="text-black">
-                <Flex gap={ 2 }>
+            <Column gap={ 0 } className="mod-content p-2">
+                <Text gfbold>{ name }</Text>
+                <Text>{ desc }</Text>
+            </Column>
+                <Flex gap={ 2 } className="mod-content p-2">
                     <Column justifyContent="center" grow gap={ 1 }>
-                        <Flex alignItems="center" gap={ 2 }>
-                            <Text bold align="end" className="col-7">Room Owner:</Text>
+                        <Flex alignItems="center" gap={ 1 }>
+                            <Text gfbold className="">Room Owner:</Text>
                             <Text underline pointer truncate>{ ownerName }</Text>
                         </Flex>
                         <Flex alignItems="center" gap={ 2 }>
-                            <Text bold align="end" className="col-7">Users in room:</Text>
+                            <Text gfbold className="">Users in room:</Text>
                             <Text>{ usersInRoom }</Text>
                         </Flex>
                         <Flex alignItems="center" gap={ 2 }>
-                            <Text bold align="end" className="col-7">Owner in room:</Text>
+                            <Text gfbold className="">Owner in room:</Text>
                             <Text>{ ownerInRoom ? 'Yes' : 'No' }</Text>
                         </Flex>
                     </Column>
@@ -99,18 +105,18 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
                         <Button onClick={ event => DispatchUiEvent(new ModToolsOpenRoomChatlogEvent(roomId)) }>Chatlog</Button>
                     </Column>
                 </Flex>
-                <Column className="bg-muted rounded p-2" gap={ 1 }>
+                <Column className="mod-content p-2" gap={ 1 }>
                     <Flex alignItems="center" gap={ 1 }>
                         <input className="form-check-input" type="checkbox" checked={ kickUsers } onChange={ event => setKickUsers(event.target.checked) } />
-                        <Text small>Kick everyone out</Text>
+                        <Text>Kick everyone out</Text>
                     </Flex>
                     <Flex alignItems="center" gap={ 1 }>
                         <input className="form-check-input" type="checkbox" checked={ lockRoom } onChange={ event => setLockRoom(event.target.checked) } />
-                        <Text small>Enable the doorbell</Text>
+                        <Text>Enable the doorbell</Text>
                     </Flex>
                     <Flex alignItems="center" gap={ 1 }>
                         <input className="form-check-input" type="checkbox" checked={ changeRoomName } onChange={ event => setChangeRoomName(event.target.checked) }/>
-                        <Text small>Change room name</Text>
+                        <Text>Change room name</Text>
                     </Flex>
                 </Column>
                 <textarea className="form-control" placeholder="Type a mandatory message to the users in this text box..." value={ message } onChange={ event => setMessage(event.target.value) }></textarea>

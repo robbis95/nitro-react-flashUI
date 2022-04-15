@@ -9,6 +9,7 @@ export interface TextProps extends BaseProps<HTMLDivElement>
     fontSize?: FontSizeType;
     align?: TextAlignType;
     bold?: boolean;
+    gfbold?: boolean;
     underline?: boolean;
     italics?: boolean;
     truncate?: boolean;
@@ -22,7 +23,7 @@ export interface TextProps extends BaseProps<HTMLDivElement>
 
 export const Text: FC<TextProps> = props =>
 {
-    const { variant = null, fontWeight = null, fontSize = 0, align = null, bold = false, underline = false, italics = false, truncate = false, center = false, textEnd = false, small = false, wrap = false, noWrap = false, textBreak = false, ...rest } = props;
+    const { variant = null, fontWeight = null, fontSize = 0, align = null, bold = false, gfbold = false, underline = false, italics = false, truncate = false, center = false, textEnd = false, small = false, wrap = false, noWrap = false, textBreak = false, ...rest } = props;
 
     const getClassNames = useMemo(() =>
     {
@@ -31,6 +32,8 @@ export const Text: FC<TextProps> = props =>
         if(variant) newClassNames.push('text-' + variant);
 
         if(bold) newClassNames.push('font-bold');
+
+        if(gfbold) newClassNames.push('goldfish-bold');
 
         if(fontWeight) newClassNames.push('fw-' + fontWeight);
 
@@ -57,7 +60,7 @@ export const Text: FC<TextProps> = props =>
         if(textBreak) newClassNames.push('text-break');
 
         return newClassNames;
-    }, [ variant, fontWeight, fontSize, align, bold, underline, italics, truncate, center, textEnd, small, wrap, noWrap, textBreak ]);
+    }, [ variant, fontWeight, fontSize, align, bold, gfbold, underline, italics, truncate, center, textEnd, small, wrap, noWrap, textBreak ]);
 
     return <Base classNames={ getClassNames } { ...rest } />;
 }
