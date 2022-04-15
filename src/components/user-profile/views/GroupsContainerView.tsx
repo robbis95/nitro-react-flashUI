@@ -1,7 +1,7 @@
 import { GroupInformationComposer, GroupInformationEvent, GroupInformationParser, HabboGroupEntryData } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { SendMessageComposer, ToggleFavoriteGroup } from '../../../api';
-import { AutoGrid, Base, Column, Flex, Grid, GridProps, LayoutBadgeImageView, LayoutGridItem } from '../../../common';
+import { LocalizeText, SendMessageComposer, ToggleFavoriteGroup } from '../../../api';
+import { AutoGrid, Base, Column, Flex, Grid, GridProps, Text, LayoutBadgeImageView, LayoutGridItem } from '../../../common';
 import { UseMessageEventHook } from '../../../hooks';
 import { GroupInformationView } from '../../groups/views/GroupInformationView';
 
@@ -58,11 +58,15 @@ export const GroupsContainerView: FC<GroupsContainerViewProps> = props =>
     {
         return (
             <Column center fullHeight>
-                <Flex justifyContent="center" gap={ 2 }>
+                <Column className="profile-grey-bg py-3 px-4">
+                    <Text small> { LocalizeText('extendedprofile.nogroups.user') }</Text>
+                <Flex justifyContent="center" gap={ 4 }>
                     <Base className="no-group-spritesheet image-1" />
                     <Base className="no-group-spritesheet image-2" />
                     <Base className="no-group-spritesheet image-3" />
                 </Flex>
+                    <Text small>{ LocalizeText('extendedprofile.nogroups.info') }</Text>
+                </Column>
             </Column>
         );
     }
