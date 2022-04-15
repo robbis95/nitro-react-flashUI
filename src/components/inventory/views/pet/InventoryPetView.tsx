@@ -80,7 +80,7 @@ export const InventoryPetView: FC<InventoryPetViewProps> = props =>
                     <Column grow justifyContent="between" gap={ 2 }>
                         <Text grow truncate>{ selectedPet.petData.name }</Text>
                         { !!roomSession &&
-                            <Button variant="success" onClick={ event => attemptPetPlacement(selectedPet) }>
+                            <Button onClick={ event => attemptPetPlacement(selectedPet) }>
                                 { LocalizeText('inventory.furni.placetoroom') }
                             </Button> }
                     </Column> }

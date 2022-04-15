@@ -81,7 +81,7 @@ export const InventoryBotView: FC<InventoryBotViewProps> = props =>
                     <Column grow justifyContent="between" gap={ 2 }>
                         <Text grow truncate>{ selectedBot.botData.name }</Text>
                         { !!roomSession &&
-                            <Button variant="success" onClick={ event => attemptBotPlacement(selectedBot) }>
+                            <Button onClick={ event => attemptBotPlacement(selectedBot) }>
                                 { LocalizeText('inventory.furni.placetoroom') }
                             </Button> }
                     </Column> }

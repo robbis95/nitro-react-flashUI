@@ -131,7 +131,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
                         <Text grow truncate>{ selectedItem.name }</Text>
                         <Column gap={ 1 }>
                             { !!roomSession &&
-                                <Button variant="success" onClick={ event => attemptItemPlacement(selectedItem) }>
+                                <Button onClick={ event => attemptItemPlacement(selectedItem) }>
                                     { LocalizeText('inventory.furni.placetoroom') }
                                 </Button> }
                             { (selectedItem && selectedItem.isSellable) &&

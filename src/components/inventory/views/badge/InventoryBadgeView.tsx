@@ -58,7 +58,7 @@ export const InventoryBadgeView: FC<{}> = props =>
                             <LayoutBadgeImageView shrink badgeCode={ selectedBadgeCode } />
                             <Text>{ LocalizeBadgeName(selectedBadgeCode) }</Text>
                         </Flex>
-                        <Button variant={ (isWearingBadge(selectedBadgeCode) ? 'danger' : 'success') } disabled={ !isWearingBadge(selectedBadgeCode) && !canWearBadges() } onClick={ event => toggleBadge(selectedBadgeCode) }>{ LocalizeText(isWearingBadge(selectedBadgeCode) ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge') }</Button>
+                        <Button disabled={ !isWearingBadge(selectedBadgeCode) && !canWearBadges() } onClick={ event => toggleBadge(selectedBadgeCode) }>{ LocalizeText(isWearingBadge(selectedBadgeCode) ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge') }</Button>
                     </Column> }
             </Column>
         </Grid>
