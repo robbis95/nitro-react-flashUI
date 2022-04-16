@@ -3,6 +3,7 @@ import { NotificationUtilities } from "../../api";
 import { Base, Column, Text } from "../../common";
 
 var randomImage = "loadingPhoto position-absolute";
+const randomImg: number = Math.floor(Math.random() * 30);
 
 interface LoadingViewProps
 {
@@ -14,8 +15,6 @@ interface LoadingViewProps
 export const LoadingView: FC<LoadingViewProps> = (props) =>
 {
     const { isError = false, message = "", percent = 0 } = props;
-
-    const randomImg: number = Math.floor(Math.random() * 30);
 
     useEffect(() =>
     {
