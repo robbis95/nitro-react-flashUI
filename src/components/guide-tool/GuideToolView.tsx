@@ -320,7 +320,7 @@ export const GuideToolView: FC<{}> = props =>
     if(!isVisible) return null;
 
     return (
-        <NitroCardView className="nitro-guide-tool" theme="primary-slim">
+        <NitroCardView className="nitro-guide-tool" theme="primary">
             <NitroCardHeaderView headerText={ headerText } onCloseClick={ event => processAction('close') } noCloseButton={ noCloseButton } />
             <NitroCardContentView className="text-black">
                 { (sessionState === GuideSessionState.GUIDE_TOOL_MENU) &&
