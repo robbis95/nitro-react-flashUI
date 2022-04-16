@@ -32,7 +32,7 @@ export const NitroCardHeaderView: FC<NitroCardHeaderViewProps> = props =>
     return (
         <Column center position="relative" classNames={ getClassNames } { ...rest }>
             <Flex fullWidth className="nitro-card-header-holder">
-                <Text bold>{ headerText }</Text>
+            <span className="nitro-card-header-text">{ headerText }</span>
                 <Base position="absolute" className="end-2 nitro-card-header-close" onMouseDownCapture={ onMouseDown } onClick={ onCloseClick }>
                 </Base>
             </Flex>
