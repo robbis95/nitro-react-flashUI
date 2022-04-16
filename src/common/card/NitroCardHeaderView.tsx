@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, MouseEvent, useCallback, useMemo } from 'react';
 import { Base, Column, ColumnProps, Flex } from '..';
+import { Text } from '../../common';
 
 interface NitroCardHeaderViewProps extends ColumnProps
 {
@@ -31,7 +32,7 @@ export const NitroCardHeaderView: FC<NitroCardHeaderViewProps> = props =>
     return (
         <Column center position="relative" classNames={ getClassNames } { ...rest }>
             <Flex fullWidth className="nitro-card-header-holder">
-                <span className="nitro-card-header-text fw-bold">{ headerText }</span>
+                <Text bold>{ headerText }</Text>
                 <Base position="absolute" className="end-2 nitro-card-header-close" onMouseDownCapture={ onMouseDown } onClick={ onCloseClick }>
                 </Base>
             </Flex>
