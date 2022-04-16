@@ -37,6 +37,7 @@ export const App: FC<{}> = props =>
             case ConfigurationEvent.LOADED:
                 GetNitroInstance().localization.init();
                 setPercent(prevValue => (prevValue + 20));
+                console.log("\n%c                                                          \n  Nitro V2 - FLASH UI EDIT!                               \n  This UI-edit is created by robbis                       \n  Do you want this UI for your hotel?                     \n  Join our Discord                                        \n  https://discord.gg/j3bqtZKAF3                           \n                                                          \n", "color: #FFFFFF; background: #eab9d0; padding:0px 0");
                 return;
             case ConfigurationEvent.FAILED:
                 setIsError(true);
