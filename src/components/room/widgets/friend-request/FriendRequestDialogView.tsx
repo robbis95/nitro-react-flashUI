@@ -13,15 +13,15 @@ export const FriendRequestDialogView: FC<{ roomIndex: number, request: Messenger
 
     return (
         <ObjectLocationView objectId={ roomIndex } category={ RoomObjectCategory.UNIT }>
-            <Base className="nitro-friend-request-dialog nitro-context-menu p-2">
+            <Base className="nitro-friend-request-dialog p-2">
                 <Column>
                     <Flex alignItems="center" justifyContent="between" gap={ 2 }>
-                        <Text variant="white" fontSize={ 6 }>{ LocalizeText('widget.friendrequest.from', [ 'username' ], [ request.name ]) }</Text>
-                        <FontAwesomeIcon icon="times" className="cursor-pointer" onClick={ event => hideFriendRequest(request.requesterUserId) } />
+                        <Text small bold variant="white">{ LocalizeText('widget.friendrequest.from', [ 'username' ], [ request.name ]) }</Text>
+                        <i className="friend-req-close" onClick={ event => hideFriendRequest(request.requesterUserId) } />
                     </Flex>
-                    <Flex justifyContent="end" gap={ 1 }>
-                        <Button variant="danger" onClick={ event => requestResponse(request.requesterUserId, false) }>{ LocalizeText('widget.friendrequest.decline') }</Button>
-                        <Button variant="success" onClick={ event => requestResponse(request.requesterUserId, true) }>{ LocalizeText('widget.friendrequest.accept') }</Button>
+                    <Flex >
+                        <Text small className="mt-2" underline onClick={ event => requestResponse(request.requesterUserId, false) }>{ LocalizeText('widget.friendrequest.decline') }</Text>
+                        <Button className="accept-friend-btn" onClick={ event => requestResponse(request.requesterUserId, true) }>{ LocalizeText('widget.friendrequest.accept') }</Button>
                     </Flex>
                 </Column>
             </Base>

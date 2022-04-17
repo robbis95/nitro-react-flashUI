@@ -1,4 +1,42 @@
 .nitro-friend-request-dialog {
     width: unset;
     max-width: 200px;
+    border-image-source: url(../../../../assets/flash/boxes/card/friend_req_bg.png);
+    border-image-slice: 6 6 6 6 fill;
+    border-image-width: 6px 6px 6px 6px;
+
+    &:after {
+        content: "";
+        background-image: url(../../../../assets/flash/boxes/card/friend_req_pointer.png);
+        background-repeat: no-repeat;
+        width: 11px;
+        height: 9px;
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .accept-friend-btn {
+        margin-left: auto;
+        font-size: 0.875em;
+        font-family: 'UbuntuBold';
+        height: 25px;
+    }
+
+    .friend-req-close {
+        cursor: pointer;
+        background-image: url(../../../../assets/flash/boxes/card/close.png);
+        width: 19px;
+        height: 20px;
+
+        &:hover {
+            background-image: url(../../../../assets/flash/boxes/card/close_hover.png);
+        }
+
+        &:active {
+            background-image: url(../../../../assets/flash/boxes/card/close_click.png);
+        }
+    }
 }
