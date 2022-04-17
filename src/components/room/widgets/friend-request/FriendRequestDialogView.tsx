@@ -20,7 +20,7 @@ export const FriendRequestDialogView: FC<{ roomIndex: number, request: Messenger
                         <i className="friend-req-close" onClick={ event => hideFriendRequest(request.requesterUserId) } />
                     </Flex>
                     <Flex >
-                        <Text small className="mt-2" underline onClick={ event => requestResponse(request.requesterUserId, false) }>{ LocalizeText('widget.friendrequest.decline') }</Text>
+                        <Text small className="mt-2 cursor-pointer" underline onClick={ event => requestResponse(request.requesterUserId, false) }>{ LocalizeText('widget.friendrequest.decline') }</Text>
                         <Button className="accept-friend-btn" onClick={ event => requestResponse(request.requesterUserId, true) }>{ LocalizeText('widget.friendrequest.accept') }</Button>
                     </Flex>
                 </Column>
