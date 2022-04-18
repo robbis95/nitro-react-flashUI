@@ -44,7 +44,11 @@
     }
 
     .item-picker {
-        height: 170px;
+        max-height: 150px;
+    }
+
+    .quanity-container {
+        height: 20px;
     }
 
     .catalog-image-column {
