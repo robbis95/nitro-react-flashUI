@@ -44,6 +44,31 @@
     }
 }
 
+.layout-catalog-grid-item {
+    height: var(--nitro-grid-column-min-height, unset);
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &.active {
+        border-image-source: url(../assets/flash/catalogue/item_grid_highlight.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+
+        &:not(.clear-bg) {
+            background-color: $grid-active-bg-color !important;
+        }
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+
+        img {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+    }
+}
+
 .nitro-room-thumbnail-camera {
     width: 132px;
     height: 192px;
@@ -327,8 +352,7 @@
         left: 0;
         height: 100%;
         width: 100%;
-        border-radius: $border-radius;
-        background-color: $light;
+        background-color: $black;
         background-repeat: no-repeat;
         background-position: center;
         overflow: hidden;
@@ -337,20 +361,6 @@
             &::after {
                 content: none;
             }
-        }
-
-        &::after {
-            position: absolute;
-            content: "";
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            border-radius: $border-radius;
-            border-bottom: 2px solid white;
-            border-right: 2px solid white;
-            box-shadow: -2px -2px rgba(0, 0, 0, 0.4),
-                inset 3px 3px rgba(0, 0, 0, 0.2);
         }
     }
 }

@@ -15,7 +15,7 @@ export const CatalogLayoutFrontPageItemView: FC<CatalogLayoutFrontPageItemViewPr
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'rounded', 'nitro-front-page-item' ];
+        const newClassNames: string[] = [ 'nitro-front-page-item' ];
 
         if(classNames.length) newClassNames.push(...classNames);
 

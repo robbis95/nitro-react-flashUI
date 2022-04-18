@@ -17,11 +17,10 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
 
     return (
         <div>
-            <Column center={ !currentOffer } size={ 5 } overflow="hidden">
+            <Column className="position-relative" center={ !currentOffer } size={ 5 } overflow="hidden">
                 { !currentOffer &&
                     <>
-                        { !!page.localization.getImage(1) && <img alt="" src={ page.localization.getImage(1) } /> }
-                        <Text center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
+                        { !!page.localization.getImage(1) && <img className="catalog-image-column" alt="" src={ page.localization.getImage(1) } /> }
                     </> }
                 { currentOffer &&
                     <>
@@ -31,20 +30,23 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
                             <CatalogAddOnBadgeWidgetView position="absolute" className="bg-muted rounded bottom-1 end-1" />
                         </Base>
                         <Column grow gap={ 1 }>
-                            <Text grow truncate>{ currentOffer.localizationName }</Text>
+                            <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
                             <Flex justifyContent="between">
                                 <Column gap={ 1 }>
                                     <CatalogSpinnerWidgetView />
                                 </Column>
-                                <CatalogTotalPriceWidget justifyContent="end" alignItems="end" />
+                                <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2" justifyContent="end" alignItems="end" />
                             </Flex>
-                            <CatalogPurchaseWidgetView />
                         </Column>
                     </> }
             </Column>
-            <Column size={ 7 } overflow="hidden">
+            <Column className="grid-bg item-picker p-2" size={ 7 } overflow="hidden">
                 <CatalogItemGridWidgetView />
             </Column>
+            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-3">
+            <CatalogPurchaseWidgetView />
+            </Flex>
+
         </div>
     );
 }

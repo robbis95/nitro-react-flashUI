@@ -431,11 +431,11 @@ export const CatalogView: FC<{}> = props =>
                     <NitroCardContentView>
                         <Grid>
                             { !navigationHidden &&
-                                <Column size={ 3 } overflow="hidden">
+                                <Column size={ 4 } overflow="hidden">
                                     { activeNodes && (activeNodes.length > 0) &&
                                         <CatalogNavigationView node={ activeNodes[0] } /> }
                                 </Column> }
-                            <Column size={ !navigationHidden ? 9 : 12 } overflow="hidden">
+                            <Column size={ !navigationHidden ? 8 : 12 } overflow="hidden">
                                 { GetCatalogLayout(currentPage, () => setNavigationHidden(true)) }
                             </Column>
                         </Grid>
