@@ -23,7 +23,7 @@ export const WiredActionSetFurniStateToView: FC<{}> = props =>
     return (
         <WiredActionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.conditions') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.conditions') }</Text>
                 <Flex alignItems="center" gap={ 1 }>
                     <input className="form-check-input" type="checkbox" id="stateFlag" checked={ !!stateFlag } onChange={ event => setStateFlag(event.target.checked ? 1 : 0) } />
                     <Text>{ LocalizeText('wiredfurni.params.condition.state') }</Text>

@@ -52,3 +52,44 @@
         }
     }
 }
+
+.wired-slider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    background: url(../flash/wired/slider_track.png);
+    background-repeat-y: no-repeat;
+    background-position: center left;
+
+
+    .thumb {
+        width: 12px;
+        height: 15px;
+        background: url(../flash/wired/slider_thumb.png);
+        background-repeat: no-repeat;
+
+        &:hover,
+        .active {
+            cursor: pointer;
+        }
+
+        &.active {
+            outline: none;
+        }
+
+        &.degree {
+
+            &:after {
+                content: "\00b0"
+            }
+        }
+
+        &.percent {
+
+            &:after {
+                content: "\0025"
+            }
+        }
+    }
+}

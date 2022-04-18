@@ -97,15 +97,15 @@ export const WiredBaseView: FC<WiredBaseViewProps> = props =>
     }, [ trigger, hasSpecialInput, requiresFurni, setIntParams, setStringParam, setFurniIds ]);
 
     return (
-        <NitroCardView uniqueKey="nitro-wired" className="nitro-wired" theme="primary">
+        <NitroCardView uniqueKey="nitro-wired" className="nitro-wired" theme="wired">
             <NitroCardHeaderView headerText={ LocalizeText('wiredfurni.title') } onCloseClick={ close } />
             <NitroCardContentView>
                 <Column gap={ 1 }>
                     <Flex alignItems="center" gap={ 1 }>
                         <i className={ `icon icon-wired-${ wiredType }` } />
-                        <Text bold>{ wiredName }</Text>
+                        <Text gfbold>{ wiredName }</Text>
                     </Flex>
-                    <Text small>{ wiredDescription }</Text>
+                    <Text>{ wiredDescription }</Text>
                 </Column>
                 { !!children && <hr className="m-0 bg-dark" /> }
                 { children }
@@ -115,8 +115,8 @@ export const WiredBaseView: FC<WiredBaseViewProps> = props =>
                         <WiredFurniSelectorView />
                     </> }
                 <Flex alignItems="center" gap={ 1 }>
-                    <Button fullWidth variant="success" onClick={ onSave }>{ LocalizeText('wiredfurni.ready') }</Button>
-                    <Button fullWidth variant="secondary" onClick={ close }>{ LocalizeText('cancel') }</Button>
+                    <button type="button" className="btn btn-primary notification-buttons w-100" onClick={ onSave }>{ LocalizeText('wiredfurni.ready') }</button>
+                    <button type="button" className="btn btn-primary notification-buttons w-100" onClick={ close }>{ LocalizeText('cancel') }</button>
                 </Flex>
             </NitroCardContentView>
         </NitroCardView>

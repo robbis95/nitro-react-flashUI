@@ -43,8 +43,8 @@ export const WiredFurniSelectorView: FC<{}> = props =>
     
     return (
         <Column gap={ 1 }>
-            <Text bold>{ LocalizeText('wiredfurni.pickfurnis.caption', [ 'count', 'limit' ], [ furniIds.length.toString(), trigger.maximumItemSelectionCount.toString() ]) }</Text>
-            <Text small>{ LocalizeText('wiredfurni.pickfurnis.desc') }</Text>
+            <Text gfbold>{ LocalizeText('wiredfurni.pickfurnis.caption', [ 'count', 'limit' ], [ furniIds.length.toString(), trigger.maximumItemSelectionCount.toString() ]) }</Text>
+            <Text>{ LocalizeText('wiredfurni.pickfurnis.desc') }</Text>
         </Column>
     );
 }

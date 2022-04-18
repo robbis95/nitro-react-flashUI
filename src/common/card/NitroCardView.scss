@@ -383,6 +383,74 @@ $nitro-card-tabs-height: 35px;
             }
         }
 
+        // WIRED WINDOWS
+
+        &.theme-wired {
+            border-image-source: url("../../assets/flash/wired/wired_bg.png");
+            border-image-slice: 10 10 10 10 fill;
+            border-image-width: 10px 10px 10px 10px;
+            border-image-repeat: repeat repeat;
+            font-family: Goldfish;
+            font-size: 9px;
+    
+            .btn {
+                font-size: 9px;
+            }
+    
+            .mod-content {
+                border-image-source: url(../../assets/flash/modtools/content_bg.png);
+                border-image-slice: 6 6 6 6 fill;
+                border-image-width: 6px 6px 6px 6px;
+            }
+    
+            .nitro-card-accordion-set-content {
+                color: #000;
+            }
+    
+            .nitro-card-accordion-set-header {
+                font-family: Goldfish-Bold;
+            }
+    
+            .nitro-card-header {
+                min-height: 25px;
+                max-height: 25px;
+                
+                .nitro-card-header-holder {
+                    background-image: url(../../assets/flash/wired/wired_header.png);
+                    background-repeat: repeat-x;
+                    justify-content: center;
+                    margin-top: 6px;
+                }
+        
+                .nitro-card-header-text {
+                    color: $white;
+                    min-height: 15px;
+                    font-size: 9px;
+                    font-family: Goldfish-Bold;
+                    background: #3d3d3d;
+                    padding: 3px 10px 6px 10px;
+                }
+        
+                .nitro-card-header-close {
+                    cursor: pointer;
+                    width: 15px;
+                    height: 15px;
+                    background-image: url("../../assets/flash/wired/wired_close.png");
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-color: #3d3d3d;
+    
+                    &:hover {
+                        background-image: url("../../assets/flash/wired/wired_close_hover.png");
+                    }
+    
+                    &:active {
+                        background-image: url("../../assets/flash/wired/wired_close_active.png");
+                    }
+                }
+            }
+        }
+
     &.theme-primary-slim {
         border: $border-width solid $border-color;
 

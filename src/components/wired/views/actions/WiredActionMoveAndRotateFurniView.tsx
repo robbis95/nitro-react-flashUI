@@ -50,7 +50,7 @@ export const WiredActionMoveAndRotateFurniView: FC<{}> = props =>
     return (
         <WiredActionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID_BY_TYPE_OR_FROM_CONTEXT } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.startdir') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.startdir') }</Text>
                 <Flex gap={ 1 }>
                     { directionOptions.map(option =>
                     {
@@ -66,7 +66,7 @@ export const WiredActionMoveAndRotateFurniView: FC<{}> = props =>
                 </Flex>
             </Column>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.turn') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.turn') }</Text>
                 { rotationOptions.map(option =>
                 {
                     return (

@@ -33,25 +33,25 @@ export const WiredActionGiveScoreToPredefinedTeamView: FC<{}> = props =>
     return (
         <WiredActionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.setpoints', [ 'points' ], [ points.toString() ]) }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.setpoints', [ 'points' ], [ points.toString() ]) }</Text>
                 <ReactSlider
-                    className={ 'nitro-slider' }
+                    className={ 'wired-slider' }
                     min={ 1 }
                     max={ 100 }
                     value={ points }
                     onChange={ event => setPoints(event) } />
             </Column>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.settimesingame', [ 'times' ], [ time.toString() ]) }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.settimesingame', [ 'times' ], [ time.toString() ]) }</Text>
                 <ReactSlider
-                    className={ 'nitro-slider' }
+                    className={ 'wired-slider' }
                     min={ 1 }
                     max={ 10 }
                     value={ time }
                     onChange={ event => setTime(event) } />
             </Column>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.team') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.team') }</Text>
                 { [ 1, 2, 3, 4 ].map(value =>
                 {
                     return (

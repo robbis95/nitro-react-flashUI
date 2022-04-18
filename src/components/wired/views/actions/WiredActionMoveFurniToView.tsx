@@ -49,16 +49,16 @@ export const WiredActionMoveFurniToView: FC<{}> = props =>
     return (
         <WiredActionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID_OR_BY_TYPE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.emptytiles', [ 'tiles' ], [ spacing.toString() ]) }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.emptytiles', [ 'tiles' ], [ spacing.toString() ]) }</Text>
                 <ReactSlider
-                    className={ 'nitro-slider' }
+                    className={ 'wired-slider' }
                     min={ 1 }
                     max={ 5 }
                     value={ spacing }
                     onChange={ event => setSpacing(event) } />
             </Column>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.startdir') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.startdir') }</Text>
                 <Flex gap={ 1 }>
                     { directionOptions.map(value =>
                     {

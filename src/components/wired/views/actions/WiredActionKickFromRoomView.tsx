@@ -19,7 +19,7 @@ export const WiredActionKickFromRoomView: FC<{}> = props =>
     return (
         <WiredActionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.message') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.message') }</Text>
                 <input type="text" className="form-control form-control-sm" value={ message } onChange={ event => setMessage(event.target.value) } maxLength={ 100 } />
             </Column>
         </WiredActionBaseView>

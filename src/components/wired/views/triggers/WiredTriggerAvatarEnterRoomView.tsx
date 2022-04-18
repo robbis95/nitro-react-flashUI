@@ -21,7 +21,7 @@ export const WiredTriggerAvatarEnterRoomView: FC<{}> = props =>
     return (
         <WiredTriggerBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.picktriggerer') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.picktriggerer') }</Text>
                 <Flex alignItems="center" gap={ 1 }>
                     <input className="form-check-input" type="radio" name="avatarMode" id="avatarMode0" checked={ (avatarMode === 0) } onChange={ event => setAvatarMode(0) } />
                     <Text>{ LocalizeText('wiredfurni.params.anyavatar') }</Text>

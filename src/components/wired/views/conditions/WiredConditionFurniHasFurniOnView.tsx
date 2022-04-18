@@ -19,7 +19,7 @@ export const WiredConditionFurniHasFurniOnView: FC<{}> = props =>
     return (
         <WiredConditionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_BY_ID } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.requireall') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.requireall') }</Text>
                 { [ 0, 1 ].map(value =>
                 {
                     return (

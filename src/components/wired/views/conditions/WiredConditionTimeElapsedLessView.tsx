@@ -20,9 +20,9 @@ export const WiredConditionTimeElapsedLessView: FC<{}> = props =>
     return (
         <WiredConditionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.allowbefore', [ 'seconds' ], [ GetWiredTimeLocale(time) ]) }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.allowbefore', [ 'seconds' ], [ GetWiredTimeLocale(time) ]) }</Text>
                 <ReactSlider
-                    className={ 'nitro-slider' }
+                    className={ 'wired-slider' }
                     min={ 1 }
                     max={ 1200 }
                     value={ time }

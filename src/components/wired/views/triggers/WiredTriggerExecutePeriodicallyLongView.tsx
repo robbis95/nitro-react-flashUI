@@ -21,9 +21,9 @@ export const WiredTriggeExecutePeriodicallyLongView: FC<{}> = props =>
     return (
         <WiredTriggerBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.setlongtime', [ 'time' ], [ FriendlyTime.format(time * 5).toString() ]) }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.setlongtime', [ 'time' ], [ FriendlyTime.format(time * 5).toString() ]) }</Text>
                 <ReactSlider
-                    className={ 'nitro-slider' }
+                    className={ 'wired-slider' }
                     min={ 1 }
                     max={ 120 }
                     value={ time }

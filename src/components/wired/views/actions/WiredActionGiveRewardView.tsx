@@ -104,19 +104,19 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
                 <Text>{ LocalizeText('wiredfurni.params.prizelimit', [ 'amount' ], [ limitEnabled ? rewardsLimit.toString() : '' ]) }</Text>
             </Flex>
             { !limitEnabled &&
-                <Text center small className="bg-muted rounded p-1">
+                <Text center  className="bg-muted rounded p-1">
                     Reward limit not set. Make sure rewards are badges or non-tradeable items.
                 </Text> }
             { limitEnabled &&
                 <ReactSlider
-                    className={ 'nitro-slider' }
+                    className={ 'wired-slider' }
                     min={ 1 }
                     max={ 1000 }
                     value={ rewardsLimit }
                     onChange={ event => setRewardsLimit(event) } /> }
             <hr className="m-0 bg-dark" />
             <Column gap={ 1 }>
-                <Text bold>How often can a user be rewarded?</Text>
+                <Text gfbold>How often can a user be rewarded?</Text>
                 <Flex gap={ 1 }>
                     <select className="form-select form-select-sm w-100" value={ rewardTime } onChange={ (e) => setRewardTime(Number(e.target.value)) }>
                         <option value="0">Once</option>
@@ -132,12 +132,12 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
                 <input className="form-check-input" type="checkbox" id="uniqueRewards" checked={ uniqueRewards } onChange={ (e) => setUniqueRewards(e.target.checked) } />
                 <Text>Unique rewards</Text>
             </Flex>
-            <Text center small className="bg-muted rounded p-1">
+            <Text center  className="bg-muted rounded p-1">
                 If checked each reward will be given once to each user. This will disable the probabilities option.
             </Text>
             <hr className="m-0 bg-dark" />
             <Flex justifyContent="between" alignItems="center">
-                <Text bold>Rewards</Text>
+                <Text gfbold>Rewards</Text>
                 <Button variant="success" onClick={ addReward }>
                     <FontAwesomeIcon icon="plus" />
                 </Button>
@@ -149,7 +149,7 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
                         <Flex key={ index } gap={ 1 }>
                             <Flex alignItems="center" gap={ 1 }>
                                 <input className="form-check-input" type="checkbox" checked={ reward.isBadge } onChange={ (e) => updateReward(index, e.target.checked, reward.itemCode, reward.probability) } />
-                                <Text small>Badge?</Text>
+                                <Text >Badge?</Text>
                             </Flex>
                             <input type="text" className="form-control form-control-sm" value={ reward.itemCode } onChange={ e => updateReward(index, reward.isBadge, e.target.value, reward.probability) } placeholder="Item Code" />
                             <input type="number" className="form-control form-control-sm" value={ reward.probability } onChange={ e => updateReward(index, reward.isBadge, reward.itemCode, Number(e.target.value)) } placeholder="Probability" />

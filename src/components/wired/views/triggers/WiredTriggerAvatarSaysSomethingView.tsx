@@ -25,11 +25,11 @@ export const WiredTriggerAvatarSaysSomethingView: FC<{}> = props =>
     return (
         <WiredTriggerBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.whatissaid') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.whatissaid') }</Text>
                 <input type="text" className="form-control form-control-sm" value={ message } onChange={ event => setMessage(event.target.value) } />
             </Column>
             <Column gap={ 1 }>
-                <Text bold>{ LocalizeText('wiredfurni.params.picktriggerer') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.params.picktriggerer') }</Text>
                 <Flex alignItems="center" gap={ 1 }>
                     <input className="form-check-input" type="radio" name="triggererAvatar" id="triggererAvatar0" checked={ (triggererAvatar === 0) } onChange={ event => setTriggererAvatar(0) } />
                     <Text>{ LocalizeText('wiredfurni.params.anyavatar') }</Text>
