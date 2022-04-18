@@ -34,7 +34,7 @@ export const FurnitureExchangeCreditView: FC<{}> = props =>
     if(objectId === -1) return null;
 
     return (
-        <NitroCardView className="nitro-widget-exchange-credit" theme="primary-slim">
+        <NitroCardView className="nitro-widget-exchange-credit" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('catalog.redeem.dialog.title') } onCloseClick={ close } />
             <NitroCardContentView center>
                 <Flex overflow="hidden" gap={ 2 }>

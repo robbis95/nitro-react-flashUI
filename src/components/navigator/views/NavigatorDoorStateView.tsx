@@ -63,7 +63,7 @@ export const NavigatorDoorStateView: FC<{}> = props =>
     const isDoorbell = (DOORBELL_STATES.indexOf(doorData.state) >= 0);
 
     return (
-        <NitroCardView className="nitro-navigator-doorbell" theme="primary-slim">
+        <NitroCardView className="nitro-navigator-doorbell" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText(isDoorbell ? 'navigator.doorbell.title' : 'navigator.password.title') } onCloseClick={ close } />
             <NitroCardContentView>
                 <Column gap={ 1 }>

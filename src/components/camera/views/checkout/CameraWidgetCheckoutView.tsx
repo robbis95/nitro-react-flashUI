@@ -88,7 +88,7 @@ export const CameraWidgetCheckoutView: FC<CameraWidgetCheckoutViewProps> = props
     if(!price) return null;
 
     return (
-        <NitroCardView className="nitro-camera-checkout" theme="primary-slim">
+        <NitroCardView className="nitro-camera-checkout" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('camera.confirm_phase.title') } onCloseClick={ event => processAction('close') } />
             <NitroCardContentView>
                 <Flex center>

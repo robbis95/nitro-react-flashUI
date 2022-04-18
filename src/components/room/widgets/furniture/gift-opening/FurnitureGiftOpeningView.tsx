@@ -196,7 +196,7 @@ export const FurnitureGiftOpeningView: FC<{}> = props =>
     if(objectId === -1) return null;
 
     return (
-        <NitroCardView className="nitro-gift-opening" theme="primary-slim">
+        <NitroCardView className="nitro-gift-opening" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText(senderName ? 'widget.furni.present.window.title_from' : 'widget.furni.present.window.title', [ 'name' ], [ senderName ]) } onCloseClick={ close } />
             <NitroCardContentView center>
                 { (placedItemId === -1) &&

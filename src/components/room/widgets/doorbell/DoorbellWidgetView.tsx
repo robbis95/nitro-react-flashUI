@@ -16,7 +16,7 @@ export const DoorbellWidgetView: FC<{}> = props =>
     if(!isVisible) return null;
 
     return (
-        <NitroCardView className="nitro-widget-doorbell" theme="primary-slim">
+        <NitroCardView className="nitro-widget-doorbell" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('navigator.doorbell.title') } onCloseClick={ event => setIsVisible(false) } />
             <NitroCardContentView overflow="hidden" gap={ 0 }>
                 <Column gap={ 2 }>

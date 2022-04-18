@@ -109,7 +109,7 @@ export const ChatHistoryView: FC<{}> = props =>
         <ChatHistoryContextProvider value={ { chatHistoryState, roomHistoryState } }>
             <ChatHistoryMessageHandler />
             { isVisible &&
-                <NitroCardView uniqueKey="chat-history" className="nitro-chat-history" theme="primary-slim">
+                <NitroCardView uniqueKey="chat-history" className="nitro-chat-history" theme="primary">
                     <NitroCardHeaderView headerText={ LocalizeText('room.chathistory.button.text') } onCloseClick={ event => setIsVisible(false) }/>
                     <NitroCardContentView>
                         <AutoSizer defaultWidth={ 300 } defaultHeight={ 200 } onResize={ onResize }>

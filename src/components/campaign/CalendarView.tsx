@@ -96,7 +96,7 @@ export const CalendarView: FC<CalendarViewProps> = props =>
     }
 
     return (
-        <NitroCardView className="nitro-campaign-calendar" theme="primary-slim">
+        <NitroCardView className="nitro-campaign-calendar" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText(`campaign.calendar.${ campaignName }.title`) } onCloseClick={ close } />
             <NitroCardContentView>
                 <Grid fullHeight={ false } justifyContent="between" alignItems="center">

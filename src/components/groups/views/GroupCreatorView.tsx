@@ -121,7 +121,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
     if(!groupData) return null;
 
     return (
-        <NitroCardView className="nitro-group-creator" theme="primary-slim">
+        <NitroCardView className="nitro-group-creator" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('group.create.title') } onCloseClick={ close } />
             <NitroCardContentView>
                 <Flex center className="creator-tabs">
