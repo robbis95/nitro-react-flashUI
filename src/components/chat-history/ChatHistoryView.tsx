@@ -2,7 +2,7 @@ import { ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, ListRowProps, ListRowRenderer, Size } from 'react-virtualized';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker } from '../../api';
-import { Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
+import { Flex, Column, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
 import { ChatHistoryContextProvider } from './ChatHistoryContext';
 import { ChatHistoryMessageHandler } from './ChatHistoryMessageHandler';
 import { ChatEntryType } from './common/ChatEntryType';
@@ -39,7 +39,7 @@ export const ChatHistoryView: FC<{}> = props =>
                     { (item.type === ChatEntryType.TYPE_ROOM_INFO) &&
                         <>
                             <i className="icon icon-small-room" />
-                            <Text textBreak wrap grow>{ item.name }</Text>
+                            <Text variant="danger" textBreak wrap grow>{ item.name }</Text>
                         </> }
                 </Flex>
             </CellMeasurer>
@@ -109,8 +109,8 @@ export const ChatHistoryView: FC<{}> = props =>
         <ChatHistoryContextProvider value={ { chatHistoryState, roomHistoryState } }>
             <ChatHistoryMessageHandler />
             { isVisible &&
-                <NitroCardView uniqueKey="chat-history" className="nitro-chat-history" theme="primary">
-                    <NitroCardHeaderView headerText={ LocalizeText('room.chathistory.button.text') } onCloseClick={ event => setIsVisible(false) }/>
+                <Flex gap={ 2 } className="nitro-chat-history">
+                    <Column className="chat-history-content h-100">
                     <NitroCardContentView>
                         <AutoSizer defaultWidth={ 300 } defaultHeight={ 200 } onResize={ onResize }>
                             { ({ height, width }) => 
@@ -129,7 +129,10 @@ export const ChatHistoryView: FC<{}> = props =>
                             } }
                         </AutoSizer>
                     </NitroCardContentView>
-                </NitroCardView> }
+                    </Column>
+                    <Flex className="chat-toggle" onClick={ event => setIsVisible(false) } />
+                </Flex>
+                 }
         </ChatHistoryContextProvider>
     );
 }
