@@ -78,8 +78,8 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             </TransitionAnimation>
             <Flex alignItems="center" id="toolbar-chat-input-container" />
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
-                <Flex gap={ 2 } alignItems="center" className="toolbar-left-side">
                 <button className={leftSideCollapsed ? 'toolbar-left-collapse' : 'toolbar-left-collapse-active'} onClick={() => setLeftSideCollapsed((collapsed) => !collapsed)}/>
+                <Flex gap={ 2 } alignItems="center" className="toolbar-left-side">
                     { leftSideCollapsed &&
                     <Flex alignItems="center" gap={ 2 }>
                         { isInRoom &&
@@ -103,8 +103,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                             <Base pointer className="navigation-item icon icon-modtools" onClick={ event => DispatchUiEvent(new ModToolsEvent(ModToolsEvent.TOGGLE_MOD_TOOLS)) } /> }
                     </Flex>}
                 </Flex>
-                <Flex alignItems="center" gap={ 2 } className="toolbar-right-side">
-                { rightSideCollapsed &&
+                <Flex alignItems="center" gap={ 2 } className={rightSideCollapsed ? 'toolbar-right-side' : 'd-none'}>
                     <Flex gap={ 2 }>
                         <Base pointer className="navigation-item icon icon-friendall" onClick={ event => CreateLinkEvent('friends/toggle') }>
                             { (requests.length > 0) &&
@@ -112,7 +111,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                         </Base>
                         { ((iconState === MessengerIconState.SHOW) || (iconState === MessengerIconState.UNREAD)) &&
                             <Base pointer className={ `navigation-item icon icon-message ${ (iconState === MessengerIconState.UNREAD) && 'is-unseen' }` } onClick={ event => OpenMessengerChat() } /> }
-                    </Flex>}
+                    </Flex>
                     <Base id="toolbar-friend-bar-container" className="d-none d-lg-block" />
                 </Flex>
                 <button className={rightSideCollapsed ? 'toolbar-right-collapse' : 'toolbar-right-collapse-active'} onClick={() => setRightSideCollapsed((collapsed) => !collapsed)}/>
