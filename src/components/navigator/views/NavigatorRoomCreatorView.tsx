@@ -15,7 +15,7 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     const [ tradesSetting, setTradesSetting ] = useState<number>(0);
     const [ selectedModelName, setSelectedModelName ] = useState<string>(RoomModels[0].name);
     const { categories = null } = useNavigatorContext();
-    const [ isVisible, setIsVisible ] = useState(false);
+    const [ isVisible, setIsVisible ] = useState(true);
 
     const getRoomModelImage = (name: string) => GetConfiguration<string>('images.url') + `/navigator/models/model_${ name }.png`;
 
@@ -50,6 +50,8 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     }, [ categories ]);
 
     return (
+        <Flex>
+        { isVisible &&
         <NitroCardView className="nitro-room-creator" theme="primary">
         <NitroCardHeaderView headerText={ LocalizeText('navigator.createroom.title') } onCloseClick={ event => setIsVisible(false) } />
         <NitroCardContentView>
@@ -113,5 +115,7 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
 
             </NitroCardContentView>
         </NitroCardView>
+        }
+        </Flex>
     );
 }
