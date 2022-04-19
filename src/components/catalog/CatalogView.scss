@@ -1,6 +1,7 @@
 .nitro-catalog {
     width: $catalog-width;
     height: $catalog-height;
+    min-width: 528px;
 
     font[size='16'] {
         font-size: 20px;
