@@ -134,8 +134,10 @@ export const NavigatorView: FC<{}> = props =>
                 }
                 return;
             case 'create':
-                setIsVisible(true);
-                setCreatorOpen(true);
+                setCreatorOpen(value => !value);
+                return;
+            case 'close-creator':
+                setCreatorOpen(false);
                 return;
             case 'search':
                 if(parts.length > 2)

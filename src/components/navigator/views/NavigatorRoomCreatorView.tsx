@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import { HabboClubLevelEnum, RoomCreateComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, RoomModels, SendMessageComposer } from '../../../api';
+import { CreateLinkEvent, GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, RoomModels, SendMessageComposer } from '../../../api';
 import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
 import { useNavigatorContext } from '../NavigatorContext';
 
@@ -15,7 +15,6 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     const [ tradesSetting, setTradesSetting ] = useState<number>(0);
     const [ selectedModelName, setSelectedModelName ] = useState<string>(RoomModels[0].name);
     const { categories = null } = useNavigatorContext();
-    const [ isVisible, setIsVisible ] = useState(true);
 
     const getRoomModelImage = (name: string) => GetConfiguration<string>('images.url') + `/navigator/models/model_${ name }.png`;
 
@@ -50,10 +49,8 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     }, [ categories ]);
 
     return (
-        <Flex>
-        { isVisible &&
         <NitroCardView className="nitro-room-creator" theme="primary">
-        <NitroCardHeaderView headerText={ LocalizeText('navigator.createroom.title') } onCloseClick={ event => setIsVisible(false) } />
+        <NitroCardHeaderView headerText={ LocalizeText('navigator.createroom.title') } onCloseClick={ event => CreateLinkEvent('navigator/close-creator') } />
         <NitroCardContentView>
         <Column overflow="hidden">
             <Grid overflow="hidden">
@@ -115,7 +112,5 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
 
             </NitroCardContentView>
         </NitroCardView>
-        }
-        </Flex>
     );
 }
