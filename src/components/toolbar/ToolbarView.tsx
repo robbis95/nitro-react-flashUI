@@ -11,6 +11,8 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
     const { isInRoom } = props;
 
     const [ isMeExpanded, setMeExpanded ] = useState(false);
+    const [ leftSideCollapsed, setLeftSideCollapsed ] = useState(true);
+    const [ rightSideCollapsed, setRightSideCollapsed ] = useState(true);
     const [ useGuideTool, setUseGuideTool ] = useState(false);
     const { userFigure = null } = useSessionInfo();
     const { getFullCount = 0 } = useInventoryUnseenTracker();
@@ -76,13 +78,10 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             </TransitionAnimation>
             <Flex alignItems="center" id="toolbar-chat-input-container" />
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
-                <Flex gap={ 2 } alignItems="center">
+                <Flex gap={ 2 } alignItems="center" className="toolbar-left-side">
+                <button className={leftSideCollapsed ? 'toolbar-left-collapse' : 'toolbar-left-collapse-active'} onClick={() => setLeftSideCollapsed((collapsed) => !collapsed)}/>
+                    { leftSideCollapsed &&
                     <Flex alignItems="center" gap={ 2 }>
-                        <Flex center pointer className={ 'navigation-item item-avatar ' + (isMeExpanded ? 'active ' : '') } onClick={ event => setMeExpanded(!isMeExpanded) }>
-                            <LayoutAvatarImageView figure={ userFigure } direction={ 2 } position="absolute" />
-                            { (getTotalUnseen > 0) &&
-                                <LayoutItemCountView count={ getTotalUnseen } /> }
-                        </Flex>
                         { isInRoom &&
                             <Base pointer className="navigation-item icon icon-habbo" onClick={ event => VisitDesktop() } /> }
                         { !isInRoom &&
@@ -93,13 +92,19 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                             { (getFullCount > 0) &&
                                 <LayoutItemCountView count={ getFullCount } /> }
                         </Base>
+                        <Flex center pointer className={ 'navigation-item item-avatar ' + (isMeExpanded ? 'active ' : '') } onClick={ event => setMeExpanded(!isMeExpanded) }>
+                            <LayoutAvatarImageView figure={ userFigure } direction={ 2 } position="absolute" />
+                            { (getTotalUnseen > 0) &&
+                                <LayoutItemCountView count={ getTotalUnseen } /> }
+                        </Flex>
                         { isInRoom &&
                             <Base pointer className="navigation-item icon icon-camera" onClick={ event => CreateLinkEvent('camera/toggle') } /> }
                         { isMod &&
                             <Base pointer className="navigation-item icon icon-modtools" onClick={ event => DispatchUiEvent(new ModToolsEvent(ModToolsEvent.TOGGLE_MOD_TOOLS)) } /> }
-                    </Flex>
+                    </Flex>}
                 </Flex>
-                <Flex alignItems="center" gap={ 2 }>
+                <Flex alignItems="center" gap={ 2 } className="toolbar-right-side">
+                { rightSideCollapsed &&
                     <Flex gap={ 2 }>
                         <Base pointer className="navigation-item icon icon-friendall" onClick={ event => CreateLinkEvent('friends/toggle') }>
                             { (requests.length > 0) &&
@@ -107,9 +112,10 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                         </Base>
                         { ((iconState === MessengerIconState.SHOW) || (iconState === MessengerIconState.UNREAD)) &&
                             <Base pointer className={ `navigation-item icon icon-message ${ (iconState === MessengerIconState.UNREAD) && 'is-unseen' }` } onClick={ event => OpenMessengerChat() } /> }
-                    </Flex>
+                    </Flex>}
                     <Base id="toolbar-friend-bar-container" className="d-none d-lg-block" />
                 </Flex>
+                <button className={rightSideCollapsed ? 'toolbar-right-collapse' : 'toolbar-right-collapse-active'} onClick={() => setRightSideCollapsed((collapsed) => !collapsed)}/>
             </Flex>
         </>
     );

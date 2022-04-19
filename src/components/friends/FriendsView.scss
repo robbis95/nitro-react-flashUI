@@ -108,7 +108,26 @@
 .friend-bar {
 
     .friend-bar-button {
+        height: 32px;
+        width: 30px;
         z-index: 2;
+        border: none;
+
+        &.left {
+            background: url(../../assets/flash/toolbar/friendbar_left.png);
+            background-position: center;
+            margin-right: -4px;
+
+            &:disabled {
+                display: none;
+            }
+        }
+
+        &.right {
+            background: url(../../assets/flash/toolbar/friendbar_right.png);
+            background-position: center;
+            margin-left: -4px;
+        }
     }
 
     .friend-bar-item {

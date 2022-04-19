@@ -14,13 +14,9 @@ export const FriendBarView: FC<{ onlineFriends: MessengerFriend[] }> = props =>
 
     return (
         <Flex innerRef={ elementRef } alignItems="center" className="friend-bar">
-            <Button variant="black" className="friend-bar-button" disabled={ (indexOffset <= 0) } onClick={ event => setIndexOffset(indexOffset - 1) }>
-                <FontAwesomeIcon icon="chevron-left" />
-            </Button>
+            <button className="friend-bar-button left" disabled={ (indexOffset <= 0) } onClick={ event => setIndexOffset(indexOffset - 1) } />
             { Array.from(Array(MAX_DISPLAY_COUNT), (e, i) => <FriendBarItemView key={ i } friend={ (onlineFriends[ indexOffset + i ] || null) } />) }
-            <Button variant="black" className="friend-bar-button" disabled={ !((onlineFriends.length > MAX_DISPLAY_COUNT) && ((indexOffset + MAX_DISPLAY_COUNT) <= (onlineFriends.length - 1))) } onClick={ event => setIndexOffset(indexOffset + 1) }>
-                <FontAwesomeIcon icon="chevron-right" />
-            </Button>
+            <button className="friend-bar-button right" disabled={ !((onlineFriends.length > MAX_DISPLAY_COUNT) && ((indexOffset + MAX_DISPLAY_COUNT) <= (onlineFriends.length - 1))) } onClick={ event => setIndexOffset(indexOffset + 1) } />
         </Flex>
     );
 }
