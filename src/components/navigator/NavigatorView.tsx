@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorCategoryDataParser, NavigatorInitComposer, NavigatorSearchComposer, NavigatorSearchResultSet, NavigatorTopLevelContext, RoomDataParser, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { AddEventLinkTracker, DoorStateType, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
-import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, Text, NitroCardView, Flex } from '../../common';
 import { UseRoomSessionManagerEvent, useSharedNavigatorData } from '../../hooks';
 import { NavigatorContextProvider } from './NavigatorContext';
 import { NavigatorMessageHandler } from './NavigatorMessageHandler';
@@ -231,25 +231,20 @@ export const NavigatorView: FC<{}> = props =>
                                     { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
                                 </Column>
                             </>
-                        <div className="nav-bottom">
-                            <div className="nav-bottom-buttons position-absolute">
-                                <div
-                                    className="nav-create-room"
-                                    onClick={(event) => setCreatorOpen(value => !value)}
-                                >
-                                    <p className="nav-bottom-buttons-text fw-bold">
-                                        {LocalizeText(
-                                            "navigator.createroom.create"
-                                        )}
-                                    </p>
-                                </div>
-                                <div className="nav-random-room">
-                                    <p className="nav-bottom-buttons-text fw-bold">
+                        <Flex className="nav-bottom">
+                            <Flex className="nav-bottom-buttons position-absolute">
+                                <Flex className="nav-create-room" onClick={(event) => setCreatorOpen(value => !value)}>
+                                    <Text variant="white" bold className="nav-bottom-buttons-text">
+                                        {LocalizeText("navigator.createroom.create")}
+                                    </Text>
+                                </Flex>
+                                <Flex className="nav-random-room">
+                                    <Text variant="white" bold className="nav-bottom-buttons-text">
                                         {LocalizeText("navigator.random.room")}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                                    </Text>
+                                </Flex>
+                            </Flex>
+                        </Flex>
                     </NitroCardContentView>
                 </NitroCardView> }
                 { isCreatorOpen && <NavigatorRoomCreatorView /> }

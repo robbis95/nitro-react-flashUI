@@ -27,7 +27,7 @@ export const Text: FC<TextProps> = props =>
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'd-inline' ];
+        const newClassNames: string[] = [ '' ];
 
         if(variant) newClassNames.push('text-' + variant);
 
