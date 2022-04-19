@@ -46,7 +46,7 @@ export const ModToolsIssueInfoView: FC<IssueInfoViewProps> = props =>
     
     return (
         <>
-            <NitroCardView className="nitro-mod-tools-handle-issue" theme="primary">
+            <NitroCardView className="nitro-mod-tools-handle-issue" theme="modtool-windows">
                 <NitroCardHeaderView headerText={ 'Resolving issue ' + issueId } onCloseClick={ () => onIssueInfoClosed(issueId) } />
                 <NitroCardContentView className="text-black">
                     <Text fontSize={ 4 }>Issue Information</Text>
@@ -69,13 +69,13 @@ export const ModToolsIssueInfoView: FC<IssueInfoViewProps> = props =>
                                     <tr>
                                         <th>Caller</th>
                                         <td>
-                                            <Text bold underline pointer onClick={ event => openUserInfo(ticket.reporterUserId) }>{ ticket.reporterUserName }</Text>
+                                            <Text gfbold underline pointer onClick={ event => openUserInfo(ticket.reporterUserId) }>{ ticket.reporterUserName }</Text>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Reported User</th>
                                         <td>
-                                            <Text bold underline pointer onClick={ event => openUserInfo(ticket.reportedUserId) }>{ ticket.reportedUserName }</Text>
+                                            <Text gfbold underline pointer onClick={ event => openUserInfo(ticket.reportedUserId) }>{ ticket.reportedUserName }</Text>
                                         </td>
                                     </tr>
                                 </tbody>

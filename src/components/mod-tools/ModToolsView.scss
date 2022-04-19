@@ -48,6 +48,14 @@
     }
 }
 
+.message-input {
+    height: 50px;
+
+    &::placeholder {
+        font-family: Goldfish;
+    }
+}
+
 .nitro-mod-tools-user {
     width: 350px;
     height: 370px;
@@ -59,15 +67,20 @@
 
     .table {
         color: $black;
+        font-family: Goldfish-Bold;
 
         > :not(caption) > * > * {
             box-shadow: none;
-            border-bottom: 1px solid rgba(0, 0, 0, .2);
+            border-bottom: none;
         }
 
         &.table-striped > tbody > tr:nth-of-type(odd) {
             color: $black;
-            background: rgba(0, 0, 0, .05);
+            background: #cbebf8;
+        }
+
+        td {
+            font-family: Goldfish;
         }
     }
 }
@@ -77,10 +90,6 @@
 
     .user-visits {
         min-height: 200px;
-
-        .roomvisits-container {
-
-        }
         
     }
 }
@@ -114,6 +123,10 @@
 
                 &.highlighted {
                     border: 1px solid $red;
+                }
+
+                &:nth-child(odd) {
+                    background-color: #cbebf8;
                 }
             }
 

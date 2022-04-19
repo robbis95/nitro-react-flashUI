@@ -107,10 +107,10 @@ export const ModToolsUserView: FC<ModToolsUserViewProps> = props =>
 
     return (
         <>
-            <NitroCardView className="nitro-mod-tools-user" theme="primary" windowPosition={ DraggableWindowPosition.TOP_LEFT }>
+            <NitroCardView className="nitro-mod-tools-user" theme="modtool-windows" windowPosition={ DraggableWindowPosition.TOP_CENTER }>
                 <NitroCardHeaderView headerText={ LocalizeText('modtools.userinfo.title', [ 'username' ], [ userInfo.userName ]) } onCloseClick={ () => onCloseClick() } />
                 <NitroCardContentView className="text-black">
-                    <Grid overflow="hidden">
+                    <Grid overflow="hidden" className="mod-content p-2">
                         <Column size={ 8 } overflow="auto">
                             <table className="table table-striped table-sm table-text-small text-black m-0">
                                 <tbody>

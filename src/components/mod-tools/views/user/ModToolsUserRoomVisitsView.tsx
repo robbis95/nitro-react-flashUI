@@ -35,7 +35,7 @@ export const ModToolsUserRoomVisitsView: FC<ModToolsUserRoomVisitsViewProps> = p
             <Grid key={ props.key } fullHeight={ false } style={ props.style } gap={ 1 } alignItems="center" className="text-black py-1 border-bottom">
                 <Text className="g-col-2">{ item.enterHour.toString().padStart(2, '0') }: { item.enterMinute.toString().padStart(2, '0') }</Text>
                 <Text className="g-col-7">{ item.roomName }</Text>
-                <Text bold underline pointer variant="primary" className="g-col-3" onClick={ event => TryVisitRoom(item.roomId) }>Visit Room</Text>
+                <Text gfbold underline pointer variant="primary" className="g-col-3" onClick={ event => TryVisitRoom(item.roomId) }>Visit Room</Text>
             </Grid>
         );
     }
@@ -48,7 +48,7 @@ export const ModToolsUserRoomVisitsView: FC<ModToolsUserRoomVisitsViewProps> = p
     if(!userId) return null;
 
     return (
-        <NitroCardView className="nitro-mod-tools-user-visits" theme="primary" windowPosition={ DraggableWindowPosition.TOP_LEFT }>
+        <NitroCardView className="nitro-mod-tools-user-visits" theme="modtool-windows" windowPosition={ DraggableWindowPosition.TOP_CENTER }>
             <NitroCardHeaderView headerText={ 'User Visits' } onCloseClick={ onCloseClick } />
             <NitroCardContentView className="text-black" gap={ 1 }>
                 <Column fullHeight gap={ 0 } overflow="hidden">
