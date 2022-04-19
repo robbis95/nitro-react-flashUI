@@ -1,8 +1,8 @@
 import { ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, ListRowProps, ListRowRenderer, Size } from 'react-virtualized';
-import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker } from '../../api';
-import { Flex, Column, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
+import { AddEventLinkTracker, RemoveLinkEventTracker } from '../../api';
+import { Column, Flex, NitroCardContentView, Text } from '../../common';
 import { ChatHistoryContextProvider } from './ChatHistoryContext';
 import { ChatHistoryMessageHandler } from './ChatHistoryMessageHandler';
 import { ChatEntryType } from './common/ChatEntryType';
@@ -110,29 +110,29 @@ export const ChatHistoryView: FC<{}> = props =>
             <ChatHistoryMessageHandler />
             { isVisible &&
                 <Flex gap={ 2 } className="nitro-chat-history">
-                    <Column className="chat-history-content h-100">
-                    <NitroCardContentView>
-                        <AutoSizer defaultWidth={ 300 } defaultHeight={ 200 } onResize={ onResize }>
-                            { ({ height, width }) => 
-                            {
-                                return (
-                                    <List
-                                        ref={ elementRef }
-                                        width={ width }
-                                        height={ height }
-                                        rowCount={ chatHistoryState.chats.length }
-                                        rowHeight={ cache.rowHeight }
-                                        className={ 'chat-history-list' }
-                                        rowRenderer={ RowRenderer }
-                                        deferredMeasurementCache={ cache } />
-                                )
-                            } }
-                        </AutoSizer>
+                    <NitroCardContentView className="h-100">
+                        <Column className="chat-history-content h-100">
+                            <AutoSizer defaultWidth={ 300 } defaultHeight={ 200 } onResize={ onResize }>
+                                { ({ height, width }) => 
+                                {
+                                    return (
+                                        <List
+                                            ref={ elementRef }
+                                            width={ width }
+                                            height={ height }
+                                            rowCount={ chatHistoryState.chats.length }
+                                            rowHeight={ cache.rowHeight }
+                                            className={ 'chat-history-list' }
+                                            rowRenderer={ RowRenderer }
+                                            deferredMeasurementCache={ cache } />
+                                    )
+                                } }
+                            </AutoSizer>
+                        </Column>
                     </NitroCardContentView>
-                    </Column>
                     <Flex className="chat-toggle" onClick={ event => setIsVisible(false) } />
                 </Flex>
-                 }
+            }
         </ChatHistoryContextProvider>
     );
 }
