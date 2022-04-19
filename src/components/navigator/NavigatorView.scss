@@ -130,10 +130,9 @@
 }
 
 .nav-thumbnail {
-    background-image: url(../../assets/flash/navigator/thumbnail_bg.png);
-    background-repeat: no-repeat;
-    height: 146px;
-    width: 122px;
+    border-image-source: url(../../assets/flash/navigator/thumbnail_bg.png);
+    border-image-slice: 7 7 7 7 fill;
+    border-image-width: 7px 7px 7px 7px;
 }
 
 .nav-create-room {

@@ -73,7 +73,7 @@ export const NavigatorSearchView: FC<NavigatorSearchViewProps> = props =>
                     }) }
                 </select>
             </Flex>
-            <Flex fullWidth gap={ 1 }>
+            <Flex fullWidth gap={ 2 }>
                 <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('navigator.filter.input.placeholder') } value={ searchValue } onChange={ event => setSearchValue(event.target.value) } onKeyDown={ event => handleKeyDown(event) } />
                 <i className="icon icon-pen navigator-search-button position-absolute" onClick={ processSearch } />
             </Flex>
