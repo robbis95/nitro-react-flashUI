@@ -1,7 +1,9 @@
 import { RoomObjectCategory } from '@nitrots/nitro-renderer';
 import { FC } from 'react';
 import { LocalizeText, RoomWidgetUpdateDecorateModeEvent } from '../../../../api';
+import { Flex } from '../../../../common';
 import { useRoomContext } from '../../RoomContext';
+import { ContextMenuHeaderView } from '../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../context-menu/ContextMenuListItemView';
 import { ContextMenuListView } from '../context-menu/ContextMenuListView';
 import { ContextMenuView } from '../context-menu/ContextMenuView';
@@ -22,11 +24,13 @@ export const AvatarInfoWidgetDecorateView: FC<AvatarInfoWidgetDecorateViewProps>
     
     return (
         <ContextMenuView objectId={ roomIndex } category={ RoomObjectCategory.UNIT } close={ null }>
+            <ContextMenuHeaderView />
             <ContextMenuListView>
                 <ContextMenuListItemView onClick={ stopDecorating }>
                     { LocalizeText('widget.avatar.stop_decorating') }
                 </ContextMenuListItemView>
             </ContextMenuListView>
+            <Flex className="menu-bottom" />
         </ContextMenuView>
     )
 }
