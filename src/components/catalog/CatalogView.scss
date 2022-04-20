@@ -46,6 +46,7 @@
 
     .item-picker {
         max-height: 150px;
+        min-height: 150px;
     }
 
     .quanity-container {
@@ -96,6 +97,15 @@
 
     .catalog-header-content {
         position: absolute;
+        margin-top: 20px;
+
+        .catalog-icon {
+            transform: scale(2);
+            filter: drop-shadow(2px 1px 0 rgba(0,0,0,.239216));
+            position: absolute;
+            top: 15px;
+            left: 35px;
+        }
     }
 
     .catalog-header-image {

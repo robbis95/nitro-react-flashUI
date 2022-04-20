@@ -421,7 +421,7 @@ export const CatalogView: FC<{}> = props =>
                     </NitroCardTabsView>
                     <div className="catalog-header">
                     <div className="catalog-header-content">
-                    {currentPage && rootNode && <img src={getNodeById(pageId, rootNode).iconId + ".png"} />}
+                    {currentPage && rootNode && <CatalogIconView icon={ getNodeById(pageId, rootNode).iconId } />}
                     {currentPage && rootNode && <p className="catalog-header-title fw-bold">{getNodeById(pageId, rootNode).localization}</p>}
                         <p className="catalog-header-desc">{currentPage && currentPage.localization.getText(0)}</p>
                     </div>
