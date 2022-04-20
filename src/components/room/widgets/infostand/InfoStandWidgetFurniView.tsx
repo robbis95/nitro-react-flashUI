@@ -298,9 +298,9 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                         </Flex>
                         { (furniData.purchaseOfferId > 0) &&
                             <Flex>
-                                <Text variant="white" underline pointer onClick={ event => processButtonAction('buy_one') }>
+                                <Button className="volter-button" onClick={ event => processButtonAction('buy_one') }>
                                     { LocalizeText('infostand.button.buy') }
-                                </Text>
+                                </Button>
                             </Flex> }
                     </Column>
                     <Column gap={ 1 }>
