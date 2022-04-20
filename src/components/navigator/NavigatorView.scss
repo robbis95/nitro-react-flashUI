@@ -179,6 +179,10 @@
     width: $nitro-room-creator-width;
     height: $nitro-room-creator-height;
 
+    textarea:focus, input:focus {
+        outline: none;
+    }
+
     .room-creator-form-name {
         height: 20px;
         border: 1px solid grey;
@@ -207,13 +211,7 @@
     }
 
     .room-creator-grid {
-        width: 260px;
-    }
-
-    .room-creator-grid-item {
-        border-image-source: url(../../assets/flash/navigator/room-creator/room-bg.png);
-        border-image-slice:6 6 6 6;
-        border-image-width:6px 6px 6px 6px;
+        width: 305px;
     }
 
 }

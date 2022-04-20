@@ -26,6 +26,8 @@
   fieldset:disabled & {
     pointer-events: none;
     border-image-source: url("../../../assets/flash/buttons/button_inactive.png"); 
+    border-image-slice: 4 4 4 4 fill;
+    border-image-width: 4px 4px 4px 4px;
     color: #b1b1ac;
   }
 }
@@ -129,6 +131,42 @@
 
   &:active {
     border-image-source: url(../../flash/room/infostand_buttons_active.png);
+  }
+}
+
+.volter-bold-button {
+  border-image-source: url(../../flash/buttons/volter_bold_btn.png);
+  border-image-slice: 6 6 6 6 fill;
+  border-image-width: 6px 6px 6px 6px;
+  font-family: Goldfish-bold;
+  font-size: 9px;
+  height: 20px;
+  margin-top: 5px;
+
+  &:hover {
+    border-image-source: url(../../flash/buttons/volter_bold_btn_hover.png);
+  }
+
+  &:active {
+    border-image-source: url(../../flash/buttons/volter_bold_btn_active.png);
+  }
+}
+
+.volter-button {
+  border-image-source: url(../../flash/buttons/volter_normal_btn.png);
+  border-image-slice: 4 4 4 4 fill;
+  border-image-width: 4px 4px 4px 4px;
+  font-family: Goldfish;
+  font-size: 9px;
+  height: 20px;
+  margin-top: 5px;
+
+  &:hover {
+    border-image-source: url(../../flash/buttons/volter_normal_btn_hover.png);
+  }
+
+  &:active {
+    border-image-source: url(../../flash/buttons/volter_normal_btn_active.png);
   }
 }
 

@@ -3,6 +3,7 @@ import { HabboClubLevelEnum, RoomCreateComposer } from '@nitrots/nitro-renderer'
 import { FC, useEffect, useState } from 'react';
 import { CreateLinkEvent, GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, RoomModels, SendMessageComposer } from '../../../api';
 import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
+import { RoomCreatorGridItem } from '../../../common/layout/RoomCreatorGridItem';
 import { useNavigatorContext } from '../NavigatorContext';
 
 export const NavigatorRoomCreatorView: FC<{}> = props =>
@@ -54,17 +55,17 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
         <NitroCardContentView>
         <Column overflow="hidden">
             <Grid overflow="hidden">
-                <Column size={ 6 } gap={ 1 } overflow="auto">
+                <Column size={ 5 } gap={ 1 } overflow="auto" className="px-2 py-1">
                     <Column gap={ 1 }>
-                        <Text>{ LocalizeText('navigator.createroom.roomnameinfo') }</Text>
+                        <Text gfbold>{ LocalizeText('navigator.createroom.roomnameinfo') }</Text>
                         <input type="text" className="room-creator-form" maxLength={ 60 } onChange={ event => setName(event.target.value) } placeholder={ LocalizeText('navigator.createroom.roomnameinfo') } />
                     </Column>
                     <Column grow gap={ 1 }>
-                        <Text>{ LocalizeText('navigator.createroom.roomdescinfo') }</Text>
+                        <Text gfbold>{ LocalizeText('navigator.createroom.roomdescinfo') }</Text>
                         <textarea className="flex-grow-1 room-creator-form" maxLength={ 255 } onChange={ event => setDescription(event.target.value) } placeholder={ LocalizeText('navigator.createroom.roomdescinfo') } />
                     </Column>
                     <Column gap={ 1 }>
-                        <Text>{ LocalizeText('navigator.category') }</Text>
+                        <Text gfbold>{ LocalizeText('navigator.category') }</Text>
                         <select className="form-select form-select-sm" onChange={ event => setCategory(Number(event.target.value)) }>
                             { categories && (categories.length > 0) && categories.map(category =>
                             {
@@ -73,7 +74,7 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                         </select>
                     </Column>
                     <Column gap={ 1 }>
-                        <Text>{ LocalizeText('navigator.maxvisitors') }</Text>
+                        <Text gfbold>{ LocalizeText('navigator.maxvisitors') }</Text>
                         <select className="form-select form-select-sm" onChange={ event => setVisitorsCount(Number(event.target.value)) }>
                             { maxVisitorsList && maxVisitorsList.map(value =>
                             {
@@ -82,32 +83,36 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                         </select>
                     </Column>
                     <Column gap={ 1 }>
-                        <Text>{ LocalizeText('navigator.tradesettings') }</Text>
+                        <Text gfbold>{ LocalizeText('navigator.tradesettings') }</Text>
                         <select className="form-select form-select-sm" onChange={ event => setTradesSetting(Number(event.target.value)) }>
                             <option value="0">{ LocalizeText('navigator.roomsettings.trade_not_allowed') }</option>
                             <option value="1">{ LocalizeText('navigator.roomsettings.trade_not_with_Controller') }</option>
                             <option value="2">{ LocalizeText('navigator.roomsettings.trade_allowed') }</option>
                         </select>
                     </Column>
+                    <Flex gap={ 2 }>
+                    <Button fullWidth className="volter-bold-button" onClick={ createRoom } disabled={ (!name || (name.length < 3)) }>{ LocalizeText('navigator.createroom.create') }</Button>
+                    <Button fullWidth className="volter-button" onClick={ event => CreateLinkEvent('navigator/close-creator') } >{ LocalizeText('cancel') }</Button>
+                    </Flex>
                 </Column>
-                <Column size={ 6 } gap={ 1 } overflow="auto">
+                <Column size={ 7 } gap={ 1 } overflow="auto">
                 <AutoGrid className="room-creator-grid" columnCount={ 2 } columnMinWidth={ 100 } columnMinHeight={ 50 } overflow="unset">
                     {
                         RoomModels.map((model, index )=>
                         {
-                            return (<LayoutGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="room-creator-grid-item" disabled={ (GetClubMemberLevel() < model.clubLevel) }>
+                            return (<RoomCreatorGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="py-3" disabled={ (GetClubMemberLevel() < model.clubLevel) }>
                                 <Flex fullHeight center overflow="hidden">
                                     <img alt="" src={ getRoomModelImage(model.name) } />
                                 </Flex>
-                                <Text bold>{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
+                                <Text position="absolute" className="bottom-1 start-1">{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
                                 { model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
-                            </LayoutGridItem>);
+                                { selectedModelName && <i className="active-arrow"/>}
+                            </RoomCreatorGridItem>);
                         })
                     }
                 </AutoGrid>
                 </Column>
             </Grid>
-            <Button fullWidth variant={ (!name || (name.length < 3)) ? 'danger' : 'success' } onClick={ createRoom } disabled={ (!name || (name.length < 3)) }>{ LocalizeText('navigator.createroom.create') }</Button>
         </Column>
 
             </NitroCardContentView>
