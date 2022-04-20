@@ -19,7 +19,7 @@ export const NotificationDefaultBubbleView: FC<NotificationDefaultBubbleViewProp
                 { (item.iconUrl && item.iconUrl.length) &&
                     <img className="no-select" src={ item.iconUrl } alt="" /> }
             </Flex>
-            <Text wrap className="notification-text" variant="white" dangerouslySetInnerHTML={ { __html: htmlText } } />
+            <Text wrap className="notification-bubble-text" variant="white" dangerouslySetInnerHTML={ { __html: htmlText } } />
         </LayoutNotificationBubbleView>
     );
 }
