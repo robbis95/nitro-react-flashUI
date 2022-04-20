@@ -2,6 +2,7 @@ import { BadgeImageReadyEvent, NitroSprite, TextureUtils } from '@nitrots/nitro-
 import { CSSProperties, FC, useEffect, useMemo, useState } from 'react';
 import { GetConfiguration, GetSessionDataManager, LocalizeBadgeDescription, LocalizeBadgeName, LocalizeText } from '../../api';
 import { Base, BaseProps } from '../Base';
+import { Text } from '../../common';
 
 export interface LayoutBadgeImageViewProps extends BaseProps<HTMLDivElement>
 {
@@ -108,7 +109,7 @@ export const LayoutBadgeImageView: FC<LayoutBadgeImageViewProps> = props =>
         <Base classNames={ getClassNames } style={ getStyle } { ...rest }>
             { (showInfo && GetConfiguration<boolean>('badge.descriptions.enabled', true)) &&
                 <Base className="badge-information text-black p-2">
-                    <div className="mb-1">{ isGroup ? customTitle : LocalizeBadgeName(badgeCode) }</div>
+                    <Text gfbold className="mb-1">{ isGroup ? customTitle : LocalizeBadgeName(badgeCode) }</Text>
                     <div className="badge-desc">{ isGroup ? LocalizeText('group.badgepopup.body') : LocalizeBadgeDescription(badgeCode) }</div>
                 </Base> }
             { children }

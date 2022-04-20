@@ -135,7 +135,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                     <Flex alignItems="center" justifyContent="between">
                         <Flex alignItems="center" gap={ 1 }>
                             <i className="icon icon-profile-house cursor-pointer" onClick={ event => GetUserProfile(userData.webID) }/>
-                            <Text variant="white" className="infostand-name" onClick={ event => GetUserProfile(userData.webID) }>{ userData.name }</Text>
+                            <Text gfbold variant="white" className="infostand-name" onClick={ event => GetUserProfile(userData.webID) }>{ userData.name }</Text>
                         </Flex>
                         <i className="infostand-close" onClick={ close } />
                     </Flex>
@@ -196,13 +196,13 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                     <hr className="m-0" />
                 </Column>
                 <Column gap={ 1 }>
-                    <Text variant="white" wrap>
+                    <Text gfbold variant="white" wrap>
                         { LocalizeText('infostand.text.achievement_score') + ' ' + userData.achievementScore }
                     </Text>
                     { (userData.carryItem > 0) &&
                         <>
                             <hr className="m-0" />
-                            <Text variant="white" wrap>
+                            <Text gfbold variant="white" wrap>
                                 { LocalizeText('infostand.text.handitem', [ 'item' ], [ LocalizeText('handitem' + userData.carryItem) ]) }
                             </Text>
                         </> }

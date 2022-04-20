@@ -20,7 +20,7 @@ export const InfoStandWidgetBotView: FC<InfoStandWidgetBotViewProps> = props =>
             <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
                 <Column gap={ 1 }>
                     <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                        <Text variant="white" small wrap>{ botData.name }</Text>
+                        <Text gfbold variant="white" wrap>{ botData.name }</Text>
                         <FontAwesomeIcon icon="times" className="cursor-pointer" onClick={ close } />
                     </Flex>
                     <hr className="m-0" />
@@ -39,13 +39,13 @@ export const InfoStandWidgetBotView: FC<InfoStandWidgetBotViewProps> = props =>
                     </Flex>
                     <hr className="m-0" />
                 </Column>
-                <Flex alignItems="center" className="bg-light-dark rounded py-1 px-2">
-                    <Text fullWidth wrap textBreak variant="white" small className="motto-content">{ botData.motto }</Text>
+                <Flex alignItems="center" className="py-1 px-2">
+                    <Text fullWidth wrap textBreak variant="white" className="motto-content">{ botData.motto }</Text>
                 </Flex>
                 { (botData.carryItem > 0) &&
                     <Column gap={ 1 }>
                         <hr className="m-0" />
-                        <Text variant="white" small wrap>
+                        <Text variant="white" wrap>
                             { LocalizeText('infostand.text.handitem', [ 'item' ], [ LocalizeText('handitem' + botData.carryItem) ]) }
                         </Text>
                     </Column> }

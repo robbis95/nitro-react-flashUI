@@ -265,7 +265,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                 <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                            <Text variant="white" wrap>{ furniData.name }</Text>
+                            <Text gfbold variant="white" wrap>{ furniData.name }</Text>
                             <i className="infostand-close" onClick={ close } />
                         </Flex>
                         <hr className="m-0" />
@@ -293,7 +293,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                         <Flex alignItems="center" gap={ 1 }>
                             <UserProfileIconView userId={ furniData.ownerId } />
                             <Text variant="white" wrap>
-                                { LocalizeText('furni.owner', [ 'name' ], [ furniData.ownerName ]) }
+                                { [ furniData.ownerName ] }
                             </Text>
                         </Flex>
                         { (furniData.purchaseOfferId > 0) &&

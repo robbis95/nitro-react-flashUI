@@ -34,7 +34,7 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
                 <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                            <Text variant="white" small wrap>{ rentableBotData.name }</Text>
+                            <Text variant="white" gfbold wrap>{ rentableBotData.name }</Text>
                             <FontAwesomeIcon icon="times" className="cursor-pointer" onClick={ close } />
                         </Flex>
                         <hr className="m-0" />
@@ -54,22 +54,22 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
                         <hr className="m-0" />
                     </Column>
                     <Column gap={ 1 }>
-                        <Flex alignItems="center" className="bg-light-dark rounded py-1 px-2">
-                            <Text fullWidth wrap textBreak variant="white" small className="motto-content">{ rentableBotData.motto }</Text>
+                        <Flex alignItems="center" className="py-1 px-2">
+                            <Text fullWidth wrap textBreak variant="white" className="motto-content">{ rentableBotData.motto }</Text>
                         </Flex>
                         <hr className="m-0" />
                     </Column>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" gap={ 1 }>
                             <UserProfileIconView userId={ rentableBotData.ownerId } />
-                            <Text variant="white" small wrap>
+                            <Text variant="white" wrap>
                                 { LocalizeText('infostand.text.botowner', [ 'name' ], [ rentableBotData.ownerName ]) }
                             </Text>
                         </Flex>
                         { (rentableBotData.carryItem > 0) &&
                             <>
                                 <hr className="m-0" />
-                                <Text variant="white" small wrap>
+                                <Text variant="white" wrap>
                                     { LocalizeText('infostand.text.handitem', [ 'item' ], [ LocalizeText('handitem' + rentableBotData.carryItem) ]) }
                                 </Text>
                             </> }
@@ -78,7 +78,7 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
             </Column>
             { canPickup &&
                 <Flex justifyContent="end">
-                    <Button variant="dark" onClick={ pickupBot }>{ LocalizeText('infostand.button.pickup') }</Button>
+                    <Button className="infostand-buttons" onClick={ pickupBot }>{ LocalizeText('infostand.button.pickup') }</Button>
                 </Flex> }
         </Column>
     );
