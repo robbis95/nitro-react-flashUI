@@ -91,6 +91,18 @@
     width: $friends-list-width;
     height: $friends-list-height;
 
+    .friend-search {
+        position: absolute;
+        bottom: 5px;
+        border-radius: 0px;
+        border: 1px solid #000;
+        height: 20px;
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+
     .search-input {
         border: 0;
         border-bottom: 1px solid rgba($black, 0.2);
