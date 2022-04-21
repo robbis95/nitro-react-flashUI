@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { GetSessionDataManager, LocalizeText, ProductTypeEnum, SendMessageComposer } from '../../../../api';
 import { Base, Button, ButtonGroup, Column, Flex, FormGroup, LayoutCurrencyIcon, LayoutFurniImageView, LayoutGiftTagView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
+import { GiftColorButton } from '../../../../common/GiftColorButton';
 import { CatalogEvent, CatalogInitGiftEvent, CatalogPurchasedEvent } from '../../../../events';
 import { UseUiEvent } from '../../../../hooks';
 import { useCatalogContext } from '../../CatalogContext';
@@ -209,8 +210,8 @@ export const CatalogGiftView: FC<{}> = props =>
                     <Text fontWeight="bold">
                         { LocalizeText('catalog.gift_wrapping.pick_color') }
                     </Text>
-                    <ButtonGroup fullWidth>
-                        { colors.map(color => <Button key={ color.id } variant="dark" active={ (color.id === selectedColorId) } disabled={ !isColorable } style={ { backgroundColor: color.color } } onClick={ () => setSelectedColorId(color.id) } />) }
+                    <ButtonGroup fullWidth className="gap-2">
+                        { colors.map(color => <GiftColorButton key={ color.id } variant="dark" active={ (color.id === selectedColorId) } disabled={ !isColorable } style={ { backgroundColor: color.color } } onClick={ () => setSelectedColorId(color.id) } />) }
                     </ButtonGroup>
                 </Column>
                 <Flex justifyContent="between" alignItems="center">
