@@ -35,7 +35,7 @@ export const FriendBarItemView: FC<{ friend: MessengerFriend }> = props =>
         return (
             <div ref={ elementRef } className="btn find-friends friend-bar-item friend-bar-search">
                 <div className="friend-bar-item-head position-absolute"/>
-                <div className="friend-bar-text fw-bold">{ LocalizeText('friend.bar.find.title') }</div>
+                <div className="friend-bar-text">{ LocalizeText('friend.bar.find.title') }</div>
             </div>
         );
     }
@@ -46,7 +46,7 @@ export const FriendBarItemView: FC<{ friend: MessengerFriend }> = props =>
                 { (friend.id > 0) && <LayoutAvatarImageView headOnly={ true } figure={ friend.figure } direction={ 2 } /> }
                 { (friend.id <= 0) && <LayoutBadgeImageView isGroup={ true } badgeCode={ friend.figure } /> } 
             </div>
-            <div className="friend-bar-text fw-bold">{ friend.name }</div>
+            <div className="friend-bar-text">{ friend.name }</div>
             { isVisible &&
             <div className="d-flex pt-3 justify-content-between">
                 <Base className="nitro-friends-spritesheet icon-friendbar-chat cursor-pointer" onClick={ event => OpenMessengerChat(friend.id) } />

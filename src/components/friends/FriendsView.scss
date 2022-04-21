@@ -135,8 +135,10 @@
         margin: 0 3px;
         z-index: 0;
         position: relative;
-        padding-left:38px;
+        padding-left:42px;
         text-align: left;
+        min-height: 36px;
+        max-height: 36px;
     
         &.friend-bar-item-active {
             margin-bottom:28px;
@@ -147,7 +149,6 @@
             border-image-slice:17 17 17 17 fill;
             border-image-width:17px 17px 17px 17px;
             border-image-repeat:repeat repeat;
-            min-height: 36px;
             color: #fff;
         }
 
@@ -166,6 +167,7 @@
             font-size: 13px;
             line-height: 1;
             color: #fff;
+            font-family: ubuntuBold;
         }
     
         .friend-bar-item-head {
