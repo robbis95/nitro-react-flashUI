@@ -4,6 +4,11 @@
     min-width: 326px;
     color: #000;
 
+    input {
+        min-height: 20px;
+        max-height: 20px;
+    }
+
     &.trading {
         height: 615px;
     }
