@@ -40,10 +40,10 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
             <Column className="grid-bg item-picker p-2" size={ 7 } overflow="hidden">
                 <CatalogItemGridWidgetView />
             </Column>
-            <Flex gap={ 1 } className="quanity-container">
+            <Flex gap={ 1 } className="quanity-container mt-2">
                 <CatalogSpinnerWidgetView />
             </Flex>
-            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-3">
+            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
             <CatalogPurchaseWidgetView />
             </Flex>
 

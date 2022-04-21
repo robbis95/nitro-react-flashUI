@@ -14,7 +14,6 @@
 
     .quantity-input {
         min-height: 17px;
-        height: 17px;
         width: 28px;
         padding: 0 4px;
         text-align: right;
@@ -66,6 +65,10 @@
             height: 20px;
         }
     }
+}
+
+.trophy-text {
+    height: 150px;
 }
 
 .nitro-catalog-gift {

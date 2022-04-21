@@ -31,29 +31,31 @@ export const CatalogLayoutTrophiesView: FC<CatalogLayoutProps> = props =>
     }, [ currentOffer, trophyText, setPurchaseOptions ]);
 
     return (
-        <Grid>
-            <Column size={ 7 } overflow="hidden">
-                <CatalogItemGridWidgetView />
-                <textarea className="flex-grow-1 form-control w-100" defaultValue={ trophyText || '' } onChange={ event => setTrophyText(event.target.value) } />
-            </Column>
-            <Column center={ !currentOffer } size={ 5 } overflow="hidden">
-                { !currentOffer &&
+        <Column>
+            <Column className="pt-2" center={ !currentOffer } overflow="hidden">
                     <>
                         { !!page.localization.getImage(1) && <img alt="" src={ page.localization.getImage(1) } /> }
-                        <Text center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
-                    </> }
-                { currentOffer &&
-                    <>
-                        <CatalogViewProductWidgetView />
-                        <Column grow gap={ 1 }>
-                            <Text grow truncate>{ currentOffer.localizationName }</Text>
-                            <Flex justifyContent="end">
-                                <CatalogTotalPriceWidget alignItems="end" />
-                            </Flex>
-                            <CatalogPurchaseWidgetView />
-                        </Column>
-                    </> }
+                        <Text small center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
+                    </> 
             </Column>
-        </Grid>
+            <Column size={ 7 } overflow="hidden">
+                <Column className="grid-bg item-picker p-2" size={ 7 } overflow="hidden">
+                <CatalogItemGridWidgetView />
+                </Column>
+                { currentOffer &&
+            <>
+                <Column grow gap={ 1 }>
+                    <Text grow center truncate>{ currentOffer.localizationName }</Text>
+                    <Flex justifyContent="end">
+                        <CatalogTotalPriceWidget alignItems="end" className="credits-bg py-1 px-2" />
+                    </Flex>
+                    <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
+                    <CatalogPurchaseWidgetView />
+                    </Flex>
+                </Column>
+            </> }
+                <textarea className="flex-grow-1 form-control w-100 trophy-text" defaultValue={ trophyText || '' } onChange={ event => setTrophyText(event.target.value) } />
+            </Column>
+        </Column>
     );
 }
