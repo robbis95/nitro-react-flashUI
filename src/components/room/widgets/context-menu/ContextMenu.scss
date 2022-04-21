@@ -7,6 +7,9 @@
     &.bot-chat {
         max-width: 250px;
         width: 250px;
+        background: #2d2a26;
+        border-top: 1px solid #000;
+        
     }
 
     &.name-only {
@@ -105,6 +108,11 @@
                 margin-right: unset;
             }
         }
+    }
+
+    .context-input-bg {
+        background: #2d2a26;
+        border-top: 1px solid #000;
     }
 
     .menu-item {

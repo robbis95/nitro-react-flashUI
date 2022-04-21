@@ -180,7 +180,7 @@ export const AvatarInfoWidgetRentableBotView: FC<AvatarInfoWidgetRentableBotView
                         </ContextMenuListItemView> }
                 </> }
             { (mode === MODE_CHANGE_NAME) &&
-                <Column className="menu-item" onClick={ null } gap={ 1 }>
+                <Column className="menu-item context-input-bg" onClick={ null } gap={ 1 }>
                     <Text variant="white">{ LocalizeText('bot.skill.name.configuration.new.name') }</Text>
                     <input type="text" className="form-control form-control-sm" value={ newName } maxLength={ GetConfiguration<number>('bot.name.max.length', 15) } onChange={ event => setNewName(event.target.value) } />
                     <Flex alignItems="center" justifyContent="between" gap={ 1 }>
@@ -189,7 +189,7 @@ export const AvatarInfoWidgetRentableBotView: FC<AvatarInfoWidgetRentableBotView
                     </Flex>
                 </Column> }
             { (mode === MODE_CHANGE_MOTTO) &&
-                <Column className="menu-item" onClick={ null } gap={ 1 }>
+                <Column className="menu-item context-input-bg" onClick={ null } gap={ 1 }>
                     <Text variant="white">{ LocalizeText('bot.skill.name.configuration.new.motto') }</Text>
                     <input type="text" className="form-control form-control-sm" value={ newMotto } maxLength={ GetConfiguration<number>('motto.max.length', 38) } onChange={ event => setNewMotto(event.target.value) } />
                     <Flex alignItems="center" justifyContent="between" gap={ 1 }>
