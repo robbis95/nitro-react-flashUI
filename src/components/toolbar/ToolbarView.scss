@@ -109,13 +109,16 @@
 
 .nitro-toolbar-me {
     position: absolute;
-    bottom: 60px;
+    bottom: 52px;
     left: 15px;
     z-index: $toolbar-memenu-zindex;
-    background: rgba(20, 20, 20, .95);
-    border: 1px solid #101010;
-    box-shadow: inset 2px 2px rgba(255, 255, 255, .1), inset -2px -2px rgba(255, 255, 255, .1);
-    border-radius: $border-radius;
+    border-image-source: url(../../assets/flash/toolbar/me_menu_bg.png);
+    border-image-slice: 6 6 6 6 fill; 
+    border-image-width: 6px 6px 6px 6px;
+
+    .me-text {
+        font-size: 10px;
+    }
 
     .navigation-item {
         transition: filter .2s ease-out;

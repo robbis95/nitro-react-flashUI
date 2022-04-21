@@ -1,7 +1,7 @@
 import { MouseEventType, RoomObjectCategory } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
-import { CreateLinkEvent, GetRoomEngine, GetRoomSession, GetSessionDataManager, GetUserProfile } from '../../api';
-import { Base, Flex, LayoutItemCountView } from '../../common';
+import { CreateLinkEvent, GetRoomEngine, GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText } from '../../api';
+import { Base, Column, Flex, Text, LayoutItemCountView } from '../../common';
 import { GuideToolEvent } from '../../events';
 import { DispatchUiEvent } from '../../hooks';
 
@@ -36,17 +36,31 @@ export const ToolbarMeView: FC<ToolbarMeViewProps> = props =>
     }, [ setMeExpanded ]);
 
     return (
-        <Flex innerRef={ elementRef } alignItems="center" className="nitro-toolbar-me p-2" gap={ 2 }>
+        <Flex innerRef={ elementRef } alignItems="center" className="nitro-toolbar-me p-2" gap={ 3 }>
             { useGuideTool &&
-                <Base pointer className="navigation-item icon icon-me-helper-tool" onClick={ event => DispatchUiEvent(new GuideToolEvent(GuideToolEvent.TOGGLE_GUIDE_TOOL)) } /> }
-            <Base pointer className="navigation-item icon icon-me-achievements" onClick={ event => CreateLinkEvent('achievements/toggle') }>
+                <Column gap={ 1 } alignItems="center" onClick={ event => DispatchUiEvent(new GuideToolEvent(GuideToolEvent.TOGGLE_GUIDE_TOOL)) }>
+                <Base pointer className="navigation-item icon icon-me-helper-tool" /> 
+                <Text className="me-text">{LocalizeText('widget.memenu.guide')}</Text>
+                </Column>}
+            <Column gap={ 1 } alignItems="center" onClick={ event => CreateLinkEvent('achievements/toggle') }>
+            <Base pointer className="navigation-item icon icon-me-achievements">
                 { (unseenAchievementCount > 0) &&
                     <LayoutItemCountView count={ unseenAchievementCount } /> }
             </Base>
-            <Base pointer className="navigation-item icon icon-me-profile" onClick={ event => GetUserProfile(GetSessionDataManager().userId) } />
-            <Base pointer className="navigation-item icon icon-me-rooms" onClick={ event => CreateLinkEvent('navigator/search/myworld_view') } />
-            <Base pointer className="navigation-item icon icon-me-clothing" onClick={ event => CreateLinkEvent('avatar-editor/toggle') } />
-            <Base pointer className="navigation-item icon icon-me-settings" onClick={ event => CreateLinkEvent('user-settings/toggle') } />
+            <Text className="me-text">{LocalizeText('widget.memenu.achievements')}</Text>
+            </Column>
+            <Column gap={ 1 } alignItems="center" onClick={ event => GetUserProfile(GetSessionDataManager().userId) }>
+            <Base pointer className="navigation-item icon icon-me-profile"  />
+            <Text className="me-text">{LocalizeText('widget.memenu.profile')}</Text>
+            </Column>
+            <Column gap={ 1 } alignItems="center" onClick={ event => CreateLinkEvent('navigator/search/myworld_view') }>
+            <Base pointer className="navigation-item icon icon-me-rooms" />
+            <Text className="me-text">{LocalizeText('widget.memenu.myrooms')}</Text>
+            </Column>
+            <Column gap={ 1 } alignItems="center" onClick={ event => CreateLinkEvent('avatar-editor/toggle') }>
+            <Base pointer className="navigation-item icon icon-me-clothing" />
+            <Text className="me-text">{LocalizeText('widget.memenu.myclothes')}</Text>
+            </Column>
             { children }
         </Flex>
     );
