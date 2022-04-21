@@ -4,6 +4,10 @@
     min-width: 326px;
     color: #000;
 
+    &.trading {
+        height: 615px;
+    }
+
     .empty-image {
         background: url('../../assets/images/inventory/empty.png');
         width: 129px;

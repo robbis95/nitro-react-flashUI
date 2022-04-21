@@ -148,10 +148,11 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
     if((tradeState === TradeState.TRADING_STATE_READY) || !ownUser || !otherUser) return null;
 
     return (
-        <Grid>
+        <Column>
+            <Flex>
             <Column size={ 4 } overflow="hidden">
                 <InventoryFurnitureSearchView groupItems={ groupItems } setGroupItems={ setFilteredGroupItems } />
-                <Flex column fullHeight justifyContent="between" overflow="hidden" gap={ 2 }>
+                <Flex column fullHeight fullWidth justifyContent="between" overflow="hidden" gap={ 2 }>
                     <AutoGrid columnCount={ 3 }>
                         { filteredGroupItems && (filteredGroupItems.length > 0) && filteredGroupItems.map((item, index) =>
                         {
@@ -172,9 +173,10 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                     </Base>
                 </Flex>
             </Column>
-            <Column size={ 8 } overflow="hidden">
+            </Flex>
+            <Column fullWidth size={ 8 } overflow="hidden">
                 <Grid overflow="hidden">
-                    <Column size={ 6 } overflow="hidden">
+                    <Column size={ 4 } overflow="hidden">
                         <Flex justifyContent="between" alignItems="center">
                             <Text>{ LocalizeText('inventory.trading.you') } { LocalizeText('inventory.trading.areoffering') }:</Text>
                             { getLockIcon(ownUser.accepts) }
@@ -200,7 +202,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                             { ownGroupItem ? ownGroupItem.name : LocalizeText('catalog_selectproduct') }
                         </Base>
                     </Column>
-                    <Column size={ 6 } overflow="hidden">
+                    <Column size={ 4 } overflow="hidden">
                         <Flex justifyContent="between" alignItems="center">
                             <Text>{ otherUser.userName } { LocalizeText('inventory.trading.isoffering') }:</Text>
                             { getLockIcon(otherUser.accepts) }
@@ -234,6 +236,6 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                         <Button variant="secondary">{ LocalizeText('inventory.trading.info.waiting') }</Button> }
                 </Flex>
             </Column>
-        </Grid>
+        </Column>
     );
 }
