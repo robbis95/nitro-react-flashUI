@@ -1,6 +1,6 @@
 .nitro-room-tools-container {
     position: absolute;
-    bottom: $toolbar-height + 65px;
+    bottom: $toolbar-height + 15px;
     left: 0;
 
     .nitro-room-tools {
@@ -52,8 +52,10 @@
     }
     
     .nitro-room-tools-info {
-        background: rgba($dark,.95);
-        box-shadow: inset 0px 5px lighten(rgba($dark,.6),2.5), inset 0 -4px darken(rgba($dark,.6),4);
+        border-image-source: url('../../../assets/flash/boxes/card/room_info_bg.png');
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        color: #9f9f9e;
         transition: all .2s ease;
         pointer-events: none;
         max-width: 250px;

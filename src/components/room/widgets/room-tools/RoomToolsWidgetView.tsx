@@ -106,7 +106,7 @@ export const RoomToolsWidgetView: FC<{}> = props =>
                 <Column justifyContent="center">
                         <TransitionAnimation type={TransitionAnimationTypes.SLIDE_LEFT} inProp={isOpen} timeout={300}>
                             <Column center gap={ 2 }>
-                                <Column className="nitro-room-tools-info rounded py-2 px-3">
+                                <Column className="nitro-room-tools-info py-2 px-3">
                                     <Column gap={1}>
                                         <Text wrap variant="white" fontSize={4}>{roomName}</Text>
                                         <Text variant="muted" fontSize={5}>{roomOwner}</Text>
