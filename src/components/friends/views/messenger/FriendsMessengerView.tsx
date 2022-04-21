@@ -136,6 +136,7 @@ export const FriendsMessengerView: FC<{}> = props =>
                                             <button className="profile" onClick={ openProfile } />
                                         </ButtonGroup>
                                         <button className="messenger-button fw-bold px-3" onClick={ openProfile }>
+                                        { LocalizeText('messenger.window.button.report')}
                                         </button>
                                     </Flex>
                                     <button className="clear" onClick={ event => closeThread(activeThread.threadId) } />
