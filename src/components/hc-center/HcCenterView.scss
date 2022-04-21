@@ -11,7 +11,17 @@
     }
 
     .payday-special {
+        border-image-source: url(../../assets/flash/habboclub/hc_blue_bg.png);
+        border-image-slice: 4 4 4 4 fill;
+        border-image-width: 4px 4px 4px 4px;
         height: 128px;
+        margin-right: -2px;
+    }
+
+    .hc-gift-special {
+        border-image-source: url(../../assets/flash/habboclub/hc_green_bg.png);
+        border-image-slice: 4 4 4 4 fill;
+        border-image-width: 4px 4px 4px 4px;
     }
 
     .payday {
