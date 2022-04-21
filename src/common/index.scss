@@ -141,10 +141,15 @@
 
     .camera-frame {
         position: absolute;
-        width: 110px;
+        width: 132px;
         height: 110px;
         margin-top: 38px;
         margin-left: 3px;
+    }
+
+    .camera-buttons {
+        padding-bottom: 10px;
+        padding-left: 2px;
     }
 }
 
