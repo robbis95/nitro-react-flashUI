@@ -62,9 +62,7 @@ export const CameraWidgetCaptureView: FC<CameraWidgetCaptureViewProps> = props =
             <Column center className="nitro-camera-capture" gap={ 0 }>
                 { selectedPicture && <img alt="" className="camera-area" src={ selectedPicture.imageUrl } /> }
                 <div className="camera-canvas drag-handler">
-                    <div className="position-absolute header-close" onClick={ onClose }>
-                        <FontAwesomeIcon icon="times" />
-                    </div>
+                    <div className="position-absolute header-close" onClick={ onClose } />
                     { !selectedPicture && <div ref={ elementRef } className="camera-area camera-view-finder" /> }
                     { selectedPicture && 
                         <div className="camera-area camera-frame">
