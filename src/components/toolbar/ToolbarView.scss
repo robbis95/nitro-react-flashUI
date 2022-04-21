@@ -46,6 +46,7 @@
 
     .toolbar-right-collapse {
         background-image: url(../../assets/flash/toolbar/collapse_right.png);
+        background-repeat: no-repeat;
         background-color: transparent;
         height: 43px;
         width: 14px;
@@ -56,6 +57,7 @@
 
     .toolbar-right-collapse-active {
         background-image: url(../../assets/flash/toolbar/collapse_right_active.png);
+        background-repeat: no-repeat;
         background-color: transparent;
         height: 43px;
         width: 14px;
