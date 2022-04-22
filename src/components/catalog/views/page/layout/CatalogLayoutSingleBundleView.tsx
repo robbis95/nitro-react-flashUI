@@ -16,17 +16,12 @@ export const CatalogLayoutSingleBundleView: FC<CatalogLayoutProps> = props =>
     return (
         <>
             <CatalogFirstProductSelectorWidgetView />
-            <Grid>
-                <Column size={ 7 } overflow="hidden">
-                    { !!page.localization.getText(2) &&
-                        <Text dangerouslySetInnerHTML={ { __html: page.localization.getText(2) } } /> }
-                    <Column grow overflow="hidden" className="bg-muted p-2 rounded">
-                        <CatalogBundleGridWidgetView fullWidth className="nitro-catalog-layout-bundle-grid" />
-                    </Column>
-                </Column>
-                <Column size={ 5 } overflow="hidden" gap={ 1 }>
-                    { !!page.localization.getText(1) &&
+            <Column>
+            { !!page.localization.getText(1) &&
                         <Text center small overflow="auto">{ page.localization.getText(1) }</Text> }
+            </Column>
+            <Grid>
+                <Column size={ 5 } overflow="hidden" gap={ 1 }>
                     <Column grow position="relative" overflow="hidden" gap={ 0 }>
                         { !!page.localization.getImage(1) &&
                             <img alt="" className="flex-grow-1" src={ page.localization.getImage(1) } /> }
@@ -35,6 +30,13 @@ export const CatalogLayoutSingleBundleView: FC<CatalogLayoutProps> = props =>
                     </Column>
                     <Column gap={ 1 }>
                         <CatalogPurchaseWidgetView />
+                    </Column>
+                </Column>
+                <Column size={ 7 } overflow="hidden">
+                    { !!page.localization.getText(2) &&
+                        <Text dangerouslySetInnerHTML={ { __html: page.localization.getText(2) } } /> }
+                    <Column grow overflow="hidden" className="grid-bg p-2">
+                        <CatalogBundleGridWidgetView fullWidth className="nitro-catalog-layout-bundle-grid" />
                     </Column>
                 </Column>
             </Grid>
