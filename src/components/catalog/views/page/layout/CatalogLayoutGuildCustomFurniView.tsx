@@ -19,34 +19,37 @@ export const CatalogLayouGuildCustomFurniView: FC<CatalogLayoutProps> = props =>
     const { currentOffer = null } = useCatalogContext();
     
     return (
-        <Grid>
-            <Column size={ 7 } overflow="hidden">
-                <CatalogItemGridWidgetView />
-            </Column>
-            <Column center={ !currentOffer } size={ 5 } overflow="hidden">
+        <Column>
+            <Column className="position-relative" center={ !currentOffer } size={ 5 } overflow="hidden">
                 { !currentOffer &&
                     <>
                         { !!page.localization.getImage(1) && <img alt="" src={ page.localization.getImage(1) } /> }
-                        <Text center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
+                        <Text className="py-5" center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
                     </> }
                 { currentOffer &&
                     <>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
-                            <CatalogGuildBadgeWidgetView position="absolute" className="bottom-1 end-1" />
+                            <CatalogGuildBadgeWidgetView position="absolute" className="top-1 end-1" />
+                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
                         </Base>
                         <Column grow gap={ 1 }>
-                            <Text truncate>{ currentOffer.localizationName }</Text>
-                            <Base grow>
-                                <CatalogGuildSelectorWidgetView />
-                            </Base>
-                            <Flex justifyContent="end">
-                                <CatalogTotalPriceWidget alignItems="end" />
+                            <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
+                            <Flex justifyContent="between">
+
                             </Flex>
-                            <CatalogPurchaseWidgetView />
                         </Column>
+                        <Base grow>
+                            <CatalogGuildSelectorWidgetView />
+                        </Base>
                     </> }
             </Column>
-        </Grid>
+            <Column className="grid-bg group-furni-picker p-2" size={ 7 } overflow="hidden">
+                <CatalogItemGridWidgetView />
+            </Column>
+            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
+                <CatalogPurchaseWidgetView />
+            </Flex>
+        </Column>
     );
 }
