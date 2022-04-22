@@ -196,20 +196,7 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props =>
     if(!currentOffer) return null;
 
     return (
-        <Grid>
-            <Column size={ 7 } overflow="hidden">
-                <AutoGrid columnCount={ 5 }>
-                    { !colorsShowing && (sellablePalettes.length > 0) && sellablePalettes.map((palette, index) =>
-                    {
-                        return (
-                            <LayoutGridItem key={ index } itemActive={ (selectedPaletteIndex === index) } onClick={ event => setSelectedPaletteIndex(index) }>
-                                <LayoutPetImageView typeId={ petIndex } paletteId={ palette.paletteId } direction={ 2 } headOnly={ true } />
-                            </LayoutGridItem>
-                        );
-                    }) }
-                    { colorsShowing && (sellableColors.length > 0) && sellableColors.map((colorSet, index) => <LayoutGridItem itemHighlight key={ index } itemActive={ (selectedColorIndex === index) } itemColor={ ColorConverter.int2rgb(colorSet[0]) } className="clear-bg" onClick={ event => setSelectedColorIndex(index) } />) }
-                </AutoGrid>
-            </Column>
+        <Column>
             <Column center={ !currentOffer } size={ 5 } overflow="hidden">
                 { !currentOffer &&
                     <>
@@ -220,12 +207,26 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props =>
                     <>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
+                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
                             <CatalogAddOnBadgeWidgetView position="absolute" className="bg-muted rounded bottom-1 end-1" />
                             { ((petIndex > -1) && (petIndex <= 7)) &&
                                 <Button position="absolute" className="bottom-1 start-1" onClick={ event => setColorsShowing(!colorsShowing) }>
                                     <FontAwesomeIcon icon="fill-drip" />
                                 </Button> }
                         </Base>
+                                    <Column size={ 7 } overflow="hidden">
+                        <AutoGrid className="grid-bg group-furni-picker p-2" columnCount={ 7 }>
+                            { !colorsShowing && (sellablePalettes.length > 0) && sellablePalettes.map((palette, index) =>
+                            {
+                                return (
+                                    <LayoutGridItem key={ index } itemActive={ (selectedPaletteIndex === index) } onClick={ event => setSelectedPaletteIndex(index) }>
+                                        <LayoutPetImageView typeId={ petIndex } paletteId={ palette.paletteId } direction={ 2 } headOnly={ true } />
+                                    </LayoutGridItem>
+                                );
+                            }) }
+                            { colorsShowing && (sellableColors.length > 0) && sellableColors.map((colorSet, index) => <LayoutGridItem itemHighlight key={ index } itemActive={ (selectedColorIndex === index) } itemColor={ ColorConverter.int2rgb(colorSet[0]) } className="clear-bg" onClick={ event => setSelectedColorIndex(index) } />) }
+                        </AutoGrid>
+            </Column>
                         <Column grow gap={ 1 }>
                             <Text truncate>{ petBreedName }</Text>
                             <Column grow gap={ 1 }>
@@ -233,13 +234,12 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props =>
                                 { (approvalResult > 0) &&
                                     <Base className="invalid-feedback d-block m-0">{ validationErrorMessage }</Base> }
                             </Column>
-                            <Flex justifyContent="end">
-                                <CatalogTotalPriceWidget justifyContent="end" alignItems="end" />
+                            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
+                                <CatalogPurchaseWidgetView purchaseCallback={ purchasePet } />
                             </Flex>
-                            <CatalogPurchaseWidgetView purchaseCallback={ purchasePet } />
                         </Column>
                     </> }
             </Column>
-        </Grid>
+        </Column>
     );
 }
