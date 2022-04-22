@@ -1,7 +1,7 @@
 import { CatalogPublishedMessageEvent, FrontPageItem, GetCatalogIndexComposer, GetCatalogPageComposer, GetClubGiftInfo, GetGiftWrappingConfigurationComposer, ILinkEventTracker, RoomPreviewer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { AddEventLinkTracker, GetRoomEngine, LocalizeText, NotificationAlertType, NotificationUtilities, PlaySound, RemoveLinkEventTracker, SendMessageComposer, SoundNames } from '../../api';
-import { Column, Grid, LayoutImage, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import { Column, Grid, LayoutImage, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, Text, NitroCardTabsView, NitroCardView } from '../../common';
 import { CatalogPurchasedEvent } from '../../events';
 import { UseMessageEventHook, UseUiEvent } from '../../hooks';
 import { CatalogContextProvider } from './CatalogContext';
@@ -422,7 +422,7 @@ export const CatalogView: FC<{}> = props =>
                     <div className="catalog-header">
                     <div className="catalog-header-content">
                     {currentPage && rootNode && <CatalogIconView icon={ getNodeById(pageId, rootNode).iconId } />}
-                    {currentPage && rootNode && <p className="catalog-header-title fw-bold">{getNodeById(pageId, rootNode).localization}</p>}
+                    {currentPage && rootNode && <Text bold className="catalog-header-title h-100">{getNodeById(pageId, rootNode).localization}</Text>}
                         <p className="catalog-header-desc">{currentPage && currentPage.localization.getText(0)}</p>
                     </div>
                     <div className="catalog-header-image" style={{ backgroundImage: `url(${currentPage && currentPage.localization.getImage(0)})` }}>
