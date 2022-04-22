@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AvatarEditorFigureCategory, FigureSetIdsMessageEvent, GetWardrobeMessageComposer, IAvatarFigureContainer, ILinkEventTracker, UserFigureComposer, UserWardrobePageEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { AddEventLinkTracker, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
-import { Flex, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import { NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
 import { Button } from '../../common/Button';
 import { ButtonGroup } from '../../common/ButtonGroup';
 import { Column } from '../../common/Column';
@@ -34,7 +34,7 @@ export const AvatarEditorView: FC<{}> = props =>
     const [ figureSetIds, setFigureSetIds ] = useState<number[]>([]);
     const [ boundFurnitureNames, setBoundFurnitureNames ] = useState<string[]>([]);
     const [ savedFigures, setSavedFigures ] = useState<[ IAvatarFigureContainer, string ][]>([]);
-    const [ isWardrobeVisible, setIsWardrobeVisible ] = useState(true);
+    const [ isWardrobeVisible, setIsWardrobeVisible ] = useState(false);
     const [ lastFigure, setLastFigure ] = useState<string>(null);
     const [ lastGender, setLastGender ] = useState<string>(null);
     const [ needsReset, setNeedsReset ] = useState(true);
@@ -304,21 +304,21 @@ export const AvatarEditorView: FC<{}> = props =>
             <NitroCardContentView>
                 <Grid>
                     <Column size={ 6 } overflow="hidden">
-                            <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } />
+                        { (activeCategory && !isWardrobeVisible) &&
+                            <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } /> }
+                        { isWardrobeVisible &&
+                            <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } /> }
                     </Column>
-                    <Column size={ 3 } overflow="hidden" className="pb-3">
+                    <Column size={ 3 } overflow="hidden">
                         <AvatarEditorFigurePreviewView figureData={ figureData } />
+                        <Column className="randomize-container position-absolute">
+                            <i className="icon randomize-icon" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) } />
+                        </Column>
                         <Column grow gap={ 1 }>
-                            <Flex className="randomize-container cursor-pointer" position="absolute">
-                                    <i className="icon randomize-icon" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) } />
-                            </Flex>
-                            <Button className="w-100 fw-bold" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
+                            <Button className="w-100" variant="success" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
                                 { LocalizeText('avatareditor.save') }
                             </Button>
                         </Column>
-                    </Column>
-                    <Column className="avatar-wardrobe pt-2 px-4" size={ 3 } overflow="hidden">
-                            <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } />
                     </Column>
                 </Grid>
             </NitroCardContentView>

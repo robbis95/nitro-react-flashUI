@@ -216,19 +216,16 @@
     border-image-source: url(../../assets/flash/avatareditor/wardrobe_user_bg.png);
     border-image-slice: 4 4 4 4 fill;
     border-image-width: 4px 4px 4px 4px;
-    height: 50px;
-    width: 100px;
     background-color: transparent;
     overflow: hidden;
     z-index: 1;
 
     .avatar-image {
         position: absolute;
-        top: -28px;
-        left: -35px;
+        bottom: -15px;
         margin: 0 auto;
         z-index: 4;
-        -webkit-transform: scale(0.5);
+
     }
 
     .avatar-shadow {
@@ -367,8 +364,8 @@
     }
 
     .randomize-container {
-        bottom: 110px;
-        left: 325px;
+        bottom: 95px;
+        left: 330px;
         z-index: 2;
     }
 

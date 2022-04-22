@@ -80,7 +80,7 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
                     );
                 }) }
             </Flex>
-            <Column size={ 5 } overflow="hidden">
+            <Column className="h-50" size={ 5 } overflow="hidden">
                 <AvatarEditorFigureSetView model={ model } category={ activeCategory } setMaxPaletteCount={ setMaxPaletteCount } />
             </Column>
             <Column size={ 5 } overflow="hidden">
