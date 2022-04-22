@@ -88,7 +88,7 @@ export const CatalogSpacesWidgetView: FC<CatalogSpacesWidgetViewProps> = props =
             <ButtonGroup>
                 { SPACES_GROUP_NAMES.map((name, index) => <Button key={ index } active={ (selectedGroupIndex === index) } onClick={ event => setSelectedGroupIndex(index) }>{ LocalizeText(`catalog.spaces.tab.${ name }`) }</Button>) }
             </ButtonGroup>
-            <AutoGrid columnCount={ columnCount } { ...rest }>
+            <AutoGrid className="grid-bg group-furni-picker p-2" columnCount={ columnCount } { ...rest }>
                 { offers && (offers.length > 0) && offers.map((offer, index) =>
                 {
                     const setSelectedOffer = () =>

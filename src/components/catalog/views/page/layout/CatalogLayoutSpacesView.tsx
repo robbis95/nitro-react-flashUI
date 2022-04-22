@@ -23,7 +23,7 @@ export const CatalogLayoutSpacesView: FC<CatalogLayoutProps> = props =>
     }, [ roomPreviewer ]);
 
     return (
-        <Grid>
+        <Column>
             <Column size={ 7 } overflow="hidden">
                 <CatalogSpacesWidgetView />
             </Column>
@@ -37,16 +37,14 @@ export const CatalogLayoutSpacesView: FC<CatalogLayoutProps> = props =>
                     <>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
+                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                            <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
                         </Base>
-                        <Column grow gap={ 1 }>
-                            <Text grow truncate>{ currentOffer.localizationName }</Text>
-                            <Flex justifyContent="end">
-                                <CatalogTotalPriceWidget alignItems="end" />
-                            </Flex>
+                        <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
                             <CatalogPurchaseWidgetView />
-                        </Column>
+                        </Flex>
                     </> }
             </Column>
-        </Grid>
+        </Column>
     );
 }
