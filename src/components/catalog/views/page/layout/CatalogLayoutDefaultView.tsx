@@ -28,7 +28,7 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
                             <CatalogViewProductWidgetView />
                             <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
                             <CatalogLimitedItemWidgetView fullWidth position="absolute" className="top-1" />
-                            <CatalogAddOnBadgeWidgetView position="absolute" className="bg-muted rounded bottom-1 end-1" />
+                            <CatalogAddOnBadgeWidgetView position="absolute" className="bg-muted rounded top-1 end-1" />
                         </Base>
                         <Column grow gap={ 1 }>
                             <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
