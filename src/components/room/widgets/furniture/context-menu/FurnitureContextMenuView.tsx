@@ -3,6 +3,7 @@ import { FC, useCallback, useState } from 'react';
 import { GetGroupInformation, GetRoomEngine, IsOwnerOfFurniture, LocalizeText, RoomWidgetFurniActionMessage, TryJoinGroup, TryVisitRoom } from '../../../../../api';
 import { UseMessageEventHook, UseRoomEngineEvent } from '../../../../../hooks';
 import { useRoomContext } from '../../../RoomContext';
+import { ContextMenuCaretView } from '../../context-menu/ContextMenuCaretView';
 import { ContextMenuHeaderView } from '../../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../../context-menu/ContextMenuListItemView';
 import { ContextMenuView } from '../../context-menu/ContextMenuView';
@@ -157,7 +158,7 @@ export const FurnitureContextMenuView: FC<{}> = props =>
             { (confirmMode === PURCHASABLE_CLOTHING_CONFIRMATION) && <PurchasableClothingConfirmView objectId={ confirmingObjectId } close={ closeConfirm } /> }
             { (confirmMode === EFFECTBOX_OPEN) && <EffectBoxConfirmView objectId={ confirmingObjectId } close={ closeConfirm } /> }
             { (objectId >= 0) && mode &&
-                <ContextMenuView objectId={ objectId } category={ RoomObjectCategory.FLOOR } close={ close } fades={ true }>
+                <ContextMenuView objectId={ objectId } category={ RoomObjectCategory.FLOOR } close={ close } fades={ true } collapsable={ true }>
                     { (mode === ContextMenuEnum.FRIEND_FURNITURE) &&
                         <>
                             <ContextMenuHeaderView>
@@ -209,7 +210,8 @@ export const FurnitureContextMenuView: FC<{}> = props =>
                                 { LocalizeText('widget.furniture.button.open_group_forum') }
                             </ContextMenuListItemView> }
                         </> }
-                </ContextMenuView> }
+                </ContextMenuView>
+                 }
         </>
     )
 }
