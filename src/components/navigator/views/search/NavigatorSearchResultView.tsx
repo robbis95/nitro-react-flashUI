@@ -52,10 +52,10 @@ export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = pro
         <Column className="bg-white" gap={ 0 }>
             <Flex fullWidth alignItems="center" justifyContent="between" className="px-2 py-1">
                 <Flex grow pointer alignItems="center" gap={ 1 } onClick={ event => setIsExtended(prevValue => !prevValue) }>
-                    <FontAwesomeIcon icon={ isExtended ? 'minus' : 'plus' } className="nav-icons" />
+                    <i className={ isExtended ? 'icon icon-nav-minus' : 'icon icon-nav-plus' } />
                     <div className="nav-category"> { LocalizeText(getResultTitle()) }</div>
                 </Flex>
-                <FontAwesomeIcon icon={ ((displayMode === NavigatorSearchResultViewDisplayMode.LIST) ? 'th' : (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) ? 'bars' : null) } className="text-secondary" onClick={ toggleDisplayMode } />
+                <i className={ ((displayMode === NavigatorSearchResultViewDisplayMode.LIST) ? 'icon icon-nav-thumbnail' : (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) ? 'icon icon-nav-inline' : null) } onClick={ toggleDisplayMode } />
             </Flex> { isExtended && 
                 <>
                     {

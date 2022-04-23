@@ -413,6 +413,30 @@
         height: 18px;
     }
 
+    &.icon-nav-plus {
+        background: url(../flash/navigator/plus.png);
+        width: 9px;
+        height: 9px;
+    }
+
+    &.icon-nav-minus {
+        background: url(../flash/navigator/minus.png);
+        width: 9px;
+        height: 9px;
+    }
+
+    &.icon-nav-inline {
+        background: url(../flash/navigator/inline_view.png);
+        width: 11px;
+        height: 11px;
+    }
+
+    &.icon-nav-thumbnail {
+        background: url(../flash/navigator/thumbnail_view.png);
+        width: 11px;
+        height: 11px;
+    }
+
     &.icon-pf-online {
         background: url('../images/profile/icons/online.gif');
         width: 40px;
