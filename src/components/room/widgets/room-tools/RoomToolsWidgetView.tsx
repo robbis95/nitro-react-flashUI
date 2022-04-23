@@ -78,30 +78,35 @@ export const RoomToolsWidgetView: FC<{}> = props =>
                 <div className={'toggle-icon ' + classNames({ 'right': !show, 'left': show })} />
             </div>
             {show && (
-            <><Column gap={ 1 } center className="nitro-room-tools p-3 px-4">
-                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('settings')}>
-                    <Base pointer title={LocalizeText('room.settings.button.text')} className="icon-width float-start icon icon-cog" />
-                    <Text underline small >{LocalizeText('room.settings.button.text')}</Text>
-                    </Flex>
-                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('zoom')}>
-                    <Base pointer title={LocalizeText('room.zoom.button.text')} className={'icon-width float-start icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn })} />
-                    <Text underline small >{LocalizeText('room.zoom.button.text')}</Text>
-                    </Flex>
-                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('chat_history')}>
-                    <Base pointer title={LocalizeText('room.chathistory.button.text')} className="icon-width icon icon-chat-history float-start" />
-                    <Text underline small >{LocalizeText('room.chathistory.button.text')}</Text></Flex>
-                    {navigatorData.canRate &&
-                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('like_room')}>
-                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-like-room float-start" />
-                        <Text underline small >{LocalizeText('room.like.button.text')}</Text>
-                        </Flex>
-                        }
-                    <Flex className="w-100 room-tool-item" onClick={() => handleToolClick('toggle_room_link')}>
-                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-link-room float-start" />
-                        <Text underline small >{LocalizeText('navigator.embed.caption')}</Text>
-                    </Flex>
-                    
+            <><Flex gap={ 0 } center className="nitro-room-tools p-3 px-4">
+                <Column center className="p-1">
+                    <Base pointer title={ LocalizeText('room.settings.button.text') } className="icon icon-cog" onClick={ () => handleToolClick('settings') } />
+                    <Base pointer title={ LocalizeText('room.zoom.button.text') } onClick={ () => handleToolClick('zoom') } className={ 'icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn }) } />
+                    <Base pointer title={ LocalizeText('room.chathistory.button.text') } onClick={ () => handleToolClick('chat_history') } className="icon icon-chat-history" />
+                    { navigatorData.canRate &&
+                    <Base pointer title={ LocalizeText('room.like.button.text') } onClick={ () => handleToolClick('like_room') } className="icon icon-like-room" /> }
+                    <Base pointer title={ LocalizeText('room.like.button.text') } onClick={ () => handleToolClick('toggle_room_link') } className="icon icon-link-room" />
                 </Column>
+                <Column>
+                    <Flex className="w-100 room-tool-item">
+                    <Text underline small onClick={() => handleToolClick('settings')} >{LocalizeText('room.settings.button.text')}</Text>
+                    </Flex>
+                    <Flex className="w-100 room-tool-item">
+                    <Text underline small onClick={() => handleToolClick('zoom')} >{LocalizeText('room.zoom.button.text')}</Text>
+                    </Flex>
+                    <Flex className="w-100 room-tool-item">
+                    <Text underline small onClick={() => handleToolClick('chat_history')}>{LocalizeText('room.chathistory.button.text')}</Text></Flex>
+                    {navigatorData.canRate &&
+                    <Flex className="w-100 room-tool-item">
+                        <Text underline small onClick={() => handleToolClick('like_room')} >{LocalizeText('room.like.button.text')}</Text>
+                        </Flex>}
+                    <Flex className="w-100 room-tool-item">
+                        <Text underline small onClick={() => handleToolClick('toggle_room_link')}>{LocalizeText('navigator.embed.caption')}</Text>
+                    </Flex>
+                </Column>
+
+                    
+                </Flex>
                 
                 <Column justifyContent="center">
                         <TransitionAnimation type={TransitionAnimationTypes.SLIDE_LEFT} inProp={isOpen} timeout={300}>
