@@ -17,7 +17,7 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
 
     return (
         <div>
-            <Column className="position-relative" center={ !currentOffer } size={ 5 } overflow="hidden">
+            <Column className="position-relative catalog-default-image" center={ !currentOffer } size={ 5 } overflow="hidden">
                 { !currentOffer &&
                     <>
                         { !!page.localization.getImage(1) && <img className="catalog-image-column" alt="" src={ page.localization.getImage(1) } /> }
