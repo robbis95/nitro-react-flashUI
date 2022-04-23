@@ -78,7 +78,7 @@ export const RoomToolsWidgetView: FC<{}> = props =>
                 <div className={'toggle-icon ' + classNames({ 'right': !show, 'left': show })} />
             </div>
             {show && (
-            <><Flex gap={ 0 } center className="nitro-room-tools p-3 px-4">
+            <><Flex gap={ 0 } center className="nitro-room-tools p-3 px-3">
                 <Column center className="p-1">
                     <Base pointer title={ LocalizeText('room.settings.button.text') } className="icon icon-cog" onClick={ () => handleToolClick('settings') } />
                     <Base pointer title={ LocalizeText('room.zoom.button.text') } onClick={ () => handleToolClick('zoom') } className={ 'icon ' + classNames({ 'icon-zoom-less': !isZoomedIn, 'icon-zoom-more': isZoomedIn }) } />
