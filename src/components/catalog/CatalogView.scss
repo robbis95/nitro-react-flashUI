@@ -173,6 +173,10 @@
             padding: 1px;
         }
 
+        &.layout-grid-item {
+            background-color: transparent;
+        }
+
         &.layout-grid-item.active:not(.clear-bg) {
             background-color: #63c5e9 !important;
             border-top: 2px solid #82d1ed !important;

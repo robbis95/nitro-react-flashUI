@@ -19,7 +19,7 @@ export const CatalogNavigationItemView: FC<CatalogNavigationItemViewProps> = pro
     
     return (
         <>
-            <LayoutGridItem gap={ 1 } column={ false } itemActive={ node.isActive } onClick={ event => activateNode(node) }>
+            <LayoutGridItem style={{ marginLeft: `${(node.depth -2) * 10}px` }} gap={ 1 } column={ false } itemActive={ node.isActive } onClick={ event => activateNode(node) }>
                 <CatalogIconView icon={ node.iconId } />
                 <Text grow truncate>{ node.localization }</Text>
                 { node.isBranch &&
