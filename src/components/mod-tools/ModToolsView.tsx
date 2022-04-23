@@ -17,7 +17,7 @@ import { ModToolsUserView } from './views/user/ModToolsUserView';
 
 export const ModToolsView: FC<{}> = props =>
 {
-    const [ isVisible, setIsVisible ] = useState(false);
+    const [ isVisible, setIsVisible ] = useState(true);
     const [ selectedUser, setSelectedUser ] = useState<ISelectedUser>(null);
     const [ isTicketsVisible, setIsTicketsVisible ] = useState(false);
     const [ modToolsState, dispatchModToolsState ] = useReducer(ModToolsReducer, initialModTools);
@@ -187,8 +187,8 @@ export const ModToolsView: FC<{}> = props =>
     return (
         <ModToolsContextProvider value={ { modToolsState, dispatchModToolsState } }>
             <ModToolsMessageHandler />
-            { isMod &&
-                <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools " windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
+            { isVisible && isMod &&
+                <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools" windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
                     <NitroCardHeaderView headerText={ 'Mod Tools' } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardContentView className="text-black pb-3 pt-2" gap={ 3 }>
                         <ButtonModtool gap={ 1 } onClick={ event => handleClick('toggle_room') } disabled={ !currentRoomId } className="position-relative">
