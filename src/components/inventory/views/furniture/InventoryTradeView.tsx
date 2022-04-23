@@ -111,10 +111,9 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
 
     const getLockIcon = (accepts: boolean) =>
     {
-        const iconName = accepts ? 'lock' : 'unlock';
-        const textColor = accepts ? 'success' : 'danger';
+        const iconName = accepts ? 'locked' : 'open';
 
-        return <FontAwesomeIcon icon={ iconName } className={ 'text-' + textColor } />
+        return <i className={ 'mt-auto pb-5 icon icon-lock-' + iconName } />
     }
 
     useEffect(() =>
@@ -150,7 +149,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
     return (
         <Column>
             <Flex>
-            <Column size={ 4 } overflow="hidden">
+            <Column size={ 4 } fullWidth overflow="hidden" className="trading-inventory">
                 <InventoryFurnitureSearchView groupItems={ groupItems } setGroupItems={ setFilteredGroupItems } />
                 <Flex column fullHeight fullWidth justifyContent="between" overflow="hidden" gap={ 2 }>
                     <AutoGrid columnCount={ 3 }>
@@ -160,10 +159,6 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
 
                             return (
                                 <LayoutGridItem key={ index } className={ !count ? 'opacity-0-5 ' : '' } itemImage={ item.iconUrl } itemCount={ count } itemActive={ (groupItem === item) } itemUniqueNumber={ item.stuffData.uniqueNumber } onClick={ event => (count && setGroupItem(item)) }>
-                                    { ((count > 0) && (groupItem === item)) &&
-                                    <Button position="absolute" variant="success" className="trade-button bottom-1 end-1" onClick={ event => attemptItemOffer(1) }>
-                                        <FontAwesomeIcon icon="chevron-right" />
-                                    </Button> }
                                 </LayoutGridItem>
                             );
                         }) }
@@ -174,12 +169,11 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                 </Flex>
             </Column>
             </Flex>
-            <Column fullWidth size={ 8 } overflow="hidden">
+            <Column fullWidth size={ 8 } overflow="hidden" className="trade-bg p-2">
                 <Grid overflow="hidden">
                     <Column size={ 4 } overflow="hidden">
                         <Flex justifyContent="between" alignItems="center">
                             <Text>{ LocalizeText('inventory.trading.you') } { LocalizeText('inventory.trading.areoffering') }:</Text>
-                            { getLockIcon(ownUser.accepts) }
                         </Flex>
                         <AutoGrid columnCount={ 3 }>
                             { Array.from(Array(MAX_ITEMS_TO_TRADE), (e, i) =>
@@ -202,10 +196,10 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                             { ownGroupItem ? ownGroupItem.name : LocalizeText('catalog_selectproduct') }
                         </Base>
                     </Column>
+                    { getLockIcon(ownUser.accepts) }
                     <Column size={ 4 } overflow="hidden">
                         <Flex justifyContent="between" alignItems="center">
                             <Text>{ otherUser.userName } { LocalizeText('inventory.trading.isoffering') }:</Text>
-                            { getLockIcon(otherUser.accepts) }
                         </Flex>
                         <AutoGrid columnCount={ 3 }>
                             { Array.from(Array(MAX_ITEMS_TO_TRADE), (e, i) =>
@@ -221,6 +215,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                             { otherGroupItem ? otherGroupItem.name : LocalizeText('catalog_selectproduct') }
                         </Base>
                     </Column>
+                    { getLockIcon(otherUser.accepts) }
                 </Grid>
                 <Flex grow justifyContent="between">
                     <Button variant="danger" onClick={ cancelTrade }>{ LocalizeText('generic.cancel') }</Button>

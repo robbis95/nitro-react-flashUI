@@ -272,6 +272,20 @@
         height: 17px;
     }
 
+    &.icon-lock-open {
+        background: url(../flash/inventory/lock_open.png);
+        background-repeat: no-repeat;
+        height: 43px;
+        width: 29px;
+    }
+
+    &.icon-lock-locked {
+        background: url(../flash/inventory/lock_locked.png);
+        background-repeat: no-repeat;
+        height: 44px;
+        width: 36px;
+    }
+
     &.icon-sign-heart {
         background: url('../images/icons/sign-heart.png');
         width: 15px;
