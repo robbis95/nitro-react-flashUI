@@ -2,17 +2,20 @@
     background-color: #000000cc;
     position: absolute;
     padding-right: 20px;
-    bottom: 55px;
+    bottom: 0;
     top: 0;
+    height: 100%;
     left: 0;
     width: 30vw;
-    min-width: 240px;
     border-right: 1px solid #000;
     -webkit-box-shadow: inset -2px 0px 0px 0px #34322d;
     box-shadow: inset -2px 0px 0px 0px #34322d;
 
     .chat-history-content {
         width: 100%;
+        background-color: #2e2e2c4f;
+        border-right: 1px solid #3b3933;
+        padding-bottom: 60px;
     }
 
     .chat-toggle {
@@ -24,10 +27,5 @@
         left: 100%;
         bottom: 140px;
         border-left: 1px solid black;
-    }
-
-    .chat-history-list {
-        display: flex;
-        flex-direction: column-reverse;
     }
 }
