@@ -423,7 +423,7 @@ export const CatalogView: FC<{}> = props =>
                     <Column gap={ 0 } className="catalog-header-content">
                     {currentPage && rootNode && <CatalogIconView icon={ getNodeById(pageId, rootNode).iconId } />}
                     {currentPage && rootNode && <Text bold className="catalog-header-title h-100">{getNodeById(pageId, rootNode).localization}</Text>}
-                        <Text className="catalog-header-desc">{currentPage && currentPage.localization.getText(0)}</Text>
+                        <Text className="catalog-header-desc" dangerouslySetInnerHTML={ { __html: currentPage && currentPage.localization.getText(0) } }/>
                     </Column>
                     <Flex className="catalog-header-image" style={{ backgroundImage: `url(${currentPage && currentPage.localization.getImage(0)})` }} />
                     </Flex>
