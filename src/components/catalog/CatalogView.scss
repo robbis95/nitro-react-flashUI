@@ -8,8 +8,15 @@
     }
 
     .catalog-search-button {
-        min-width: 30px;
-        width: 30px;
+        right: 5px;
+        top: 3px;
+        cursor: pointer;
+    }
+
+    .catalog-clear-button {
+        right: 5px;
+        top: 6px;
+        cursor: pointer;
     }
 
     .quantity-input {
