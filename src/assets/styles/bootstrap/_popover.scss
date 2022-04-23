@@ -11,17 +11,18 @@
   @include font-size($popover-font-size);
   // Allow breaking very long words so they don't overflow the popover's bounds
   word-wrap: break-word;
-  background-color: $popover-bg;
-  background-clip: padding-box;
-  border: $popover-border-width solid $popover-border-color;
-  @include border-radius($popover-border-radius);
-  @include box-shadow($popover-box-shadow);
+  border-image-source: url(../../flash/navigator/info_bg.png);
+  border-image-slice: 6 6 6 6 fill;
+  border-image-width: 6px 6px 6px 6px;
+  image-rendering: pixelated;
 
   .popover-arrow {
     position: absolute;
     display: block;
-    width: $popover-arrow-width;
-    height: $popover-arrow-height;
+    width: 11px;
+    height: 18px;
+    background-image: url(../../flash/navigator/info_pointer.png);
+
 
     &::before,
     &::after {
@@ -54,20 +55,13 @@
 
 .bs-popover-end {
   > .popover-arrow {
-    left: subtract(-$popover-arrow-height, $popover-border-width);
+    left: -7px;
     width: $popover-arrow-height;
     height: $popover-arrow-width;
 
-    &::before {
-      left: 0;
-      border-width: ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5) 0;
-      border-right-color: $popover-arrow-outer-color;
-    }
-
     &::after {
       left: $popover-border-width;
-      border-width: ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5) 0;
-      border-right-color: $popover-arrow-color;
+
     }
   }
 }

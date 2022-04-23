@@ -218,6 +218,15 @@
 
 .room-info {
     width: 275px;
+    color: #000;
+    image-rendering: pixelated;
+
+    .room-info-bg {
+        border-image-source: url(../../assets/flash/navigator/white_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+    }
+
 }
 
 .navigator-search-button {

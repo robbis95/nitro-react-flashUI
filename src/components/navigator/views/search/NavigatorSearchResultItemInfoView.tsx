@@ -16,28 +16,6 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
     const [ target, setTarget ] = useState<(EventTarget & HTMLElement)>(null);
     const [ isVisible, setIsVisible ] = useState(false);
 
-    const getUserCounterColor = () =>
-    {
-        const num: number = (100 * (roomData.userCount / roomData.maxUserCount));
-
-        let bg = 'bg-primary';
-
-        if(num >= 92)
-        {
-            bg = 'bg-danger';
-        }
-        else if(num >= 50)
-        {
-            bg = 'bg-warning';
-        }
-        else if(num > 0)
-        {
-            bg = 'bg-success';
-        }
-
-        return bg;
-    }
-
     const toggle = (event: MouseEvent<HTMLElement>) =>
     {
         event.stopPropagation();
@@ -63,11 +41,11 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
 
     return (
         <>
-            <Base pointer className="icon icon-navigator-info" onClick={ toggle }/>
+            <Base pointer className="icon icon-navigator-info" onMouseEnter={ toggle } onMouseLeave={ toggle }/>
             <Overlay show={ isVisible } target={ target } placement="right">
                 <Popover>
                     <NitroCardContentView overflow="hidden" className="room-info bg-transparent">
-                        <Flex gap={ 2 } overflow="hidden">
+                        <Flex gap={ 2 } overflow="hidden" className="room-info-bg p-2">
                             <LayoutRoomThumbnailView roomId={ roomData.roomId } customUrl={ roomData.officialRoomPicRef } className="d-flex flex-column align-items-center justify-content-end mb-1">
                                 { roomData.habboGroupId > 0 && (
                                     <LayoutBadgeImageView badgeCode={ roomData.groupBadgeCode } isGroup={ true } className={ 'position-absolute top-0 start-0 m-1 ' }/>) }
@@ -78,24 +56,27 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
                                 <Text bold truncate className="flex-grow-1" style={ { maxHeight: 13 } }>
                                     { roomData.roomName }
                                 </Text>
-                                <Flex gap={ 1 }>
-                                    <Text italics variant="muted">
-                                        { LocalizeText('navigator.roomownercaption') }
-                                    </Text>
-                                    <UserProfileIconView
-                                        userId={ roomData.ownerId }
-                                    />
-                                    <Text italics>{ roomData.ownerName }</Text>
-                                </Flex>
                                 <Text className="flex-grow-1">
                                     { roomData.description }
                                 </Text>
-                                <Flex className={ 'badge p-1 position-absolute m-1 bottom-0 end-0 m-2 ' + getUserCounterColor() } gap={ 1 }>
-                                    <FontAwesomeIcon icon="user" />
-                                    { roomData.userCount }
-                                </Flex>
                             </Column>
                         </Flex>
+                        <Column>
+                            <Flex>
+                                <Flex gap={ 1 } className="align-items-center">
+                                    <UserProfileIconView userId={ roomData.ownerId }/>
+                                    <Text bold underline>{ roomData.ownerName }</Text>
+                                </Flex>
+                                <Flex gap={ 1 } className="align-items-center" justifyContent="end" fullWidth>
+                                <i className="icon icon-navigator-room-group"/>
+                                <Text bold underline>{ roomData.groupName }</Text>
+                                </Flex>
+                            </Flex>
+                            <Flex gap={ 1 }>
+                                <Text bold>{LocalizeText('navigator.roompopup.property.max_users')}</Text>
+                                <Text>{ roomData.maxUserCount }</Text>
+                            </Flex>
+                        </Column>
                     </NitroCardContentView>
                 </Popover>
             </Overlay>
