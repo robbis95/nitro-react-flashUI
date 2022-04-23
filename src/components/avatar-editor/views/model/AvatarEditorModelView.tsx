@@ -83,7 +83,7 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
             <Column className="h-50" size={ 5 } overflow="hidden">
                 <AvatarEditorFigureSetView model={ model } category={ activeCategory } setMaxPaletteCount={ setMaxPaletteCount } />
             </Column>
-            <Column size={ 5 } overflow="hidden">
+            <Column size={ 5 } overflow="hidden" className="h-50">
                 { (maxPaletteCount >= 1) &&
                     <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(0) } paletteIndex={ 0 } /> }
                 { (maxPaletteCount === 2) &&
