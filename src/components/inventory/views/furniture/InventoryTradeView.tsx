@@ -159,6 +159,10 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
 
                             return (
                                 <LayoutGridItem key={ index } className={ !count ? 'opacity-0-5 ' : '' } itemImage={ item.iconUrl } itemCount={ count } itemActive={ (groupItem === item) } itemUniqueNumber={ item.stuffData.uniqueNumber } onClick={ event => (count && setGroupItem(item)) }>
+                                    { ((count > 0) && (groupItem === item)) &&
+                                    <Button position="absolute" variant="success" className="trade-button bottom-1 end-1" onClick={ event => attemptItemOffer(1) }>
+                                        <FontAwesomeIcon icon="chevron-right" />
+                                    </Button> }
                                 </LayoutGridItem>
                             );
                         }) }
