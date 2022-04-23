@@ -636,4 +636,8 @@
     border-image-width:6px 6px 6px 6px;
 }
 
+.notification-height {
+    max-height: 85px;
+}
+
 @import './card/NitroCardView';
