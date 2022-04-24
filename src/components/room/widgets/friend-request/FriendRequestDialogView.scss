@@ -28,7 +28,8 @@
     .friend-req-close {
         cursor: pointer;
         background-image: url(../../../../assets/flash/boxes/card/close.png);
-        width: 22px;
+        background-repeat: no-repeat;
+        width: 19px;
         height: 20px;
 
         &:hover {
