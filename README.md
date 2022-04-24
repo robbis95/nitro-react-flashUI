@@ -8,16 +8,16 @@ We recommend you to use the main-branch because thats the one that probably will
 Dev branch will be more updated but their will be risk for bugs, if you find any issues within the dev-branch please report them here on the Git.
 
 If you ever see a branch with the name "bug-fixes" or something similar do not use it on your hotel because that is only a branch for developers, that branch is when we pull all the updates from original Nitro V2 and there might be issues that needs to be fixed first before its ready to use.
+
+Please join our Discord so that you are always being up-to-date with info [here.](https://discord.gg/KGYG5V2vf3)
 ## Contribution
 
 Feel free to help out and contribute to make this UI replicate flash as much as possible, would be fun if the community could help out to make this UI great!
 
-If you encounter any issues, please contact-me on the discord channel [here.](https://discord.gg/KGYG5V2vf3)
-
 Thanks to everyone that has helped out contributing to this UI:
-Robbis
-Live
-Laynester
+       - Robbis
+       - Live
+       - Laynester
 
 ## Nitro Client installation
 
