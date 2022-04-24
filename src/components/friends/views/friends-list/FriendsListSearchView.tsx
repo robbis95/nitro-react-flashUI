@@ -43,7 +43,10 @@ export const FriendsSearchView: FC<FriendsSearchViewProps> = props =>
 
     return (
         <NitroCardAccordionSetView { ...rest }>
-            <Column className="h-100 position-relative">
+            <Column className="h-100">
+                <Column>
+                    <input type="text" className="w-100 friend-search" placeholder={ LocalizeText('generic.search') } value={ searchValue } maxLength={ 50 } onChange={ event => setSearchValue(event.target.value) } />
+                </Column>
             <Column>
                 { friendResults &&
                     <>
@@ -100,7 +103,6 @@ export const FriendsSearchView: FC<FriendsSearchViewProps> = props =>
                             </Column> }
                     </> }
             </Column>
-            <input type="text" className="w-100 friend-search" placeholder={ LocalizeText('generic.search') } value={ searchValue } maxLength={ 50 } onChange={ event => setSearchValue(event.target.value) } />
             </Column>
         </NitroCardAccordionSetView>
     );
