@@ -15,9 +15,9 @@ Please join our Discord so that you are always being up-to-date with info [here.
 Feel free to help out and contribute to make this UI replicate flash as much as possible, would be fun if the community could help out to make this UI great!
 
 Thanks to everyone that has helped out contributing to this UI:
-       - Robbis
-       - Live
-       - Laynester
+-   Robbis
+- Live
+- Laynester
 
 ## Nitro Client installation
 
