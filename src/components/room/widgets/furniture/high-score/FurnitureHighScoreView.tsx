@@ -70,7 +70,7 @@ export const FurnitureHighScoreView: FC<{}> = props =>
                             <Flex center className="nitro-widget-high-score-header">
                                 <Text small bold>{ LocalizeText('high.score.display.caption', [ 'scoretype', 'cleartype' ], [ LocalizeText(`high.score.display.scoretype.${ SCORE_TYPES[stuffData.scoreType] }`), LocalizeText(`high.score.display.cleartype.${ CLEAR_TYPES[stuffData.clearType] }`) ]) }</Text>
                             </Flex>
-                            <ContextMenuListView overflow="hidden" gap={ 1 } className="h-100">
+                            <Column overflow="hidden" gap={ 1 } className="h-100">
                                 <Column gap={ 1 }>
                                     <Flex alignItems="center" className="score-board-header mt-1 p-1">
                                         <Text small variant="black" className="col-8">
@@ -82,7 +82,7 @@ export const FurnitureHighScoreView: FC<{}> = props =>
                                     </Flex>
                                     <hr className="m-0" />
                                 </Column>
-                                <Column overflow="auto" gap={ 1 } className="overflow-y-auto high-score-results">
+                                <Column overflow="auto" gap={ 1 } className="overflow-y-auto high-score-results p-2">
                                     { stuffData.entries.map((entry, index) =>
                                     {
                                         return (
@@ -90,7 +90,7 @@ export const FurnitureHighScoreView: FC<{}> = props =>
                                                 <Text small variant="white" className="col-8">
                                                     { entry.users.join(', ') }
                                                 </Text>
-                                                <Text small variant="white" className="col-4">
+                                                <Text small center variant="white" className="col-4">
                                                     { entry.score }
                                                 </Text>
                                             </Flex>
@@ -101,7 +101,7 @@ export const FurnitureHighScoreView: FC<{}> = props =>
                                 <Flex center className="bottom-text">
                                     <Text small center>{LocalizeText('high.score.display.congratulations.footer')}</Text>
                                 </Flex>
-                            </ContextMenuListView>
+                            </Column>
                         </Column>
                     </ObjectLocationView>
                 );
