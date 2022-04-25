@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import { HabboClubLevelEnum, RoomCreateComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { CreateLinkEvent, GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, RoomModels, SendMessageComposer } from '../../../api';
+import { CreateLinkEvent, GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, SendMessageComposer } from '../../../api';
 import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
 import { RoomCreatorGridItem } from '../../../common/layout/RoomCreatorGridItem';
 import { useNavigatorContext } from '../NavigatorContext';
@@ -14,8 +14,11 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     const [ category, setCategory ] = useState<number>(null);
     const [ visitorsCount, setVisitorsCount ] = useState<number>(null);
     const [ tradesSetting, setTradesSetting ] = useState<number>(0);
-    const [ selectedModelName, setSelectedModelName ] = useState<string>(RoomModels[0].name);
+    const [ roomModels, setRoomModels ] = useState<IRoomModel[]>([]);
+    const [ selectedModelName, setSelectedModelName ] = useState<string>('');
     const { categories = null } = useNavigatorContext();
+
+    const hcDisabled = GetConfiguration<boolean>('hc.disabled', false);
 
     const getRoomModelImage = (name: string) => GetConfiguration<string>('images.url') + `/navigator/models/model_${ name }.png`;
 
@@ -23,13 +26,13 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     {
         if(!model || (model.clubLevel > GetClubMemberLevel())) return;
 
-        setSelectedModelName(RoomModels[index].name);
-    }
+        setSelectedModelName(roomModels[index].name);
+    };
 
     const createRoom = () =>
     {
         SendMessageComposer(new RoomCreateComposer(name, description, 'model_' + selectedModelName, Number(category), Number(visitorsCount), tradesSetting));
-    }
+    };
 
     useEffect(() =>
     {
@@ -48,6 +51,17 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     {
         if(categories && categories.length) setCategory(categories[0].id);
     }, [ categories ]);
+
+    useEffect(() =>
+    {
+        const models = GetConfiguration<IRoomModel[]>('navigator.room.models');
+        
+        if(models && models.length)
+        {
+            setRoomModels(models);
+            setSelectedModelName(models[0].name);
+        }
+    }, []);
 
     return (
         <NitroCardView className="nitro-room-creator" theme="primary">
@@ -98,14 +112,14 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                 <Column size={ 7 } gap={ 1 } overflow="auto">
                 <AutoGrid className="room-creator-grid" columnCount={ 2 } columnMinWidth={ 100 } columnMinHeight={ 50 } overflow="unset">
                     {
-                        RoomModels.map((model, index )=>
+                        roomModels.map((model, index )=>
                         {
                             return (<RoomCreatorGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="py-3" disabled={ (GetClubMemberLevel() < model.clubLevel) }>
                                 <Flex fullHeight center overflow="hidden">
                                     <img alt="" src={ getRoomModelImage(model.name) } />
                                 </Flex>
                                 <Text position="absolute" className="bottom-1 start-1">{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
-                                { model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
+                                { !hcDisabled && model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
                                 { selectedModelName && <i className="active-arrow"/>}
                             </RoomCreatorGridItem>);
                         })
