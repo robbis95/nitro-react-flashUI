@@ -89,12 +89,12 @@ export const CatalogView: FC<{}> = props =>
                         }) }
                     </NitroCardTabsView>
                     <Flex className="catalog-header">
-                    <Column gap={ 0 } className="catalog-header-content">
-                    {currentPage && rootNode && <CatalogIconView icon={ 0 } />}
-                    {currentPage && rootNode && <Text bold className="catalog-header-title h-100">{'Category Name'}</Text>}
-                        <Text className="catalog-header-desc" dangerouslySetInnerHTML={ { __html: currentPage && currentPage.localization.getText(0) } }/>
-                    </Column>
-                    <Flex className="catalog-header-image" style={{ backgroundImage: `url(${currentPage && currentPage.localization.getImage(0)})` }} />
+                        <Column gap={ 0 } className="catalog-header-content">
+                            { currentPage && rootNode && <CatalogIconView icon={ 0 } /> }
+                            { currentPage && rootNode && <Text bold className="catalog-header-title h-100">{ 'Category Name' }</Text> }
+                            <Text className="catalog-header-desc" dangerouslySetInnerHTML={ { __html: currentPage && currentPage.localization.getText(0) } }/>
+                        </Column>
+                        <Flex className="catalog-header-image" style={ { backgroundImage: `url(${ currentPage && currentPage.localization.getImage(0) })` } } />
                     </Flex>
                     <NitroCardContentView>
                         <Grid>

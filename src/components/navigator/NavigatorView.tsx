@@ -225,29 +225,29 @@ export const NavigatorView: FC<{}> = props =>
                     <NitroCardContentView position="relative">
                         { isLoading &&
                             <Base fit position="absolute" className="top-0 start-0 z-index-1 bg-muted opacity-0-5" /> }
-                            <>
-                                <NavigatorSearchView sendSearch={ sendSearch } />
-                                <Column overflow="auto">
-                                    { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
-                                </Column>
-                            </>
+                        <>
+                            <NavigatorSearchView sendSearch={ sendSearch } />
+                            <Column overflow="auto">
+                                { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
+                            </Column>
+                        </>
                         <Flex className="nav-bottom">
                             <Flex className="nav-bottom-buttons position-absolute">
-                                <Flex className="nav-create-room" onClick={(event) => setCreatorOpen(value => !value)}>
+                                <Flex className="nav-create-room" onClick={ (event) => setCreatorOpen(value => !value) }>
                                     <Text variant="white" bold className="nav-bottom-buttons-text">
-                                        {LocalizeText("navigator.createroom.create")}
+                                        { LocalizeText('navigator.createroom.create') }
                                     </Text>
                                 </Flex>
                                 <Flex className="nav-random-room">
                                     <Text variant="white" bold className="nav-bottom-buttons-text">
-                                        {LocalizeText("navigator.random.room")}
+                                        { LocalizeText('navigator.random.room') }
                                     </Text>
                                 </Flex>
                             </Flex>
                         </Flex>
                     </NitroCardContentView>
                 </NitroCardView> }
-                { isCreatorOpen && <NavigatorRoomCreatorView /> }
+            { isCreatorOpen && <NavigatorRoomCreatorView /> }
             <NavigatorDoorStateView />
             { isRoomInfoOpen && <NavigatorRoomInfoView onCloseClick={ () => setRoomInfoOpen(false) } /> }
             { isRoomLinkOpen && <NavigatorRoomLinkView onCloseClick={ () => setRoomLinkOpen(false) } /> }
