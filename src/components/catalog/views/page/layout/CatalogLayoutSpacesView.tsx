@@ -20,9 +20,6 @@ export const CatalogLayoutSpacesView: FC<CatalogLayoutProps> = props =>
 
     return (
         <Column>
-            <Column size={ 7 } overflow="hidden">
-                <CatalogSpacesWidgetView />
-            </Column>
             <Column center={ !currentOffer } size={ 5 } overflow="hidden">
                 { !currentOffer &&
                     <>
@@ -40,6 +37,9 @@ export const CatalogLayoutSpacesView: FC<CatalogLayoutProps> = props =>
                             <CatalogPurchaseWidgetView />
                         </Flex>
                     </> }
+            </Column>
+            <Column size={ 7 } overflow="hidden">
+                <CatalogSpacesWidgetView />
             </Column>
         </Column>
     );
