@@ -1,7 +1,7 @@
 import { ILinkEventTracker, RemoveFriendComposer, SendRoomInviteComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { AddEventLinkTracker, LocalizeText, MessengerFriend, RemoveLinkEventTracker, SendMessageComposer } from '../../../../api';
-import { Button, Flex, NitroCardAccordionSetView, NitroCardAccordionView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
+import { Flex, NitroCardAccordionSetView, NitroCardAccordionView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { NitroCardAccordionSetInnerView } from '../../../../common/card/accordion/NitroCardAccordionSetInnerView';
 import { useFriends } from '../../../../hooks';
 import { FriendsListGroupView } from './friends-list-group/FriendsListGroupView';
@@ -125,27 +125,27 @@ export const FriendsListView: FC<{}> = props =>
                 <NitroCardHeaderView headerText={ LocalizeText('friendlist.friends') } onCloseClick={ event => setIsVisible(false) } />
                 <NitroCardContentView overflow="hidden" gap={ 1 } className="text-black p-0">
                     <NitroCardAccordionView fullHeight overflow="hidden">
-                    <NitroCardAccordionSetView className="friend-headers" headerText={ LocalizeText('friendlist.friends')} isExpanded={ true }>
-                        <NitroCardAccordionSetInnerView headerText={ LocalizeText('friendlist.friends') + ` (${ onlineFriends.length })` } isExpanded={ true }>
-                            <FriendsListGroupView list={ onlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
-                        </NitroCardAccordionSetInnerView>
-                        <NitroCardAccordionSetInnerView headerText={ LocalizeText('friendlist.friends.offlinecaption') + ` (${ offlineFriends.length })` } isExpanded={ true }>
-                            <FriendsListGroupView list={ offlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
-                        </NitroCardAccordionSetInnerView>
-                        { selectedFriendsIds && selectedFriendsIds.length === 0 &&
+                        <NitroCardAccordionSetView className="friend-headers" headerText={ LocalizeText('friendlist.friends') } isExpanded={ true }>
+                            <NitroCardAccordionSetInnerView headerText={ LocalizeText('friendlist.friends') + ` (${ onlineFriends.length })` } isExpanded={ true }>
+                                <FriendsListGroupView list={ onlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
+                            </NitroCardAccordionSetInnerView>
+                            <NitroCardAccordionSetInnerView headerText={ LocalizeText('friendlist.friends.offlinecaption') + ` (${ offlineFriends.length })` } isExpanded={ true }>
+                                <FriendsListGroupView list={ offlineFriends } selectedFriendsIds={ selectedFriendsIds } selectFriend={ selectFriend } />
+                            </NitroCardAccordionSetInnerView>
+                            { selectedFriendsIds && selectedFriendsIds.length === 0 &&
                         <Flex gap={ 1 } className="friend-active-tab p-1">
                             <div className="friend-follow-icon" />
                             <div className="friend-profile-icon" />
                             <div className="friend-delete-icon" />
                         </Flex> } 
-                        { selectedFriendsIds && selectedFriendsIds.length > 0 &&
+                            { selectedFriendsIds && selectedFriendsIds.length > 0 &&
                         <Flex gap={ 1 } className="friend-active-tab p-1">
                             <div className="friend-follow-icon active" onClick={ () => setShowRoomInvite(true) } />
                             <div className="friend-profile-icon active" />
                             <div className="friend-delete-icon active" onClick={ event => setShowRemoveFriendsConfirmation(true) } />
                         </Flex> } 
                         </NitroCardAccordionSetView>
-                        <FriendsListRequestView className="friend-headers" headerText={ LocalizeText('friendlist.tab.friendrequests') + ` (${ requests.length })` } isExpanded={ true } />
+                        <FriendsListRequestView className="friend-headers" headerText={ LocalizeText('friendlist.tab.friendrequests') + ` (${ requests.length })` } isExpanded={ false } />
                         <FriendsSearchView className="search-headers" headerText={ LocalizeText('people.search.title') } />
                     </NitroCardAccordionView>
                 </NitroCardContentView>
