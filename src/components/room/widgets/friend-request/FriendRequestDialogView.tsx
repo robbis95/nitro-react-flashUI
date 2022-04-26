@@ -16,7 +16,7 @@ export const FriendRequestDialogView: FC<{ roomIndex: number, request: Messenger
             <Base className="nitro-friend-request-dialog p-2">
                 <Column>
                     <Flex alignItems="center" justifyContent="between" gap={ 2 }>
-                        <Text small bold variant="white">{ LocalizeText('widget.friendrequest.from', [ 'username' ], [ request.name ]) }</Text>
+                        <Text small bold variant="white" className="w-75">{ LocalizeText('widget.friendrequest.from', [ 'username' ], [ request.name ]) }</Text>
                         <i className="friend-req-close" onClick={ event => hideFriendRequest(request.requesterUserId) } />
                     </Flex>
                     <Flex >

@@ -159,6 +159,10 @@
             border-image-width:17px 17px 17px 17px;
             border-image-repeat:repeat repeat;
             color: #fff;
+
+            &:hover {
+                border-image-source: url(../../assets/flash/toolbar/findfriend-bg-hover.png);
+            }
         }
 
         &.find-friends-active {
@@ -167,6 +171,10 @@
             border-image-width:17px 17px 17px 17px;
             border-image-repeat:repeat repeat;
             min-height: 36px;
+
+            &:hover {
+                border-image-source: url(../../assets/flash/toolbar/friend-bg-hover.png);
+            }
 
             .friend-bar-text {
                 padding-top: 4px;
