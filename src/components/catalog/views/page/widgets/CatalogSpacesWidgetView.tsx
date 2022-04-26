@@ -1,9 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import { LocalizeText, ProductTypeEnum } from '../../../../../api';
-import { AutoGrid, AutoGridProps, Button, ButtonGroup } from '../../../../../common';
-import { useCatalogContext } from '../../../CatalogContext';
-import { IPurchasableOffer } from '../../../common/IPurchasableOffer';
-import { Offer } from '../../../common/Offer';
+import { IPurchasableOffer, LocalizeText, Offer, ProductTypeEnum } from '../../../../../api';
+import { AutoGrid, AutoGridProps, Button, ButtonGroup, Column } from '../../../../../common';
+import { useCatalog } from '../../../../../hooks';
 import { CatalogGridOfferView } from '../common/CatalogGridOfferView';
 
 interface CatalogSpacesWidgetViewProps extends AutoGridProps
@@ -19,7 +17,21 @@ export const CatalogSpacesWidgetView: FC<CatalogSpacesWidgetViewProps> = props =
     const [ groupedOffers, setGroupedOffers ] = useState<IPurchasableOffer[][]>(null);
     const [ selectedGroupIndex, setSelectedGroupIndex ] = useState(-1);
     const [ selectedOfferForGroup, setSelectedOfferForGroup ] = useState<IPurchasableOffer[]>(null);
-    const { currentPage = null, currentOffer = null, setCurrentOffer = null, setPurchaseOptions = null } = useCatalogContext();
+    const { currentPage = null, currentOffer = null, setCurrentOffer = null, setPurchaseOptions = null } = useCatalog();
+
+    const setSelectedOffer = (offer: IPurchasableOffer) =>
+    {
+        if(!offer) return;
+
+        setSelectedOfferForGroup(prevValue =>
+        {
+            const newValue = [ ...prevValue ];
+
+            newValue[selectedGroupIndex] = offer;
+
+            return newValue;
+        });
+    }
 
     useEffect(() =>
     {
@@ -85,28 +97,15 @@ export const CatalogSpacesWidgetView: FC<CatalogSpacesWidgetViewProps> = props =
 
     return (
         <>
-            <ButtonGroup>
+            <ButtonGroup className="purchase-buttons">
                 { SPACES_GROUP_NAMES.map((name, index) => <Button key={ index } active={ (selectedGroupIndex === index) } onClick={ event => setSelectedGroupIndex(index) }>{ LocalizeText(`catalog.spaces.tab.${ name }`) }</Button>) }
             </ButtonGroup>
-            <AutoGrid className="grid-bg group-furni-picker p-2" columnCount={ columnCount } { ...rest }>
-                { offers && (offers.length > 0) && offers.map((offer, index) =>
-                {
-                    const setSelectedOffer = () =>
-                    {
-                        setSelectedOfferForGroup(prevValue =>
-                        {
-                            const newValue = [ ...prevValue ];
-
-                            newValue[selectedGroupIndex] = offer;
-
-                            return newValue;
-                        });
-                    }
-
-                    return <CatalogGridOfferView key={ index } itemActive={ (currentOffer && (currentOffer === offer)) } offer={ offer } onClick={ setSelectedOffer } />;
-                }) }
+            <Column className="grid-bg item-picker p-2" size={ 7 } overflow="hidden">
+            <AutoGrid columnCount={ columnCount } { ...rest }>
+                { offers && (offers.length > 0) && offers.map((offer, index) => <CatalogGridOfferView key={ index } itemActive={ (currentOffer && (currentOffer === offer)) } offer={ offer } selectOffer={ offer => setSelectedOffer(offer) } />) }
                 { children }
             </AutoGrid>
+            </Column>
         </>
     );
 }
