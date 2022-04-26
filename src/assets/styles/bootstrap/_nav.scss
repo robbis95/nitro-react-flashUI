@@ -58,17 +58,16 @@
         margin-bottom: -2px;
         margin-left: -2px;
 
+        &:hover,
+        &:focus {
+            border-image-source: url("../../../assets/flash/boxes/card/tabs_hover.png");
+            // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
+            isolation: isolate;
+        }
+
         &.active {
             border-image-source: url("../../../assets/flash/boxes/card/tabs_active.png");
             margin-right: 1px;
-        }
-
-
-        &:hover,
-        &:focus {
-            border-color: $nav-tabs-link-hover-border-color;
-            // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
-            isolation: isolate;
         }
 
         &.disabled {
