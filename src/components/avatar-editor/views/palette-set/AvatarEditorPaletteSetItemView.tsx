@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from 'react';
+import { GetConfiguration } from '../../../../api';
 import { LayoutCurrencyIcon, LayoutGridItem, LayoutGridItemProps } from '../../../../common';
 import { LayoutGridColorPickerItem } from '../../../../common/layout/LayoutGridColorPickerItem';
 import { AvatarEditorGridColorItem } from '../../common/AvatarEditorGridColorItem';
@@ -12,6 +13,8 @@ export const AvatarEditorPaletteSetItem: FC<AvatarEditorPaletteSetItemProps> = p
 {
     const { colorItem = null, children = null, ...rest } = props;
     const [ updateId, setUpdateId ] = useState(-1);
+
+    const hcDisabled = GetConfiguration<boolean>('hc.disabled', false);
 
     const rerender = useCallback(() =>
     {
@@ -27,7 +30,7 @@ export const AvatarEditorPaletteSetItem: FC<AvatarEditorPaletteSetItemProps> = p
 
     return (
         <LayoutGridColorPickerItem itemHighlight itemColor={ colorItem.color } itemActive={ colorItem.isSelected } className="color-picker-frame clear-bg" { ...rest }>
-            { colorItem.isHC && <i className="icon hc-icon position-absolute" /> }
+            { !hcDisabled && colorItem.isHC && <i className="icon hc-icon position-absolute" /> }
             { children }
         </LayoutGridColorPickerItem>
     );
