@@ -549,6 +549,13 @@ $nitro-card-tabs-height: 35px;
 
 .nav-tabs {
     margin-left: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    .nav-link {
+        width: 100%;
+        justify-content: center;
+        white-space: nowrap;
+    }
 }
 
 .nitro-card-accordion-set {
