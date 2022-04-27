@@ -50,7 +50,6 @@
         }
 
         .nitro-seasonal-box {
-            border-image-source: url(../../assets/flash/purse/seasonal_bg_purple.png);
             border-image-slice: 6 6 6 6 fill;
             border-image-width: 6px 6px 6px 6px;
             top: 0px;
@@ -58,8 +57,59 @@
             height: 100%;
         }
 
-        .seasonal-bold {
-            color: #b17fbe;
+        &.purple {
+
+            .nitro-seasonal-box{
+                border-image-source: url(../../assets/flash/purse/seasonal_bg_purple.png);
+            }
+
+            .seasonal-bold {
+                color: #b17fbe;
+            }
+        }
+
+        &.bronze {
+
+            .nitro-seasonal-box{
+                border-image-source: url(../../assets/flash/purse/seasonal_bg_bronze.png);
+            }
+
+            .seasonal-bold {
+                color: #d4943c;
+            }
+        }
+
+        &.pink {
+
+            .nitro-seasonal-box{
+                border-image-source: url(../../assets/flash/purse/seasonal_bg_pink.png);
+            }
+
+            .seasonal-bold {
+                color: #d89ba8;
+            }
+        }
+
+        &.blue {
+
+            .nitro-seasonal-box{
+                border-image-source: url(../../assets/flash/purse/seasonal_bg_blue.png);
+            }
+
+            .seasonal-bold {
+                color: #95c3e5;
+            }
+        }
+
+        &.red {
+
+            .nitro-seasonal-box{
+                border-image-source: url(../../assets/flash/purse/seasonal_bg_red.png);
+            }
+
+            .seasonal-bold {
+                color: #ff0004;
+            }
         }
     }
 }
