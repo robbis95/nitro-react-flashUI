@@ -42,7 +42,24 @@
     }
 
     .nitro-purse-seasonal-currency {
-        background-color: rgba($dark, .95);
-        box-shadow: inset 0px 5px lighten(rgba($dark, .6),2.5), inset 0 -4px darken(rgba($dark, .6), 4);
+
+        height: 25px;
+
+        .seasonal-padding {
+            padding: 4px 6px 4px 6px;
+        }
+
+        .nitro-seasonal-box {
+            border-image-source: url(../../assets/flash/purse/seasonal_bg_purple.png);
+            border-image-slice: 6 6 6 6 fill;
+            border-image-width: 6px 6px 6px 6px;
+            top: 0px;
+            right: 0px;
+            height: 100%;
+        }
+
+        .seasonal-bold {
+            color: #b17fbe;
+        }
     }
 }
