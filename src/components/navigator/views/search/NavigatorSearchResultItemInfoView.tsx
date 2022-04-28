@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC, useRef, useState } from 'react';
 import { Overlay, Popover } from 'react-bootstrap';
@@ -76,12 +75,12 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
                                     <Text bold underline>{ roomData.ownerName }</Text>
                                 </Flex>
                                 <Flex gap={ 1 } className="align-items-center" justifyContent="end" fullWidth>
-                                <i className="icon icon-navigator-room-group"/>
-                                <Text bold underline>{ roomData.groupName }</Text>
+                                    <i className="icon icon-navigator-room-group"/>
+                                    <Text bold underline>{ roomData.groupName }</Text>
                                 </Flex>
                             </Flex>
                             <Flex gap={ 1 }>
-                                <Text bold>{LocalizeText('navigator.roompopup.property.max_users')}</Text>
+                                <Text bold>{ LocalizeText('navigator.roompopup.property.max_users') }</Text>
                                 <Text>{ roomData.maxUserCount }</Text>
                             </Flex>
                         </Column>

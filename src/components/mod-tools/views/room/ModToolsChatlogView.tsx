@@ -1,7 +1,7 @@
 import { ChatRecordData, GetRoomChatlogMessageComposer, RoomChatlogEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { SendMessageComposer } from '../../../../api';
-import { Column, DraggableWindowPosition, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
+import { Column, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { UseMessageEventHook } from '../../../../hooks';
 import { ChatlogView } from '../chatlog/ChatlogView';
 
@@ -39,7 +39,7 @@ export const ModToolsChatlogView: FC<ModToolsChatlogViewProps> = props =>
             <NitroCardHeaderView headerText={ `Room Chatlog ${ roomChatlog.roomName }` } onCloseClick={ onCloseClick } />
             <NitroCardContentView className="text-black h-100">
                 <Column className="mod-content p-2">
-                { roomChatlog &&
+                    { roomChatlog &&
                     <ChatlogView records={ [ roomChatlog ] } /> }
                 </Column>
             </NitroCardContentView>

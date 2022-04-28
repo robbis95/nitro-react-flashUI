@@ -101,8 +101,8 @@ export const UserProfileView: FC<{}> = props =>
                         <UserContainerView userProfile={ userProfile } />
                         { userProfile.id === GetSessionDataManager().userId &&
                         <Flex className="p-0">
-                            <Text small underline className="cursor-pointer" onClick={ event => CreateLinkEvent(`avatar-editor/toggle`) }>Change Clothes</Text>
-                            <Text className="cursor-pointer badge-text" small underline onClick={ event => CreateLinkEvent(`inventory/toggle`) }>Change Badges</Text>
+                            <Text small underline className="cursor-pointer" onClick={ event => CreateLinkEvent('avatar-editor/toggle') }>Change Clothes</Text>
+                            <Text className="cursor-pointer badge-text" small underline onClick={ event => CreateLinkEvent('inventory/toggle') }>Change Badges</Text>
                         </Flex>
                         }
                         <Grid columnCount={ 5 } fullHeight className="profile-grey-bg p-1">

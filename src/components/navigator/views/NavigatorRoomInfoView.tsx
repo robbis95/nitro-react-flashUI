@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoomMuteComposer, RoomSettingsComposer, RoomStaffPickComposer, SecurityLevel, UserHomeRoomComposer } from '@nitrots/nitro-renderer';
 import classNames from 'classnames';
 import { FC, useEffect, useState } from 'react';
@@ -126,15 +125,15 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                                             </Flex> }
                                     </Column>
                                     <Column alignItems="center" gap={ 1 }>
-                                    <i onClick={ () => processAction('set_home_room') } className={ 'flex-shrink-0 icon icon-house-small cursor-pointer' + classNames({ ' gray': navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId }) } />
+                                        <i onClick={ () => processAction('set_home_room') } className={ 'flex-shrink-0 icon icon-house-small cursor-pointer' + classNames({ ' gray': navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId }) } />
                                     </Column>
                                 </Flex>
                                 <Text small overflow="auto" style={ { maxHeight: 50 } }>{ navigatorData.enteredGuestRoom.description }</Text>
-                            <Flex justifyContent="center">
-                                <LayoutRoomThumbnailView roomId={ navigatorData.enteredGuestRoom.roomId } customUrl={ navigatorData.enteredGuestRoom.officialRoomPicRef }>
-                                { hasPermission('settings') && <i className="icon icon-camera-small position-absolute b-0 r-0 m-1 cursor-pointer top-0" onClick={ () => processAction('open_room_thumbnail_camera') } /> }
-                                </LayoutRoomThumbnailView>
-                            </Flex>
+                                <Flex justifyContent="center">
+                                    <LayoutRoomThumbnailView roomId={ navigatorData.enteredGuestRoom.roomId } customUrl={ navigatorData.enteredGuestRoom.officialRoomPicRef }>
+                                        { hasPermission('settings') && <i className="icon icon-camera-small position-absolute b-0 r-0 m-1 cursor-pointer top-0" onClick={ () => processAction('open_room_thumbnail_camera') } /> }
+                                    </LayoutRoomThumbnailView>
+                                </Flex>
                                 { (navigatorData.enteredGuestRoom.habboGroupId > 0) &&
                                     <Flex pointer alignItems="center" gap={ 2 } onClick={ () => processAction('open_group_info') }>
                                         <LayoutBadgeImageView className="flex-none" badgeCode={ navigatorData.enteredGuestRoom.groupBadgeCode } isGroup={ true } />
@@ -142,11 +141,11 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                                             { LocalizeText('navigator.guildbase', [ 'groupName' ], [ navigatorData.enteredGuestRoom.groupName ]) }
                                         </Text>
                                     </Flex>
-                                     }
-                        <Flex gap={ 1 } className="w-100 room-tool-item" onClick={() => processAction('toggle_room_link')}>
-                        <Base pointer title={LocalizeText('room.like.button.text')} className="icon-width icon icon-link-room float-start" />
-                        <Text underline small >{LocalizeText('navigator.embed.caption')}</Text>
-                    </Flex>
+                                }
+                                <Flex gap={ 1 } className="w-100 room-tool-item" onClick={ () => processAction('toggle_room_link') }>
+                                    <Base pointer title={ LocalizeText('room.like.button.text') } className="icon-width icon icon-link-room float-start" />
+                                    <Text underline small >{ LocalizeText('navigator.embed.caption') }</Text>
+                                </Flex>
                             </Column>
                         </Flex>
                         <Column gap={ 1 }>

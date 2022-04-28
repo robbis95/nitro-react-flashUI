@@ -105,7 +105,7 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
     return (
         <Flex pointer overflow="hidden" alignItems="center" onClick={ visitRoom } gap={ 2 } className="navigator-item px-2 small" { ...rest }>
             <Flex center className={ 'p-1 fw-bold ' + getUserCounterColor() } gap={ 1 }>
-                  <div className="nav-avatar-icon"/>
+                <div className="nav-avatar-icon"/>
                 { roomData.userCount }
             </Flex>
             <Text truncate grow>{ roomData.roomName }</Text>
