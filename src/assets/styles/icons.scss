@@ -395,6 +395,18 @@
         height: 15px;
     }
 
+    &.icon-context-arrow-left {
+        background: url(../flash/room/arrow-left.png);
+        height: 10px;
+        width: 5px;
+    }
+
+    &.icon-context-arrow-right {
+        background: url(../flash/room/arrow-right.png);
+        height: 10px;
+        width: 5px;
+    }
+
     &.icon-camera-colormatrix {
         background: url('../images/icons/camera-colormatrix.png');
         width: 32px;
