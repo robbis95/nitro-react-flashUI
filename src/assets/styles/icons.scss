@@ -407,6 +407,18 @@
         width: 5px;
     }
 
+    &.icon-accept-check {
+        background: url(../flash/buttons/accept.png);
+        width: 16px;
+        height: 13px;
+    }
+
+    &.icon-decline-x {
+        background: url(../flash/buttons/decline.png);
+        width: 13px;
+        height: 13px;
+    }
+
     &.icon-camera-colormatrix {
         background: url('../images/icons/camera-colormatrix.png');
         width: 32px;
