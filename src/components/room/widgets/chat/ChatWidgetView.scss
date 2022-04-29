@@ -83,8 +83,7 @@
         &.type-1 {
             // whisper
             .message {
-                font-weight: 400;
-                font-style: italic;
+                font-family: ubuntuItalics;
                 color: #595959;
             }
         }
@@ -92,7 +91,7 @@
         &.type-2 {
             // shout
             .message {
-                font-weight: 700;
+                font-family: ubuntuBold;
             }
         }
 
@@ -916,4 +915,8 @@
             background: url("../../../../assets/images/chat/chatbubbles/bubble_38_extra.png");
         }
     }
+}
+
+.username {
+    font-family: UbuntuBold;
 }
