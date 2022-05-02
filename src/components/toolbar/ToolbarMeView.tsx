@@ -1,5 +1,5 @@
 import { MouseEventType, RoomObjectCategory } from '@nitrots/nitro-renderer';
-import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
+import { Dispatch, FC, PropsWithChildren, SetStateAction, useEffect, useRef } from 'react';
 import { CreateLinkEvent, GetRoomEngine, GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText } from '../../api';
 import { Base, Column, Flex, LayoutItemCountView, Text } from '../../common';
 import { GuideToolEvent } from '../../events';
@@ -12,7 +12,7 @@ interface ToolbarMeViewProps
     setMeExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ToolbarMeView: FC<ToolbarMeViewProps> = props =>
+export const ToolbarMeView: FC<PropsWithChildren<ToolbarMeViewProps>> = props =>
 {
     const { useGuideTool = false, unseenAchievementCount = 0, setMeExpanded = null, children = null, ...rest } = props;
     const elementRef = useRef<HTMLDivElement>();
