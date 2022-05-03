@@ -24,7 +24,7 @@ export const LayoutCatalogGridItem: FC<LayoutCatalogGridItemProps> = props =>
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'layout-catalog-grid-item'  ];
+        const newClassNames: string[] = [ 'layout-catalog-grid-item', 'justify-content-end' ];
 
         if(itemActive) newClassNames.push('active');
 
@@ -59,7 +59,7 @@ export const LayoutCatalogGridItem: FC<LayoutCatalogGridItemProps> = props =>
     }, [ style, itemImage, itemColor ]);
 
     return (
-        <Column center={ center } pointer position={ position } overflow={ overflow } column={ column } classNames={ getClassNames } style={ getStyle } { ...rest }>
+        <Column pointer position={ position } overflow={ overflow } column={ column } classNames={ getClassNames } style={ getStyle } { ...rest }>
             { (itemCount > itemCountMinimum) &&
                 <LayoutItemCountView count={ itemCount } /> }
             { (itemUniqueNumber > 0) && 

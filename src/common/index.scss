@@ -110,9 +110,10 @@
 }
 
 .layout-catalog-grid-item {
-    height: var(--nitro-grid-column-min-height, unset);
-    background-position: center;
+    height: 63px;
+    background-position: center top 6px;
     background-repeat: no-repeat;
+    padding: 2px;
 
     &.active {
         border-image-source: url(../assets/flash/catalogue/item_grid_highlight.png);
