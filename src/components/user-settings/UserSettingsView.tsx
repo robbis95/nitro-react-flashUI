@@ -157,7 +157,10 @@ export const UserSettingsView: FC<{}> = props =>
                         <Text className="w-25">{ LocalizeText('widget.memenu.settings.volume.ui') }</Text>
                         <Flex alignItems="center" gap={ 1 }>
                             <i className={ (userSettings.volumeSystem > 1) ? 'icon icon-sound-off' : 'icon icon-sound-off-active' } />
-                            <input type="range" className="custom-range" min="0" max="100" step="1" id="volumeSystem" value={ userSettings.volumeSystem } onChange={ event => processAction('system_volume', event.target.value) } onMouseUp={ () => saveRangeSlider('volume') }/>
+                            <Column gap={ 0 }>
+                                <Flex className="number-range" />
+                                <input type="range" className="custom-range" min="0" max="100" step="1" id="volumeSystem" value={ userSettings.volumeSystem } onChange={ event => processAction('system_volume', event.target.value) } onMouseUp={ () => saveRangeSlider('volume') }/>
+                            </Column>
                             <i className={ (userSettings.volumeSystem < 1) ? 'icon icon-sound-on' : 'icon icon-sound-on-active' } />
                         </Flex>
                     </Flex>
@@ -165,7 +168,10 @@ export const UserSettingsView: FC<{}> = props =>
                         <Text className="w-25">{ LocalizeText('widget.memenu.settings.volume.furni') }</Text>
                         <Flex alignItems="center" gap={ 1 }>
                             <i className={ (userSettings.volumeFurni > 1) ? 'icon icon-sound-off' : 'icon icon-sound-off-active' } />
-                            <input type="range" className="custom-range" min="0" max="100" step="1" id="volumeFurni" value={ userSettings.volumeFurni } onChange={ event => processAction('furni_volume', event.target.value) } onMouseUp={ () => saveRangeSlider('volume') }/>
+                            <Column gap={ 0 }>
+                                <Flex className="number-range" />
+                                <input type="range" className="custom-range" min="0" max="100" step="1" id="volumeFurni" value={ userSettings.volumeFurni } onChange={ event => processAction('furni_volume', event.target.value) } onMouseUp={ () => saveRangeSlider('volume') }/>
+                            </Column>
                             <i className={ (userSettings.volumeFurni < 1) ? 'icon icon-sound-on' : 'icon icon-sound-on-active' } />
                         </Flex>
                     </Flex>
@@ -173,7 +179,10 @@ export const UserSettingsView: FC<{}> = props =>
                         <Text className="w-25">{ LocalizeText('widget.memenu.settings.volume.trax') }</Text>
                         <Flex alignItems="center" gap={ 1 }>
                             <i className={ (userSettings.volumeTrax > 1) ? 'icon icon-sound-off' : 'icon icon-sound-off-active' } />
-                            <input type="range" className="custom-range" min="0" max="100" step="1" id="volumeTrax" value={ userSettings.volumeTrax } onChange={ event => processAction('trax_volume', event.target.value) } onMouseUp={ () => saveRangeSlider('volume') }/>
+                            <Column gap={ 0 }>
+                                <Flex className="number-range" />
+                                <input type="range" className="custom-range" min="0" max="100" step="1" id="volumeTrax" value={ userSettings.volumeTrax } onChange={ event => processAction('trax_volume', event.target.value) } onMouseUp={ () => saveRangeSlider('volume') }/>
+                            </Column>
                             <i className={ (userSettings.volumeTrax < 1) ? 'icon icon-sound-on' : 'icon icon-sound-on-active' } />
                         </Flex>
                     </Flex>
