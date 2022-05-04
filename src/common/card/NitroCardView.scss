@@ -207,6 +207,24 @@ $nitro-card-tabs-height: 35px;
         }
     }
 
+        // SETTINGS
+
+        &.theme-settings {
+            border-image-source: url("../../assets/flash/boxes/card/grey_card.png");
+            border-image-slice: 6 6 6 6 fill;
+            border-image-width: 6px 6px 6px 6px;
+
+            .nitro-card-header {
+                min-height: 30px;
+                max-height: 30px;
+                
+                .nitro-card-header-holder {
+                    justify-content: center;
+                    border-bottom: 1px solid #2f2f2f;
+                }
+            }
+        }
+
         // FRIENDLIST
 
         &.theme-friendlist {
