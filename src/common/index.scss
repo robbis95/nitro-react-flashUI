@@ -450,6 +450,8 @@
         height: 100%;
         background: url("../assets/images/unique/grid-bg.png") center no-repeat;
         z-index: 1;
+        bottom: 10px;
+        right: 0.2px;
     }
 
     &:after {
@@ -459,8 +461,10 @@
         height: 100%;
         background: url("../assets/images/unique/grid-bg-glass.png") center
             no-repeat;
-        bottom: 0;
         z-index: 4;
+        bottom: 10px;
+        right: 0.2px;
+
     }
 
     &.sold-out:after {
@@ -474,9 +478,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        bottom: 1px;
+        bottom: 23.5px;
         width: 100%;
         height: 9px;
+        right: 0.2px;
         background: url("../assets/images/unique/grid-count-bg.png") center
             no-repeat;
         z-index: 3;
