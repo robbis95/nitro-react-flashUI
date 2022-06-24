@@ -29,7 +29,7 @@ export const CatalogPriceGridDisplayWidgetView: FC<CatalogPriceGridDisplayWidget
             { (offer.priceInActivityPoints > 0) &&
                 <Flex alignItems="end" justifyContent="end" gap={ 1 } className="grid-price-view">
                     <Text bold>{ (offer.priceInActivityPoints * quantity) }</Text>
-                    <i className="icon icon-small-diamond" />
+                    <i className={ 'icon icon-small-' + offer.activityPointType } />
                 </Flex> }
         </>
     );
