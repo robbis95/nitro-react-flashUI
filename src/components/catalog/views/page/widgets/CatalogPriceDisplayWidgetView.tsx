@@ -29,7 +29,7 @@ export const CatalogPriceDisplayWidgetView: FC<CatalogPriceDisplayWidgetViewProp
                 <FontAwesomeIcon size="xs" color="black" icon="plus" /> }
             { (offer.priceInActivityPoints > 0) &&
                 <Flex alignItems="center" gap={ 1 }>
-                    <Text bold>{ (offer.priceInActivityPoints * quantity) }</Text>
+                    <Text bold> + { (offer.priceInActivityPoints * quantity) }</Text>
                     <LayoutCurrencyIcon type={ offer.activityPointType } />
                 </Flex> }
         </>
