@@ -92,7 +92,7 @@ export const CatalogView: FC<{}> = props =>
                     <NitroCardContentView>
                         <Grid>
                             { !navigationHidden &&
-                                <Column size={ 4 } overflow="hidden">
+                                <Column className="catalog-left" size={ 4 } overflow="hidden">
                                     { activeNodes && (activeNodes.length > 0) &&
                                         <CatalogNavigationView node={ activeNodes[0] } /> }
                                 </Column> }
