@@ -8,11 +8,12 @@ export interface ColumnProps extends FlexProps
     size?: ColumnSizesType;
     offset?: ColumnSizesType;
     column?: boolean;
+    itemActive?: boolean;
 }
 
 export const Column: FC<ColumnProps> = props =>
 {
-    const { size = 0, offset = 0, column = true, gap = 2, classNames = [], ...rest } = props;
+    const { size = 0, itemActive = false, offset = 0, column = true, gap = 2, classNames = [], ...rest } = props;
     const { isCssGrid = false } = useGridContext();
 
     const getClassNames = useMemo(() =>
@@ -28,6 +29,8 @@ export const Column: FC<ColumnProps> = props =>
             newClassNames.push(colClassName);
         }
 
+        if(itemActive) newClassNames.push('active');
+
         if(offset)
         {
             let colClassName = `offset-${ offset }`;
@@ -40,7 +43,7 @@ export const Column: FC<ColumnProps> = props =>
         if(classNames.length) newClassNames.push(...classNames);
 
         return newClassNames;
-    }, [ size, offset, isCssGrid, classNames ]);
+    }, [ size, itemActive, offset, isCssGrid, classNames ]);
 
     return <Flex classNames={ getClassNames } column={ column } gap={ gap } { ...rest } />;
 }

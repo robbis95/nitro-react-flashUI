@@ -21,6 +21,12 @@
         max-height: 250px;
         height: 250px;
     }
+
+    .grid-price-view {
+        font-size: 10px;
+        padding-right: 2px;
+        padding-bottom: 2px;
+    }
     
 
     .catalog-clear-button {
@@ -122,6 +128,10 @@
     }
 }
 
+.catalog-left {
+    width: 184px;
+}
+
 .catalog-header {
     height: 120px;
     border-right: 1px solid #000;
@@ -198,6 +208,16 @@
             background-color: #63c5e9 !important;
             border-top: 2px solid #82d1ed !important;
             border-bottom: 2px solid #82d1ed !important;
+            font-family: UbuntuBold;
+            color: #fff;
+        }
+
+        &:hover {
+            background-color: #63c5e9 !important;
+            border-top: 2px solid #82d1ed !important;
+            border-bottom: 2px solid #82d1ed !important;
+            font-family: UbuntuBold;
+            color: #fff;
         }
     }
 }

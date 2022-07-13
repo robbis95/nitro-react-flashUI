@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { LocalizeText } from '../../../../api';
-import { Base, Button, Column, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
+import { Base, Button, Column, Flex, Grid, Text, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { useDoorbellWidget } from '../../../../hooks';
 
 export const DoorbellWidgetView: FC<{}> = props =>
@@ -20,25 +20,20 @@ export const DoorbellWidgetView: FC<{}> = props =>
             <NitroCardHeaderView headerText={ LocalizeText('navigator.doorbell.title') } onCloseClick={ event => setIsVisible(false) } />
             <NitroCardContentView overflow="hidden" gap={ 0 }>
                 <Column gap={ 2 }>
-                    <Grid gap={ 1 } className="text-black fw-bold border-bottom px-1 pb-1">
-                        <Base className="g-col-6">{ LocalizeText('generic.username') }</Base>
-                        <Base className="g-col-6"></Base>
+                    <Grid gap={ 1 } className="px-1 pb-1">
+                        <Text small className="g-col-10">{ LocalizeText('widgets.doorbell.info') }</Text>
                     </Grid>
                 </Column>
                 <Column overflow="auto" className="striped-children" gap={ 0 }>
                     { users && (users.length > 0) && users.map(userName =>
                     {
                         return (
-                            <Grid key={ userName } gap={ 1 } alignItems="center" className="text-black border-bottom p-1">
-                                <Base className="g-col-6">{ userName }</Base>
+                            <Grid key={ userName } gap={ 1 } alignItems="center" className="text-black p-1">
+                                <Text small className="g-col-6">{ userName }</Text>
                                 <Base className="g-col-6">
                                     <Flex alignItems="center" justifyContent="end" gap={ 1 }>
-                                        <Button variant="success" onClick={ () => answer(userName, true) }>
-                                            { LocalizeText('generic.accept') }
-                                        </Button>
-                                        <Button variant="danger" onClick={ () => answer(userName, false) }>
-                                            { LocalizeText('generic.deny') }
-                                        </Button>
+                                        <i className="icon icon-accept-check cursor-pointer" onClick={ () => answer(userName, true) }/>
+                                        <i className="icon icon-decline-x cursor-pointer" onClick={ () => answer(userName, false) }/>
                                     </Flex>
                                 </Base>
                             </Grid>

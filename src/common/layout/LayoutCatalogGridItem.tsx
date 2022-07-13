@@ -24,7 +24,7 @@ export const LayoutCatalogGridItem: FC<LayoutCatalogGridItemProps> = props =>
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames: string[] = [ 'layout-catalog-grid-item'  ];
+        const newClassNames: string[] = [ 'layout-catalog-grid-item', 'justify-content-end' ];
 
         if(itemActive) newClassNames.push('active');
 
@@ -59,13 +59,13 @@ export const LayoutCatalogGridItem: FC<LayoutCatalogGridItemProps> = props =>
     }, [ style, itemImage, itemColor ]);
 
     return (
-        <Column center={ center } pointer position={ position } overflow={ overflow } column={ column } classNames={ getClassNames } style={ getStyle } { ...rest }>
+        <Column pointer position={ position } overflow={ overflow } column={ column } classNames={ getClassNames } style={ getStyle } { ...rest }>
             { (itemCount > itemCountMinimum) &&
                 <LayoutItemCountView count={ itemCount } /> }
             { (itemUniqueNumber > 0) && 
                 <>
                     <Base fit className="unique-bg-override" style={ { backgroundImage: `url(${ itemImage })` } } />
-                    <div className="position-absolute bottom-0 unique-item-counter">
+                    <div className="position-absolute unique-item-counter">
                         <LayoutLimitedEditionStyledNumberView value={ itemUniqueNumber } />
                     </div>
                 </> }

@@ -47,8 +47,8 @@ export const FriendsSearchView: FC<FriendsSearchViewProps> = props =>
                 <Column>
                     <input type="text" className="w-100 friend-search" placeholder={ LocalizeText('generic.search') } value={ searchValue } maxLength={ 50 } onChange={ event => setSearchValue(event.target.value) } />
                 </Column>
-            <Column>
-                { friendResults &&
+                <Column>
+                    { friendResults &&
                     <>
                         { (friendResults.length === 0) &&
                             <Text gfbold className="px-2 py-1">{ LocalizeText('friendlist.search.nofriendsfound') }</Text> }
@@ -75,7 +75,7 @@ export const FriendsSearchView: FC<FriendsSearchViewProps> = props =>
                                 </Column>
                             </Column> }
                     </> }
-                { otherResults &&
+                    { otherResults &&
                     <>
                         { (otherResults.length === 0) &&
                             <Text gfbold className="px-2 py-1">{ LocalizeText('friendlist.search.noothersfound') }</Text> }
@@ -102,7 +102,7 @@ export const FriendsSearchView: FC<FriendsSearchViewProps> = props =>
                                 </Column>
                             </Column> }
                     </> }
-            </Column>
+                </Column>
             </Column>
         </NitroCardAccordionSetView>
     );

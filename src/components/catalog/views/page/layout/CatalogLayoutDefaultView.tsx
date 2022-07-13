@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Base, Column, Flex, Grid, Text } from '../../../../../common';
+import { Base, Column, Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 import { CatalogAddOnBadgeWidgetView } from '../widgets/CatalogAddOnBadgeWidgetView';
 import { CatalogItemGridWidgetView } from '../widgets/CatalogItemGridWidgetView';
@@ -42,7 +42,7 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
                 <CatalogSpinnerWidgetView />
             </Flex>
             <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
-            <CatalogPurchaseWidgetView />
+                <CatalogPurchaseWidgetView />
             </Flex>
 
         </div>

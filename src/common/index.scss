@@ -109,10 +109,25 @@
     }
 }
 
+.catalog-grid-active {
+
+    &.active {
+        border-image-source: url(../assets/flash/catalogue/item_grid_highlight.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+
+        &:not(.clear-bg) {
+            background-color: $grid-active-bg-color !important;
+            border-radius: 5px;
+        }
+    }
+}
+
 .layout-catalog-grid-item {
-    height: var(--nitro-grid-column-min-height, unset);
-    background-position: center;
+    height: 38px;
+    background-position: center top 6px;
     background-repeat: no-repeat;
+    padding: 2px;
 
     &.active {
         border-image-source: url(../assets/flash/catalogue/item_grid_highlight.png);
@@ -449,6 +464,8 @@
         height: 100%;
         background: url("../assets/images/unique/grid-bg.png") center no-repeat;
         z-index: 1;
+        bottom: -1px;
+        right: 0.2px;
     }
 
     &:after {
@@ -458,8 +475,10 @@
         height: 100%;
         background: url("../assets/images/unique/grid-bg-glass.png") center
             no-repeat;
-        bottom: 0;
         z-index: 4;
+        bottom: -1px;
+        right: 0.2px;
+
     }
 
     &.sold-out:after {
@@ -473,9 +492,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        bottom: 1px;
+        bottom: 0px;
         width: 100%;
         height: 9px;
+        right: 0.2px;
         background: url("../assets/images/unique/grid-count-bg.png") center
             no-repeat;
         z-index: 3;
@@ -505,7 +525,7 @@
     align-items: center;
     right: 16px;
     width: 34px;
-    height: 37px;
+    height: 38px;
     background: url("../assets/images/unique/inventory-info-amount-bg.png");
 
     div {

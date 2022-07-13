@@ -75,10 +75,10 @@ export const PurseView: FC<{}> = props =>
                         </Column> }
                     <Column justifyContent="center" size={ 2 } gap={ 1 }>
                         <Flex center pointer className="nitro-purse-right-button help p-1" onClick={ event => CreateLinkEvent('help/show') }>
-                            <Text small>{LocalizeText('help.button.cfh')}</Text>
+                            <Text small>{ LocalizeText('help.button.cfh') }</Text>
                         </Flex>
                         <Flex center pointer className="nitro-purse-right-button disconnect p-1" onClick={ event => CreateLinkEvent('disconnect') }>
-                        <i className="icon icon-purse-disconnect"/>
+                            <i className="icon icon-purse-disconnect"/>
                         </Flex>
                         <Flex center pointer className="nitro-purse-right-button settings p-1" onClick={ event => CreateLinkEvent('user-settings/toggle') } >
                             <i className="icon icon-purse-settings"/>

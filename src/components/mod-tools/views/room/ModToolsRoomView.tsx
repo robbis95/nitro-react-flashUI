@@ -81,10 +81,10 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
         <NitroCardView className="nitro-mod-tools-room" theme="modtool-windows" windowPosition={ DraggableWindowPosition.TOP_CENTER }>
             <NitroCardHeaderView headerText={ 'Room Info' } onCloseClick={ event => onCloseClick() } />
             <NitroCardContentView className="text-black">
-            <Column gap={ 0 } className="mod-content p-2">
-                <Text gfbold>{ name }</Text>
-                <Text>{ desc }</Text>
-            </Column>
+                <Column gap={ 0 } className="mod-content p-2">
+                    <Text gfbold>{ name }</Text>
+                    <Text>{ desc }</Text>
+                </Column>
                 <Flex gap={ 2 } className="mod-content p-2">
                     <Column justifyContent="center" grow gap={ 1 }>
                         <Flex alignItems="center" gap={ 1 }>

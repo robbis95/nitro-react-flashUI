@@ -1,9 +1,8 @@
 import { ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, useEffect } from 'react';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker } from '../../api';
-import { Column, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
+import { Column, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
 import { useCatalog } from '../../hooks';
-import { CatalogIconView } from './views/catalog-icon/CatalogIconView';
 import { CatalogGiftView } from './views/gift/CatalogGiftView';
 import { CatalogNavigationView } from './views/navigation/CatalogNavigationView';
 import { CatalogHeaderView } from './views/page/common/CatalogHeaderView';
@@ -72,7 +71,7 @@ export const CatalogView: FC<{}> = props =>
             { isVisible &&
                 <NitroCardView uniqueKey="catalog" className="nitro-catalog">
                     <NitroCardHeaderView headerText={ LocalizeText('catalog.title') } onCloseClick={ event => setIsVisible(false) } />
-                    <NitroCardTabsView>
+                    <NitroCardTabsView subClassName="w-100">
                         { rootNode && (rootNode.children.length > 0) && rootNode.children.map(child =>
                         {
                             if(!child.isVisible) return null;
@@ -93,7 +92,7 @@ export const CatalogView: FC<{}> = props =>
                     <NitroCardContentView>
                         <Grid>
                             { !navigationHidden &&
-                                <Column size={ 4 } overflow="hidden">
+                                <Column className="catalog-left" size={ 4 } overflow="hidden">
                                     { activeNodes && (activeNodes.length > 0) &&
                                         <CatalogNavigationView node={ activeNodes[0] } /> }
                                 </Column> }

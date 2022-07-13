@@ -1,9 +1,13 @@
 import { FC, useMemo } from 'react';
 import { Flex, FlexProps } from '../..';
 
-export const NitroCardTabsView: FC<FlexProps> = props =>
+interface NitroCardTabsProps extends FlexProps
 {
-    const { justifyContent = 'center', gap = 1, classNames = [], children = null, ...rest } = props;
+    subClassName?: string;
+}
+export const NitroCardTabsView: FC<NitroCardTabsProps> = props =>
+{
+    const { justifyContent = 'center', gap = 1, classNames = [], children = null,subClassName = '', ...rest } = props;
 
     const getClassNames = useMemo(() =>
     {
@@ -16,7 +20,7 @@ export const NitroCardTabsView: FC<FlexProps> = props =>
 
     return (
         <Flex classNames={ getClassNames } { ...rest }>
-            <ul className="nav nav-tabs border-0">
+            <ul className={ 'nav nav-tabs border-0 ' + subClassName }>
                 { children }
             </ul>
         </Flex>

@@ -14,6 +14,17 @@
   }
 }
 
+.flash-form-check-input {
+    width: 15px;
+    height: 15px;
+    background-image: url(../../../flash/buttons/checkbox.png);
+    -webkit-appearance: none;
+
+    &:checked {
+      background-image: url(../../../flash/buttons/checkbox_checked.png);
+    }
+}
+
 .form-check-input {
   width: $form-check-input-width;
   height: $form-check-input-width;

@@ -78,17 +78,17 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             </TransitionAnimation>
             <Flex alignItems="center" id="toolbar-chat-input-container" />
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
-                <button className={leftSideCollapsed ? 'toolbar-left-collapse' : 'toolbar-left-collapse-active'} onClick={() => setLeftSideCollapsed((collapsed) => !collapsed)}/>
+                <button className={ leftSideCollapsed ? 'toolbar-left-collapse' : 'toolbar-left-collapse-active' } onClick={ () => setLeftSideCollapsed((collapsed) => !collapsed) }/>
                 <Flex gap={ 2 } alignItems="center" className="toolbar-left-side">
                     <Flex alignItems="center" gap={ 2 }>
-                    { leftSideCollapsed &&
+                        { leftSideCollapsed &&
                         <Flex gap={ 2 }>
-                        { isInRoom &&
+                            { isInRoom &&
                             <Base pointer className="navigation-item icon icon-habbo" onClick={ event => VisitDesktop() } /> }
-                        { !isInRoom &&
+                            { !isInRoom &&
                             <Base pointer className="navigation-item icon icon-house" onClick={ event => CreateLinkEvent('navigator/goto/home') } /> }
-                        <Base pointer className="navigation-item icon icon-rooms" onClick={ event => CreateLinkEvent('navigator/toggle') } />
-                        </Flex>}
+                            <Base pointer className="navigation-item icon icon-rooms" onClick={ event => CreateLinkEvent('navigator/toggle') } />
+                        </Flex> }
                         <Base pointer className="navigation-item icon icon-catalog" onClick={ event => CreateLinkEvent('catalog/toggle') } />
                         <Base pointer className="navigation-item icon icon-inventory" onClick={ event => CreateLinkEvent('inventory/toggle') }>
                             { (getFullCount > 0) &&
@@ -114,9 +114,9 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                         { ((iconState === MessengerIconState.SHOW) || (iconState === MessengerIconState.UNREAD)) &&
                             <Base pointer className={ `navigation-item icon icon-message ${ (iconState === MessengerIconState.UNREAD) && 'is-unseen' }` } onClick={ event => OpenMessengerChat() } /> }
                     </Flex>
-                    <Base id="toolbar-friend-bar-container" className={rightSideCollapsed ? 'd-none d-lg-block' : 'd-none'} />
+                    <Base id="toolbar-friend-bar-container" className={ rightSideCollapsed ? 'd-none d-lg-block' : 'd-none' } />
                 </Flex>
-                <button className={rightSideCollapsed ? 'toolbar-right-collapse' : 'toolbar-right-collapse-active'} onClick={() => setRightSideCollapsed((collapsed) => !collapsed)}/>
+                <button className={ rightSideCollapsed ? 'toolbar-right-collapse' : 'toolbar-right-collapse-active' } onClick={ () => setRightSideCollapsed((collapsed) => !collapsed) }/>
             </Flex>
         </>
     );

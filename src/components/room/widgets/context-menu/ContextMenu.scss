@@ -36,7 +36,7 @@
     }
 
     &:not(.name-only):not(.menu-hidden) {
-        min-width: 125px;
+        min-width: 100px;
     }
 
     &:not(.name-only) {
@@ -71,7 +71,7 @@
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         color: $white;
-        min-width: 117px;
+        min-width: 100px;
         height: 30px;
         max-height: 30px;
         font-size: 12px;
@@ -133,16 +133,15 @@
         }
 
         &.list-item {
-            height: 24px;
-            max-height: 24px;
+            height: 27px;
+            max-height: 27px;
             padding: 3px;
             background: repeating-linear-gradient(#2a2725, #2a2725 50%, #262321 50%, #262321 100%);            
             cursor: pointer;
             font-size: 11px;
 
             &:not(.disabled):hover {
-                background: repeating-linear-gradient(#47a3cc, #47a3cc 50%, #4296bc 50%, #4296bc 100%);
-                text-decoration: underline;            
+                background: repeating-linear-gradient(#60a1c8, #60a1c8 50%, #5994b8 50%, #5994b8 100%);
             }
 
             .fas,

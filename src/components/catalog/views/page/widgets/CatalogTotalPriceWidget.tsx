@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Column, ColumnProps } from '../../../../../common';
+import { Flex, ColumnProps } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 import { CatalogPriceDisplayWidgetView } from './CatalogPriceDisplayWidgetView';
 
@@ -13,8 +13,8 @@ export const CatalogTotalPriceWidget: FC<CatalogSimplePriceWidgetViewProps> = pr
     const { currentOffer = null } = useCatalog();
 
     return (
-        <Column gap={ gap } { ...rest }>
+        <Flex gap={ gap } { ...rest }>
             <CatalogPriceDisplayWidgetView offer={ currentOffer } />
-        </Column>
+        </Flex>
     );
 }
