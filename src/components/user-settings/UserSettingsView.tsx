@@ -1,8 +1,8 @@
 import { ILinkEventTracker, NitroSettingsEvent, UserSettingsCameraFollowComposer, UserSettingsEvent, UserSettingsOldChatComposer, UserSettingsRoomInvitesComposer, UserSettingsSoundComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
+import { AddEventLinkTracker, DispatchMainEvent, DispatchUiEvent, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
 import { Button, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
-import { DispatchMainEvent, DispatchUiEvent, useCatalogPlaceMultipleItems, useCatalogSkipPurchaseConfirmation, UseMessageEventHook } from '../../hooks';
+import { useCatalogPlaceMultipleItems, useCatalogSkipPurchaseConfirmation, useMessageEvent } from '../../hooks';
 
 export const UserSettingsView: FC<{}> = props =>
 {
@@ -10,26 +10,6 @@ export const UserSettingsView: FC<{}> = props =>
     const [ userSettings, setUserSettings ] = useState<NitroSettingsEvent>(null);
     const [ catalogPlaceMultipleObjects, setCatalogPlaceMultipleObjects ] = useCatalogPlaceMultipleItems();
     const [ catalogSkipPurchaseConfirmation, setCatalogSkipPurchaseConfirmation ] = useCatalogSkipPurchaseConfirmation();
-
-    const onUserSettingsEvent = useCallback((event: UserSettingsEvent) =>
-    {
-        const parser = event.getParser();
-        const settingsEvent = new NitroSettingsEvent();
-
-        settingsEvent.volumeSystem = parser.volumeSystem;
-        settingsEvent.volumeFurni = parser.volumeFurni;
-        settingsEvent.volumeTrax = parser.volumeTrax;
-        settingsEvent.oldChat = parser.oldChat;
-        settingsEvent.roomInvites = parser.roomInvites;
-        settingsEvent.cameraFollow = parser.cameraFollow;
-        settingsEvent.flags = parser.flags;
-        settingsEvent.chatType = parser.chatType;
-
-        setUserSettings(settingsEvent);
-        DispatchMainEvent(settingsEvent);
-    }, []);
-
-    UseMessageEventHook(UserSettingsEvent, onUserSettingsEvent);
 
     const processAction = useCallback((type: string, value?: boolean | number | string) =>
     {
@@ -73,6 +53,7 @@ export const UserSettingsView: FC<{}> = props =>
         }
 
         if(doUpdate) setUserSettings(clone);
+        
         DispatchMainEvent(clone)
     }, [ userSettings ]);
 
@@ -85,6 +66,24 @@ export const UserSettingsView: FC<{}> = props =>
                 break;
         }
     }, [ userSettings ]);
+
+    useMessageEvent<UserSettingsEvent>(UserSettingsEvent, event =>
+    {
+        const parser = event.getParser();
+        const settingsEvent = new NitroSettingsEvent();
+
+        settingsEvent.volumeSystem = parser.volumeSystem;
+        settingsEvent.volumeFurni = parser.volumeFurni;
+        settingsEvent.volumeTrax = parser.volumeTrax;
+        settingsEvent.oldChat = parser.oldChat;
+        settingsEvent.roomInvites = parser.roomInvites;
+        settingsEvent.cameraFollow = parser.cameraFollow;
+        settingsEvent.flags = parser.flags;
+        settingsEvent.chatType = parser.chatType;
+
+        setUserSettings(settingsEvent);
+        DispatchMainEvent(settingsEvent);
+    });
 
     useEffect(() =>
     {
@@ -123,7 +122,7 @@ export const UserSettingsView: FC<{}> = props =>
         DispatchUiEvent(userSettings);
     }, [ userSettings ]);
 
-    if(!isVisible) return null;
+    if(!isVisible || !userSettings) return null;
 
     return (
         <NitroCardView uniqueKey="user-settings" className="user-settings-window" theme="settings">

@@ -1,6 +1,5 @@
-import { FC, useEffect } from 'react';
-import { NotificationUtilities } from '../../api';
-import { Base, Column } from '../../common';
+import { FC } from 'react';
+import { Base, Column, LayoutProgressBar, Text } from '../../common';
 
 var randomImage = 'loadingPhoto position-absolute';
 const randomImg: number = Math.floor(Math.random() * 30);
@@ -15,20 +14,7 @@ interface LoadingViewProps
 export const LoadingView: FC<LoadingViewProps> = (props) =>
 {
     const { isError = false, message = '', percent = 0 } = props;
-
-    useEffect(() =>
-    {
-        if (!isError) return;
-
-        NotificationUtilities.simpleAlert(
-            message,
-            null,
-            null,
-            null,
-            'Connection Error'
-        );
-    }, [ isError, message ]);
-
+    
     return (
         <Column fullHeight alignItems="center" justifyContent="center" className="nitro-loading">
             <div className="loading-stories">

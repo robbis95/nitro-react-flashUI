@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import { HabboClubLevelEnum, RoomCreateComposer } from '@nitrots/nitro-renderer';
+import { CreateFlatMessageComposer, HabboClubLevelEnum } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { CreateLinkEvent, GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, SendMessageComposer } from '../../../api';
 import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
@@ -31,7 +31,7 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
 
     const createRoom = () =>
     {
-        SendMessageComposer(new RoomCreateComposer(name, description, 'model_' + selectedModelName, Number(category), Number(visitorsCount), tradesSetting));
+        SendMessageComposer(new CreateFlatMessageComposer(name, description, 'model_' + selectedModelName, Number(category), Number(visitorsCount), tradesSetting));
     };
 
     useEffect(() =>
@@ -55,7 +55,7 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     useEffect(() =>
     {
         const models = GetConfiguration<IRoomModel[]>('navigator.room.models');
-        
+
         if(models && models.length)
         {
             setRoomModels(models);

@@ -1,9 +1,9 @@
 import { FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { AddEventLinkTracker, GetUserProfile, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../../../api';
-import { ButtonGroup, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
+import { AddEventLinkTracker, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
+import { Base, Button, ButtonGroup, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, LayoutGridItem, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
-import { useMessenger } from '../../../../hooks';
+import { useHelp, useMessenger } from '../../../../hooks';
 import { FriendsMessengerThreadView } from './messenger-thread/FriendsMessengerThreadView';
 
 export const FriendsMessengerView: FC<{}> = props =>
@@ -12,6 +12,7 @@ export const FriendsMessengerView: FC<{}> = props =>
     const [ lastThreadId, setLastThreadId ] = useState(-1);
     const [ messageText, setMessageText ] = useState('');
     const { visibleThreads = [], activeThread = null, getMessageThread = null, sendMessage = null, setActiveThreadId = null, closeThread = null } = useMessenger();
+    const { report = null } = useHelp();
     const messagesBox = useRef<HTMLDivElement>();
 
     const followFriend = () => (activeThread && activeThread.participant && SendMessageComposer(new FollowFriendMessageComposer(activeThread.participant.id)));
@@ -135,9 +136,9 @@ export const FriendsMessengerView: FC<{}> = props =>
                                             <button className="follow" onClick={ followFriend } />
                                             <button className="profile" onClick={ openProfile } />
                                         </ButtonGroup>
-                                        <button className="messenger-button fw-bold px-3" onClick={ openProfile }>
+                                        <Button variant="danger" onClick={ () => report(ReportType.IM, { reportedUserId: activeThread.participant.id }) }>
                                             { LocalizeText('messenger.window.button.report') }
-                                        </button>
+                                        </Button>
                                     </Flex>
                                     <button className="clear" onClick={ event => closeThread(activeThread.threadId) } />
                                 </Flex>

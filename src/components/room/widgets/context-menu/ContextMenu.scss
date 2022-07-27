@@ -9,7 +9,6 @@
         width: 250px;
         background: #2d2a26;
         border-top: 1px solid #000;
-        
     }
 
     &.name-only {
@@ -32,127 +31,147 @@
             left: 0;
             right: 0;
             margin: auto;
-        }
-    }
+            font-size: 18px;
 
-    &:not(.name-only):not(.menu-hidden) {
-        min-width: 100px;
-    }
-
-    &:not(.name-only) {
-        &:after {
-            content: "";
-            background-image: url(../../../../assets/flash/room/context_pointer_after.png);
-            background-repeat: no-repeat;
-            width: 11px;
-            height: 9px;
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            right: 0;
-            margin: auto;
-        }
-    }
-
-    .menu-bottom {
-        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
-        border-image-slice: 6 6 6 6 fill;
-        border-image-width: 6px 6px 6px 6px;
-        color: $white;
-        height: 27px;
-        font-size: 12px;
-        margin-top: -6px;
-        padding-top: 0.25rem;
-        min-width: 30px;
+            &.is-friend {
+                background-color: rgba($green, 0.5);
+            }
         }
 
-    .menu-header {
-        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
-        border-image-slice: 6 6 6 6 fill;
-        border-image-width: 6px 6px 6px 6px;
-        color: $white;
-        min-width: 100px;
-        height: 30px;
-        max-height: 30px;
-        font-size: 12px;
-        margin-bottom: -6px;
-        font-family: Ubuntubold;
-
-        &:hover {
-            color: #47a3cc;
-        }
+        &:not(.name-only):not(.menu-hidden) {
+            min-width: 100px;
         }
 
-    &.menu-hidden {
+        &:not(.name-only) {
+            &:after {
+                content: "";
+                background-image: url(../../../../assets/flash/room/context_pointer_after.png);
+                background-repeat: no-repeat;
+                width: 11px;
+                height: 9px;
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+        }
+
+        .menu-bottom {
+            border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+            border-image-slice: 6 6 6 6 fill;
+            border-image-width: 6px 6px 6px 6px;
+            color: $white;
+            height: 27px;
+            font-size: 12px;
+            margin-top: -6px;
+            padding-top: 0.25rem;
+            min-width: 30px;
+        }
+
+        .menu-header {
+            border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+            border-image-slice: 6 6 6 6 fill;
+            border-image-width: 6px 6px 6px 6px;
+            color: $white;
+            min-width: 100px;
+            height: 30px;
+            max-height: 30px;
+            font-size: 12px;
+            margin-bottom: -6px;
+            font-family: Ubuntubold;
+
+            &:hover {
+                color: #47a3cc;
+            }
+        }
+
+        &.menu-hidden {
+            .menu-footer {
+                padding-top: 2px;
+                padding-bottom: 0;
+            }
+        }
+
         .menu-footer {
-            padding-top:2px;
-            padding-bottom:0;
+            color: $white;
+            font-size: 16px;
+            width: 100%;
+            min-width: 25px;
+            padding-bottom: 2px;
+            cursor: pointer;
         }
-    }
 
-    .menu-footer {
-        color: $white;
-        font-size: 16px;
-        width:100%;
-        min-width: 25px;
-        padding-bottom:2px;
-        cursor: pointer;
-    }
+        .menu-list-split-3 {
+            .menu-item {
+                margin-right: -1px;
 
-    .menu-list-split-3 {
+                &:nth-child(3n + 3) {
+                    margin-right: unset;
+                }
+            }
+        }
+
+        .context-input-bg {
+            background: #2d2a26;
+            border-top: 1px solid #000;
+        }
 
         .menu-item {
-            margin-right: -1px;
-
-            &:nth-child(3n+3) {
-                margin-right: unset;
-            }
-        }
-    }
-
-    .context-input-bg {
-        background: #2d2a26;
-        border-top: 1px solid #000;
-    }
-
-    .menu-item {
-        position: relative;
-        border-bottom: 1px solid #4f4c48;
-        padding: 3px;
-        overflow: hidden;
-        border-right: 1px solid #000000;
-        border-left: 1px solid #000000;
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-
-        &.disabled {
-            filter: brightness(0.7);
-            cursor: not-allowed !important;
-        }
-
-        &.list-item {
-            height: 27px;
-            max-height: 27px;
+            position: relative;
+            border-bottom: 1px solid #4f4c48;
             padding: 3px;
-            background: repeating-linear-gradient(#2a2725, #2a2725 50%, #262321 50%, #262321 100%);            
-            cursor: pointer;
-            font-size: 11px;
+            overflow: hidden;
+            border-right: 1px solid #000000;
+            border-left: 1px solid #000000;
 
-            &:not(.disabled):hover {
-                background: repeating-linear-gradient(#60a1c8, #60a1c8 50%, #5994b8 50%, #5994b8 100%);
+            &:last-child {
+                margin-bottom: 0;
             }
 
-            .fas,
-            .svg-inline--fa,
-            .nitro-currency-icon {
-                position: absolute;
-                right: 8px;
+            &.disabled {
+                filter: brightness(0.7);
+                cursor: not-allowed !important;
+            }
 
-                &.left {
-                    left: 8px;
-                    right: unset;
+            &.list-item {
+                height: 27px;
+                max-height: 27px;
+                padding: 3px;
+                background: repeating-linear-gradient(
+                    #2a2725,
+                    #2a2725 50%,
+                    #262321 50%,
+                    #262321 100%
+                );
+                cursor: pointer;
+                font-size: 11px;
+
+                &:not(.disabled):hover {
+                    background: repeating-linear-gradient(
+                        #60a1c8,
+                        #60a1c8 50%,
+                        #5994b8 50%,
+                        #5994b8 100%
+                    );
+                }
+
+                .fas,
+                .svg-inline--fa,
+                .nitro-currency-icon {
+                    position: absolute;
+                    right: 8px;
+
+                    &.left {
+                        left: 8px;
+                        right: unset;
+                    }
+
+                    &.center {
+                        position: unset;
+                        right: unset;
+                        left: unset;
+                    }
                 }
             }
         }

@@ -1,8 +1,7 @@
 import { FC, useCallback, useEffect, useState } from 'react';
-import { GetConfiguration } from '../../../../api';
+import { AvatarEditorGridColorItem, GetConfiguration } from '../../../../api';
 import { LayoutCurrencyIcon, LayoutGridItem, LayoutGridItemProps } from '../../../../common';
 import { LayoutGridColorPickerItem } from '../../../../common/layout/LayoutGridColorPickerItem';
-import { AvatarEditorGridColorItem } from '../../common/AvatarEditorGridColorItem';
 
 export interface AvatarEditorPaletteSetItemProps extends LayoutGridItemProps
 {

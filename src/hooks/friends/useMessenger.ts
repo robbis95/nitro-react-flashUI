@@ -1,8 +1,9 @@
 import { NewConsoleMessageEvent, RoomInviteErrorEvent, RoomInviteEvent, SendMessageComposer as SendMessageComposerPacket } from '@nitrots/nitro-renderer';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useBetween } from 'use-between';
-import { CloneObject, GetSessionDataManager, LocalizeText, MessengerIconState, MessengerThread, MessengerThreadChat, NotificationAlertType, NotificationUtilities, PlaySound, SendMessageComposer, SoundNames } from '../../api';
-import { UseMessageEventHook } from '../messages';
+import { CloneObject, GetSessionDataManager, LocalizeText, MessengerIconState, MessengerThread, MessengerThreadChat, NotificationAlertType, PlaySound, SendMessageComposer, SoundNames } from '../../api';
+import { useMessageEvent } from '../events';
+import { useNotification } from '../notification';
 import { useFriends } from './useFriends';
 
 const useMessengerState = () =>
@@ -12,6 +13,7 @@ const useMessengerState = () =>
     const [ hiddenThreadIds, setHiddenThreadIds ] = useState<number[]>([]);
     const [ iconState, setIconState ] = useState<number>(MessengerIconState.HIDDEN);
     const { getFriend = null } = useFriends();
+    const { simpleAlert = null } = useNotification();
 
     const visibleThreads = useMemo(() => messageThreads.filter(thread => (hiddenThreadIds.indexOf(thread.threadId) === -1)), [ messageThreads, hiddenThreadIds ]);
     const activeThread = useMemo(() => ((activeThreadId > 0) && visibleThreads.find(thread => (thread.threadId === activeThreadId) || null)), [ activeThreadId, visibleThreads ]);
@@ -20,7 +22,24 @@ const useMessengerState = () =>
     {
         let thread = messageThreads.find(thread => (thread.participant && (thread.participant.id === userId)));
 
-        if(thread) return thread;
+        if(thread)
+        {
+            const hiddenIndex = hiddenThreadIds.indexOf(thread.threadId);
+
+            if(hiddenIndex >= 0)
+            {
+                setHiddenThreadIds(prevValue =>
+                {
+                    const newValue = [ ...prevValue ];
+
+                    newValue.splice(hiddenIndex, 1);
+
+                    return newValue;
+                });
+            }
+
+            return thread;
+        }
         
         const friend = getFriend(userId);
 
@@ -51,7 +70,7 @@ const useMessengerState = () =>
         });
 
         return thread;
-    }, [ messageThreads, getFriend ]);
+    }, [ messageThreads, hiddenThreadIds, getFriend ]);
 
     const closeThread = (threadId: number) =>
     {
@@ -65,6 +84,8 @@ const useMessengerState = () =>
 
             return newValue;
         });
+
+        if(activeThreadId === threadId) setActiveThreadId(-1);
     }
 
     const sendMessage = (thread: MessengerThread, text: string) =>
@@ -94,7 +115,7 @@ const useMessengerState = () =>
         });
     }
 
-    const onNewConsoleMessageEvent = useCallback((event: NewConsoleMessageEvent) =>
+    useMessageEvent<NewConsoleMessageEvent>(NewConsoleMessageEvent, event =>
     {
         const parser = event.getParser();
 
@@ -131,11 +152,9 @@ const useMessengerState = () =>
 
             return newValue;
         });
-    }, [ activeThreadId, getFriend ]);
+    });
 
-    UseMessageEventHook(NewConsoleMessageEvent, onNewConsoleMessageEvent);
-
-    const onRoomInviteEvent = useCallback((event: RoomInviteEvent) =>
+    useMessageEvent<RoomInviteEvent>(RoomInviteEvent, event =>
     {
         const parser = event.getParser();
 
@@ -172,19 +191,15 @@ const useMessengerState = () =>
 
             return newValue;
         });
-    }, [ activeThreadId, getFriend ]);
+    });
 
-    UseMessageEventHook(RoomInviteEvent, onRoomInviteEvent);
-
-    const onRoomInviteErrorEvent = useCallback((event: RoomInviteErrorEvent) =>
+    useMessageEvent<RoomInviteErrorEvent>(RoomInviteErrorEvent, event =>
     {
         const parser = event.getParser();
         const message = ((('Received room invite error: errorCode: ' + parser.errorCode) + ', recipients: ') + parser.failedRecipients);
             
-        NotificationUtilities.simpleAlert(message, NotificationAlertType.DEFAULT, null, null, LocalizeText('friendlist.alert.title'));
-    }, []);
-
-    UseMessageEventHook(RoomInviteErrorEvent, onRoomInviteErrorEvent);
+        simpleAlert(message, NotificationAlertType.DEFAULT, null, null, LocalizeText('friendlist.alert.title'));
+    });
 
     useEffect(() =>
     {
