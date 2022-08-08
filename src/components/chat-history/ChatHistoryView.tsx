@@ -1,8 +1,8 @@
 import { ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, ListRowProps, ListRowRenderer, Size } from 'react-virtualized';
-import { AddEventLinkTracker, ChatEntryType, LocalizeText, RemoveLinkEventTracker } from '../../api';
-import { Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
+import { AddEventLinkTracker, ChatEntryType, RemoveLinkEventTracker } from '../../api';
+import { Column, Flex, Text } from '../../common';
 import { useChatHistory } from '../../hooks';
 
 export const ChatHistoryView: FC<{}> = props =>
@@ -78,26 +78,32 @@ export const ChatHistoryView: FC<{}> = props =>
     if(!isVisible) return null;
 
     return (
-        <NitroCardView uniqueKey="chat-history" className="nitro-chat-history" theme="primary-slim">
-            <NitroCardHeaderView headerText={ LocalizeText('room.chathistory.button.text') } onCloseClick={ event => setIsVisible(false) }/>
-            <NitroCardContentView>
-                <AutoSizer defaultWidth={ 300 } defaultHeight={ 200 } onResize={ onResize }>
-                    { ({ height, width }) => 
-                    {
-                        return (
-                            <List
-                                ref={ elementRef }
-                                width={ width }
-                                height={ height }
-                                rowCount={ chatHistory.length }
-                                rowHeight={ cache.rowHeight }
-                                className={ 'chat-history-list' }
-                                rowRenderer={ RowRenderer }
-                                deferredMeasurementCache={ cache } />
-                        )
-                    } }
-                </AutoSizer>
-            </NitroCardContentView>
-        </NitroCardView>
+        <>
+            { isVisible &&
+            <Flex gap={ 2 } className="nitro-chat-history">
+                <Column className="chat-history-content h-100">
+                    <Column className="h-100">
+                        <AutoSizer defaultWidth={ 300 } defaultHeight={ 200 } onResize={ onResize }>
+                            { ({ height, width }) => 
+                            {
+                                return (
+                                    <List
+                                        ref={ elementRef }
+                                        width={ width }
+                                        height={ height }
+                                        rowCount={ chatHistory.length }
+                                        rowHeight={ cache.rowHeight }
+                                        className={ 'chat-history-list' }
+                                        rowRenderer={ RowRenderer }
+                                        deferredMeasurementCache={ cache } />
+                                )
+                            } }
+                        </AutoSizer>
+                    </Column>
+                </Column>
+                <Flex className="chat-toggle" onClick={ event => setIsVisible(false) } />
+            </Flex>
+            }
+        </>
     );
 }
