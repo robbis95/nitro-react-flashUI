@@ -33,7 +33,7 @@ export const AvatarEditorPaletteSetView: FC<AvatarEditorPaletteSetViewProps> = p
     }, [ model, category ]);
 
     return (
-        <AutoGrid innerRef={ elementRef } gap={ 1 } columnCount={ 5 } columnMinWidth={ 30 }>
+        <AutoGrid className="py-1" innerRef={ elementRef } gap={ 1 } columnCount={ 5 } columnMinWidth={ 13 }>
             { (paletteSet.length > 0) && paletteSet.map((item, index) =>
                 <AvatarEditorPaletteSetItem key={ index } colorItem={ item } onClick={ event => selectColor(item) } />) }
         </AutoGrid>
