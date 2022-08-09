@@ -1,7 +1,7 @@
 import { CommunityGoalHallOfFameData, CommunityGoalHallOfFameMessageEvent, GetCommunityGoalHallOfFameMessageComposer } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SendMessageComposer } from '../../../../../api';
-import { UseMessageEventHook } from '../../../../../hooks';
+import { useMessageEvent } from '../../../../../hooks';
 import { HallOfFameItemView } from '../hall-of-fame-item/HallOfFameItemView';
 import { HallOfFameWidgetViewProps } from './HallOfFameWidgetView.types';
 
@@ -10,14 +10,12 @@ export const HallOfFameWidgetView: FC<HallOfFameWidgetViewProps> = props =>
     const { slot = -1, conf = null } = props;
     const [ data, setData ] = useState<CommunityGoalHallOfFameData>(null);
 
-    const onCommunityGoalHallOfFameMessageEvent = useCallback((event: CommunityGoalHallOfFameMessageEvent) =>
+    useMessageEvent<CommunityGoalHallOfFameMessageEvent>(CommunityGoalHallOfFameMessageEvent, event =>
     {
         const parser = event.getParser();
 
         setData(parser.data);
-    }, []);
-
-    UseMessageEventHook(CommunityGoalHallOfFameMessageEvent, onCommunityGoalHallOfFameMessageEvent);
+    });
 
     useEffect(() =>
     {

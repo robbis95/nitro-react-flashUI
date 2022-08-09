@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { CreateRoomSession, DoorStateType, GoToDesktop, LocalizeText } from '../../../api';
 import { Button, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
-import { useNavigatorContext } from '../NavigatorContext';
+import { useNavigator } from '../../../hooks';
 
 const VISIBLE_STATES = [ DoorStateType.START_DOORBELL, DoorStateType.STATE_WAITING, DoorStateType.STATE_NO_ANSWER, DoorStateType.START_PASSWORD, DoorStateType.STATE_WRONG_PASSWORD ];
 const DOORBELL_STATES = [ DoorStateType.START_DOORBELL, DoorStateType.STATE_WAITING, DoorStateType.STATE_NO_ANSWER ];
@@ -10,9 +10,9 @@ const PASSWORD_STATES = [ DoorStateType.START_PASSWORD, DoorStateType.STATE_WRON
 export const NavigatorDoorStateView: FC<{}> = props =>
 {
     const [ password, setPassword ] = useState('');
-    const { doorData = null, setDoorData = null } = useNavigatorContext();
+    const { doorData = null, setDoorData = null } = useNavigator();
 
-    const close = () =>
+    const onClose = () =>
     {
         if(doorData && (doorData.state === DoorStateType.STATE_WAITING)) GoToDesktop();
 
@@ -64,7 +64,7 @@ export const NavigatorDoorStateView: FC<{}> = props =>
 
     return (
         <NitroCardView className="nitro-navigator-doorbell" theme="primary">
-            <NitroCardHeaderView headerText={ LocalizeText(isDoorbell ? 'navigator.doorbell.title' : 'navigator.password.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText(isDoorbell ? 'navigator.doorbell.title' : 'navigator.password.title') } onCloseClick={ onClose } />
             <NitroCardContentView className="px-3 pb-4">
                 <Column gap={ 1 }>
                     <Text small bold>{ doorData && doorData.roomInfo && doorData.roomInfo.roomName }</Text>
@@ -81,7 +81,7 @@ export const NavigatorDoorStateView: FC<{}> = props =>
                 </Column>
                 { isDoorbell &&
                     <Flex fullWidth gap={ 1 } className="align-items-end mt-auto pt-3">
-                        <Text small className="cursor-pointer" underline onClick={ close }>
+                        <Text small className="cursor-pointer" underline onClick={ onClose }>
                             { LocalizeText('generic.cancel') }
                         </Text>
                         { (doorData.state === DoorStateType.START_DOORBELL) &&
@@ -96,7 +96,7 @@ export const NavigatorDoorStateView: FC<{}> = props =>
                             <input type="password" className="form-control form-control-sm" onChange={ event => setPassword(event.target.value) } />
                         </Flex>
                         <Flex fullWidth gap={ 1 } className="align-items-end mt-auto pt-3">
-                            <Text small className="cursor-pointer" underline onClick={ close }>
+                            <Text small className="cursor-pointer" underline onClick={ onClose }>
                                 { LocalizeText('generic.cancel') }
                             </Text>
                             <Button className="ms-auto" onClick={ tryEntering }>

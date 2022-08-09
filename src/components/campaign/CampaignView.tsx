@@ -1,7 +1,7 @@
-import { CampaignCalendarData, CampaignCalendarDataMessageEvent, CampaignCalendarDoorOpenedMessageEvent, OpenCampaignCalendarDoorAsStaffComposer, OpenCampaignCalendarDoorComposer } from '@nitrots/nitro-renderer';
+import { CampaignCalendarData, CampaignCalendarDataMessageEvent, CampaignCalendarDoorOpenedMessageEvent, ILinkEventTracker, OpenCampaignCalendarDoorAsStaffComposer, OpenCampaignCalendarDoorComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { AddEventLinkTracker, CalendarItem, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
-import { UseMessageEventHook } from '../../hooks';
+import { useMessageEvent } from '../../hooks';
 import { CalendarView } from './CalendarView';
 
 export const CampaignView: FC<{}> = props =>
@@ -10,18 +10,16 @@ export const CampaignView: FC<{}> = props =>
     const [ lastOpenAttempt, setLastOpenAttempt ] = useState<number>(-1);
     const [ receivedProducts, setReceivedProducts ] = useState<Map<number, CalendarItem>>(new Map());
     const [ isCalendarOpen, setCalendarOpen ] = useState(false);
-    
-    const onCampaignCalendarDataMessageEvent = useCallback((event: CampaignCalendarDataMessageEvent) =>
+
+    useMessageEvent<CampaignCalendarDataMessageEvent>(CampaignCalendarDataMessageEvent, event =>
     {
         const parser = event.getParser();
 
         if(!parser) return;
         setCalendarData(parser.calendarData);
-    }, []);
+    });
 
-    UseMessageEventHook(CampaignCalendarDataMessageEvent, onCampaignCalendarDataMessageEvent);
-
-    const onCampaignCalendarDoorOpenedMessageEvent = useCallback((event: CampaignCalendarDoorOpenedMessageEvent) =>
+    useMessageEvent<CampaignCalendarDoorOpenedMessageEvent>(CampaignCalendarDoorOpenedMessageEvent, event =>
     {
         const parser = event.getParser();
 
@@ -49,9 +47,7 @@ export const CampaignView: FC<{}> = props =>
         }
 
         setLastOpenAttempt(-1);
-    }, [ lastOpenAttempt ]);
-
-    UseMessageEventHook(CampaignCalendarDoorOpenedMessageEvent, onCampaignCalendarDoorOpenedMessageEvent);
+    });
 
     const openPackage = useCallback((id: number, asStaff = false) =>
     {
@@ -75,35 +71,34 @@ export const CampaignView: FC<{}> = props =>
         setCalendarOpen(false);
     }, []);
 
-    const onLinkReceived = useCallback((link: string) =>
-    {
-        const value = link.split('/');
-
-        if(value.length < 2) return;
-
-        switch(value[1])
-        {
-            case 'calendar':
-                setCalendarOpen(true);
-                break;
-        }
-    }, []);
-
     useEffect(() =>
     {
-        const linkTracker = { linkReceived: onLinkReceived, eventUrlPrefix: 'openView/' };
+        const linkTracker: ILinkEventTracker = {
+            linkReceived: (url: string) =>
+            {
+                const value = url.split('/');
+        
+                if(value.length < 2) return;
+        
+                switch(value[1])
+                {
+                    case 'calendar':
+                        setCalendarOpen(true);
+                        break;
+                }
+            },
+            eventUrlPrefix: 'openView/'
+        };
+
         AddEventLinkTracker(linkTracker);
 
-        return () =>
-        {
-            RemoveLinkEventTracker(linkTracker);
-        }
-    }, [ onLinkReceived ]);
+        return () => RemoveLinkEventTracker(linkTracker);
+    }, []);
 
     return (
         <>
             { (calendarData && isCalendarOpen) && 
-                <CalendarView close={ onCalendarClose } campaignName={ calendarData.campaignName } currentDay={ calendarData.currentDay } numDays={ calendarData.campaignDays } openedDays={ calendarData.openedDays } missedDays={ calendarData.missedDays } openPackage={ openPackage } receivedProducts={ receivedProducts } />
+                <CalendarView onClose={ onCalendarClose } campaignName={ calendarData.campaignName } currentDay={ calendarData.currentDay } numDays={ calendarData.campaignDays } openedDays={ calendarData.openedDays } missedDays={ calendarData.missedDays } openPackage={ openPackage } receivedProducts={ receivedProducts } />
             }
         </>
     )

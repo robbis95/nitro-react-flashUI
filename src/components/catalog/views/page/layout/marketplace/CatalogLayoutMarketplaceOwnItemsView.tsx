@@ -1,19 +1,18 @@
 import { CancelMarketplaceOfferMessageComposer, GetMarketplaceOwnOffersMessageComposer, MarketplaceCancelOfferResultEvent, MarketplaceOwnOffersEvent, RedeemMarketplaceOfferCreditsMessageComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { LocalizeText, NotificationAlertType, NotificationUtilities, SendMessageComposer } from '../../../../../../api';
+import { LocalizeText, MarketplaceOfferData, MarketPlaceOfferState, NotificationAlertType, SendMessageComposer } from '../../../../../../api';
 import { Button, Column, Text } from '../../../../../../common';
-import { UseMessageEventHook } from '../../../../../../hooks';
+import { useMessageEvent, useNotification } from '../../../../../../hooks';
 import { CatalogLayoutProps } from '../CatalogLayout.types';
 import { CatalogLayoutMarketplaceItemView, OWN_OFFER } from './CatalogLayoutMarketplaceItemView';
-import { MarketplaceOfferData } from './common/MarketplaceOfferData';
-import { MarketPlaceOfferState } from './common/MarketplaceOfferState';
 
 export const CatalogLayoutMarketplaceOwnItemsView: FC<CatalogLayoutProps> = props =>
 {
     const [ creditsWaiting, setCreditsWaiting ] = useState(0);
     const [ offers, setOffers ] = useState<MarketplaceOfferData[]>([]);
+    const { simpleAlert = null } = useNotification();
 
-    const onMarketPlaceOwnOffersEvent = useCallback((event: MarketplaceOwnOffersEvent) =>
+    useMessageEvent<MarketplaceOwnOffersEvent>(MarketplaceOwnOffersEvent, event =>
     {
         const parser = event.getParser();
 
@@ -29,12 +28,10 @@ export const CatalogLayoutMarketplaceOwnItemsView: FC<CatalogLayoutProps> = prop
         });
 
         setCreditsWaiting(parser.creditsWaiting);
-        setOffers(offers);
-    }, []);
+        setOffers(offers); 
+    });
 
-    UseMessageEventHook(MarketplaceOwnOffersEvent, onMarketPlaceOwnOffersEvent);
-
-    const onMarketplaceCancelOfferResultEvent = useCallback((event:MarketplaceCancelOfferResultEvent) =>
+    useMessageEvent<MarketplaceCancelOfferResultEvent>(MarketplaceCancelOfferResultEvent, event =>
     {
         const parser = event.getParser();
 
@@ -42,15 +39,13 @@ export const CatalogLayoutMarketplaceOwnItemsView: FC<CatalogLayoutProps> = prop
 
         if(!parser.success)
         {
-            NotificationUtilities.simpleAlert(LocalizeText('catalog.marketplace.cancel_failed'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.marketplace.operation_failed.topic'));
+            simpleAlert(LocalizeText('catalog.marketplace.cancel_failed'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.marketplace.operation_failed.topic'));
 
             return;
         }
 
         setOffers(prevValue => prevValue.filter(value => (value.offerId !== parser.offerId)));
-    }, []);
-
-    UseMessageEventHook(MarketplaceCancelOfferResultEvent, onMarketplaceCancelOfferResultEvent);
+    });
 
     const soldOffers = useMemo(() =>
     {

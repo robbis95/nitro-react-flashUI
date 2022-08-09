@@ -1,14 +1,11 @@
 import { BuyMarketplaceOfferMessageComposer, GetMarketplaceOffersMessageComposer, MarketplaceBuyOfferResultEvent, MarketPlaceOffersEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useMemo, useState } from 'react';
-import { LocalizeText, NotificationAlertType, NotificationUtilities, SendMessageComposer } from '../../../../../../api';
+import { IMarketplaceSearchOptions, LocalizeText, MarketplaceOfferData, MarketplaceSearchType, NotificationAlertType, SendMessageComposer } from '../../../../../../api';
 import { Button, ButtonGroup, Column, Text } from '../../../../../../common';
-import { UseMessageEventHook, usePurse } from '../../../../../../hooks';
+import { useMessageEvent, useNotification, usePurse } from '../../../../../../hooks';
 import { CatalogLayoutProps } from '../CatalogLayout.types';
 import { CatalogLayoutMarketplaceItemView, PUBLIC_OFFER } from './CatalogLayoutMarketplaceItemView';
 import { SearchFormView } from './CatalogLayoutMarketplaceSearchFormView';
-import { IMarketplaceSearchOptions } from './common/IMarketplaceSearchOptions';
-import { MarketplaceOfferData } from './common/MarketplaceOfferData';
-import { MarketplaceSearchType } from './common/MarketplaceSearchType';
 
 const SORT_TYPES_VALUE = [ 1, 2 ];
 const SORT_TYPES_ACTIVITY = [ 3, 4, 5, 6 ];
@@ -25,6 +22,7 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
     const [ offers, setOffers ] = useState(new Map<number, MarketplaceOfferData>());
     const [ lastSearch, setLastSearch ] = useState<IMarketplaceSearchOptions>({ minPrice: -1, maxPrice: -1, query: '', type: 3 });
     const { getCurrencyAmount = null } = usePurse();
+    const { simpleAlert = null, showConfirm = null } = useNotification();
 
     const requestOffers = useCallback((options: IMarketplaceSearchOptions) =>
     {
@@ -50,20 +48,20 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
     {
         if(offerData.price > getCurrencyAmount(-1))
         {
-            NotificationUtilities.simpleAlert(LocalizeText('catalog.alert.notenough.credits.description'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.alert.notenough.title'));
+            simpleAlert(LocalizeText('catalog.alert.notenough.credits.description'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.alert.notenough.title'));
             return;
         }
 
         const offerId = offerData.offerId;
 
-        NotificationUtilities.confirm(LocalizeText('catalog.marketplace.confirm_header'), () =>
+        showConfirm(LocalizeText('catalog.marketplace.confirm_header'), () =>
         {
             SendMessageComposer(new BuyMarketplaceOfferMessageComposer(offerId));
         },
         null, null, null, LocalizeText('catalog.marketplace.confirm_title'));
-    }, [ getCurrencyAmount ]);
+    }, [ getCurrencyAmount, simpleAlert, showConfirm ]);
 
-    const onMarketPlaceOffersEvent = useCallback( (event: MarketPlaceOffersEvent) =>
+    useMessageEvent<MarketPlaceOffersEvent>(MarketPlaceOffersEvent, event =>
     {
         const parser = event.getParser();
 
@@ -79,9 +77,9 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
 
         setTotalItemsFound(parser.totalItemsFound);
         setOffers(latestOffers);
-    }, []);
+    });
 
-    const onMarketplaceBuyOfferResultEvent = useCallback( (event: MarketplaceBuyOfferResultEvent) =>
+    useMessageEvent<MarketplaceBuyOfferResultEvent>(MarketplaceBuyOfferResultEvent, event =>
     {
         const parser = event.getParser();
 
@@ -99,7 +97,7 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
                     newVal.delete(parser.requestedOfferId);
                     return newVal;
                 });
-                NotificationUtilities.simpleAlert(LocalizeText('catalog.marketplace.not_available_header'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.marketplace.not_available_title'));
+                simpleAlert(LocalizeText('catalog.marketplace.not_available_header'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.marketplace.not_available_title'));
                 break;
             case 3:
             // our shit was updated
@@ -121,7 +119,7 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
                     return newVal;
                 });
 
-                NotificationUtilities.confirm(LocalizeText('catalog.marketplace.confirm_higher_header') + 
+                showConfirm(LocalizeText('catalog.marketplace.confirm_higher_header') + 
                 '\n' + LocalizeText('catalog.marketplace.confirm_price', [ 'price' ], [ parser.newPrice.toString() ]), () =>
                 {
                     SendMessageComposer(new BuyMarketplaceOfferMessageComposer(parser.offerId));
@@ -129,13 +127,10 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
                 null, null, null, LocalizeText('catalog.marketplace.confirm_higher_title'));
                 break;
             case 4:
-                NotificationUtilities.simpleAlert(LocalizeText('catalog.alert.notenough.credits.description'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.alert.notenough.title'));
+                simpleAlert(LocalizeText('catalog.alert.notenough.credits.description'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.alert.notenough.title'));
                 break;
         }
-    }, [ lastSearch, requestOffers ]);
-
-    UseMessageEventHook(MarketPlaceOffersEvent, onMarketPlaceOffersEvent);
-    UseMessageEventHook(MarketplaceBuyOfferResultEvent, onMarketplaceBuyOfferResultEvent);
+    });
     
     return (
         <>

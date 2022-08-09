@@ -1,6 +1,6 @@
-import { NitroLogger } from '@nitrots/nitro-renderer';
+import { ILinkEventTracker, NitroLogger } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { AddEventLinkTracker, GetConfiguration, NotificationUtilities, RemoveLinkEventTracker } from '../../api';
+import { AddEventLinkTracker, GetConfiguration, OpenUrl, RemoveLinkEventTracker } from '../../api';
 import { Base, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
 
 const NEW_LINE_REGEX = /\n\r|\n|\r/mg;
@@ -48,25 +48,26 @@ export const NitropediaView: FC<{}> = props =>
         }
     }, []);
 
-    const onLinkReceived = useCallback((link: string) =>
-    {
-        const value = link.split('/');
-
-        if(value.length < 2) return;
-
-        value.shift();
-
-        openPage(GetConfiguration<string>('habbopages.url') + value.join('/'));
-    }, [ openPage ]);
-
     useEffect(() =>
     {
-        const linkTracker = { linkReceived: onLinkReceived, eventUrlPrefix: 'habbopages/' };
+        const linkTracker: ILinkEventTracker = {
+            linkReceived: (url: string) =>
+            {
+                const value = url.split('/');
+
+                if(value.length < 2) return;
+
+                value.shift();
+
+                openPage(GetConfiguration<string>('habbopages.url') + value.join('/'));
+            },
+            eventUrlPrefix: 'habbopages/'
+        };
 
         AddEventLinkTracker(linkTracker);
 
         return () => RemoveLinkEventTracker(linkTracker);
-    }, [ onLinkReceived ]);
+    }, [ openPage ]);
 
     useEffect(() =>
     {
@@ -80,7 +81,7 @@ export const NitropediaView: FC<{}> = props =>
 
             if(!link || !link.length) return;
 
-            NotificationUtilities.openUrl(link);
+            OpenUrl(link);
         }
 
         document.addEventListener('click', handle);

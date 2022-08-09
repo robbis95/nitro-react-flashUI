@@ -1,9 +1,8 @@
 import { GetModeratorRoomInfoMessageComposer, ModerateRoomMessageComposer, ModeratorActionMessageComposer, ModeratorRoomInfoEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { SendMessageComposer, TryVisitRoom } from '../../../../api';
+import { FC, useEffect, useState } from 'react';
+import { CreateLinkEvent, SendMessageComposer, TryVisitRoom } from '../../../../api';
 import { Button, Column, DraggableWindowPosition, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
-import { ModToolsOpenRoomChatlogEvent } from '../../../../events/mod-tools/ModToolsOpenRoomChatlogEvent';
-import { DispatchUiEvent, UseMessageEventHook } from '../../../../hooks';
+import { useMessageEvent } from '../../../../hooks';
 
 interface ModToolsRoomViewProps
 {
@@ -14,41 +13,20 @@ interface ModToolsRoomViewProps
 export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
 {
     const { roomId = null, onCloseClick = null } = props;
-
     const [ infoRequested, setInfoRequested ] = useState(false);
     const [ loadedRoomId, setLoadedRoomId ] = useState(null);
-
     const [ name, setName ] = useState(null);
     const [ desc, setDesc ] = useState(null);
     const [ ownerId, setOwnerId ] = useState(null);
     const [ ownerName, setOwnerName ] = useState(null);
     const [ ownerInRoom, setOwnerInRoom ] = useState(false);
     const [ usersInRoom, setUsersInRoom ] = useState(0);
-
-    //form data
     const [ kickUsers, setKickUsers ] = useState(false);
     const [ lockRoom, setLockRoom ] = useState(false);
     const [ changeRoomName, setChangeRoomName ] = useState(false);
     const [ message, setMessage ] = useState('');
 
-    const onModtoolRoomInfoEvent = useCallback((event: ModeratorRoomInfoEvent) =>
-    {
-        const parser = event.getParser();
-
-        if(!parser || parser.data.flatId !== roomId) return;
-
-        setLoadedRoomId(parser.data.flatId);
-        setName(parser.data.room.name);
-        setDesc(parser.data.room.desc);
-        setOwnerId(parser.data.ownerId);
-        setOwnerName(parser.data.ownerName);
-        setOwnerInRoom(parser.data.ownerInRoom);
-        setUsersInRoom(parser.data.userCount);
-    }, [ roomId ]);
-
-    UseMessageEventHook(ModeratorRoomInfoEvent, onModtoolRoomInfoEvent);
-
-    const handleClick = useCallback((action: string, value?: string) =>
+    const handleClick = (action: string, value?: string) =>
     {
         if(!action) return;
 
@@ -67,7 +45,21 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
                 SendMessageComposer(new ModerateRoomMessageComposer(roomId, lockRoom ? 1 : 0, changeRoomName ? 1 : 0, kickUsers ? 1 : 0));
                 return;
         }
-    }, [ changeRoomName, kickUsers, lockRoom, message, roomId ]);
+    }
+
+    useMessageEvent<ModeratorRoomInfoEvent>(ModeratorRoomInfoEvent, event =>
+    {
+        const parser = event.getParser();
+
+        if(!parser || parser.data.flatId !== roomId) return;
+
+        setLoadedRoomId(parser.data.flatId);
+        setName(parser.data.room.name);
+        setOwnerId(parser.data.ownerId);
+        setOwnerName(parser.data.ownerName);
+        setOwnerInRoom(parser.data.ownerInRoom);
+        setUsersInRoom(parser.data.userCount);
+    });
 
     useEffect(() =>
     {
@@ -102,7 +94,7 @@ export const ModToolsRoomView: FC<ModToolsRoomViewProps> = props =>
                     </Column>
                     <Column gap={ 1 }>
                         <Button onClick={ event => TryVisitRoom(roomId) }>Visit Room</Button>
-                        <Button onClick={ event => DispatchUiEvent(new ModToolsOpenRoomChatlogEvent(roomId)) }>Chatlog</Button>
+                        <Button onClick={ event => CreateLinkEvent(`mod-tools/open-room-chatlog/${ roomId }`) }>Chatlog</Button>
                     </Column>
                 </Flex>
                 <Column className="mod-content p-2" gap={ 1 }>

@@ -1,9 +1,9 @@
 import { GetRoomVisitsMessageComposer, RoomVisitsData, RoomVisitsEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { AutoSizer, List, ListRowProps } from 'react-virtualized';
 import { SendMessageComposer, TryVisitRoom } from '../../../../api';
 import { Base, Column, DraggableWindowPosition, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
-import { UseMessageEventHook } from '../../../../hooks';
+import { useMessageEvent } from '../../../../hooks';
 
 interface ModToolsUserRoomVisitsViewProps
 {
@@ -16,16 +16,21 @@ export const ModToolsUserRoomVisitsView: FC<ModToolsUserRoomVisitsViewProps> = p
     const { userId = null, onCloseClick = null } = props;
     const [ roomVisitData, setRoomVisitData ] = useState<RoomVisitsData>(null);
 
-    const onModtoolReceivedRoomsUserEvent = useCallback((event: RoomVisitsEvent) =>
+    useMessageEvent<RoomVisitsEvent>(RoomVisitsEvent, event =>
     {
         const parser = event.getParser();
 
-        if(!parser || (parser.data.userId !== userId)) return;
+        if(parser.data.userId !== userId) return;
 
         setRoomVisitData(parser.data);
+    });
+
+    useEffect(() =>
+    {
+        SendMessageComposer(new GetRoomVisitsMessageComposer(userId));
     }, [ userId ]);
 
-    UseMessageEventHook(RoomVisitsEvent, onModtoolReceivedRoomsUserEvent);
+    if(!userId) return null;
 
     const RowRenderer = (props: ListRowProps) =>
     {
@@ -39,13 +44,6 @@ export const ModToolsUserRoomVisitsView: FC<ModToolsUserRoomVisitsViewProps> = p
             </Grid>
         );
     }
-
-    useEffect(() =>
-    {
-        SendMessageComposer(new GetRoomVisitsMessageComposer(userId));
-    }, [ userId ]);
-
-    if(!userId) return null;
 
     return (
         <NitroCardView className="nitro-mod-tools-user-visits" theme="modtool-windows" windowPosition={ DraggableWindowPosition.TOP_CENTER }>

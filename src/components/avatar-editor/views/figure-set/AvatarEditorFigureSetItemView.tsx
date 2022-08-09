@@ -1,7 +1,6 @@
-import { FC, useCallback, useEffect, useState } from 'react';
-import { GetConfiguration } from '../../../../api';
+import { FC, useEffect, useState } from 'react';
+import { AvatarEditorGridPartItem, GetConfiguration } from '../../../../api';
 import { LayoutCurrencyIcon, LayoutGridItem, LayoutGridItemProps } from '../../../../common';
-import { AvatarEditorGridPartItem } from '../../common/AvatarEditorGridPartItem';
 import { AvatarEditorIcon } from '../AvatarEditorIcon';
 
 export interface AvatarEditorFigureSetItemViewProps extends LayoutGridItemProps
@@ -16,20 +15,14 @@ export const AvatarEditorFigureSetItemView: FC<AvatarEditorFigureSetItemViewProp
 
     const hcDisabled = GetConfiguration<boolean>('hc.disabled', false);
 
-    const rerender = useCallback(() =>
-    {
-        setUpdateId(prevValue => (prevValue + 1));
-    }, []);
-
     useEffect(() =>
     {
+        const rerender = () => setUpdateId(prevValue => (prevValue + 1));
+
         partItem.notify = rerender;
 
-        return () =>
-        {
-            partItem.notify = null;
-        }
-    }, [ partItem, rerender ]);
+        return () => partItem.notify = null;
+    }, [ partItem ]);
 
     return (
         <LayoutGridItem itemImage={ (partItem.isClear ? undefined : partItem.imageUrl) } itemActive={ partItem.isSelected } { ...rest }>

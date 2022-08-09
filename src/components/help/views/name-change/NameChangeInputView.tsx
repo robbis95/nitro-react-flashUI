@@ -1,7 +1,7 @@
 import { CheckUserNameMessageComposer, CheckUserNameResultMessageEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useState } from 'react';
 import { LocalizeText, SendMessageComposer } from '../../../../api';
-import { UseMessageEventHook } from '../../../../hooks';
+import { useMessageEvent } from '../../../../hooks';
 import { NameChangeLayoutViewProps } from './NameChangeView.types';
 
 const AVAILABLE: number = 0;
@@ -20,8 +20,8 @@ export const NameChangeInputView:FC<NameChangeLayoutViewProps> = props =>
     const [ isChecking, setIsChecking ] = useState<boolean>(false);
     const [ errorCode, setErrorCode ] = useState<string>(null);
     const [ suggestions, setSuggestions ] = useState<string[]>([]);
-
-    const onCheckUserNameResultMessageEvent = useCallback((event: CheckUserNameResultMessageEvent) =>
+    
+    useMessageEvent<CheckUserNameResultMessageEvent>(CheckUserNameResultMessageEvent, event =>
     {
         setIsChecking(false);
 
@@ -50,9 +50,7 @@ export const NameChangeInputView:FC<NameChangeLayoutViewProps> = props =>
             case DISABLED:
                 setErrorCode('change_not_allowed');
         }
-    }, []);
-    
-    UseMessageEventHook(CheckUserNameResultMessageEvent, onCheckUserNameResultMessageEvent);
+    });
 
     const check = useCallback(() =>
     {

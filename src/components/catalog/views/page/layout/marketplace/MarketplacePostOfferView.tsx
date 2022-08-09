@@ -1,9 +1,9 @@
 import { GetMarketplaceConfigurationMessageComposer, MakeOfferMessageComposer, MarketplaceConfigurationEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { FurnitureItem, LocalizeText, NotificationUtilities, ProductTypeEnum, SendMessageComposer } from '../../../../../../api';
+import { FC, useEffect, useState } from 'react';
+import { FurnitureItem, LocalizeText, ProductTypeEnum, SendMessageComposer } from '../../../../../../api';
 import { Base, Button, Column, Grid, LayoutFurniImageView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../../common';
 import { CatalogPostMarketplaceOfferEvent } from '../../../../../../events';
-import { useCatalog, UseMessageEventHook, UseUiEvent } from '../../../../../../hooks';
+import { useCatalog, useMessageEvent, useNotification, useUiEvent } from '../../../../../../hooks';
 
 export const MarketplacePostOfferView : FC<{}> = props =>
 {
@@ -11,8 +11,9 @@ export const MarketplacePostOfferView : FC<{}> = props =>
     const [ askingPrice, setAskingPrice ] = useState(0);
     const { catalogOptions = null, setCatalogOptions = null } = useCatalog();
     const { marketplaceConfiguration = null } = catalogOptions;
+    const { showConfirm = null } = useNotification();
 
-    const onMarketplaceConfigurationEvent = useCallback((event: MarketplaceConfigurationEvent) =>
+    useMessageEvent<MarketplaceConfigurationEvent>(MarketplaceConfigurationEvent, event =>
     {
         const parser = event.getParser();
 
@@ -24,16 +25,9 @@ export const MarketplacePostOfferView : FC<{}> = props =>
 
             return newValue;
         });
-    }, [ setCatalogOptions ]);
+    });
 
-    UseMessageEventHook(MarketplaceConfigurationEvent, onMarketplaceConfigurationEvent);
-
-    const onCatalogPostMarketplaceOfferEvent = useCallback( (event: CatalogPostMarketplaceOfferEvent) =>
-    {
-        setItem(event.item);
-    }, []);
-
-    UseUiEvent(CatalogPostMarketplaceOfferEvent.POST_MARKETPLACE, onCatalogPostMarketplaceOfferEvent);
+    useUiEvent<CatalogPostMarketplaceOfferEvent>(CatalogPostMarketplaceOfferEvent.POST_MARKETPLACE, event => setItem(event.item));
 
     useEffect(() =>
     {
@@ -54,11 +48,13 @@ export const MarketplacePostOfferView : FC<{}> = props =>
     const getFurniTitle = (item ? LocalizeText(item.isWallItem ? 'wallItem.name.' + item.type : 'roomItem.name.' + item.type) : '');
     const getFurniDescription = (item ? LocalizeText(item.isWallItem ? 'wallItem.desc.' + item.type : 'roomItem.desc.' + item.type) : '');
 
+    const getCommission = () => Math.max(Math.ceil(((marketplaceConfiguration.commission * 0.01) * askingPrice)), 1);
+
     const postItem = () =>
     {
-        if(!item || (askingPrice <= marketplaceConfiguration.minimumPrice)) return;
+        if(!item || (askingPrice < marketplaceConfiguration.minimumPrice)) return;
 
-        NotificationUtilities.confirm(LocalizeText('inventory.marketplace.confirm_offer.info', [ 'furniname', 'price' ], [ getFurniTitle, askingPrice.toString() ]), () =>
+        showConfirm(LocalizeText('inventory.marketplace.confirm_offer.info', [ 'furniname', 'price' ], [ getFurniTitle, askingPrice.toString() ]), () =>
         {
             SendMessageComposer(new MakeOfferMessageComposer(askingPrice, item.isWallItem ? 2 : 1, item.id));
             setItem(null);
@@ -98,7 +94,7 @@ export const MarketplacePostOfferView : FC<{}> = props =>
                                     </Base> }
                                 { (!((askingPrice < marketplaceConfiguration.minimumPrice) || (askingPrice > marketplaceConfiguration.maximumPrice) || isNaN(askingPrice))) &&
                                     <Base className="invalid-feedback d-block">
-                                        { LocalizeText('inventory.marketplace.make_offer.final_price', [ 'commission', 'finalprice' ], [ marketplaceConfiguration.commission.toString(), (askingPrice + marketplaceConfiguration.commission).toString() ]) }
+                                        { LocalizeText('inventory.marketplace.make_offer.final_price', [ 'commission', 'finalprice' ], [ getCommission().toString(), (askingPrice + getCommission()).toString() ]) }
                                     </Base> }
                             </div>
                             <Button disabled={ ((askingPrice < marketplaceConfiguration.minimumPrice) || (askingPrice > marketplaceConfiguration.maximumPrice) || isNaN(askingPrice)) } onClick={ postItem }>
