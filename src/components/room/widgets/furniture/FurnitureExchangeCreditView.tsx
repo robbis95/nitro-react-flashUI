@@ -5,7 +5,7 @@ import { useFurnitureExchangeWidget } from '../../../../hooks';
 
 export const FurnitureExchangeCreditView: FC<{}> = props =>
 {
-    const { objectId = -1, value = 0, close = null, redeem = null } = useFurnitureExchangeWidget();
+    const { objectId = -1, value = 0, onClose = null, redeem = null } = useFurnitureExchangeWidget();
 
     if(objectId === -1) return null;
 

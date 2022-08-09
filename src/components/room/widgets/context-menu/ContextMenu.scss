@@ -66,6 +66,18 @@
         min-width: 30px;
         }
 
+    .menu-bottom {
+        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        color: $white;
+        height: 27px;
+        font-size: 12px;
+        margin-top: -6px;
+        padding-top: 0.25rem;
+        min-width: 30px;
+        }
+
     .menu-header {
         border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
         border-image-slice: 6 6 6 6 fill;
@@ -85,17 +97,17 @@
 
     &.menu-hidden {
         .menu-footer {
-            padding-top:2px;
-            padding-bottom:0;
+            padding-top: 2px;
+            padding-bottom: 0;
         }
     }
 
     .menu-footer {
         color: $white;
         font-size: 16px;
-        width:100%;
+        width: 100%;
         min-width: 25px;
-        padding-bottom:2px;
+        padding-bottom: 2px;
         cursor: pointer;
     }
 
@@ -153,6 +165,12 @@
                 &.left {
                     left: 8px;
                     right: unset;
+                }
+
+                &.center {
+                    position: unset;
+                    right: unset;
+                    left: unset;
                 }
             }
         }

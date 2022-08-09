@@ -8,12 +8,12 @@ interface ChooserWidgetViewProps
     title: string;
     items: RoomObjectItem[];
     selectItem: (item: RoomObjectItem) => void;
-    close: () => void;
+    onClose: () => void;
 }
 
 export const ChooserWidgetView: FC<ChooserWidgetViewProps> = props =>
 {
-    const { title = null, items = [], selectItem = null, close = null } = props;
+    const { title = null, items = [], selectItem = null, onClose = null } = props;
     const [ selectedItem, setSelectedItem ] = useState<RoomObjectItem>(null);
     const [ searchValue, setSearchValue ] = useState('');
     const canSeeId = GetSessionDataManager().isModerator;

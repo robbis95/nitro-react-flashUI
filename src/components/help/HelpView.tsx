@@ -17,7 +17,7 @@ export const HelpView: FC<{}> = props =>
     const [ isVisible, setIsVisible ] = useState(false);
     const { activeReport = null, setActiveReport = null, report = null } = useHelp();
 
-    const close = () =>
+    const onClose = () =>
     {
         setActiveReport(null);
         setIsVisible(false);

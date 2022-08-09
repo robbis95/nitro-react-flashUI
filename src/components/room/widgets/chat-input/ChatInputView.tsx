@@ -89,8 +89,15 @@ export const ChatInputView: FC<{}> = props =>
 
         if(text.length <= maxChatLength)
         {
-            setChatValue('');
-            sendChat(text, chatType, recipientName, chatStyleId);
+            if(/%CC%/g.test(encodeURIComponent(text)))
+            {
+                setChatValue('');
+            }
+            else
+            {
+                setChatValue('');
+                sendChat(text, chatType, recipientName, chatStyleId);
+            }
         }
 
         setChatValue(append);
@@ -141,7 +148,7 @@ export const ChatInputView: FC<{}> = props =>
                 }
                 return;
         }
-        
+
     }, [ floodBlocked, inputRef, chatModeIdWhisper, anotherInputHasFocus, setInputFocus, checkSpecialKeywordForInput, sendChatValue ]);
 
     useUiEvent<RoomWidgetUpdateChatInputContentEvent>(RoomWidgetUpdateChatInputContentEvent.CHAT_INPUT_CONTENT, event =>
@@ -235,6 +242,7 @@ export const ChatInputView: FC<{}> = props =>
                     { floodBlocked &&
                     <Text variant="danger">{ LocalizeText('chat.input.alert.flood', [ 'time' ], [ floodBlockedSeconds.toString() ]) } </Text> }
                 </div>
+                <ChatInputStyleSelectorView chatStyleId={ chatStyleId } chatStyleIds={ chatStyleIds } selectChatStyleId={ updateChatStyleId } />
             </div>, document.getElementById('toolbar-chat-input-container'))
     );
 }

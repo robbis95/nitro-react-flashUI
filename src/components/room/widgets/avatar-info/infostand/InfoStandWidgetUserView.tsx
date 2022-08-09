@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomSessionFavoriteGroupUpdateEvent, RoomSessionUserBadgesEvent, RoomSessionUserFigureUpdateEvent, UserRelationshipsComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, FocusEvent, KeyboardEvent, SetStateAction, useEffect, useState } from 'react';
 import { AvatarInfoUser, CloneObject, GetConfiguration, GetGroupInformation, GetSessionDataManager, GetUserProfile, LocalizeText, SendMessageComposer } from '../../../../../api';
-import { Base, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, Text, UserProfileIconView } from '../../../../../common';
+import { Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, Text, UserProfileIconView } from '../../../../../common';
 import { useMessageEvent, useRoom, useRoomSessionManagerEvent } from '../../../../../hooks';
 import { InfoStandWidgetUserRelationshipsView } from './InfoStandWidgetUserRelationshipsView';
 
@@ -10,17 +10,16 @@ interface InfoStandWidgetUserViewProps
 {
     avatarInfo: AvatarInfoUser;
     setAvatarInfo: Dispatch<SetStateAction<AvatarInfoUser>>;
-    close: () => void;
+    onClose: () => void;
 }
 
 export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =>
 {
-    const { avatarInfo = null, setAvatarInfo = null, close = null } = props;
+    const { avatarInfo = null, setAvatarInfo = null, onClose = null } = props;
     const [ motto, setMotto ] = useState<string>(null);
     const [ isEditingMotto, setIsEditingMotto ] = useState(false);
     const [ relationships, setRelationships ] = useState<RelationshipStatusInfoMessageParser>(null);
     const { roomSession = null } = useRoom();
-    const maxBadgeCount = GetConfiguration<number>('user.badges.max.slots', 5);
 
     const saveMotto = (motto: string) =>
     {
@@ -48,6 +47,10 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
     useRoomSessionManagerEvent<RoomSessionUserBadgesEvent>(RoomSessionUserBadgesEvent.RSUBE_BADGES, event =>
     {
         if(!avatarInfo || (avatarInfo.webID !== event.userId)) return;
+
+        const oldBadges = avatarInfo.badges.join('');
+        
+        if(oldBadges === event.badges.join('')) return;
 
         setAvatarInfo(prevValue =>
         {
@@ -82,7 +85,6 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
         setAvatarInfo(prevValue =>
         {
             const newValue = CloneObject(prevValue);
-
             const clearGroup = ((event.status === -1) || (event.habboGroupId <= 0));
 
             newValue.groupId = clearGroup ? -1 : event.habboGroupId;
@@ -137,7 +139,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                         <Column fullWidth className="body-image infostand-thumb-bg" onClick={ event => GetUserProfile(avatarInfo.webID) }>
                             <LayoutAvatarImageView figure={ avatarInfo.figure } direction={ 4 } />
                         </Column>
-                        <Column grow gap={ 0 }>
+                        <Column grow alignItems="center" gap={ 0 }>
                             <Flex gap={ 1 }>
                                 <Base className="badge-image">
                                     { avatarInfo.badges[0] && <LayoutBadgeImageView badgeCode={ avatarInfo.badges[0] } showInfo={ true } /> }

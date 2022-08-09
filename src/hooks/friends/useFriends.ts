@@ -1,7 +1,7 @@
 import { AcceptFriendMessageComposer, DeclineFriendMessageComposer, FollowFriendMessageComposer, FriendListFragmentEvent, FriendListUpdateComposer, FriendListUpdateEvent, FriendParser, FriendRequestsEvent, GetFriendRequestsComposer, MessengerInitComposer, MessengerInitEvent, NewFriendRequestEvent, RequestFriendComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
 import { useEffect, useMemo, useState } from 'react';
 import { useBetween } from 'use-between';
-import { CloneObject, MessengerFriend, MessengerRequest, MessengerSettings, SendMessageComposer } from '../../api';
+import { CloneObject, GetSessionDataManager, MessengerFriend, MessengerRequest, MessengerSettings, SendMessageComposer } from '../../api';
 import { useMessageEvent } from '../events';
 
 const useFriendsState = () =>
@@ -9,6 +9,7 @@ const useFriendsState = () =>
     const [ friends, setFriends ] = useState<MessengerFriend[]>([]);
     const [ requests, setRequests ] = useState<MessengerRequest[]>([]);
     const [ sentRequests, setSentRequests ] = useState<number[]>([]);
+    const [ dismissedRequestIds, setDismissedRequestIds ] = useState<number[]>([]);
     const [ settings, setSettings ] = useState<MessengerSettings>(null);
 
     const onlineFriends = useMemo(() =>
@@ -59,6 +60,8 @@ const useFriendsState = () =>
 
     const canRequestFriend = (userId: number) =>
     {
+        if(userId === GetSessionDataManager().userId) return false;
+        
         if(getFriend(userId)) return false;
 
         if(requests.find(request => (request.requesterUserId === userId))) return false;
@@ -257,7 +260,7 @@ const useFriendsState = () =>
         }
     }, []);
 
-    return { friends, requests, sentRequests, settings, onlineFriends, offlineFriends, getFriend, canRequestFriend, requestFriend, requestResponse, followFriend, updateRelationship };
+    return { friends, requests, sentRequests, dismissedRequestIds, setDismissedRequestIds, settings, onlineFriends, offlineFriends, getFriend, canRequestFriend, requestFriend, requestResponse, followFriend, updateRelationship };
 }
 
 export const useFriends = () => useBetween(useFriendsState);

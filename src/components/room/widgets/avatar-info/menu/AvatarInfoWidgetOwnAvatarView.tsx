@@ -14,7 +14,7 @@ interface AvatarInfoWidgetOwnAvatarViewProps
     avatarInfo: AvatarInfoUser;
     isDancing: boolean;
     setIsDecorating: Dispatch<SetStateAction<boolean>>;
-    close: () => void;
+    onClose: () => void;
 }
 
 const MODE_NORMAL = 0;
@@ -25,12 +25,10 @@ const MODE_SIGNS = 4;
 
 export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProps> = props =>
 {
-    const { avatarInfo = null, isDancing = false, setIsDecorating = null, close = null } = props;
+    const { avatarInfo = null, isDancing = false, setIsDecorating = null, onClose = null } = props;
     const [ mode, setMode ] = useState((isDancing && HasHabboClub()) ? MODE_CLUB_DANCES : MODE_NORMAL);
     const { roomSession = null } = useRoom();
     const [ hide, setHide ] = useState(false);
-
-
     const processAction = (name: string) =>
     {
         let hideMenu = true;
@@ -109,7 +107,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
             }
         }
 
-        if(hideMenu) close();
+        if(hideMenu) onClose();
     }
 
     const isShowDecorate = () => (avatarInfo.amIOwner || avatarInfo.amIAnyRoomController || (avatarInfo.roomControllerLevel > RoomControllerLevel.GUEST));
@@ -117,7 +115,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
     const isRidingHorse = IsRidingHorse();
 
     return (
-        <ContextMenuView objectId={ avatarInfo.roomIndex } category={ RoomObjectCategory.UNIT } userType={ avatarInfo.userType } close={ close } collapsable={ true }>
+        <ContextMenuView objectId={ avatarInfo.roomIndex } category={ RoomObjectCategory.UNIT } userType={ avatarInfo.userType } onClose={ onClose } collapsable={ true }>
             
             <ContextMenuHeaderView className="cursor-pointer" onClick={ event => GetUserProfile(avatarInfo.webID) }>
                 { avatarInfo.name }

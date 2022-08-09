@@ -73,18 +73,16 @@ export const GroupMembersView: FC<{}> = props =>
         SendMessageComposer(new GroupConfirmRemoveMemberComposer(membersData.groupId, member.id));
     }
 
-    const onGroupMembersEvent = useCallback((event: GroupMembersEvent) =>
+    useMessageEvent<GroupMembersEvent>(GroupMembersEvent, event =>
     {
         const parser = event.getParser();
 
         setMembersData(parser);
         setLevelId(parser.level);
         setTotalPages(Math.ceil(parser.totalMembersCount / parser.pageSize));
-    }, []);
+    });
 
-    useMessageEvent(GroupMembersEvent, onGroupMembersEvent);
-
-    const onGroupConfirmMemberRemoveEvent = useCallback((event: GroupConfirmMemberRemoveEvent) =>
+    useMessageEvent<GroupConfirmMemberRemoveEvent>(GroupConfirmMemberRemoveEvent, event =>
     {
         const parser = event.getParser();
 
@@ -96,34 +94,31 @@ export const GroupMembersView: FC<{}> = props =>
         }, null);
             
         setRemovingMemberName(null);
-    }, [ membersData, removingMemberName, refreshMembers, showConfirm ]);
-
-    useMessageEvent(GroupConfirmMemberRemoveEvent, onGroupConfirmMemberRemoveEvent);
-
-    const linkReceived = useCallback((url: string) =>
-    {
-        const parts = url.split('/');
-
-        if(parts.length < 2) return;
-
-        const groupId = (parseInt(parts[1]) || -1);
-        const levelId = (parseInt(parts[2]) || 3);
-        
-        setGroupId(groupId);
-        setLevelId(levelId);
-    }, []);
+    });
 
     useEffect(() =>
     {
         const linkTracker: ILinkEventTracker = {
-            linkReceived,
+            linkReceived: (url: string) =>
+            {
+                const parts = url.split('/');
+        
+                if(parts.length < 2) return;
+        
+                const groupId = (parseInt(parts[1]) || -1);
+                const levelId = (parseInt(parts[2]) || 3);
+                
+                setGroupId(groupId);
+                setLevelId(levelId);
+                setPageId(0);
+            },
             eventUrlPrefix: 'group-members/'
         };
 
         AddEventLinkTracker(linkTracker);
 
         return () => RemoveLinkEventTracker(linkTracker);
-    }, [ linkReceived ]);
+    }, []);
 
     useEffect(() =>
     {

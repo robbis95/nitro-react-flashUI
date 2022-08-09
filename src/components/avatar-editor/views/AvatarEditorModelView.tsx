@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useState } from 'react';
-import { CategoryData, FigureData, IAvatarEditorCategoryModel, LocalizeText } from '../../../api';
-import { Column, Flex, Grid, Text } from '../../../common';
+import { CategoryData, FigureData, IAvatarEditorCategoryModel } from '../../../api';
+import { Column, Flex, Grid } from '../../../common';
 import { AvatarEditorIcon } from './AvatarEditorIcon';
 import { AvatarEditorFigureSetView } from './figure-set/AvatarEditorFigureSetView';
 import { AvatarEditorPaletteSetView } from './palette-set/AvatarEditorPaletteSetView';

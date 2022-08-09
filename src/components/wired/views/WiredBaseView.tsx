@@ -21,7 +21,7 @@ export const WiredBaseView: FC<PropsWithChildren<WiredBaseViewProps>> = props =>
     const [ needsSave, setNeedsSave ] = useState<boolean>(false);
     const { trigger = null, setTrigger = null, setIntParams = null, setStringParam = null, setFurniIds = null, saveWired = null } = useWired();
 
-    const close = () => setTrigger(null);
+    const onClose = () => setTrigger(null);
     
     const onSave = () =>
     {
@@ -77,19 +77,6 @@ export const WiredBaseView: FC<PropsWithChildren<WiredBaseViewProps>> = props =>
 
                     return trigger.selectedItems;
                 }
-
-                return [];
-            });
-        }
-
-        return () =>
-        {
-            setNeedsSave(false);
-            setIntParams([]);
-            setStringParam(null);
-            setFurniIds(prevValue =>
-            {
-                if(prevValue && prevValue.length) WiredSelectionVisualizer.clearSelectionShaderFromFurni(prevValue);
 
                 return [];
             });

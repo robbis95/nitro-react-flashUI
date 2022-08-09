@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CrackableDataType, GroupInformationComposer, GroupInformationEvent, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter, RoomWidgetFurniInfoUsagePolicyEnum, SetObjectDataMessageComposer, StringDataType } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { AvatarInfoFurni, CreateLinkEvent, GetGroupInformation, GetRoomEngine, LocalizeText, SendMessageComposer } from '../../../../../api';
@@ -7,7 +8,7 @@ import { useMessageEvent, useRoom } from '../../../../../hooks';
 interface InfoStandWidgetFurniViewProps
 {
     avatarInfo: AvatarInfoFurni;
-    close: () => void;
+    onClose: () => void;
 }
 
 const PICKUP_MODE_NONE: number = 0;
@@ -16,7 +17,7 @@ const PICKUP_MODE_FULL: number = 2;
 
 export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props =>
 {
-    const { avatarInfo = null, close = null } = props;
+    const { avatarInfo = null, onClose = null } = props;
     const { roomSession = null } = useRoom();
     
     const [ pickupMode, setPickupMode ] = useState(0);

@@ -7,8 +7,7 @@ import { useUserAddedEvent, useUserRemovedEvent } from '../engine';
 const useFriendRequestWidgetState = () =>
 {
     const [ activeRequests, setActiveRequests ] = useState<{ roomIndex: number, request: MessengerRequest }[]>([]);
-    const [ dismissedRequestIds, setDismissedRequestIds ] = useState<number[]>([]);
-    const { requests = [] } = useFriends();
+    const { requests = [], dismissedRequestIds = [], setDismissedRequestIds = null } = useFriends();
 
     const displayedRequests = useMemo(() => activeRequests.filter(request => (dismissedRequestIds.indexOf(request.request.requesterUserId) === -1)), [ activeRequests, dismissedRequestIds ]);
 
@@ -62,8 +61,6 @@ const useFriendRequestWidgetState = () =>
 
     useEffect(() =>
     {
-        if(!requests || !requests.length) return;
-
         const newDisplayedRequests: { roomIndex: number, request: MessengerRequest }[] = [];
 
         for(const request of requests)

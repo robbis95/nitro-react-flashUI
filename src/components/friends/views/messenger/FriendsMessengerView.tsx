@@ -1,6 +1,6 @@
 import { FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { AddEventLinkTracker, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
+import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
 import { Base, Button, ButtonGroup, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, LayoutGridItem, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
 import { useHelp, useMessenger } from '../../../../hooks';
@@ -22,7 +22,7 @@ export const FriendsMessengerView: FC<{}> = props =>
     {
         if(!activeThread || !messageText.length) return;
 
-        sendMessage(activeThread, messageText);
+        sendMessage(activeThread, GetSessionDataManager().userId, messageText);
 
         setMessageText('');
     }
@@ -49,15 +49,20 @@ export const FriendsMessengerView: FC<{}> = props =>
 
                         return;
                     }
-                    else
+
+                    if(parts[1] === 'toggle')
                     {
-                        const thread = getMessageThread(parseInt(parts[1]));
+                        setIsVisible(prevValue => !prevValue);
 
-                        if(!thread) return;
-
-                        setActiveThreadId(thread.threadId);
-                        setIsVisible(true);
+                        return;
                     }
+
+                    const thread = getMessageThread(parseInt(parts[1]));
+
+                    if(!thread) return;
+
+                    setActiveThreadId(thread.threadId);
+                    setIsVisible(true);
                 }
             },
             eventUrlPrefix: 'friends-messenger/'

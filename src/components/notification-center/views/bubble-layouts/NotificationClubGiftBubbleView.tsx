@@ -9,10 +9,10 @@ export interface NotificationClubGiftBubbleViewProps extends LayoutNotificationB
 
 export const NotificationClubGiftBubbleView: FC<NotificationClubGiftBubbleViewProps> = props =>
 {
-    const { item = null, close = null, ...rest } = props;
+    const { item = null, onClose = null, ...rest } = props;
 
     return (
-        <LayoutNotificationBubbleView fadesOut={ false } className="flex-column nitro-notification club-gift" close={ close } { ...rest }>
+        <LayoutNotificationBubbleView fadesOut={ false } className="flex-column nitro-notification club-gift" onClose={ close } { ...rest }>
             <div className="d-flex gap-1 mb-2">
                 <LayoutCurrencyIcon type="hc" className="flex-shrink-0" />
                 <span className="ms-1">{ LocalizeText('notifications.text.club_gift') }</span>
