@@ -1,6 +1,7 @@
 import { NitroRectangle, NitroRenderTexture } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useRef } from 'react';
 import { GetRoomEngine, LocalizeText, PlaySound, SoundNames } from '../../api';
+import { Button } from '../Button';
 import { DraggableWindow } from '../draggable-window';
 import { Flex } from '../Flex';
 

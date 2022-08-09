@@ -153,7 +153,7 @@ export const CatalogGiftView: FC<{}> = props =>
     const priceText = 'catalog.gift_wrapping_new.' + (isBoxDefault ? 'freeprice' : 'price');
 
     return (
-        <NitroCardView uniqueKey="catalog-gift" className="nitro-catalog-gift" theme="primary-slim">
+        <NitroCardView uniqueKey="catalog-gift" className="nitro-catalog-gift" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('catalog.gift_wrapping.title') } onCloseClick={ onClose } />
             <NitroCardContentView className="text-black">
                 <FormGroup column>

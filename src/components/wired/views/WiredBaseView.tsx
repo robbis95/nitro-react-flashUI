@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { GetSessionDataManager, LocalizeText, WiredFurniType, WiredSelectionVisualizer } from '../../../api';
-import { Button, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
+import { Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
 import { useWired } from '../../../hooks';
 import { WiredFurniSelectorView } from './WiredFurniSelectorView';
 
@@ -85,7 +85,7 @@ export const WiredBaseView: FC<PropsWithChildren<WiredBaseViewProps>> = props =>
 
     return (
         <NitroCardView uniqueKey="nitro-wired" className="nitro-wired" theme="wired">
-            <NitroCardHeaderView headerText={ LocalizeText('wiredfurni.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText('wiredfurni.title') } onCloseClick={ onClose } />
             <NitroCardContentView>
                 <Column gap={ 1 }>
                     <Flex alignItems="center" gap={ 1 }>
@@ -103,7 +103,7 @@ export const WiredBaseView: FC<PropsWithChildren<WiredBaseViewProps>> = props =>
                     </> }
                 <Flex alignItems="center" gap={ 1 }>
                     <button type="button" className="btn btn-primary notification-buttons w-100" onClick={ onSave }>{ LocalizeText('wiredfurni.ready') }</button>
-                    <button type="button" className="btn btn-primary notification-buttons w-100" onClick={ close }>{ LocalizeText('cancel') }</button>
+                    <button type="button" className="btn btn-primary notification-buttons w-100" onClick={ onClose }>{ LocalizeText('cancel') }</button>
                 </Flex>
             </NitroCardContentView>
         </NitroCardView>

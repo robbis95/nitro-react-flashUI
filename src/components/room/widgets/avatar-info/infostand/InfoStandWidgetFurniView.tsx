@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CrackableDataType, GroupInformationComposer, GroupInformationEvent, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter, RoomWidgetFurniInfoUsagePolicyEnum, SetObjectDataMessageComposer, StringDataType } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { AvatarInfoFurni, CreateLinkEvent, GetGroupInformation, GetRoomEngine, LocalizeText, SendMessageComposer } from '../../../../../api';
@@ -278,7 +277,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                     <Column gap={ 1 }>
                         <Flex alignItems="center" justifyContent="between" gap={ 1 }>
                             <Text gfbold variant="white" wrap>{ avatarInfo.name }</Text>
-                            <i className="infostand-close" onClick={ close } />
+                            <i className="infostand-close" onClick={ onClose } />
                         </Flex>
                         <hr className="m-0" />
                     </Column>

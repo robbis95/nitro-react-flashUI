@@ -1,7 +1,7 @@
 import { RedeemVoucherMessageComposer, VoucherRedeemErrorMessageEvent, VoucherRedeemOkMessageEvent } from '@nitrots/nitro-renderer';
 import { FC, useState } from 'react';
 import { LocalizeText, SendMessageComposer } from '../../../../../api';
-import { Button, Flex } from '../../../../../common';
+import { Button, Column, Flex, Text } from '../../../../../common';
 import { useMessageEvent, useNotification } from '../../../../../hooks';
 
 export interface CatalogRedeemVoucherViewProps

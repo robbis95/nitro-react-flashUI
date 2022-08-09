@@ -119,7 +119,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
 
     return (
         <NitroCardView className="nitro-group-creator" theme="primary">
-            <NitroCardHeaderView headerText={ LocalizeText('group.create.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText('group.create.title') } onCloseClick={ onClose } />
             <NitroCardContentView>
                 <Flex center className="creator-tabs">
                     { TABS.map((tab, index) =>

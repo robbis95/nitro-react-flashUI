@@ -81,7 +81,7 @@ export const NavigatorDoorStateView: FC<{}> = props =>
                 </Column>
                 { isDoorbell &&
                     <Flex fullWidth gap={ 1 } className="align-items-end mt-auto pt-3">
-                        <Text small className="cursor-pointer" underline onClick={ close }>
+                        <Text small className="cursor-pointer" underline onClick={ onClose }>
                             { LocalizeText('generic.cancel') }
                         </Text>
                         { (doorData.state === DoorStateType.START_DOORBELL) &&
@@ -96,7 +96,7 @@ export const NavigatorDoorStateView: FC<{}> = props =>
                             <input type="password" className="form-control form-control-sm" onChange={ event => setPassword(event.target.value) } />
                         </Flex>
                         <Flex fullWidth gap={ 1 } className="align-items-end mt-auto pt-3">
-                            <Text small className="cursor-pointer" underline onClick={ close }>
+                            <Text small className="cursor-pointer" underline onClick={ onClose }>
                                 { LocalizeText('generic.cancel') }
                             </Text>
                             <Button className="ms-auto" onClick={ tryEntering }>

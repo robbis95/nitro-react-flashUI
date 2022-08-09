@@ -33,7 +33,7 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
                 <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                            <Text variant="white" small wrap>{ avatarInfo.name }</Text>
+                            <Text variant="white" wrap>{ avatarInfo.name }</Text>
                             <FontAwesomeIcon icon="times" className="cursor-pointer" onClick={ onClose } />
                         </Flex>
                         <hr className="m-0" />
@@ -54,21 +54,21 @@ export const InfoStandWidgetRentableBotView: FC<InfoStandWidgetRentableBotViewPr
                     </Column>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" className="bg-light-dark rounded py-1 px-2">
-                            <Text fullWidth wrap textBreak variant="white" small className="motto-content">{ avatarInfo.motto }</Text>
+                            <Text fullWidth wrap textBreak variant="white" className="motto-content">{ avatarInfo.motto }</Text>
                         </Flex>
                         <hr className="m-0" />
                     </Column>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" gap={ 1 }>
                             <UserProfileIconView userId={ avatarInfo.ownerId } />
-                            <Text variant="white" small wrap>
+                            <Text variant="white" wrap>
                                 { LocalizeText('infostand.text.botowner', [ 'name' ], [ avatarInfo.ownerName ]) }
                             </Text>
                         </Flex>
                         { (avatarInfo.carryItem > 0) &&
                             <>
                                 <hr className="m-0" />
-                                <Text variant="white" small wrap>
+                                <Text variant="white" wrap>
                                     { LocalizeText('infostand.text.handitem', [ 'item' ], [ LocalizeText('handitem' + avatarInfo.carryItem) ]) }
                                 </Text>
                             </> }

@@ -11,7 +11,7 @@ export const FurnitureBackgroundColorView: FC<{}> = props =>
     if(objectId === -1) return null;
 
     return (
-        <NitroCardView theme="primary-slim" className="nitro-room-widget-toner">
+        <NitroCardView theme="primary" className="nitro-room-widget-toner">
             <NitroCardHeaderView headerText={ LocalizeText('widget.backgroundcolor.title') } onCloseClick={ onClose } />
             <NitroCardContentView overflow="hidden" justifyContent="between">
                 <Column overflow="auto" gap={ 1 }>

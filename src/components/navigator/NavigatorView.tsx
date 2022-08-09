@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
@@ -123,9 +122,12 @@ export const NavigatorView: FC<{}> = props =>
                         }
                         return;
                     case 'create':
-                        setIsVisible(true);
-                        setCreatorOpen(true);
+                        setCreatorOpen(value => !value);
                         return;
+                    case 'close-creator':
+                        setCreatorOpen(false);
+                        return;
+            
                     case 'search':
                         if(parts.length > 2)
                         {

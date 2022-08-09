@@ -45,7 +45,7 @@ export const ChooserWidgetView: FC<ChooserWidgetViewProps> = props =>
 
     return (
         <NitroCardView className="nitro-chooser-widget" theme="primary">
-            <NitroCardHeaderView headerText={ title } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ title } onCloseClick={ onClose } />
             <NitroCardContentView overflow="hidden">
                 <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('generic.search') } value={ searchValue } onChange={ event => setSearchValue(event.target.value) } />
                 <Column fullHeight overflow="auto">

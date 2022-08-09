@@ -119,7 +119,7 @@ export const InventoryView: FC<{}> = props =>
 
     return (
         <NitroCardView uniqueKey={ 'inventory' } className={ isTrading ? 'nitro-inventory trading' : 'nitro-inventory' } theme={ isTrading ? 'primary' : '' } >
-            <NitroCardHeaderView headerText={ LocalizeText('inventory.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText('inventory.title') } onCloseClick={ onClose } />
             { !isTrading &&
                 <>
                     <NitroCardTabsView>

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ProductTypeEnum } from '../../../../../api';
-import { Column, Flex, Grid, Text } from '../../../../../common';
+import { Base, Column, Flex, Grid, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 import { CatalogAddOnBadgeWidgetView } from '../widgets/CatalogAddOnBadgeWidgetView';
 import { CatalogItemGridWidgetView } from '../widgets/CatalogItemGridWidgetView';

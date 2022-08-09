@@ -17,8 +17,6 @@ export const ModToolsView: FC<{}> = props =>
     const [ isTicketsVisible, setIsTicketsVisible ] = useState(false);
     const { openRooms = [], openRoomChatlogs = [], openUserChatlogs = [], openUserInfos = [], openRoomInfo = null, closeRoomInfo = null, toggleRoomInfo = null, openRoomChatlog = null, closeRoomChatlog = null, toggleRoomChatlog = null, openUserInfo = null, closeUserInfo = null, toggleUserInfo = null, openUserChatlog = null, closeUserChatlog = null, toggleUserChatlog = null } = useModTools();
     const elementRef = useRef<HTMLDivElement>(null);
-    const isMod = GetSessionDataManager().isModerator;
-
 
     useRoomEngineEvent<RoomEngineEvent>([
         RoomEngineEvent.INITIALIZED,
@@ -120,24 +118,23 @@ export const ModToolsView: FC<{}> = props =>
     }, [ openRoomInfo, closeRoomInfo, toggleRoomInfo, openRoomChatlog, closeRoomChatlog, toggleRoomChatlog, openUserInfo, closeUserInfo, toggleUserInfo, openUserChatlog, closeUserChatlog, toggleUserChatlog ]);
 
     return (
-        <ModToolsContextProvider value={ { modToolsState, dispatchModToolsState } }>
-            <ModToolsMessageHandler />
-            { isVisible && isMod &&
+        <>
+            { isVisible &&
                 <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools" windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
                     <NitroCardHeaderView headerText={ 'Mod Tools' } onCloseClick={ event => setIsVisible(false) } />
-                    <NitroCardContentView className="text-black pb-3 pt-2" gap={ 3 }>
-                        <ButtonModtool gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-info/${ currentRoomId }`) } disabled={ (currentRoomId <= 0) } className="position-relative">
-                            <Base className="icon icon-small-room position-absolute start-1"/> Room tool
-                        </ButtonModtool>
-                        <ButtonModtool innerRef={ elementRef } gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-chatlog/${ currentRoomId }`) } disabled={ (currentRoomId <= 0) } className="position-relative">
+                    <NitroCardContentView className="text-black" gap={ 1 }>
+                        <Button gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-info/${ currentRoomId }`) } disabled={ (currentRoomId <= 0) } className="position-relative">
+                            <Base className="icon icon-small-room position-absolute start-1"/> Room Tool
+                        </Button>
+                        <Button innerRef={ elementRef } gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-chatlog/${ currentRoomId }`) } disabled={ (currentRoomId <= 0) } className="position-relative">
                             <Base className="icon icon-chat-history position-absolute start-1"/> Chatlog Tool
-                        </ButtonModtool>
-                        <ButtonModtool gap={ 1 } onClick={ () => CreateLinkEvent(`mod-tools/toggle-user-info/${ selectedUser.userId }`) } disabled={ !selectedUser } className="position-relative">
+                        </Button>
+                        <Button gap={ 1 } onClick={ () => CreateLinkEvent(`mod-tools/toggle-user-info/${ selectedUser.userId }`) } disabled={ !selectedUser } className="position-relative">
                             <Base className="icon icon-user position-absolute start-1"/> User: { selectedUser ? selectedUser.username : '' }
-                        </ButtonModtool>
-                        <ButtonModtool gap={ 1 } onClick={ () => setIsTicketsVisible(value => !value) } className="position-relative">
+                        </Button>
+                        <Button gap={ 1 } onClick={ () => setIsTicketsVisible(prevValue => !prevValue) } className="position-relative">
                             <Base className="icon icon-tickets position-absolute start-1"/> Report Tool
-                        </ButtonModtool>
+                        </Button>
                     </NitroCardContentView>
                 </NitroCardView> }
             { (openRooms.length > 0) && openRooms.map(roomId => <ModToolsRoomView key={ roomId } roomId={ roomId } onCloseClick={ () => CreateLinkEvent(`mod-tools/close-room-info/${ roomId }`) } />) }

@@ -11,7 +11,7 @@ export const FurnitureExchangeCreditView: FC<{}> = props =>
 
     return (
         <NitroCardView className="nitro-widget-exchange-credit" theme="primary">
-            <NitroCardHeaderView headerText={ LocalizeText('catalog.redeem.dialog.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText('catalog.redeem.dialog.title') } onCloseClick={ onClose } />
             <NitroCardContentView center>
                 <Flex overflow="hidden" gap={ 2 }>
                     <Column center>
