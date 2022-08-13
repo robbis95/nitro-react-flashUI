@@ -70,8 +70,6 @@ export const HelpView: FC<{}> = props =>
 
         setIsVisible(true);
     }, [ activeReport ]);
-
-    if(!isVisible && !activeReport) return null;
     
     const CurrentStepView = () =>
     {
