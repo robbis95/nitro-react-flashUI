@@ -23,6 +23,7 @@ export const NavigatorView: FC<{}> = props =>
     const [ needsSearch, setNeedsSearch ] = useState(false);
     const { searchResult = null, topLevelContext = null, topLevelContexts = null, navigatorData = null } = useNavigator();
     const pendingSearch = useRef<{ value: string, code: string }>(null);
+    const elementRef = useRef<HTMLDivElement>();
 
     useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.CREATED, event =>
     {
@@ -158,6 +159,8 @@ export const NavigatorView: FC<{}> = props =>
         if(!searchResult) return;
 
         setIsLoading(false);
+
+        if(elementRef && elementRef.current) elementRef.current.scrollTop = 0;
     }, [ searchResult ]);
 
     useEffect(() =>

@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC } from 'react';
-import { AvatarInfoPet, LocalizeText } from '../../../../../api';
-import { Base, Column, Flex, LayoutPetImageView, Text, UserProfileIconView } from '../../../../../common';
+import { PetRespectComposer, PetType } from '@nitrots/nitro-renderer';
+import { FC, useEffect, useState } from 'react';
+import { AvatarInfoPet, ConvertSeconds, CreateLinkEvent, GetConfiguration, LocalizeText, SendMessageComposer } from '../../../../../api';
+import { Base, Button, Column, Flex, LayoutCounterTimeView, LayoutPetImageView, LayoutRarityLevelView, Text, UserProfileIconView } from '../../../../../common';
+import { useRoom, useSessionInfo } from '../../../../../hooks';
 
 interface InfoStandWidgetPetViewProps
 {
@@ -12,8 +14,64 @@ interface InfoStandWidgetPetViewProps
 export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props =>
 {
     const { avatarInfo = null, onClose = null } = props;
+    const [ remainingGrowTime, setRemainingGrowTime ] = useState(0);
+    const [ remainingTimeToLive, setRemainingTimeToLive ] = useState(0);
+    const { roomSession = null } = useRoom();
+    const { petRespectRemaining = 0, respectPet = null } = useSessionInfo();
+
+    useEffect(() =>
+    {
+        setRemainingGrowTime(avatarInfo.remainingGrowTime);
+        setRemainingTimeToLive(avatarInfo.remainingTimeToLive);
+    }, [ avatarInfo ]);
+
+    useEffect(() =>
+    {
+        if((avatarInfo.petType !== PetType.MONSTERPLANT) || avatarInfo.dead) return;
+        
+        const interval = setInterval(() =>
+        {
+            setRemainingGrowTime(prevValue => (prevValue - 1));
+            setRemainingTimeToLive(prevValue => (prevValue - 1));
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [ avatarInfo ]);
 
     if(!avatarInfo) return null;
+
+    const processButtonAction = (action: string) =>
+    {
+        let hideMenu = true;
+
+        if (!action || action == '') return;
+
+        switch (action)
+        {
+            case 'respect':
+                respectPet(avatarInfo.id);
+
+                if((petRespectRemaining - 1) >= 1) hideMenu = false;
+                break;
+            case 'buyfood':
+                CreateLinkEvent('catalog/open/' + GetConfiguration('catalog.links')['pets.buy_saddle']);
+                break;
+            case 'train':
+                // not coded
+                break;
+            case 'treat':
+                SendMessageComposer(new PetRespectComposer(avatarInfo.id));
+                break;
+            case 'compost':
+                roomSession?.compostPlant(avatarInfo.id);
+                break;
+            case 'pick_up':
+                roomSession?.pickupPet(avatarInfo.id);
+                break;
+        }
+
+        if(hideMenu) onClose();
+    }
 
     return (
         <Column className="nitro-infostand rounded">

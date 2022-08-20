@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
 import { ICatalogNode } from '../../../../api';
-import { LayoutGridItem, Text } from '../../../../common';
+import { Base, LayoutGridItem, Text } from '../../../../common';
 import { useCatalog } from '../../../../hooks';
 import { CatalogIconView } from '../catalog-icon/CatalogIconView';
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';
@@ -9,11 +9,12 @@ import { CatalogNavigationSetView } from './CatalogNavigationSetView';
 export interface CatalogNavigationItemViewProps
 {
     node: ICatalogNode;
+    child?: boolean;
 }
 
 export const CatalogNavigationItemView: FC<CatalogNavigationItemViewProps> = props =>
 {
-    const { node = null } = props;
+    const { node = null, child = false } = props;
     const { activateNode = null } = useCatalog();
     
     return (
@@ -25,7 +26,7 @@ export const CatalogNavigationItemView: FC<CatalogNavigationItemViewProps> = pro
                     <FontAwesomeIcon icon={ node.isOpen ? 'caret-up' : 'caret-down' } /> }
             </LayoutGridItem>
             { node.isOpen && node.isBranch &&
-                <CatalogNavigationSetView node={ node } /> }
+                <CatalogNavigationSetView node={ node } child={ true } /> }
         </>
     );
 }

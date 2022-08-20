@@ -95,6 +95,7 @@ export const HelpView: FC<{}> = props =>
 
     return (
         <>
+            { isVisible &&
             <NitroCardView className="nitro-help" theme="primary">
                 <NitroCardHeaderView headerText={ LocalizeText('help.button.cfh') } onCloseClick={ onClose } />
                 <NitroCardContentView className="text-black">
@@ -107,7 +108,7 @@ export const HelpView: FC<{}> = props =>
                         </Column>
                     </Grid>
                 </NitroCardContentView>
-            </NitroCardView>
+            </NitroCardView> }
             <SanctionSatusView />
             <NameChangeView />
         </>

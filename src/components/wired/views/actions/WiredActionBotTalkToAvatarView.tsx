@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { LocalizeText, WiredFurniType, WIRED_STRING_DELIMETER } from '../../../../api';
+import { GetConfiguration, LocalizeText, WiredFurniType, WIRED_STRING_DELIMETER } from '../../../../api';
 import { Column, Flex, Text } from '../../../../common';
 import { useWired } from '../../../../hooks';
 import { WiredActionBaseView } from './WiredActionBaseView';
