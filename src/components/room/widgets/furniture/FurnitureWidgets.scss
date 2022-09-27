@@ -32,6 +32,11 @@
     }
 }
 
+.nitro-widget-crafting {
+  width: $nitro-widget-crafting-width;
+  height: $nitro-widget-crafting-height;
+}
+
 .nitro-widget-exchange-credit {
     width: $nitro-widget-exchange-credit-width;
     height: $nitro-widget-exchange-credit-height;
@@ -44,9 +49,24 @@
 }
 
 .nitro-external-image-widget {
+
     .picture-preview {
         width: 320px;
         height: 320px;
+    }
+
+    .picture-preview-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: black;
+    }
+
+    .picture-preview-buttons-previous, .picture-preview-buttons-next {
+        color: #222;
+        background-color: white;
+        padding: 10px;
+        border-radius: 50%;
     }
 }
 
