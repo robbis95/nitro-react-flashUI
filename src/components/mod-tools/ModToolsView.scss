@@ -69,12 +69,12 @@
         color: $black;
         font-family: Goldfish-Bold;
 
-        > :not(caption) > * > * {
+        > :not(caption)>*>* {
             box-shadow: none;
             border-bottom: none;
         }
 
-        &.table-striped > tbody > tr:nth-of-type(odd) {
+        &.table-striped>tbody>tr:nth-of-type(odd) {
             color: $black;
             background: #cbebf8;
         }
@@ -96,10 +96,12 @@
 
 .nitro-mod-tools-chatlog {
     width: 400px;
+    height: 250px;
 }
 
 .nitro-mod-tools-user-visits {
     width: 250px;
+    height: 250px;
 }
 
 .nitro-mod-tools-tickets {
