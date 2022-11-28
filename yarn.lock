@@ -1484,10 +1484,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@nitrots/nitro-renderer@^1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@nitrots/nitro-renderer/-/nitro-renderer-1.3.4.tgz#1cde08c7988795a5e016930bd47bdb93279d6560"
-  integrity sha512-HmgRZkoM5BQQz27BWKujyioTTMokzVIPzxL9juiGagt+qFupM5Hj8Nm7Udx0XeuEGH1E7gghv+ggCCl1FKweoA==
+"@nitrots/nitro-renderer@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@nitrots/nitro-renderer/-/nitro-renderer-1.5.0.tgz#05a2f5837fb16bf2b44d5953a27d407f4cebbca1"
+  integrity sha512-6Fq5X9tR+Vlk/JaxNxYNpMW25K8ILxgzN832qXyA4DLtOoEEm5/9qVQgZAZHitM+5W+CjYcVjovGv272lxMFiw==
   dependencies:
     "@pixi/app" "~6.4.2"
     "@pixi/basis" "~6.4.2"
@@ -1522,6 +1522,7 @@
     "@pixi/tilemap" "^3.2.2"
     "@pixi/utils" "~6.4.2"
     gifuct-js "^2.1.2"
+    howler "^2.2.3"
     pako "^2.0.4"
 
 "@nodelib/fs.scandir@2.1.5":
@@ -4730,10 +4731,10 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
-emoji-toolkit@^6.6.0:
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/emoji-toolkit/-/emoji-toolkit-6.6.0.tgz#e7287c43a96f940ec4c5428cd7100a40e57518f1"
-  integrity sha512-pEu0kow2p1N8zCKnn/L6H0F3rWUBB3P3hVjr/O5yl1fK7N9jU4vO4G7EFapC5Y3XwZLUCY0FZbOPyTkH+4V2eQ==
+emoji-toolkit@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/emoji-toolkit/-/emoji-toolkit-7.0.0.tgz#63b5e5bdc63acd2e5629a0157969b94d414961fb"
+  integrity sha512-swoVbGlR/cyJ2ysrw1+axjRkEHAlH0myhbK1ybkv8zR6r9KpL4vzb96m3Y2j0hixUKj1Nb8YBQbk3ihB+XkpBw==
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -6026,6 +6027,11 @@ hosted-git-info@^2.1.4:
   version "2.8.9"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
   integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
+
+howler@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/howler/-/howler-2.2.3.tgz#a2eff9b08b586798e7a2ee17a602a90df28715da"
+  integrity sha512-QM0FFkw0LRX1PR8pNzJVAY25JhIWvbKMBFM4gqk+QdV+kPXOhleWGCB6AiAF/goGjIHK2e/nIElplvjQwhr0jg==
 
 hpack.js@^2.1.6:
   version "2.1.6"
@@ -8410,9 +8416,9 @@ p-try@^2.0.0:
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
 pako@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/pako/-/pako-2.0.4.tgz#6cebc4bbb0b6c73b0d5b8d7e8476e2b2fbea576d"
-  integrity sha512-v8tweI900AUkZN6heMU/4Uy4cXRc2AYNRggVmTR+dEncawDJgCdLMximOVA2p4qO57WMynangsfGRb5WD6L1Bg==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-2.1.0.tgz#266cc37f98c7d883545d11335c00fbd4062c9a86"
+  integrity sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==
 
 pako@~1.0.5:
   version "1.0.11"
