@@ -88,8 +88,35 @@
 }
 
 .nitro-friends {
-    width: $friends-list-width;
+    width: 350px;
     height: $friends-list-height;
+
+    .friends-list {
+        padding-bottom: 42px;
+        background-color: #fff!important;
+
+        .friend-item {
+            .friend-head {
+                width: 50px;
+                height: 45px;
+                overflow: hidden;
+                
+                .avatar-image {
+                    background-position: center 12px;
+                }
+            }
+        }
+
+        .friend-item:nth-child(odd) {
+            background-color: #ececec;
+        }
+
+        .selected-friends {
+            position: absolute;
+            bottom:0;
+            width:100%;
+        }
+    }
 
     .friend-search {
         border-radius: 0px;
