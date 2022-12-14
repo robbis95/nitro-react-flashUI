@@ -12,7 +12,7 @@ export const FurniturePlaylistEditorWidgetView: FC<{}> = props =>
     if(objectId === -1) return null;
 
     return (
-        <NitroCardView className="nitro-playlist-editor-widget" theme="primary-slim">
+        <NitroCardView className="nitro-playlist-editor-widget" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('playlist.editor.title') } onCloseClick={ onClose } />
             <NitroCardContentView>
                 <div className="d-flex flex-row gap-1 h-100">
