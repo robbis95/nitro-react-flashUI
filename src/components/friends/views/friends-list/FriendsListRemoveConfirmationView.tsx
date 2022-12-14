@@ -15,7 +15,7 @@ export const FriendsRemoveConfirmationView: FC<FriendsRemoveConfirmationViewProp
     const { selectedFriendsIds = null, removeFriendsText = null, removeSelectedFriends = null, onCloseClick = null } = props;
 
     return (
-        <NitroCardView className="nitro-friends-remove-confirmation" theme="primary">
+        <NitroCardView className="nitro-friends-remove-confirmation" theme="primary-slim">
             <NitroCardHeaderView headerText={ LocalizeText('friendlist.removefriendconfirm.title') } onCloseClick={ onCloseClick } />
             <NitroCardContentView className="text-black">
                 <div>{ removeFriendsText }</div>

@@ -15,7 +15,7 @@ export const FriendsRoomInviteView: FC<FriendsRoomInviteViewProps> = props =>
     const [ roomInviteMessage, setRoomInviteMessage ] = useState<string>('');
 
     return (
-        <NitroCardView className="nitro-friends-room-invite" uniqueKey="nitro-friends-room-invite" theme="friendlist">
+        <NitroCardView className="nitro-friends-room-invite" uniqueKey="nitro-friends-room-invite" theme="primary-slim">
             <NitroCardHeaderView headerText={ LocalizeText('friendlist.invite.title') } onCloseClick={ onCloseClick } />
             <NitroCardContentView className="text-black">
                 { LocalizeText('friendlist.invite.summary', [ 'count' ], [ selectedFriendsIds.length.toString() ]) }

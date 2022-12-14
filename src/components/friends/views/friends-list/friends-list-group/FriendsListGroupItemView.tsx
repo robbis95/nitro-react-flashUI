@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useState } from 'react';
 import { LocalizeText, MessengerFriend, OpenMessengerChat } from '../../../../../api';
-import { Base, Flex, NitroCardAccordionItemView, UserProfileIconView } from '../../../../../common';
+import { Base, Flex, LayoutAvatarImageView, UserProfileIconView } from '../../../../../common';
 import { useFriends } from '../../../../../hooks';
 
 export const FriendsListGroupItemView: FC<{ friend: MessengerFriend, selected: boolean, selectFriend: (userId: number) => void }> = props =>
@@ -55,7 +55,38 @@ export const FriendsListGroupItemView: FC<{ friend: MessengerFriend, selected: b
     if(!friend) return null;
 
     return (
-        <NitroCardAccordionItemView justifyContent="between" className={ `friend-tab px-2 py-1 ${ selected && 'bg-primary text-white' }` } onClick={ event => selectFriend(friend.id) }>
+        <Flex pointer justifyContent="between" onClick={ event => selectFriend(friend.id) } gap={ 2 } className={ `px-2 py-1 friend-item ${ selected && 'bg-primary text-white' }` }>
+            <Flex alignItems="center" gap={ 1 }>
+                { friend.online &&
+                    <Flex alignItems="center" className="friend-head px-1">
+                        <LayoutAvatarImageView figure={ friend.figure } headOnly={ true } direction={ 3 } />
+                    </Flex> }
+                
+                <div>{ friend.name }</div>
+            </Flex>
+            <Flex alignItems="center" gap={ 1 }>
+                { !isRelationshipOpen &&
+                    <>
+                        { friend.followingAllowed &&
+                            <Base pointer onClick={ clickFollowFriend } className="nitro-friends-spritesheet icon-follow" title={ LocalizeText('friendlist.tip.follow') } /> }
+                        { friend.online &&
+                            <Base pointer className="nitro-friends-spritesheet icon-chat" onClick={ openMessengerChat } title={ LocalizeText('friendlist.tip.im') } /> }
+                        { (friend.id > 0) &&
+                            <Base className={ `nitro-friends-spritesheet icon-${ getCurrentRelationshipName() } cursor-pointer` } onClick={ openRelationship } title={ LocalizeText('infostand.link.relationship') } /> }
+                        <Base onClick={ event => event.stopPropagation() }>
+                            <UserProfileIconView userId={ friend.id } />
+                        </Base>
+                    </> }
+                { isRelationshipOpen &&
+                    <>
+                        <Base pointer className="nitro-friends-spritesheet icon-heart" onClick={ event => clickUpdateRelationship(event, MessengerFriend.RELATIONSHIP_HEART) } />
+                        <Base pointer className="nitro-friends-spritesheet icon-smile" onClick={ event => clickUpdateRelationship(event, MessengerFriend.RELATIONSHIP_SMILE) } />
+                        <Base pointer className="nitro-friends-spritesheet icon-bobba" onClick={ event => clickUpdateRelationship(event, MessengerFriend.RELATIONSHIP_BOBBA) } />
+                        <Base pointer className="nitro-friends-spritesheet icon-none" onClick={ event => clickUpdateRelationship(event, MessengerFriend.RELATIONSHIP_NONE) } />
+                    </> }
+            </Flex>
+        </Flex>
+        /** <NitroCardAccordionItemView justifyContent="between" className={ `px-2 py-1 ${ selected && 'bg-primary text-white' }` } onClick={ event => selectFriend(friend.id) }>
             <Flex alignItems="center" gap={ 1 }>
                 <Base onClick={ event => event.stopPropagation() }>
                     <UserProfileIconView userId={ friend.id } />
@@ -80,6 +111,6 @@ export const FriendsListGroupItemView: FC<{ friend: MessengerFriend, selected: b
                         <Base pointer className="nitro-friends-spritesheet icon-none" onClick={ event => clickUpdateRelationship(event, MessengerFriend.RELATIONSHIP_NONE) } />
                     </> }
             </Flex>
-        </NitroCardAccordionItemView>
+        </NitroCardAccordionItemView> */
     );
 }
