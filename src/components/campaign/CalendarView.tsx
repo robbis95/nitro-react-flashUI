@@ -29,7 +29,7 @@ export const CalendarView: FC<CalendarViewProps> = props =>
 
         if(day > currentDay) return CalendarItemState.STATE_LOCKED_FUTURE;
 
-        if(missedDays.includes(day)) return CalendarItemState.STATE_LOCKED_EXPIRED;
+        if(day < currentDay) return CalendarItemState.STATE_LOCKED_EXPIRED;
 
         return CalendarItemState.STATE_LOCKED_AVAILABLE;
     }
