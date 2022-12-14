@@ -4,7 +4,7 @@ import { Column, Text } from '../../../../common';
 import { useWired } from '../../../../hooks';
 import { WiredConditionBaseView } from './WiredConditionBaseView';
 
-const ALLOWED_HAND_ITEM_IDS: number[] = [ 2, 5, 7, 8, 9, 10, 27 ];
+const ALLOWED_HAND_ITEM_IDS: number[] = [ 2, 3, 4, 5, 6, 7, 8, 9, 10, 27 ];
 
 export const WiredConditionActorHasHandItemView: FC<{}> = props =>
 {
