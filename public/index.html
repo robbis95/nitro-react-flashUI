@@ -23,7 +23,7 @@
     <div id="root" class="w-100 h-100"></div>
     <script>
       const NitroConfig = {
-        "config.urls": [ '/renderer-config.json', '/ui-config.json' ],
+        "config.urls": [ 'renderer-config.json', 'ui-config.json' ],
         "sso.ticket": (new URLSearchParams(window.location.search).get('sso') || null),
         "forward.type": (new URLSearchParams(window.location.search).get('room') ? 2 : -1),
         "forward.id": (new URLSearchParams(window.location.search).get('room') || 0),

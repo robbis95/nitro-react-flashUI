@@ -36,8 +36,12 @@ export const CalendarItemView: FC<CalendarItemViewProps> = props =>
             { (state === CalendarItemState.STATE_UNLOCKED) &&
                 <Flex center className="campaign-spritesheet unlocked-bg">
                     <Flex center className="campaign-spritesheet campaign-opened">
-                        { product &&
-                            <LayoutImage imageUrl={ product.customImage ? GetConfiguration<string>('image.library.url') + product.customImage : getFurnitureIcon(product.productName) } /> }
+						<Column center>
+							{ product &&
+								<LayoutImage imageUrl={ product.customImage ? GetConfiguration<string>('image.library.url') + product.customImage : getFurnitureIcon(product.productName) } /> }
+							{ product &&
+								<h2 className={ `campaign-reward-text` }>{ product.productName }</h2>	}
+						</Column>
                     </Flex>
                 </Flex> }
             { (state !== CalendarItemState.STATE_UNLOCKED) &&

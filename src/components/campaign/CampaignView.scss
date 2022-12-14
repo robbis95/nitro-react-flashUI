@@ -8,6 +8,13 @@
         &.active {
             filter: brightness(100%);
         }
+		.campaign-reward-text {
+			color: black;
+			text-align: center;
+			position: absolute;
+			bottom: 0;
+            font-size: 1.2em;
+		}
     }
 }
 
