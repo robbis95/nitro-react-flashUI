@@ -11,7 +11,7 @@ export const FurnitureBackgroundColorView: FC<{}> = props =>
 
     return (
         <NitroCardView theme="primary" className="nitro-room-widget-toner">
-            <NitroCardHeaderView headerText={ LocalizeText('widget.backgroundcolor.title') } onCloseClick={ onClose } />
+            <NitroCardHeaderView headerText={ LocalizeText('widget.backgroundcolor.info') } onCloseClick={ onClose } />
             <NitroCardContentView overflow="hidden" justifyContent="between">
                 <Column overflow="auto" gap={ 1 }>
                     <input type="color" className="form-control" value={ ColorUtils.makeColorNumberHex(color) } onChange={ event => setColor(ColorUtils.convertFromHex(event.target.value)) } />
