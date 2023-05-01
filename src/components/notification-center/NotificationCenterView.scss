@@ -24,14 +24,14 @@
     max-height: 350px;
 
     .flashui-logo {
-        background: url(../../assets/flash/flashui_logo.png);
+        background: url(@/assets/flash/flashui_logo.png);
         width: 118px;
         height: 38px;
         background-position: center;
     }
 
     .notification-frank {
-        background-image: url('../../assets/images/notifications/frank.gif');
+        background-image: url('@/assets/images/notifications/frank.gif');
         width:47px;
         height: 85px;
     }
@@ -60,7 +60,7 @@
 .nitro-notification-bubble {
     pointer-events: all;
     padding: 6px 5px;
-    border-image-source: url(../../assets/flash/notifications/notifications_bg.png);
+    border-image-source: url(@/assets/flash/notifications/notifications_bg.png);
     border-image-slice: 9 9 9 9 fill;
     border-image-width: 9px 9px 9px 9px;
     font-size: $font-size-sm;
@@ -79,7 +79,7 @@
         position: relative;
 
         .arrow-down {
-            background: url(../../assets/flash/notifications/notification_arrow_down.png);
+            background: url(@/assets/flash/notifications/notification_arrow_down.png);
             width: 18px;
             height: 19px;
             position: absolute;
@@ -87,7 +87,7 @@
         }
 
         .arrow-left {
-            background: url(../../assets/flash/notifications/notification_arrow_left.png);
+            background: url(@/assets/flash/notifications/notification_arrow_left.png);
             width: 18px;
             height: 19px;
             position: absolute;

@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CrackableDataType, GroupInformationComposer, GroupInformationEvent, NowPlayingEvent, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter, RoomWidgetFurniInfoUsagePolicyEnum, SetObjectDataMessageComposer, SongInfoReceivedEvent, StringDataType } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { AvatarInfoFurni, CreateLinkEvent, GetGroupInformation, GetNitroInstance, GetRoomEngine, LocalizeText, SendMessageComposer } from '../../../../../api';
 import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, Text, UserProfileIconView } from '../../../../../common';
 import { useMessageEvent, useRoom, useSoundEvent } from '../../../../../hooks';
@@ -19,7 +19,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 {
     const { avatarInfo = null, onClose = null } = props;
     const { roomSession = null } = useRoom();
-    
+
     const [ pickupMode, setPickupMode ] = useState(0);
     const [ canMove, setCanMove ] = useState(false);
     const [ canRotate, setCanRotate ] = useState(false);
@@ -48,7 +48,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     useSoundEvent<NowPlayingEvent>(SongInfoReceivedEvent.SIR_TRAX_SONG_INFO_RECEIVED, event =>
     {
         if(event.id !== songId) return;
-        
+
         const songInfo = GetNitroInstance().soundManager.musicController.getSongInfo(event.id);
 
         if(!songInfo) return;
@@ -75,7 +75,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         let furniIsJukebox = false;
         let furniIsSongDisk = false;
         let furniSongId = -1;
-        
+
         const isValidController = (avatarInfo.roomControllerLevel >= RoomControllerLevel.GUEST);
 
         if(isValidController || avatarInfo.isOwner || avatarInfo.isRoomOwner || avatarInfo.isAnyRoomController)
@@ -90,7 +90,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         {
             canSeeFurniId = true;
         }
-        
+
         if((((avatarInfo.usagePolicy === RoomWidgetFurniInfoUsagePolicyEnum.EVERYBODY) || ((avatarInfo.usagePolicy === RoomWidgetFurniInfoUsagePolicyEnum.CONTROLLER) && isValidController)) || ((avatarInfo.extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) && isValidController)) || ((avatarInfo.extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT) && isValidController)) canUse = true;
 
         if(avatarInfo.extraParam)
@@ -120,7 +120,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
             else if(avatarInfo.extraParam.indexOf(RoomWidgetEnumItemExtradataParameter.SONGDISK) === 0)
             {
                 furniSongId = parseInt(avatarInfo.extraParam.substr(RoomWidgetEnumItemExtradataParameter.SONGDISK.length));
-                
+
                 furniIsSongDisk = true;
             }
 
@@ -189,7 +189,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         setIsJukeBox(furniIsJukebox);
         setIsSongDisk(furniIsSongDisk);
         setSongId(furniSongId);
-        
+
         if(avatarInfo.groupId) SendMessageComposer(new GroupInformationComposer(avatarInfo.groupId, false));
     }, [ roomSession, avatarInfo ]);
 
@@ -290,7 +290,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                     for(const part of dataParts)
                     {
                         const [ key, value ] = part.split('=', 2);
-                        
+
                         mapData.set(key, value);
                     }
                 }
@@ -347,7 +347,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                                 <div className="position-absolute end-0">
                                     <LayoutRarityLevelView level={ avatarInfo.stuffData.rarityLevel } />
                                 </div> }
-                            { avatarInfo.image && avatarInfo.image.src.length && 
+                            { avatarInfo.image && avatarInfo.image.src.length &&
                                 <img className="d-block mx-auto" src={ avatarInfo.image.src } alt="" /> }
                         </Flex>
                         <hr className="m-0" />

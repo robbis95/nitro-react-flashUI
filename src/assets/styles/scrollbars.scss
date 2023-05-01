@@ -3,57 +3,57 @@
 }
 
 ::-webkit-scrollbar-track:vertical {
-    background-image: url("../../assets/flash/scrollbar/background.png");
+    background-image: url("@/assets/flash/scrollbar/background.png");
     pointer-events: all;
     width: 17px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-    background-image: url("../../assets/flash/scrollbar/thumb_top.png"),
-    url("../../assets/flash/scrollbar/thumb_bottom.png"),
-    url("../../assets/flash/scrollbar/thumb_middle.png");
+    background-image: url("@/assets/flash/scrollbar/thumb_top.png"),
+    url("@/assets/flash/scrollbar/thumb_bottom.png"),
+    url("@/assets/flash/scrollbar/thumb_middle.png");
     background-repeat: no-repeat, no-repeat, repeat-y;
     background-position: 0 0, bottom, 0 7px;
     width: 17px;
 
     &:hover {
-        background-image: url("../../assets/flash/scrollbar/thumb_top.png"),
-        url("../../assets/flash/scrollbar/thumb_bottom.png"),
-        url("../../assets/flash/scrollbar/thumb_middle_hover.png");
+        background-image: url("@/assets/flash/scrollbar/thumb_top.png"),
+        url("@/assets/flash/scrollbar/thumb_bottom.png"),
+        url("@/assets/flash/scrollbar/thumb_middle_hover.png");
     }
 
     &:active {
-        background-image: url("../../assets/flash/scrollbar/thumb_top_active.png"),
-        url("../../assets/flash/scrollbar/thumb_bottom_active.png"),
-        url("../../assets/flash/scrollbar/thumb_middle_active.png");
+        background-image: url("@/assets/flash/scrollbar/thumb_top_active.png"),
+        url("@/assets/flash/scrollbar/thumb_bottom_active.png"),
+        url("@/assets/flash/scrollbar/thumb_middle_active.png");
     }
 }
 
 ::-webkit-scrollbar-button:vertical:start:decrement {
-    background-image: url("../../assets/flash/scrollbar/up.png");
+    background-image: url("@/assets/flash/scrollbar/up.png");
     height: 16px;
     display: block;
 
     &:hover {
-        background-image: url("../../assets/flash/scrollbar/up_hover.png");
+        background-image: url("@/assets/flash/scrollbar/up_hover.png");
     }
 
     &:active {
-        background-image: url("../../assets/flash/scrollbar/up_active.png");
+        background-image: url("@/assets/flash/scrollbar/up_active.png");
     }
 }
 
 ::-webkit-scrollbar-button:vertical:end:increment {
-    background-image: url("../../assets/flash/scrollbar/down.png");
+    background-image: url("@/assets/flash/scrollbar/down.png");
     height: 16px;
     display: block;
 
     &:hover {
-        background-image: url("../../assets/flash/scrollbar/down_hover.png");
+        background-image: url("@/assets/flash/scrollbar/down_hover.png");
     }
 
     &:active {
-        background-image: url("../../assets/flash/scrollbar/down_active.png");
+        background-image: url("@/assets/flash/scrollbar/down_active.png");
     }
 }
 
@@ -62,56 +62,56 @@
 }
 
 ::-webkit-scrollbar-track:horizontal {
-    background-image: url("../../assets/flash/scrollbar/background_horizontal.png");
+    background-image: url("@/assets/flash/scrollbar/background_horizontal.png");
     pointer-events: all;
     height: 17px;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-    background-image: url("../../assets/flash/scrollbar/thumb_left.png"),
-    url("../../assets/flash/scrollbar/thumb_right.png"),
-    url("../../assets/flash/scrollbar/thumb_middle_horizontal.png");
+    background-image: url("@/assets/flash/scrollbar/thumb_left.png"),
+    url("@/assets/flash/scrollbar/thumb_right.png"),
+    url("@/assets/flash/scrollbar/thumb_middle_horizontal.png");
     background-repeat: no-repeat, no-repeat, repeat-x;
     background-position: 0 0, right, 0 0px;
     height: 17px;
 
     &:hover {
-        background-image: url("../../assets/flash/scrollbar/thumb_left.png"),
-        url("../../assets/flash/scrollbar/thumb_right.png"),
-        url("../../assets/flash/scrollbar/thumb_middle_horizontal_hover.png");
+        background-image: url("@/assets/flash/scrollbar/thumb_left.png"),
+        url("@/assets/flash/scrollbar/thumb_right.png"),
+        url("@/assets/flash/scrollbar/thumb_middle_horizontal_hover.png");
     }
 
     &:active {
-        background-image: url("../../assets/flash/scrollbar/thumb_left_active.png"),
-        url("../../assets/flash/scrollbar/thumb_right_active.png"),
-        url("../../assets/flash/scrollbar/thumb_middle_horizontal_active.png");
+        background-image: url("@/assets/flash/scrollbar/thumb_left_active.png"),
+        url("@/assets/flash/scrollbar/thumb_right_active.png"),
+        url("@/assets/flash/scrollbar/thumb_middle_horizontal_active.png");
     }
 }
 
 ::-webkit-scrollbar-button:horizontal:start:decrement {
-    background-image: url("../../assets/flash/scrollbar/left.png");
+    background-image: url("@/assets/flash/scrollbar/left.png");
     height: 17px;
     display: block;
 
     &:hover {
-        background-image: url("../../assets/flash/scrollbar/left_hover.png");
+        background-image: url("@/assets/flash/scrollbar/left_hover.png");
     }
 
     &:active {
-        background-image: url("../../assets/flash/scrollbar/left_active.png");
+        background-image: url("@/assets/flash/scrollbar/left_active.png");
     }
 }
 
 ::-webkit-scrollbar-button:horizontal:end:increment {
-    background-image: url("../../assets/flash/scrollbar/right.png");
+    background-image: url("@/assets/flash/scrollbar/right.png");
     height: 16px;
     display: block;
 
     &:hover {
-        background-image: url("../../assets/flash/scrollbar/right_hover.png");
+        background-image: url("@/assets/flash/scrollbar/right_hover.png");
     }
 
     &:active {
-        background-image: url("../../assets/flash/scrollbar/right_active.png");
+        background-image: url("@/assets/flash/scrollbar/right_active.png");
     }
 }

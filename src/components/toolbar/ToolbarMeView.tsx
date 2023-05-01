@@ -1,7 +1,7 @@
 import { MouseEventType, RoomObjectCategory } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, PropsWithChildren, SetStateAction, useEffect, useRef } from 'react';
-import { CreateLinkEvent, DispatchUiEvent, GetRoomEngine, GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText } from '../../api';
-import { Base, Column, Flex, LayoutItemCountView, Text } from '../../common';
+import { CreateLinkEvent, DispatchUiEvent, GetConfiguration, GetRoomEngine, GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText } from '../../api';
+import { Base, Flex, Column, LayoutItemCountView, Text } from '../../common';
 import { GuideToolEvent } from '../../events';
 
 interface ToolbarMeViewProps
@@ -36,9 +36,9 @@ export const ToolbarMeView: FC<PropsWithChildren<ToolbarMeViewProps>> = props =>
 
     return (
         <Flex innerRef={ elementRef } alignItems="center" className="nitro-toolbar-me p-2" gap={ 3 }>
-            { useGuideTool &&
+            { (GetConfiguration('guides.enabled') && useGuideTool) &&
                 <Column gap={ 1 } alignItems="center" onClick={ event => DispatchUiEvent(new GuideToolEvent(GuideToolEvent.TOGGLE_GUIDE_TOOL)) }>
-                    <Base pointer className="navigation-item icon icon-me-helper-tool" /> 
+                    <Base pointer className="navigation-item icon icon-me-helper-tool" />
                     <Text className="me-text">{ LocalizeText('widget.memenu.guide') }</Text>
                 </Column> }
             <Column gap={ 1 } alignItems="center" onClick={ event => CreateLinkEvent('achievements/toggle') }>

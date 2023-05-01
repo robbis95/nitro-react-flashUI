@@ -1,5 +1,6 @@
 import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
 import { Base, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
 import { useNavigator, useRoomSessionManagerEvent } from '../../hooks';
@@ -74,9 +75,9 @@ export const NavigatorView: FC<{}> = props =>
             linkReceived: (url: string) =>
             {
                 const parts = url.split('/');
-        
+
                 if(parts.length < 2) return;
-        
+
                 switch(parts[1])
                 {
                     case 'show': {
@@ -91,10 +92,10 @@ export const NavigatorView: FC<{}> = props =>
                         if(isVisible)
                         {
                             setIsVisible(false);
-        
+
                             return;
                         }
-        
+
                         setIsVisible(true);
                         setNeedsSearch(true);
                         return;
@@ -107,17 +108,17 @@ export const NavigatorView: FC<{}> = props =>
                         return;
                     case 'goto':
                         if(parts.length <= 2) return;
-        
+
                         switch(parts[2])
                         {
                             case 'home':
                                 if(navigatorData.homeRoomId <= 0) return;
-        
+
                                 TryVisitRoom(navigatorData.homeRoomId);
                                 break;
                             default: {
                                 const roomId = parseInt(parts[2]);
-        
+
                                 TryVisitRoom(roomId);
                             }
                         }
@@ -128,18 +129,18 @@ export const NavigatorView: FC<{}> = props =>
                     case 'close-creator':
                         setCreatorOpen(false);
                         return;
-            
+
                     case 'search':
                         if(parts.length > 2)
                         {
                             const topLevelContextCode = parts[2];
-        
+
                             let searchValue = '';
-        
+
                             if(parts.length > 3) searchValue = parts[3];
-        
+
                             pendingSearch.current = { value: searchValue, code: topLevelContextCode };
-        
+
                             setIsVisible(true);
                             setNeedsSearch(true);
                         }
@@ -207,6 +208,9 @@ export const NavigatorView: FC<{}> = props =>
                                 </NitroCardTabsItemView>
                             );
                         }) }
+                        <NitroCardTabsItemView isActive={ isCreatorOpen } onClick={ event => setCreatorOpen(true) }>
+                            <FaPlus className="fa-icon" />
+                        </NitroCardTabsItemView>
                     </NitroCardTabsView>
                     <NitroCardContentView position="relative">
                         { isLoading &&

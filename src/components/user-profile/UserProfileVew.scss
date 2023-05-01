@@ -6,26 +6,26 @@
     resize: none;
 
     .profile-grey-bg {
-        border-image-source: url(../../assets/flash/profile/grey-bg.png);
+        border-image-source: url(@/assets/flash/profile/grey-bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
 
     .profile-white-bg {
-        border-image-source: url(../../assets/flash/profile/white_bg.png);
+        border-image-source: url(@/assets/flash/profile/white_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
 
     .profile-grey-bg-border {
-        border-image-source: url(../../assets/flash/profile/grey_bg_border.png);
+        border-image-source: url(@/assets/flash/profile/grey_bg_border.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         max-height: 240px;
     }
 
     .badge-text {
-        margin-left: auto; 
+        margin-left: auto;
         margin-right: 0;
     }
 
@@ -71,24 +71,24 @@
     }
 
     .no-group-spritesheet {
-        background: transparent url('../../assets/images/groups/no-group-spritesheet.png') no-repeat;
+        background: transparent url('@/assets/images/groups/no-group-spritesheet.png') no-repeat;
 
         &.image-1 {
             width: 95px;
             height: 136px;
             background-position: -3px -3px;
         }
-        
+
         &.image-2 {
             width: 95px;
             height: 136px;
             background-position: -104px -3px;
         }
-        
+
         &.image-3 {
             width: 95px;
             height: 136px;
             background-position: -205px -3px;
         }
-    }    
+    }
 }

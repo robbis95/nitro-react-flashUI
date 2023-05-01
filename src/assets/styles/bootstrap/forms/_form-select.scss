@@ -9,10 +9,10 @@
   border-image-slice:4 4 4 4 fill;
   border-image-width:4px 4px 4px 4px;
   border-image-repeat:repeat repeat;
-  border-image-source: url("../../../flash/boxes/card/dropdown.png");
+  border-image-source: url("@/assets/flash/boxes/card/dropdown.png");
   background-color: transparent;
   appearance: none;
-  
+
 
   &:focus {
     border-color: $form-select-focus-border-color;
@@ -45,7 +45,7 @@
 }
 
 .form-dropdown-button {
-  background-image: url("../../../flash/boxes/card/dropdown_button.png");
+  background-image: url("@/assets/flash/boxes/card/dropdown_button.png");
   background-repeat: no-repeat;
   float: left;
   position: absolute;

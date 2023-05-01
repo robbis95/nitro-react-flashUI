@@ -17,11 +17,11 @@
 .flash-form-check-input {
     width: 15px;
     height: 15px;
-    background-image: url(../../../flash/buttons/checkbox.png);
+    background-image: url(@/assets/flash/buttons/checkbox.png);
     -webkit-appearance: none;
 
     &:checked {
-      background-image: url(../../../flash/buttons/checkbox_checked.png);
+      background-image: url(@/assets/flash/buttons/checkbox_checked.png);
     }
 }
 

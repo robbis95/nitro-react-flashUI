@@ -1,7 +1,7 @@
 import { ILinkEventTracker } from '@nitrots/nitro-renderer';
-import { FC, useEffect, useMemo, useState } from 'react';
-import { AddEventLinkTracker, ChatEntryType, RemoveLinkEventTracker } from '../../api';
-import { Column, Flex, InfiniteScroll, Text } from '../../common';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { AddEventLinkTracker, ChatEntryType, LocalizeText, RemoveLinkEventTracker } from '../../api';
+import { Column, Flex, InfiniteScroll, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
 import { useChatHistory } from '../../hooks';
 
 export const ChatHistoryView: FC<{}> = props =>
@@ -9,8 +9,9 @@ export const ChatHistoryView: FC<{}> = props =>
     const [ isVisible, setIsVisible ] = useState(false);
     const [ searchText, setSearchText ] = useState<string>('');
     const { chatHistory = [] } = useChatHistory();
+    const elementRef = useRef<HTMLDivElement>(null);
 
-    const filteredChatHistory = useMemo(() => 
+    const filteredChatHistory = useMemo(() =>
     {
         if (searchText.length === 0) return chatHistory;
 
@@ -19,10 +20,10 @@ export const ChatHistoryView: FC<{}> = props =>
         return chatHistory.filter(entry => ((entry.message && entry.message.toLowerCase().includes(text))) || (entry.name && entry.name.toLowerCase().includes(text)));
     }, [ chatHistory, searchText ]);
 
-    /* useEffect(() =>
+    useEffect(() =>
     {
         if(elementRef && elementRef.current && isVisible) elementRef.current.scrollTop = elementRef.current.scrollHeight;
-    }, [ isVisible ]); */
+    }, [ isVisible ]);
 
     useEffect(() =>
     {
@@ -30,9 +31,9 @@ export const ChatHistoryView: FC<{}> = props =>
             linkReceived: (url: string) =>
             {
                 const parts = url.split('/');
-        
+
                 if(parts.length < 2) return;
-        
+
                 switch(parts[1])
                 {
                     case 'show':

@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
 import { IPurchasableOffer } from '../../../../../api';
 import { Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
+import {FaPlus} from "react-icons/fa";
 interface CatalogPriceGridDisplayWidgetViewProps
 {
     offer: IPurchasableOffer;
@@ -25,7 +25,7 @@ export const CatalogPriceGridDisplayWidgetView: FC<CatalogPriceGridDisplayWidget
                     <i className="icon icon-small-coin" />
                 </Flex> }
             { separator && (offer.priceInCredits > 0) && (offer.priceInActivityPoints > 0) &&
-                <FontAwesomeIcon size="xs" color="black" icon="plus" /> }
+                <FaPlus className="fa-icon" /> }
             { (offer.priceInActivityPoints > 0) &&
                 <Flex alignItems="end" justifyContent="end" gap={ 1 } className="grid-price-view">
                     <Text bold>{ (offer.priceInActivityPoints * quantity) }</Text>

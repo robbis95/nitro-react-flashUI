@@ -8,7 +8,7 @@
     }
 
     .loading-stories {
-        background-image: url(../../assets/flash/loadingscreen/background.png);
+        background-image: url(@/assets/flash/loadingscreen/background.png);
         width: 500px;
         height: 434px;
         position: relative;
@@ -22,13 +22,13 @@
 
             @for $i from 1 through 30 {
                 &[data-image="#{$i}"] {
-                    background-image: url(../../assets/flash/loadingscreen/image-#{$i}.png);
+                    background-image: url(@/assets/flash/loadingscreen/image-#{$i}.png);
                 }
             }
         }
 
         .imageOverlay {
-            background-image: url(../../assets/flash/loadingscreen/overlay.png);
+            background-image: url(@/assets/flash/loadingscreen/overlay.png);
             width: 500px;
             height: 434px;
         }

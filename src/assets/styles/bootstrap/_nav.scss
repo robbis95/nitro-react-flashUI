@@ -49,7 +49,7 @@
 
     .nav-link {
         position: relative;
-        border-image-source: url("../../../assets/flash/boxes/card/tabs.png");
+        border-image-source: url("@/assets/flash/boxes/card/tabs.png");
         border-image-slice:7 7 7 7 fill;
         border-image-width:7px 7px 7px 7px;
         border-image-outset:0px 0px 0px 0px;
@@ -59,13 +59,13 @@
 
         &:hover,
         &:focus {
-            border-image-source: url("../../../assets/flash/boxes/card/tabs_hover.png");
+            border-image-source: url("@/assets/flash/boxes/card/tabs_hover.png");
             // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
             isolation: isolate;
         }
 
         &.active {
-            border-image-source: url("../../../assets/flash/boxes/card/tabs_active.png");
+            border-image-source: url("@/assets/flash/boxes/card/tabs_active.png");
             margin-right: 1px;
         }
 

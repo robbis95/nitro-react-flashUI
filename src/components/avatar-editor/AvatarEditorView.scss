@@ -1,18 +1,18 @@
 .nitro-avatar-editor-spritesheet {
-    background: url('../../assets/images/avatareditor/avatar-editor-spritesheet.png') transparent no-repeat;
+    background: url('@/assets/images/avatareditor/avatar-editor-spritesheet.png') transparent no-repeat;
 
     &.arrow-left-icon {
         width: 28px;
         height: 21px;
         background-position: -226px -131px;
     }
-    
+
     &.arrow-right-icon {
         width: 28px;
         height: 21px;
         background-position: -226px -162px;
     }
-    
+
     &.ca-icon {
         width: 25px;
         height: 25px;
@@ -24,7 +24,7 @@
             background-position: -226px -96px;
         }
     }
-    
+
     &.cc-icon {
         width: 31px;
         height: 29px;
@@ -36,7 +36,7 @@
             background-position: -145px -44px;
         }
     }
-    
+
     &.ch-icon {
         width: 29px;
         height: 24px;
@@ -48,13 +48,13 @@
             background-position: -186px -73px;
         }
     }
-    
+
     &.clear-icon {
         width: 27px;
         height: 27px;
         background-position: -145px -157px;
     }
-    
+
     &.cp-icon {
         width: 30px;
         height: 24px;
@@ -67,7 +67,7 @@
         }
     }
 
-    
+
     &.ea-icon {
         width: 35px;
         height: 16px;
@@ -79,7 +79,7 @@
             background-position: -226px -219px;
         }
     }
-    
+
     &.fa-icon {
         width: 27px;
         height: 20px;
@@ -91,7 +91,7 @@
             background-position: -186px -107px;
         }
     }
-    
+
     &.female-icon {
         width: 18px;
         height: 27px;
@@ -103,7 +103,7 @@
             background-position: -186px -239px;
         }
     }
-    
+
     &.ha-icon {
         width: 25px;
         height: 22px;
@@ -115,7 +115,7 @@
             background-position: -226px -277px;
         }
     }
-    
+
     &.he-icon {
         width: 31px;
         height: 27px;
@@ -127,7 +127,7 @@
             background-position: -145px -120px;
         }
     }
-    
+
     &.hr-icon {
         width: 29px;
         height: 25px;
@@ -139,7 +139,7 @@
             background-position: -145px -229px;
         }
     }
-    
+
     &.lg-icon {
         width: 19px;
         height: 20px;
@@ -157,7 +157,7 @@
         height: 25px;
         background-position: -186px -167px;
     }
-    
+
 
     &.male-icon {
         width: 21px;
@@ -170,14 +170,14 @@
             background-position: -272px -5px;
         }
     }
-    
+
 
     &.sellable-icon {
         width: 17px;
         height: 15px;
         background-position: -303px -105px;
     }
-    
+
 
     &.sh-icon {
         width: 37px;
@@ -190,14 +190,14 @@
             background-position: -303px -25px;
         }
     }
-    
+
 
     &.spotlight-icon {
         width: 130px;
         height: 305px;
         background-position: -5px -5px;
     }
-    
+
 
     &.wa-icon {
         width: 36px;
@@ -213,7 +213,7 @@
 }
 
 .nitro-avatar-editor-wardrobe-figure-preview {
-    border-image-source: url(../../assets/flash/avatareditor/wardrobe_user_bg.png);
+    border-image-source: url(@/assets/flash/avatareditor/wardrobe_user_bg.png);
     border-image-slice: 4 4 4 4 fill;
     border-image-width: 4px 4px 4px 4px;
     background-color: transparent;
@@ -273,13 +273,13 @@
             z-index: 5;
 
             .arrow-left {
-                background-image: url(../../assets/flash/avatareditor/rotation_arrow.png);
+                background-image: url(@/assets/flash/avatareditor/rotation_arrow.png);
                 width: 44px;
                 height: 29px;
                 margin-left: auto;
                 margin-right: auto;
             }
-    
+
             .icon {
                 cursor: pointer;
             }
@@ -302,7 +302,7 @@
             width: 68px;
             height: 34px;
             margin: 0 auto;
-            background: url(../../assets/flash/avatareditor/avatar_shadow.png);
+            background: url(@/assets/flash/avatareditor/avatar_shadow.png);
             z-index: 2;
         }
     }
@@ -313,7 +313,7 @@
     }
 
     .color-picker-frame {
-        border-image-source: url(../../assets/flash/avatareditor/color_frame.png);
+        border-image-source: url(@/assets/flash/avatareditor/color_frame.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         width: 13px;
@@ -321,20 +321,20 @@
         border-radius: 4px;
 
         &.active {
-            border-image-source: url(../../assets/flash/avatareditor/color_frame_active.png);
+            border-image-source: url(@/assets/flash/avatareditor/color_frame_active.png);
             height: 21px;
             margin-top: -2px;
         }
 
         &:hover {
-            border-image-source: url(../../assets/flash/avatareditor/color_frame_active.png);
+            border-image-source: url(@/assets/flash/avatareditor/color_frame_active.png);
             height: 21px;
             margin-top: -2px;
         }
     }
 
     .hc-icon {
-        background-image: url(../../assets/flash/avatareditor/hc_icon.png);
+        background-image: url(@/assets/flash/avatareditor/hc_icon.png);
         height: 9px;
         width: 10px;
         bottom: 2px;
@@ -347,7 +347,7 @@
 
         .nav-tabs .nav-link {
             position: relative;
-            border-image-source: url(../../assets/flash/boxes/card/tabs_avatareditor.png);
+            border-image-source: url(@/assets/flash/boxes/card/tabs_avatareditor.png);
             border-image-slice: 7 7 7 7 fill;
             border-image-width: 7px 7px 7px 7px;
             border-image-outset: 0px 0px 0px 0px;
@@ -357,7 +357,7 @@
         }
 
         .nav-tabs .nav-link.active {
-            border-image-source: url(../../assets/flash/boxes/card/tabs_active.png);
+            border-image-source: url(@/assets/flash/boxes/card/tabs_active.png);
         }
     }
 
@@ -368,17 +368,17 @@
     }
 
     .randomize-icon {
-        background-image: url(../../assets/flash/avatareditor/randomize_transparent.png);
+        background-image: url(@/assets/flash/avatareditor/randomize_transparent.png);
         height: 33px;
         width: 39px;
 
         &:hover {
-            background-image: url(../../assets/flash/avatareditor/randomize.png);
+            background-image: url(@/assets/flash/avatareditor/randomize.png);
         }
     }
 
     .avatar-wardrobe {
-        border-image-source: url(../../assets/flash/avatareditor/wardrobe_bg.png);
+        border-image-source: url(@/assets/flash/avatareditor/wardrobe_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }

@@ -1,6 +1,7 @@
 import { RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC, useRef, useState } from 'react';
 import { Overlay, Popover } from 'react-bootstrap';
+import { FaUser } from 'react-icons/fa';
 import { LocalizeText } from '../../../../api';
 import { Base, Column, Flex, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, Text, UserProfileIconView } from '../../../../common';
 
@@ -66,6 +67,10 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
                                 <Text className="flex-grow-1">
                                     { roomData.description }
                                 </Text>
+                                <Flex className={ 'badge p-1 position-absolute m-1 bottom-0 end-0 m-2 ' + getUserCounterColor() } gap={ 1 }>
+                                    <FaUser className="fa-icon" />
+                                    { roomData.userCount }
+                                </Flex>
                             </Column>
                         </Flex>
                         <Column>

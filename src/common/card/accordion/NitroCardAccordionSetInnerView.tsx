@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Column, ColumnProps, Flex, Text } from '../..';
 import { useNitroCardAccordionContext } from './NitroCardAccordionContext';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 export interface NitroCardAccordionSetInnerViewProps extends ColumnProps
 {
@@ -17,7 +17,7 @@ export const NitroCardAccordionSetInnerView: FC<NitroCardAccordionSetInnerViewPr
 
     const onClick = () =>
     {
-        
+
         setIsOpen(prevValue => !prevValue);
     }
 
@@ -61,7 +61,7 @@ export const NitroCardAccordionSetInnerView: FC<NitroCardAccordionSetInnerViewPr
                     const index = newClosers.indexOf(closeFunction);
 
                     if(index >= 0) newClosers.splice(index, 1);
-    
+
                     return newClosers;
                 });
         }
@@ -71,7 +71,8 @@ export const NitroCardAccordionSetInnerView: FC<NitroCardAccordionSetInnerViewPr
         <Column classNames={ getClassNames } gap={ gap } { ...rest }>
             <Flex pointer justifyContent="between" className="nitro-card-accordion-set-header px-2 py-1" onClick={ onClick }>
                 <Text>{ headerText }</Text>
-                <FontAwesomeIcon icon={ isOpen ? 'caret-up' : 'caret-down' } />
+                { isOpen && <FaChevronUp className="fa-icon" /> }
+                { !isOpen && <FaChevronDown className="fa-icon" /> }
             </Flex>
             { isOpen &&
                 <Column fullHeight overflow="auto" gap={ 0 } className="nitro-card-accordion-set-content p-1">

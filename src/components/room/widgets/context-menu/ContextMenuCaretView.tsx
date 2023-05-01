@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useMemo } from 'react';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { Flex, FlexProps } from '../../../../common';
 
 interface CaretViewProps extends FlexProps

@@ -1,5 +1,5 @@
 .nitro-friends-spritesheet {
-    background: url('../../assets/images/friends/friends-spritesheet.png') transparent no-repeat;
+    background: url('@/assets/images/friends/friends-spritesheet.png') transparent no-repeat;
 
     &.icon-friendbar-visit {
         width: 21px; height: 21px;
@@ -83,7 +83,7 @@
 }
 
 .messenger-notification-icon {
-    background: url('../../assets/images/friends/messenger_notification_icon.png') transparent no-repeat;
+    background: url('@/assets/images/friends/messenger_notification_icon.png') transparent no-repeat;
     width: 25px; height: 25px;
 }
 
@@ -124,7 +124,7 @@
         border: none;
 
         &.left {
-            background: url(../../assets/flash/toolbar/friendbar_left.png);
+            background: url(@/assets/flash/toolbar/friendbar_left.png);
             background-position: center;
             margin-right: -4px;
 
@@ -134,7 +134,7 @@
         }
 
         &.right {
-            background: url(../../assets/flash/toolbar/friendbar_right.png);
+            background: url(@/assets/flash/toolbar/friendbar_right.png);
             background-position: center;
             margin-left: -4px;
         }
@@ -148,32 +148,32 @@
         padding-left:42px;
         text-align: left;
         min-height: 36px;
-    
+
         &.friend-bar-item-active {
             margin-bottom:26px;
         }
 
         &.find-friends {
-            border-image-source: url(../../assets/flash/toolbar/findfriend-bg.png);
+            border-image-source: url(@/assets/flash/toolbar/findfriend-bg.png);
             border-image-slice:17 17 17 17 fill;
             border-image-width:17px 17px 17px 17px;
             border-image-repeat:repeat repeat;
             color: #fff;
 
             &:hover {
-                border-image-source: url(../../assets/flash/toolbar/findfriend-bg-hover.png);
+                border-image-source: url(@/assets/flash/toolbar/findfriend-bg-hover.png);
             }
         }
 
         &.find-friends-active {
-            border-image-source: url(../../assets/flash/toolbar/friend-bg.png);
+            border-image-source: url(@/assets/flash/toolbar/friend-bg.png);
             border-image-slice:17 17 17 17 fill;
             border-image-width:17px 17px 17px 17px;
             border-image-repeat:repeat repeat;
             min-height: 36px;
 
             &:hover {
-                border-image-source: url(../../assets/flash/toolbar/friend-bg-hover.png);
+                border-image-source: url(@/assets/flash/toolbar/friend-bg-hover.png);
             }
 
             .friend-bar-text {
@@ -210,7 +210,7 @@
                 left: 6px;
                 width: 31px;
                 height: 34px;
-                background-image: url('../../assets/images/toolbar/friend-search.png');
+                background-image: url('@/assets/images/toolbar/friend-search.png');
             }
         }
     }
@@ -229,21 +229,21 @@
     }
 
     .follow {
-        background-image: url('../../assets/flash/messenger/button_follow.png');
+        background-image: url('@/assets/flash/messenger/button_follow.png');
         background-repeat: no-repeat;
         width: 21px;
         height: 20px;
     }
 
     .profile {
-        background-image: url('../../assets/flash/messenger/button_profile.png');
+        background-image: url('@/assets/flash/messenger/button_profile.png');
         background-repeat: no-repeat;
         width: 30px;
         height: 20px;
     }
 
     .clear {
-        background-image: url('../../assets/flash/boxes/card/mod_close.png');
+        background-image: url('@/assets/flash/boxes/card/mod_close.png');
         background-repeat: no-repeat;
         width: 20px;
         height: 20px;
@@ -252,7 +252,7 @@
     .chat-input-form {
         font-size: 12px;
         width: 100%;
-        border-image-source: url('../../assets/flash/messenger/chatform.png');
+        border-image-source: url('@/assets/flash/messenger/chatform.png');
         border-image-slice:10 10 10 10 fill;
         border-image-width:10px 10px 10px 10px;
         border-image-repeat:repeat repeat;
@@ -265,7 +265,7 @@
     }
 
     .thread-message {
-        border-image-source: url('../../assets/flash/messenger/chatform.png');
+        border-image-source: url('@/assets/flash/messenger/chatform.png');
         border-image-slice:10 10 10 10 fill;
         border-image-width:10px 10px 10px 10px;
         border-image-repeat:repeat repeat;
@@ -280,7 +280,7 @@
     }
 
     .messenger-button {
-        border-image-source: url(../../assets/flash/messenger/button.png);
+        border-image-source: url(@/assets/flash/messenger/button.png);
         border-image-slice:6 6 6 6 fill;
         border-image-width:6px 6px 6px 6px;
         border-image-repeat:stretch stretch;
@@ -298,7 +298,7 @@
     }
 
     .messenger-line {
-        background-image: url('../../assets/flash/messenger/line.png');
+        background-image: url('@/assets/flash/messenger/line.png');
         background-repeat: repeat-x;
         background-position: 0 6px;
     }
@@ -308,7 +308,7 @@
         width: 39px;
 
         &.active {
-            border-image-source: url('../../assets/flash/messenger/avatar_head_bg.png');
+            border-image-source: url('@/assets/flash/messenger/avatar_head_bg.png');
             border-image-slice:13 13 13 13 fill;border-image-width:13px 13px 13px 13px;border-image-outset:0px 0px 0px 0px;border-image-repeat:repeat repeat;
         }
     }
@@ -381,7 +381,7 @@
         }
 
         .message-bubble {
-            border-image-source: url('../../assets/flash/messenger/message_bubble.png');
+            border-image-source: url('@/assets/flash/messenger/message_bubble.png');
             border-image-slice:5 5 5 5 fill;
             border-image-width:5px 5px 5px 5px;
             border-image-repeat:repeat repeat;
@@ -397,7 +397,7 @@
                 content: ' ';
                 width: 5px;
                 height: 10px;
-                background-image: url('../../assets/flash/messenger/pointer.png');
+                background-image: url('@/assets/flash/messenger/pointer.png');
                 top: 15px;
                 left: -5px;
             }
@@ -411,7 +411,7 @@
                 content: ' ';
                 width: 5px;
                 height: 10px;
-                background-image: url('../../assets/flash/messenger/pointer_right.png');
+                background-image: url('@/assets/flash/messenger/pointer_right.png');
                 top: 15px;
                 right: -5px;
             }
