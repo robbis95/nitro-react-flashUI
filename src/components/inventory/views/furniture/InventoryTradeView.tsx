@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IObjectData, TradingListAddItemComposer, TradingListAddItemsComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
+import { FaChevronLeft, FaChevronRight, FaLock, FaUnlock } from 'react-icons/fa';
 import { FurniCategory, getGuildFurniType, GroupItem, IFurnitureItem, LocalizeText, NotificationAlertType, SendMessageComposer, TradeState } from '../../../../api';
 import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutGridItem, Text } from '../../../../common';
 import { useInventoryTrade, useNotification } from '../../../../hooks';
@@ -113,9 +113,14 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
 
     const getLockIcon = (accepts: boolean) =>
     {
-        const iconName = accepts ? 'locked' : 'open';
-
-        return <i className={ 'mt-auto pb-5 icon icon-lock-' + iconName } />
+        if(accepts)
+        {
+            return <FaLock className="mt-auto pb-5 text-success fa-icon" />
+        }
+        else
+        {
+            return <FaUnlock className="mt-auto pb-5 text-danger fa-icon" />
+        }
     }
 
     const updateQuantity = (value: number, totalItemCount: number) =>
@@ -186,7 +191,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                 <LayoutGridItem key={ index } className={ !count ? 'opacity-0-5 ' : '' } itemImage={ item.iconUrl } itemCount={ count } itemActive={ (groupItem === item) } itemUniqueNumber={ item.stuffData.uniqueNumber } onClick={ event => (count && setGroupItem(item)) } onDoubleClick={ event => attemptItemOffer(1) }>
                                     { ((count > 0) && (groupItem === item)) &&
                                         <Button position="absolute" variant="success" className="trade-button bottom-1 end-1" onClick={ event => attemptItemOffer(1) }>
-                                            <FontAwesomeIcon icon="chevron-right" />
+                                            <FaChevronRight className="fa-icon" />
                                         </Button>
                                     }
                                 </LayoutGridItem>
@@ -226,7 +231,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                     <LayoutGridItem key={ i } itemActive={ (ownGroupItem === item) } itemImage={ item.iconUrl } itemCount={ item.getTotalCount() } itemUniqueNumber={ item.stuffData.uniqueNumber } onClick={ event => setOwnGroupItem(item) } onDoubleClick={ event => removeItem(item) }>
                                         { (ownGroupItem === item) &&
                                             <Button position="absolute" variant="danger" className="trade-button bottom-1 start-1" onClick={ event => removeItem(item) }>
-                                                <FontAwesomeIcon icon="chevron-left" />
+                                                <FaChevronLeft className="fa-icon" />
                                             </Button> }
                                     </LayoutGridItem>
                                 );

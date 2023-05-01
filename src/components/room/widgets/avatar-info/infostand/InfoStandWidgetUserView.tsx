@@ -1,9 +1,11 @@
 import { RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomSessionFavoriteGroupUpdateEvent, RoomSessionUserBadgesEvent, RoomSessionUserFigureUpdateEvent, UserRelationshipsComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, FocusEvent, KeyboardEvent, SetStateAction, useEffect, useState } from 'react';
+import { FaPencilAlt, FaTimes } from 'react-icons/fa';
 import { AvatarInfoUser, CloneObject, GetConfiguration, GetGroupInformation, GetSessionDataManager, GetUserProfile, LocalizeText, SendMessageComposer } from '../../../../../api';
 import { Base, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, Text } from '../../../../../common';
 import { useMessageEvent, useRoom, useRoomSessionManagerEvent } from '../../../../../hooks';
 import { InfoStandWidgetUserRelationshipsView } from './InfoStandWidgetUserRelationshipsView';
+import { InfoStandWidgetUserTagsView } from './InfoStandWidgetUserTagsView';
 
 interface InfoStandWidgetUserViewProps
 {
@@ -34,7 +36,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
     const onMottoKeyDown = (event: KeyboardEvent<HTMLInputElement>) =>
     {
         event.stopPropagation();
-        
+
         switch(event.key)
         {
             case 'Enter':
@@ -48,7 +50,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
         if(!avatarInfo || (avatarInfo.webID !== event.userId)) return;
 
         const oldBadges = avatarInfo.badges.join('');
-        
+
         if(oldBadges === event.badges.join('')) return;
 
         setAvatarInfo(prevValue =>
@@ -107,10 +109,10 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
     {
         setIsEditingMotto(false);
         setMotto(avatarInfo.motto);
-        
+
         SendMessageComposer(new UserRelationshipsComposer(avatarInfo.webID));
 
-        return () => 
+        return () =>
         {
             setIsEditingMotto(false);
             setMotto(null);
@@ -129,7 +131,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                             <i className="icon icon-profile-house cursor-pointer" onClick={ event => GetUserProfile(avatarInfo.webID) }/>
                             <Text gfbold variant="white" className="infostand-name" onClick={ event => GetUserProfile(avatarInfo.webID) }>{ avatarInfo.name }</Text>
                         </Flex>
-                        <i className="infostand-close" onClick={ onClose } />
+                        <FaTimes className="cursor-pointer fa-icon" onClick={ onClose } />
                     </Flex>
                     <hr className="m-0" />
                 </Column>
@@ -176,7 +178,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                             </Flex> }
                         { avatarInfo.type === AvatarInfoUser.OWN_USER &&
                             <Flex grow alignItems="center" gap={ 2 }>
-                                <i className="icon pencil-icon" />
+                                <FaPencilAlt className="small fa-icon" />
                                 <Flex grow alignItems="center" className="motto-content">
                                     { !isEditingMotto &&
                                         <Text fullWidth pointer wrap textBreak variant="white" onClick={ event => setIsEditingMotto(true) }>{ motto }&nbsp;</Text> }
@@ -202,6 +204,11 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                 <Column gap={ 1 }>
                     <InfoStandWidgetUserRelationshipsView relationships={ relationships } />
                 </Column>
+                { GetConfiguration('user.tags.enabled') &&
+                    <Column gap={ 1 } className="mt-1">
+                        <InfoStandWidgetUserTagsView tags={ GetSessionDataManager().tags } />
+                    </Column>
+                }
             </Column>
         </Column>
     );

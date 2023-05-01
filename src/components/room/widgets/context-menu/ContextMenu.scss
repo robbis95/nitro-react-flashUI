@@ -9,11 +9,11 @@
         width: 250px;
         background: #2d2a26;
         border-top: 1px solid #000;
-        
+
     }
 
     &.name-only {
-        border-image-source: url(../../../../assets/flash/room/name_bg.png);
+        border-image-source: url(@/assets/flash/room/name_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         padding: 6px 18px;
@@ -23,7 +23,7 @@
 
         &:after {
             content: "";
-            background-image: url(../../../../assets/flash/room/pointer_after.png);
+            background-image: url(@/assets/flash/room/pointer_after.png);
             background-repeat: no-repeat;
             width: 11px;
             height: 9px;
@@ -41,8 +41,8 @@
 
     &:not(.name-only) {
         &:after {
-            content: "";
-            background-image: url(../../../../assets/flash/room/context_pointer_after.png);
+            content: '';
+            background-image: url(@/assets/flash/room/context_pointer_after.png);
             background-repeat: no-repeat;
             width: 11px;
             height: 9px;
@@ -55,7 +55,7 @@
     }
 
     .menu-bottom {
-        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+        border-image-source: url(@/assets/flash/room/context_menu_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         color: $white;
@@ -67,7 +67,7 @@
         }
 
     .menu-bottom {
-        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+        border-image-source: url(@/assets/flash/room/context_menu_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         color: $white;
@@ -79,7 +79,7 @@
         }
 
     .menu-header {
-        border-image-source: url(../../../../assets/flash/room/context_menu_bg.png);
+        border-image-source: url(@/assets/flash/room/context_menu_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         color: $white;
@@ -148,7 +148,7 @@
             height: 27px;
             max-height: 27px;
             padding: 3px;
-            background: repeating-linear-gradient(#2a2725, #2a2725 50%, #262321 50%, #262321 100%);            
+            background: repeating-linear-gradient(#2a2725, #2a2725 50%, #262321 50%, #262321 100%);
             cursor: pointer;
             font-size: 11px;
 
@@ -156,8 +156,7 @@
                 background: repeating-linear-gradient(#60a1c8, #60a1c8 50%, #5994b8 50%, #5994b8 100%);
             }
 
-            .fas,
-            .svg-inline--fa,
+            .fa-icon,
             .nitro-currency-icon {
                 position: absolute;
                 right: 8px;

@@ -1,5 +1,6 @@
 import { IFurnitureData } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
+import { FaSearch, FaTimes } from 'react-icons/fa';
 import { CatalogPage, CatalogType, FilterCatalogNode, FurnitureOffer, GetOfferNodes, GetSessionDataManager, ICatalogNode, ICatalogPage, IPurchasableOffer, LocalizeText, PageLocalization, SearchResult } from '../../../../../api';
 import { Button, Flex } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';

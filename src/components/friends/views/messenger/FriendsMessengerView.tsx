@@ -1,5 +1,6 @@
 import { FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
 import { Base, Button, ButtonGroup, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, LayoutGridItem, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';

@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoomObjectCategory } from '@nitrots/nitro-renderer';
 import { FC } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { LocalizeText, MessengerRequest } from '../../../../api';
 import { Base, Button, Column, Flex, Text } from '../../../../common';
 import { ObjectLocationView } from '../object-location/ObjectLocationView';

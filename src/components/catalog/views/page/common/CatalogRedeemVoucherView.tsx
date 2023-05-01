@@ -1,5 +1,6 @@
 import { RedeemVoucherMessageComposer, VoucherRedeemErrorMessageEvent, VoucherRedeemOkMessageEvent } from '@nitrots/nitro-renderer';
 import { FC, useState } from 'react';
+import { FaTag } from 'react-icons/fa';
 import { LocalizeText, SendMessageComposer } from '../../../../../api';
 import { Button, Column, Flex, Text } from '../../../../../common';
 import { useMessageEvent, useNotification } from '../../../../../hooks';
@@ -34,7 +35,7 @@ export const CatalogRedeemVoucherView: FC<CatalogRedeemVoucherViewProps> = props
         if(parser.productName) message = LocalizeText('catalog.alert.voucherredeem.ok.description.furni', [ 'productName', 'productDescription' ], [ parser.productName, parser.productDescription ]);
 
         simpleAlert(message, null, null, null, LocalizeText('catalog.alert.voucherredeem.ok.title'));
-        
+
         setIsWaiting(false);
         setVoucher('');
     });

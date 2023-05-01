@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, KeyboardEvent, useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
 import { INavigatorSearchFilter, LocalizeText, SearchFilterOptions } from '../../../../api';
 import { Button, Flex } from '../../../../common';
 import { useNavigator } from '../../../../hooks';

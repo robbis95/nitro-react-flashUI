@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC, MouseEvent } from 'react';
+import { FaUser } from 'react-icons/fa';
 import { CreateRoomSession, DoorStateType, GetSessionDataManager, TryVisitRoom } from '../../../../api';
 import { Column, Flex, LayoutBadgeImageView, LayoutGridItemProps, LayoutRoomThumbnailView, Text } from '../../../../common';
 import { useNavigator } from '../../../../hooks';
@@ -56,10 +56,10 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
                     setDoorData(prevValue =>
                     {
                         const newValue = { ...prevValue };
-        
+
                         newValue.roomInfo = roomData;
                         newValue.state = DoorStateType.START_DOORBELL;
-        
+
                         return newValue;
                     });
                     return;
@@ -67,16 +67,16 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
                     setDoorData(prevValue =>
                     {
                         const newValue = { ...prevValue };
-        
+
                         newValue.roomInfo = roomData;
                         newValue.state = DoorStateType.START_PASSWORD;
-        
+
                         return newValue;
                     });
                     return;
             }
         }
-        
+
         CreateRoomSession(roomData.roomId);
     }
 
@@ -85,10 +85,10 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
             <LayoutRoomThumbnailView roomId={ roomData.roomId } customUrl={ roomData.officialRoomPicRef } className="d-flex flex-column align-items-center justify-content-end mb-1">
                 { roomData.habboGroupId > 0 && <LayoutBadgeImageView badgeCode={ roomData.groupBadgeCode } isGroup={ true } className={ 'position-absolute top-0 start-0 m-1' } /> }
                 <Flex center className={ 'badge p-1 position-absolute m-1 ' + getUserCounterColor() } gap={ 1 }>
-                    <FontAwesomeIcon icon="user" />
+                    <FaUser className="fa-icon" />
                     { roomData.userCount }
                 </Flex>
-                { (roomData.doorMode !== RoomDataParser.OPEN_STATE) && 
+                { (roomData.doorMode !== RoomDataParser.OPEN_STATE) &&
                 <i className={ ('position-absolute end-0 mb-1 me-1 icon icon-navigator-room-' + ((roomData.doorMode === RoomDataParser.DOORBELL_STATE) ? 'locked' : (roomData.doorMode === RoomDataParser.PASSWORD_STATE) ? 'password' : (roomData.doorMode === RoomDataParser.INVISIBLE_STATE) ? 'invisible' : '')) } /> }
             </LayoutRoomThumbnailView>
             <Flex className="w-100">
@@ -96,7 +96,7 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
                 <Flex reverse alignItems="center" gap={ 1 }>
                     <NavigatorSearchResultItemInfoView roomData={ roomData } />
                 </Flex>
-                { children } 
+                { children }
             </Flex>
 
         </Column>
@@ -112,7 +112,7 @@ export const NavigatorSearchResultItemView: FC<NavigatorSearchResultItemViewProp
             <Flex reverse alignItems="center" gap={ 1 }>
                 <NavigatorSearchResultItemInfoView roomData={ roomData } />
                 { roomData.habboGroupId > 0 && <i className="icon icon-navigator-room-group" /> }
-                { (roomData.doorMode !== RoomDataParser.OPEN_STATE) && 
+                { (roomData.doorMode !== RoomDataParser.OPEN_STATE) &&
                     <i className={ ('icon icon-navigator-room-' + ((roomData.doorMode === RoomDataParser.DOORBELL_STATE) ? 'locked' : (roomData.doorMode === RoomDataParser.PASSWORD_STATE) ? 'password' : (roomData.doorMode === RoomDataParser.INVISIBLE_STATE) ? 'invisible' : '')) } /> }
             </Flex>
             { children }

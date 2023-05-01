@@ -1,7 +1,8 @@
 import { ILinkEventTracker, NitroSettingsEvent, UserSettingsCameraFollowComposer, UserSettingsEvent, UserSettingsOldChatComposer, UserSettingsRoomInvitesComposer, UserSettingsSoundComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
+import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from 'react-icons/fa';
 import { AddEventLinkTracker, DispatchMainEvent, DispatchUiEvent, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
-import { Button, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
+import { Button, classNames, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
 import { useCatalogPlaceMultipleItems, useCatalogSkipPurchaseConfirmation, useMessageEvent } from '../../hooks';
 
 export const UserSettingsView: FC<{}> = props =>
@@ -53,7 +54,7 @@ export const UserSettingsView: FC<{}> = props =>
         }
 
         if(doUpdate) setUserSettings(clone);
-        
+
         DispatchMainEvent(clone)
     }
 
@@ -93,7 +94,7 @@ export const UserSettingsView: FC<{}> = props =>
                 const parts = url.split('/');
 
                 if(parts.length < 2) return;
-        
+
                 switch(parts[1])
                 {
                     case 'show':

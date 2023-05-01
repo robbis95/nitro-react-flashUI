@@ -5,15 +5,15 @@
         top: 8px;
         right: 8px;
         cursor: pointer;
-        background-image: url("../../assets/flash/boxes/card/close.png");
+        background-image: url("@/assets/flash/boxes/card/close.png");
         width: 19px;
         height: 20px;
 
             &:hover {
-            background-image: url("../../assets/flash/boxes/card/close_hover.png");
+            background-image: url("@/assets/flash/boxes/card/close_hover.png");
 
             &:active {
-            background-image: url("../../assets/flash/boxes/card/close_click.png");
+            background-image: url("@/assets/flash/boxes/card/close_click.png");
             }
 
         }
@@ -31,7 +31,7 @@
         position: relative;
         width: 340px;
         height: 462px;
-        background-image: url("../../assets/images/room-widgets/camera-widget/camera-spritesheet.png");
+        background-image: url('@/assets/images/room-widgets/camera-widget/camera-spritesheet.png');
         background-position: -1px -1px;
         z-index: 2;
 
@@ -41,7 +41,7 @@
             cursor: pointer;
             margin-top: 362px;
 
-            background-image: url("../../assets/images/room-widgets/camera-widget/camera-spritesheet.png");
+            background-image: url('@/assets/images/room-widgets/camera-widget/camera-spritesheet.png');
             background-position: -343px -321px;
 
             &:hover {
@@ -54,7 +54,7 @@
         }
 
         .camera-view-finder {
-            background-image: url("../../assets/images/room-widgets/camera-widget/camera-spritesheet.png");
+            background-image: url('@/assets/images/room-widgets/camera-widget/camera-spritesheet.png');
             background-position: -343px -1px;
         }
 

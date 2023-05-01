@@ -3,7 +3,7 @@
     height: $catalog-height;
     min-width: 528px;
 
-    font[size="16"] {
+    font[size='16'] {
         font-size: 20px;
     }
 
@@ -27,7 +27,7 @@
         padding-right: 2px;
         padding-bottom: 2px;
     }
-    
+
 
     .catalog-clear-button {
         right: 5px;
@@ -43,13 +43,13 @@
     }
 
     .grid-bg {
-        border-image-source: url(../../assets/flash/catalogue/cata_bg.png);
+        border-image-source: url(@/assets/flash/catalogue/cata_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
 
     .credits-bg {
-        border-image-source: url(../../assets/flash/catalogue/credits_bg.png);
+        border-image-source: url(@/assets/flash/catalogue/credits_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
@@ -119,6 +119,9 @@
         width: 80px;
         height: 80px;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .gift-color {
@@ -235,14 +238,14 @@
     .info-loyalty-content {
         background-repeat: no-repeat;
         background-position: top right;
-        background-image: url("../../assets/images/catalog/diamond_info_illustration.gif");
+        background-image: url('@/assets/images/catalog/diamond_info_illustration.gif');
         padding-right: 123px;
     }
 
     .info-image {
         width: 123px;
         height: 350px;
-        background-image: url("../../assets/images/catalog/diamond_info_illustration.gif");
+        background-image: url('@/assets/images/catalog/diamond_info_illustration.gif');
     }
 }
 
@@ -254,7 +257,8 @@
         .icon-hc-banner {
             width: 68px;
             height: 40px;
-            background: url("../../assets/images/catalog/hc_big.png") center no-repeat;
+            background: url('@/assets/images/catalog/hc_big.png') center
+                no-repeat;
         }
     }
 }
@@ -284,8 +288,8 @@
 }
 
 .nitro-front-page-item-text {
-    border-image-source: url(../../assets/flash/catalogue/cata_feature_text_bg.png);
-    border-image-slice: 6 6 6 6 fill; 
+    border-image-source: url(@/assets/flash/catalogue/cata_feature_text_bg.png);
+    border-image-slice: 6 6 6 6 fill;
     border-image-width: 6px 6px 6px 6px;
     width: 96%;
     font-family: Ubuntubold;
@@ -293,8 +297,8 @@
 }
 
 .voucher-box {
-    border-image-source: url(../../assets/flash/catalogue/voucer_bg.png);
-    border-image-slice: 6 6 6 6 fill; 
+    border-image-source: url(@/assets/flash/catalogue/voucer_bg.png);
+    border-image-slice: 6 6 6 6 fill;
     border-image-width: 6px 6px 6px 6px;
     font-size: 13px;
 }
@@ -302,3 +306,33 @@
 .voucher-form {
     height: 24px;
 }
+
+.autocomplete-gift-container {
+    background: #fff;
+    padding: 8px;
+    list-style-type: none;
+    min-width: 307px;
+    border-radius: 0.2rem;
+    position: absolute;
+    font-size: 0.7875rem;
+    top: 81px;
+    left: 8px;
+    border: 1px solid #b6c1ce;
+    margin: 0;
+    border-radius: 2px;
+    margin: 0;
+    box-sizing: border-box;
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 1;
+
+    .autocomplete-gift-item {
+        width: 100%;
+        box-sizing: border-box;
+        &:hover {
+            background-color: #ebf4ff;
+        }
+    }
+}
+
+@import './views/targeted-offer/Offer.scss';

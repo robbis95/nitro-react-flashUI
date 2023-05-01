@@ -14,7 +14,7 @@ $nitro-card-tabs-height: 35px;
 
 
         .nitro-card-header {
-            border-image-source: url("../../assets/flash/boxes/card/top.png");
+            border-image-source: url("@/assets/flash/boxes/card/top.png");
             border-image-slice: 7 fill;
             border-image-width: 7px;
             border-image-repeat: repeat repeat;
@@ -25,7 +25,7 @@ $nitro-card-tabs-height: 35px;
             justify-content: center;
 
             .nitro-card-header-holder {
-            justify-content: center;
+                justify-content: center;
             }
 
 
@@ -36,15 +36,15 @@ $nitro-card-tabs-height: 35px;
 
             .nitro-card-header-close {
                 cursor: pointer;
-                background-image: url("../../assets/flash/boxes/card/close.png");
+                background-image: url("@/assets/flash/boxes/card/close.png");
                 width: 19px;
                 height: 20px;
 
-                    &:hover {
-                    background-image: url("../../assets/flash/boxes/card/close_hover.png");
+                &:hover {
+                    background-image: url("@/assets/flash/boxes/card/close_hover.png");
 
                     &:active {
-                    background-image: url("../../assets/flash/boxes/card/close_click.png");
+                        background-image: url("@/assets/flash/boxes/card/close_click.png");
                     }
 
                 }
@@ -56,7 +56,7 @@ $nitro-card-tabs-height: 35px;
         }
 
         .content-area {
-            border-image-source: url("../../assets/flash/boxes/card/body.png");
+            border-image-source: url("@/assets/flash/boxes/card/body.png");
             border-image-slice: 33 7 8 7 fill;
             border-image-width: 0px 7px 8px 7px;
             border-image-repeat: repeat repeat;
@@ -66,48 +66,48 @@ $nitro-card-tabs-height: 35px;
 
     // MOD TOOL
 
-&.theme-primary-modtool {
-    border-image-source: url("../../assets/flash/boxes/card/mod_window.png");
-    border-image-slice: 6 6 6 6 fill;
-    border-image-width: 6px 6px 6px 6px;
-    border-image-repeat: repeat repeat;
+    &.theme-primary-modtool {
+        border-image-source: url("@/assets/flash/boxes/card/mod_window.png");
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+        border-image-repeat: repeat repeat;
 
-    .nitro-card-header {
+        .nitro-card-header {
 
-        min-height: 25px;
-        max-height: 25px;
-        justify-content: left;
+            min-height: 25px;
+            max-height: 25px;
+            justify-content: left;
 
 
-        .nitro-card-header-text {
-            color: $black;
-            min-height: 21px;
-            font-size: 10px;
-            margin-top: 3px;
-            text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
-        }
-
-        .nitro-card-header-close {
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
-            background-image: url("../../assets/flash/boxes/card/mod_close.png");
-
-            &:hover {
-                filter: brightness(1.2);
+            .nitro-card-header-text {
+                color: $black;
+                min-height: 21px;
+                font-size: 10px;
+                margin-top: 3px;
+                text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
             }
-    
-            &:active {
-                filter: brightness(0.8);
+
+            .nitro-card-header-close {
+                cursor: pointer;
+                width: 20px;
+                height: 20px;
+                background-image: url("@/assets/flash/boxes/card/mod_close.png");
+
+                &:hover {
+                    filter: brightness(1.2);
+                }
+
+                &:active {
+                    filter: brightness(0.8);
+                }
             }
         }
     }
-}
 
     // MOD TOOL WINDOWS
 
     &.theme-modtool-windows {
-        border-image-source: url("../../assets/flash/friendlist/friendlist_bg.png");
+        border-image-source: url("@/assets/flash/friendlist/friendlist_bg.png");
         border-image-slice: 10 10 10 10 fill;
         border-image-width: 10px 10px 10px 10px;
         border-image-repeat: repeat repeat;
@@ -119,7 +119,7 @@ $nitro-card-tabs-height: 35px;
         }
 
         .mod-content {
-            border-image-source: url(../../assets/flash/modtools/content_bg.png);
+            border-image-source: url(@/assets/flash/modtools/content_bg.png);
             border-image-slice: 6 6 6 6 fill;
             border-image-width: 6px 6px 6px 6px;
             height: 100%;
@@ -136,14 +136,14 @@ $nitro-card-tabs-height: 35px;
         .nitro-card-header {
             min-height: 25px;
             max-height: 25px;
-            
+
             .nitro-card-header-holder {
-                background-image: url(../../assets/flash/friendlist/friendlist_header.png);
+                background-image: url(@/assets/flash/friendlist/friendlist_header.png);
                 background-repeat: repeat-x;
                 justify-content: center;
                 margin-top: 6px;
             }
-    
+
             .nitro-card-header-text {
                 color: $white;
                 min-height: 15px;
@@ -152,22 +152,22 @@ $nitro-card-tabs-height: 35px;
                 background: #418db0;
                 padding: 3px 10px 6px 10px;
             }
-    
+
             .nitro-card-header-close {
                 cursor: pointer;
                 width: 15px;
                 height: 15px;
-                background-image: url("../../assets/flash/friendlist/friendlist_close.png");
+                background-image: url("@/assets/flash/friendlist/friendlist_close.png");
                 background-repeat: no-repeat;
                 background-position: center;
                 background-color: #418cb0;
 
                 &:hover {
-                    background-image: url("../../assets/flash/friendlist/friendlist_close_hover.png");
+                    background-image: url("@/assets/flash/friendlist/friendlist_close_hover.png");
                 }
 
                 &:active {
-                    background-image: url("../../assets/flash/friendlist/friendlist_close_active.png");
+                    background-image: url("@/assets/flash/friendlist/friendlist_close_active.png");
                 }
             }
         }
@@ -176,18 +176,18 @@ $nitro-card-tabs-height: 35px;
     // MESSENGER
 
     &.theme-messenger {
-        border-image-source: url("../../assets/flash/boxes/card/mod_window.png");
+        border-image-source: url("@/assets/flash/boxes/card/mod_window.png");
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         border-image-repeat: repeat repeat;
-    
+
         .nitro-card-header {
-    
+
             min-height: 25px;
             max-height: 25px;
             justify-content: left;
-    
-    
+
+
             .nitro-card-header-text {
                 color: $black;
                 min-height: 21px;
@@ -195,281 +195,281 @@ $nitro-card-tabs-height: 35px;
                 padding-top: 10px;
                 text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
             }
-    
+
             .nitro-card-header-close {
                 cursor: pointer;
                 width: 20px;
                 height: 20px;
                 margin-top: 10px;
-                background-image: url("../../assets/flash/messenger/close.png");
+                background-image: url("@/assets/flash/messenger/close.png");
 
             }
         }
     }
 
-        // SETTINGS
+    // SETTINGS
 
-        &.theme-settings {
-            border-image-source: url("../../assets/flash/boxes/card/grey_card.png");
+    &.theme-settings {
+        border-image-source: url("@/assets/flash/boxes/card/grey_card.png");
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+
+        .nitro-card-header {
+            min-height: 30px;
+            max-height: 30px;
+
+            .nitro-card-header-holder {
+                justify-content: center;
+                border-bottom: 1px solid #2f2f2f;
+            }
+        }
+    }
+
+    // FRIENDLIST
+
+    &.theme-friendlist {
+        border-image-source: url("@/assets/flash/friendlist/friendlist_bg.png");
+        border-image-slice: 10 10 10 10 fill;
+        border-image-width: 10px 10px 10px 10px;
+        border-image-repeat: repeat repeat;
+        font-family: Goldfish;
+        font-size: 9px;
+
+        .nitro-card-accordion-set-content {
+
+            color: #000;
+
+            .nitro-card-accordion-set-header {
+                font-family: Goldfish-Bold;
+            }
+
+        }
+
+        .search-headers {
+            font-family: Goldfish;
+            color: #fff;
+            background: linear-gradient(180deg, #6b6b6b 50%, #555555 50%);
+            border: 1px solid #000;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #555555;
+            box-shadow: inset 0px 1px 0px 0px #555555;
+            background-size: 1px 18px;
+            margin-top: -1px;
+        }
+
+        .friend-req-headers {
+            font-family: Goldfish;
+            color: #fff;
+            background: linear-gradient(180deg, #f09837 50%, #dc8530 50%);
+            border: 1px solid #000;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #dc8530;
+            box-shadow: inset 0px 1px 0px 0px #dc8530;
+            background-size: 1px 18px;
+        }
+
+        .friend-headers {
+            font-family: Goldfish;
+            background: linear-gradient(180deg, rgba(138,218,255,1) 50%, rgba(89,191,255,1) 50%);
+            border: 1px solid #000;
+            border-bottom: none;
+            -webkit-box-shadow: inset 0px 1px 0px 0px #59bfff;
+            box-shadow: inset 0px 1px 0px 0px #59bfff;
+            background-size: 1px 18px;
+        }
+
+        .nitro-card-accordion-set-content {
+            background: #fff;
+        }
+
+        .friend-tab:nth-of-type(odd) {
+            background: #eeeeee;
+        }
+
+        .friend-active {
+            background: #3cb8ff !important;
+        }
+
+        .friendlist-bottom {
+            height: 30px;
+        }
+
+        .friend-active-tab {
+            border-image-source: url("@/assets/flash/friendlist/friend_active_bg.png");
+            border-image-slice: 7 7 7 7 fill;
+            border-image-width: 7px 7px 7px 7px;
+            border-image-repeat: repeat repeat;
+            max-height: 30px;
+            width: 100%
+        }
+
+        .friend-follow-icon {
+            background-image: url(@/assets/flash/friendlist/follow_friend.png);
+            background-repeat: no-repeat;
+            width: 32px;
+            height: 22px;
+
+            &.active {
+                background-image: url(@/assets/flash/friendlist/follow_friend_active.png);
+                cursor: pointer;
+
+                &:hover {
+                    background-image: url(@/assets/flash/friendlist/follow_friend_hover.png);
+                }
+
+                &:active {
+                    background-image: url(@/assets/flash/friendlist/follow_friend_clicked.png);
+                }
+            }
+        }
+
+        .friend-delete-icon {
+            background-image: url(@/assets/flash/friendlist/delete_friend.png);
+            background-repeat: no-repeat;
+            width: 23px;
+            height: 22px;
+            position: absolute;
+            right: 9px;
+
+            &.active {
+                background-image: url(@/assets/flash/friendlist/delete_friend_active.png);
+                cursor: pointer;
+
+                &:hover {
+                    background-image: url(@/assets/flash/friendlist/delete_friend_hover.png);
+                }
+
+                &:active {
+                    background-image: url(@/assets/flash/friendlist/delete_friend_clicked.png);
+                }
+            }
+        }
+
+        .friend-profile-icon {
+            background-image: url(@/assets/flash/friendlist/profile_friend.png);
+            background-repeat: no-repeat;
+            width: 27px;
+            height: 22px;
+
+            &.active {
+                background-image: url(@/assets/flash/friendlist/profile_friend_active.png);
+                cursor: pointer;
+
+                &:hover {
+                    background-image: url(@/assets/flash/friendlist/profile_friend_hover.png);
+                }
+
+                &:active {
+                    background-image: url(@/assets/flash/friendlist/profile_friend_clicked.png);
+                }
+            }
+        }
+
+        .nitro-card-header {
+            min-height: 25px;
+            max-height: 25px;
+
+            .nitro-card-header-holder {
+                background-image: url(@/assets/flash/friendlist/friendlist_header.png);
+                background-repeat: repeat-x;
+                justify-content: center;
+                margin-top: 6px;
+            }
+
+            .nitro-card-header-text {
+                color: $white;
+                min-height: 15px;
+                font-size: 9px;
+                font-family: Goldfish-Bold;
+                background: #418db0;
+                padding: 0px 10px 6px 10px;
+            }
+
+            .nitro-card-header-close {
+                cursor: pointer;
+                width: 15px;
+                height: 15px;
+                background-image: url("@/assets/flash/friendlist/friendlist_close.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: #418cb0;
+
+                &:hover {
+                    background-image: url("@/assets/flash/friendlist/friendlist_close_hover.png");
+                }
+
+                &:active {
+                    background-image: url("@/assets/flash/friendlist/friendlist_close_active.png");
+                }
+            }
+        }
+    }
+
+    // WIRED WINDOWS
+
+    &.theme-wired {
+        border-image-source: url("@/assets/flash/wired/wired_bg.png");
+        border-image-slice: 10 10 10 10 fill;
+        border-image-width: 10px 10px 10px 10px;
+        border-image-repeat: repeat repeat;
+        font-family: Goldfish;
+        font-size: 9px;
+
+        .btn {
+            font-size: 9px;
+        }
+
+        .mod-content {
+            border-image-source: url(@/assets/flash/modtools/content_bg.png);
             border-image-slice: 6 6 6 6 fill;
             border-image-width: 6px 6px 6px 6px;
-
-            .nitro-card-header {
-                min-height: 30px;
-                max-height: 30px;
-                
-                .nitro-card-header-holder {
-                    justify-content: center;
-                    border-bottom: 1px solid #2f2f2f;
-                }
-            }
         }
 
-        // FRIENDLIST
-
-        &.theme-friendlist {
-            border-image-source: url("../../assets/flash/friendlist/friendlist_bg.png");
-            border-image-slice: 10 10 10 10 fill;
-            border-image-width: 10px 10px 10px 10px;
-            border-image-repeat: repeat repeat;
-            font-family: Goldfish;
-            font-size: 9px;
-
-            .nitro-card-accordion-set-content {
-
-                color: #000;
-
-            .nitro-card-accordion-set-header {
-                font-family: Goldfish-Bold;
-            }
-
+        .nitro-card-accordion-set-content {
+            color: #000;
         }
 
-            .search-headers {
-                font-family: Goldfish;
-                color: #fff;
-                background: linear-gradient(180deg, #6b6b6b 50%, #555555 50%);   
-                border: 1px solid #000;
-                -webkit-box-shadow: inset 0px 1px 0px 0px #555555; 
-                box-shadow: inset 0px 1px 0px 0px #555555;
-                background-size: 1px 18px;
-                margin-top: -1px;
-            }
-
-            .friend-req-headers {
-                font-family: Goldfish;
-                color: #fff;
-                background: linear-gradient(180deg, #f09837 50%, #dc8530 50%);   
-                border: 1px solid #000;
-                -webkit-box-shadow: inset 0px 1px 0px 0px #dc8530; 
-                box-shadow: inset 0px 1px 0px 0px #dc8530;
-                background-size: 1px 18px;
-            }
-
-            .friend-headers {
-                font-family: Goldfish;
-                background: linear-gradient(180deg, rgba(138,218,255,1) 50%, rgba(89,191,255,1) 50%);   
-                border: 1px solid #000;
-                border-bottom: none;
-                -webkit-box-shadow: inset 0px 1px 0px 0px #59bfff; 
-                box-shadow: inset 0px 1px 0px 0px #59bfff;
-                background-size: 1px 18px;
-            }
-
-            .nitro-card-accordion-set-content {
-                background: #fff;
-            }
-
-            .friend-tab:nth-of-type(odd) {
-                background: #eeeeee;
-            }
-
-            .friend-active {
-                background: #3cb8ff !important;
-            }
-
-            .friendlist-bottom {
-                height: 30px;
-            }
-
-            .friend-active-tab {
-                border-image-source: url("../../assets/flash/friendlist/friend_active_bg.png");
-                border-image-slice: 7 7 7 7 fill;
-                border-image-width: 7px 7px 7px 7px;
-                border-image-repeat: repeat repeat;
-                max-height: 30px;
-                width: 100%
-            }
-
-            .friend-follow-icon {
-                background-image: url(../../assets/flash/friendlist/follow_friend.png);
-                background-repeat: no-repeat;
-                width: 32px;
-                height: 22px;
-
-                &.active {
-                    background-image: url(../../assets/flash/friendlist/follow_friend_active.png);
-                    cursor: pointer;
-
-                    &:hover {
-                        background-image: url(../../assets/flash/friendlist/follow_friend_hover.png);
-                    }
-
-                    &:active {
-                        background-image: url(../../assets/flash/friendlist/follow_friend_clicked.png);
-                    }
-                }
-            }
-
-            .friend-delete-icon {
-                background-image: url(../../assets/flash/friendlist/delete_friend.png);
-                background-repeat: no-repeat;
-                width: 23px;
-                height: 22px;
-                position: absolute;
-                right: 9px;
-
-                &.active {
-                    background-image: url(../../assets/flash/friendlist/delete_friend_active.png);
-                    cursor: pointer;
-
-                    &:hover {
-                        background-image: url(../../assets/flash/friendlist/delete_friend_hover.png);
-                    }
-
-                    &:active {
-                        background-image: url(../../assets/flash/friendlist/delete_friend_clicked.png);
-                    }
-                }
-            }
-
-            .friend-profile-icon {
-                background-image: url(../../assets/flash/friendlist/profile_friend.png);
-                background-repeat: no-repeat;
-                width: 27px;
-                height: 22px;
-
-                &.active {
-                    background-image: url(../../assets/flash/friendlist/profile_friend_active.png);
-                    cursor: pointer;
-
-                    &:hover {
-                        background-image: url(../../assets/flash/friendlist/profile_friend_hover.png);
-                    }
-
-                    &:active {
-                        background-image: url(../../assets/flash/friendlist/profile_friend_clicked.png);
-                    }
-                }
-            }
-        
-            .nitro-card-header {
-                min-height: 25px;
-                max-height: 25px;
-                
-                .nitro-card-header-holder {
-                    background-image: url(../../assets/flash/friendlist/friendlist_header.png);
-                    background-repeat: repeat-x;
-                    justify-content: center;
-                    margin-top: 6px;
-                }
-        
-                .nitro-card-header-text {
-                    color: $white;
-                    min-height: 15px;
-                    font-size: 9px;
-                    font-family: Goldfish-Bold;
-                    background: #418db0;
-                    padding: 0px 10px 6px 10px;
-                }
-        
-                .nitro-card-header-close {
-                    cursor: pointer;
-                    width: 15px;
-                    height: 15px;
-                    background-image: url("../../assets/flash/friendlist/friendlist_close.png");
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-color: #418cb0;
-
-                    &:hover {
-                        background-image: url("../../assets/flash/friendlist/friendlist_close_hover.png");
-                    }
-
-                    &:active {
-                        background-image: url("../../assets/flash/friendlist/friendlist_close_active.png");
-                    }
-                }
-            }
+        .nitro-card-accordion-set-header {
+            font-family: Goldfish-Bold;
         }
 
-        // WIRED WINDOWS
+        .nitro-card-header {
+            min-height: 25px;
+            max-height: 25px;
 
-        &.theme-wired {
-            border-image-source: url("../../assets/flash/wired/wired_bg.png");
-            border-image-slice: 10 10 10 10 fill;
-            border-image-width: 10px 10px 10px 10px;
-            border-image-repeat: repeat repeat;
-            font-family: Goldfish;
-            font-size: 9px;
-    
-            .btn {
+            .nitro-card-header-holder {
+                background-image: url(@/assets/flash/wired/wired_header.png);
+                background-repeat: repeat-x;
+                justify-content: center;
+                margin-top: 6px;
+            }
+
+            .nitro-card-header-text {
+                color: $white;
+                min-height: 15px;
                 font-size: 9px;
-            }
-    
-            .mod-content {
-                border-image-source: url(../../assets/flash/modtools/content_bg.png);
-                border-image-slice: 6 6 6 6 fill;
-                border-image-width: 6px 6px 6px 6px;
-            }
-    
-            .nitro-card-accordion-set-content {
-                color: #000;
-            }
-    
-            .nitro-card-accordion-set-header {
                 font-family: Goldfish-Bold;
+                background: #3d3d3d;
+                padding: 3px 10px 6px 10px;
             }
-    
-            .nitro-card-header {
-                min-height: 25px;
-                max-height: 25px;
-                
-                .nitro-card-header-holder {
-                    background-image: url(../../assets/flash/wired/wired_header.png);
-                    background-repeat: repeat-x;
-                    justify-content: center;
-                    margin-top: 6px;
+
+            .nitro-card-header-close {
+                cursor: pointer;
+                width: 15px;
+                height: 15px;
+                background-image: url("@/assets/flash/wired/wired_close.png");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: #3d3d3d;
+
+                &:hover {
+                    background-image: url("@/assets/flash/wired/wired_close_hover.png");
                 }
-        
-                .nitro-card-header-text {
-                    color: $white;
-                    min-height: 15px;
-                    font-size: 9px;
-                    font-family: Goldfish-Bold;
-                    background: #3d3d3d;
-                    padding: 3px 10px 6px 10px;
-                }
-        
-                .nitro-card-header-close {
-                    cursor: pointer;
-                    width: 15px;
-                    height: 15px;
-                    background-image: url("../../assets/flash/wired/wired_close.png");
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-color: #3d3d3d;
-    
-                    &:hover {
-                        background-image: url("../../assets/flash/wired/wired_close_hover.png");
-                    }
-    
-                    &:active {
-                        background-image: url("../../assets/flash/wired/wired_close_active.png");
-                    }
+
+                &:active {
+                    background-image: url("@/assets/flash/wired/wired_close_active.png");
                 }
             }
         }
+    }
 
     &.theme-primary-slim {
         border: $border-width solid $border-color;
@@ -483,7 +483,7 @@ $nitro-card-tabs-height: 35px;
             box-shadow: 0 2px white;
             width: 100%;
             margin: 0;
-            
+
             &:before {
                 position: absolute;
                 content: " ";
@@ -508,16 +508,16 @@ $nitro-card-tabs-height: 35px;
                 box-shadow: 0 0 0 1.6px $white;
                 border: 2px solid #921911;
                 background: repeating-linear-gradient(
-                    rgba(245, 80, 65, 1),
-                    rgba(245, 80, 65, 1) 50%,
-                    rgba(194, 48, 39, 1) 50%,
-                    rgba(194, 48, 39, 1) 100%
+                                rgba(245, 80, 65, 1),
+                                rgba(245, 80, 65, 1) 50%,
+                                rgba(194, 48, 39, 1) 50%,
+                                rgba(194, 48, 39, 1) 100%
                 );
 
                 &:hover {
                     filter: brightness(1.2);
                 }
-        
+
                 &:active {
                     filter: brightness(0.8);
                 }

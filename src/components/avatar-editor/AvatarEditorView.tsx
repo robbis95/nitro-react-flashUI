@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AvatarEditorFigureCategory, FigureSetIdsMessageEvent, GetWardrobeMessageComposer, IAvatarFigureContainer, ILinkEventTracker, UserFigureComposer, UserWardrobePageEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FaDice, FaTrash, FaUndo } from 'react-icons/fa';
 import { AddEventLinkTracker, AvatarEditorAction, AvatarEditorUtilities, BodyModel, FigureData, generateRandomFigure, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, HeadModel, IAvatarEditorCategoryModel, LegModel, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TorsoModel } from '../../api';
 import { Button, ButtonGroup, Column, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
 import { useMessageEvent } from '../../hooks';
@@ -64,7 +64,7 @@ export const AvatarEditorView: FC<{}> = props =>
     const selectCategory = useCallback((name: string) =>
     {
         if(!categories) return;
-        
+
         setActiveCategory(categories.get(name));
     }, [ categories ]);
 
@@ -154,9 +154,9 @@ export const AvatarEditorView: FC<{}> = props =>
             linkReceived: (url: string) =>
             {
                 const parts = url.split('/');
-        
+
                 if(parts.length < 2) return;
-        
+
                 switch(parts[1])
                 {
                     case 'show':
@@ -296,6 +296,17 @@ export const AvatarEditorView: FC<{}> = props =>
                             <i className="icon randomize-icon" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) } />
                         </Column>
                         <Column grow gap={ 1 }>
+                            <ButtonGroup>
+                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
+                                    <FaUndo className="fa-icon" />
+                                </Button>
+                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_CLEAR) }>
+                                    <FaTrash className="fa-icon" />
+                                </Button>
+                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
+                                    <FaDice className="fa-icon" />
+                                </Button>
+                            </ButtonGroup>
                             <Button className="w-100" variant="success" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
                                 { LocalizeText('avatareditor.save') }
                             </Button>
