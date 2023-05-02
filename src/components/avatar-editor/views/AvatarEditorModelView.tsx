@@ -77,10 +77,10 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
                         );
                     }) }
                 </Flex>
-                <Column className="h-50" size={ 5 } overflow="hidden">
+                <Column className="avatar-parts-container" size={ 5 } overflow="hidden">
                     <AvatarEditorFigureSetView model={ model } category={ activeCategory } setMaxPaletteCount={ setMaxPaletteCount } />
                 </Column>
-                <Column size={ 5 } overflow="hidden" className="h-50">
+                <Column size={ 5 } overflow="hidden" className="avatar-color-palette-container">
                     { (maxPaletteCount >= 1) &&
                     <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(0) } paletteIndex={ 0 } /> }
                     { (maxPaletteCount === 2) &&

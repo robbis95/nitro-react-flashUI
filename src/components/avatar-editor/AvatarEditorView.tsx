@@ -270,33 +270,31 @@ export const AvatarEditorView: FC<{}> = props =>
             <NitroCardTabsView className="avatar-editor-tabs">
                 { categories && (categories.size > 0) && Array.from(categories.keys()).map(category =>
                 {
+                    console.log(category)
                     const isActive = (activeCategory && (activeCategory.name === category));
 
                     return (
                         <NitroCardTabsItemView key={ category } isActive={ isActive } onClick={ event => selectCategory(category) }>
-                            { LocalizeText(`avatareditor.category.${ category }`) }
+                            <div className={`tab ${category}`}></div>
                         </NitroCardTabsItemView>
                     );
                 }) }
                 <NitroCardTabsItemView isActive={ isWardrobeVisible } onClick={ event => setIsWardrobeVisible(true) }>
-                    { LocalizeText('avatareditor.category.wardrobe') }
+                    <div className="tab-wardrobe"></div>
                 </NitroCardTabsItemView>
             </NitroCardTabsView>
             <NitroCardContentView>
                 <Grid>
-                    <Column size={ 6 } overflow="hidden">
+                    <Column size={ 7 } overflow="hidden">
                         { (activeCategory && !isWardrobeVisible) &&
                             <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } /> }
                         { isWardrobeVisible &&
                             <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } /> }
                     </Column>
-                    <Column size={ 3 } overflow="hidden">
+                    <Column size={ 5 } overflow="hidden">
                         <AvatarEditorFigurePreviewView figureData={ figureData } />
-                        <Column className="randomize-container position-absolute">
-                            <i className="icon randomize-icon" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) } />
-                        </Column>
                         <Column grow gap={ 1 }>
-                            <ButtonGroup>
+                            <ButtonGroup className="action-buttons">
                                 <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
                                     <FaUndo className="fa-icon" />
                                 </Button>
