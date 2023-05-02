@@ -242,6 +242,13 @@
         height: 20px;
     }
 
+    .report {
+        background-image: url('@/assets/flash/messenger/button_report.png');
+        background-repeat: no-repeat;
+        width: 76px;
+        height: 20px;
+    }
+
     .clear {
         background-image: url('@/assets/flash/boxes/card/mod_close.png');
         background-repeat: no-repeat;
@@ -251,7 +258,6 @@
 
     .chat-input-form {
         font-size: 12px;
-        width: 100%;
         border-image-source: url('@/assets/flash/messenger/chatform.png');
         border-image-slice:10 10 10 10 fill;
         border-image-width:10px 10px 10px 10px;
