@@ -15,9 +15,11 @@ Please join our Discord so that you are always being up-to-date with info [here.
 Feel free to help out and contribute to make this UI replicate flash as much as possible, would be fun if the community could help out to make this UI great!
 
 Thanks to everyone that has helped out contributing to this UI:
--   Robbis
+- Robbis
 - Live
 - Laynester
+- Dennis
+- Object
 
 ## Nitro Client installation
 
@@ -32,7 +34,7 @@ Installation:
 
 -   First you should open terminal and navigate to the folder where you want to clone Nitro
 -   Clone Nitro
-    -   `git clone https://git.krews.org/nitro/nitro-react.git`
+    -   `git clone https://github.com/robbis95/nitro-react-flashUI.git`
 -   Install the dependencies
     -   `yarn install`
     -   This may take some time, please be patient
