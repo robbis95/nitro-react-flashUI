@@ -544,15 +544,16 @@
     width: 364px;
     height: 30px;
     background: url('@/assets/images/unique/catalog-info-sold-out.png');
+    margin-top: -8px !important;
 
     div {
         float: right;
         width: 140px;
         text-align: center;
         font-weight: bold;
-        margin-top: 5px;
+        margin-top: 6px;
         margin-right: 17px;
-        color: #000;
+        color: #404455;
     }
 }
 
