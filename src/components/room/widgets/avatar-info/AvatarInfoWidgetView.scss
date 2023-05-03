@@ -62,6 +62,49 @@
             cursor: pointer;
         }
 
+        .icon-petting {
+            background: url('@/assets/flash/infostand/pets/petting.png');
+            width: 13px;
+            height: 18px;
+            float: right;
+            margin-left: 4px;
+            margin-top: -4px;
+        }
+
+        .icon-happiness {
+            background: url('@/assets/flash/infostand/pets/happiness.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .icon-experience {
+            background: url('@/assets/flash/infostand/pets/experience.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .icon-energy {
+            background: url('@/assets/flash/infostand/pets/energy.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .height-bar {
+            height: 17px;
+        }
+
         .body-image {
             display: flex;
             align-items: center;
