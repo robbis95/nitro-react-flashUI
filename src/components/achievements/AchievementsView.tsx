@@ -1,6 +1,6 @@
 import { ILinkEventTracker } from '@nitrots/nitro-renderer';
-import { FC, useEffect, useMemo, useState } from 'react';
-import { AddEventLinkTracker, GetAchievementCategoryImageUrl, LocalizeText, RemoveLinkEventTracker } from '../../api';
+import { FC, useEffect, useState } from 'react';
+import { AchievementUtilities, AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker } from '../../api';
 import { Base, Column, LayoutImage, LayoutProgressBar, NitroCardContentView, NitroCardHeaderView, NitroCardSubHeaderView, NitroCardView, Text } from '../../common';
 import { useAchievements } from '../../hooks';
 import { AchievementCategoryView } from './views/AchievementCategoryView';
@@ -9,14 +9,7 @@ import { AchievementsCategoryListView } from './views/category-list/Achievements
 export const AchievementsView: FC<{}> = props =>
 {
     const [ isVisible, setIsVisible ] = useState(false);
-    const { achievementCategories = [], selectedCategoryCode = null, setSelectedCategoryCode = null, selectedAchievementId = -1, setSelectedAchievementId = null, achievementScore = 0, getProgress = 0, getMaxProgress = 0, setAchievementSeen = null } = useAchievements();
-
-    const selectedCategory = useMemo(() =>
-    {
-        if(selectedCategoryCode === null) return null;
-
-        return achievementCategories.find(category => (category.code === selectedCategoryCode));
-    }, [ achievementCategories, selectedCategoryCode ]);
+    const { achievementCategories = [], selectedCategoryCode = null, setSelectedCategoryCode = null, achievementScore = 0, getProgress = 0, getMaxProgress = 0, selectedCategory = null } = useAchievements();
 
     useEffect(() =>
     {
@@ -60,7 +53,7 @@ export const AchievementsView: FC<{}> = props =>
                         <Text fontSize={ 4 } fontWeight="bold" className="text-small">{ LocalizeText(`quests.${ selectedCategory.code }.name`) }</Text>
                         <Text>{ LocalizeText('achievements.details.categoryprogress', [ 'progress', 'limit' ], [ selectedCategory.getProgress().toString(), selectedCategory.getMaxProgress().toString() ]) }</Text>
                     </Column>
-                    <LayoutImage imageUrl={ GetAchievementCategoryImageUrl(selectedCategory, null,true) } />
+                    <LayoutImage imageUrl={ AchievementUtilities.getAchievementCategoryImageUrl(selectedCategory, null,true) } />
                 </NitroCardSubHeaderView> }
             <NitroCardContentView gap={ 1 }>
                 { !selectedCategory &&
@@ -72,7 +65,7 @@ export const AchievementsView: FC<{}> = props =>
                         </Column>
                     </> }
                 { selectedCategory &&
-                    <AchievementCategoryView category={ selectedCategory } selectedAchievementId={ selectedAchievementId } setSelectedAchievementId={ setSelectedAchievementId } setAchievementSeen={ setAchievementSeen } /> }
+                    <AchievementCategoryView category={ selectedCategory } /> }
             </NitroCardContentView>
         </NitroCardView>
     );

@@ -1,9 +1,8 @@
 import { GuideSessionGetRequesterRoomMessageComposer, GuideSessionInviteRequesterMessageComposer, GuideSessionMessageMessageComposer, GuideSessionRequesterRoomMessageEvent, GuideSessionResolvedMessageComposer } from '@nitrots/nitro-renderer';
-import { FC, KeyboardEvent, useCallback, useState } from 'react';
-import { GetSessionDataManager, LocalizeText, SendMessageComposer, TryVisitRoom } from '../../../api';
+import { FC, KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { GetSessionDataManager, GuideToolMessageGroup, LocalizeText, SendMessageComposer, TryVisitRoom } from '../../../api';
 import { Base, Button, ButtonGroup, Column, Flex, LayoutAvatarImageView, Text } from '../../../common';
-import { UseMessageEventHook } from '../../../hooks';
-import { GuideToolMessageGroup } from '../common/GuideToolMessageGroup';
+import { useMessageEvent } from '../../../hooks';
 
 interface GuideToolOngoingViewProps
 {
@@ -17,9 +16,17 @@ interface GuideToolOngoingViewProps
 
 export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props =>
 {
+    const scrollDiv = useRef<HTMLDivElement>(null);
+
     const { isGuide = false, userId = 0, userName = null, userFigure = null, isTyping = false, messageGroups = [] } = props;
 
     const [ messageText, setMessageText ] = useState<string>('');
+
+    useEffect(() =>
+    {
+        scrollDiv.current?.scrollIntoView({ block: 'end', behavior: 'smooth' });
+
+    }, [ messageGroups ]);
 
     const visit = useCallback(() =>
     {
@@ -36,14 +43,12 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props =>
         SendMessageComposer(new GuideSessionResolvedMessageComposer());
     }, []);
 
-    const onGuideSessionRequesterRoomMessageEvent = useCallback((event: GuideSessionRequesterRoomMessageEvent) =>
+    useMessageEvent<GuideSessionRequesterRoomMessageEvent>(GuideSessionRequesterRoomMessageEvent, event =>
     {
         const parser = event.getParser();
-        
-        TryVisitRoom(parser.requesterRoomId);
-    }, []);
 
-    UseMessageEventHook(GuideSessionRequesterRoomMessageEvent, onGuideSessionRequesterRoomMessageEvent);
+        TryVisitRoom(parser.requesterRoomId);
+    });
 
     const sendMessage = useCallback(() =>
     {
@@ -71,7 +76,7 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props =>
                 { isGuide &&
                     <ButtonGroup>
                         <Button onClick={ visit }>{ LocalizeText('guide.help.request.guide.ongoing.visit.button') }</Button>
-                        <Button disabled onClick={ invite }>{ LocalizeText('guide.help.request.guide.ongoing.invite.button') }</Button>
+                        <Button onClick={ invite }>{ LocalizeText('guide.help.request.guide.ongoing.invite.button') }</Button>
                     </ButtonGroup> }
                 { !isGuide &&
                     <Column gap={ 0 }>
@@ -95,7 +100,7 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props =>
                                         { (isOwnChat(group.userId)) && GetSessionDataManager().userName }
                                         { (!isOwnChat(group.userId)) && userName }
                                     </Text>
-                                    { group.messages.map((chat, index) => <Base key={ index } className="text-break">{ chat.message }</Base>) }
+                                    { group.messages.map((chat, index) => <Base key={ index } pointer={ chat.roomId ? true : false } className={ chat.roomId ? 'text-break text-underline' : 'text-break' } onClick={ () => chat.roomId ? TryVisitRoom(chat.roomId) : null }>{ chat.message }</Base>) }
                                 </Base>
                                 { (isOwnChat(group.userId)) &&
                                 <Base className="message-avatar flex-shrink-0">
@@ -103,7 +108,8 @@ export const GuideToolOngoingView: FC<GuideToolOngoingViewProps> = props =>
                                 </Base> }
                             </Flex>
                         );
-                    }) } 
+                    }) }
+                    <div ref={ scrollDiv } />
                 </Column>
             </Column>
             <Column gap={ 1 }>

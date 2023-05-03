@@ -1,8 +1,8 @@
 import { HabboSearchComposer, HabboSearchResultData, HabboSearchResultEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { LocalizeText, OpenMessengerChat, SendMessageComposer } from '../../../../api';
 import { Base, Column, Flex, NitroCardAccordionItemView, NitroCardAccordionSetView, NitroCardAccordionSetViewProps, Text, UserProfileIconView } from '../../../../common';
-import { useFriends, UseMessageEventHook } from '../../../../hooks';
+import { useFriends, useMessageEvent } from '../../../../hooks';
 
 interface FriendsSearchViewProps extends NitroCardAccordionSetViewProps
 {
@@ -17,15 +17,13 @@ export const FriendsSearchView: FC<FriendsSearchViewProps> = props =>
     const [ otherResults, setOtherResults ] = useState<HabboSearchResultData[]>(null);
     const { canRequestFriend = null, requestFriend = null } = useFriends();
 
-    const onHabboSearchResultEvent = useCallback((event: HabboSearchResultEvent) =>
+    useMessageEvent<HabboSearchResultEvent>(HabboSearchResultEvent, event =>
     {
         const parser = event.getParser();
 
         setFriendResults(parser.friends);
         setOtherResults(parser.others);
-    }, []);
-
-    UseMessageEventHook(HabboSearchResultEvent, onHabboSearchResultEvent);
+    });
 
     useEffect(() =>
     {

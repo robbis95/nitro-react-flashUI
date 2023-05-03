@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import { Base, Column, Flex, Text } from '../../../../../common';
+import { ProductTypeEnum } from '../../../../../api';
+import { Base, Column, Flex, Grid, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
+import { CatalogHeaderView } from '../../catalog-header/CatalogHeaderView';
 import { CatalogAddOnBadgeWidgetView } from '../widgets/CatalogAddOnBadgeWidgetView';
 import { CatalogItemGridWidgetView } from '../widgets/CatalogItemGridWidgetView';
 import { CatalogLimitedItemWidgetView } from '../widgets/CatalogLimitedItemWidgetView';
@@ -13,7 +15,7 @@ import { CatalogLayoutProps } from './CatalogLayout.types';
 export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
 {
     const { page = null } = props;
-    const { currentOffer = null } = useCatalog();
+    const { currentOffer = null, currentPage = null } = useCatalog();
 
     return (
         <div>

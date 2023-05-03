@@ -4,7 +4,7 @@
     left: 0;
 
     .nitro-room-tools {
-        border-image-source: url('../../../assets/flash/boxes/card/room_info_bg.png');
+        border-image-source: url('@/assets/flash/boxes/card/room_info_bg.png');
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         transition: all .2s ease;
@@ -16,50 +16,65 @@
         .icon-width {
             min-width: 25px;
         }
-    
+
         .list-group-item {
             background: transparent;
             padding: 3px 0px;
             color: $white;
             border-color: rgba($black, 0.3);
             cursor: pointer;
-    
+
             &:hover {
                 text-decoration: underline;
             }
-    
+
             &:first-child {
                 padding-top: 8px;
             }
-    
+
             &:last-child {
                 border-bottom: none;
                 padding-bottom: 8px;
             }
-        
+
             .tools-item {
                 .icon {
                     width: 22px;
                     background-repeat: no-repeat;
                     background-position: center;
                 }
-        
+
                 &:hover {
                     text-decoration: underline;
                 }
             }
         }
     }
-    
+
+    .nitro-room-history {
+        background: #363536;
+        box-shadow: inset 0px 5px #363536;
+        transition: all .2s ease;
+        width: 168px;
+        overflow: hidden;
+        z-index: 3;
+    }
+
     .nitro-room-tools-info {
-        border-image-source: url('../../../assets/flash/boxes/card/room_info_bg.png');
+        border-image-source: url('@/assets/flash/boxes/card/room_info_bg.png');
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
         color: #9f9f9e;
         transition: all .2s ease;
-        pointer-events: none;
         max-width: 250px;
+        overflow: hidden;
     }
+}
+
+.nitro-room-tools-history {
+    position: absolute;
+    left: 0;
+    margin-left: 2px;
 }
 
 .wordquiz-question {
@@ -69,36 +84,36 @@
     transform: translateX(-50%);
     font-size: large;
     background: rgba($dark, 0.95);
-    box-shadow: inset 0px 5px lighten(rgba($dark,.6),2.5), inset 0 -4px darken(rgba($dark,.6),4);
+    box-shadow: inset 0px 5px lighten(rgba($dark, .6), 2.5), inset 0 -4px darken(rgba($dark, .6), 4);
     border-radius: $border-radius;
     transition: all 0.2s ease;
     z-index: $quiz-zindex;
-    
+
     .question {
         max-width: 300px;
     }
 }
 
 .word-quiz-dislike {
-    background: url('../../../assets/images/room-widgets/wordquiz-widget/thumbs-down.png');
+    background: url('@/assets/images/room-widgets/wordquiz-widget/thumbs-down.png');
     width: 31px;
     height: 34px;
 }
 
 .word-quiz-like {
-    background: url('../../../assets/images/room-widgets/wordquiz-widget/thumbs-up.png');
+    background: url('@/assets/images/room-widgets/wordquiz-widget/thumbs-up.png');
     width: 31px;
     height: 34px;
 }
 
 .word-quiz-dislike-sm {
-    background: url('../../../assets/images/room-widgets/wordquiz-widget/thumbs-down-small.png');
+    background: url('@/assets/images/room-widgets/wordquiz-widget/thumbs-down-small.png');
     width: 22px;
     height: 22px;
 }
 
 .word-quiz-like-sm {
-    background: url('../../../assets/images/room-widgets/wordquiz-widget/thumbs-up-small.png');
+    background: url('@/assets/images/room-widgets/wordquiz-widget/thumbs-up-small.png');
     height: 22px;
     width: 22px;
 }
@@ -121,6 +136,15 @@
     cursor: pointer;
 }
 
+.margin-icons {
+    margin-top: -14px;
+}
+
+.margin-button-history {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
 @import './avatar-info/AvatarInfoWidgetView';
 @import './chat/ChatWidgetView';
 @import './chat-input/ChatInputView';
@@ -128,4 +152,5 @@
 @import './context-menu/ContextMenu';
 @import './friend-request/FriendRequestDialogView';
 @import './furniture/FurnitureWidgets';
-@import './infostand/InfoStandWidgetView';
+@import './mysterybox/MysteryBoxExtensionView';
+@import './pet-package/PetPackageWidgetView';

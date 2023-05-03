@@ -1,18 +1,19 @@
+import { FriendlyTime } from '@nitrots/nitro-renderer';
 import { FC, useMemo } from 'react';
-import { GetGroupChatData, GetSessionDataManager, GroupType, LocalizeText, MessengerThread, MessengerThreadChat, MessengerThreadChatGroup } from '../../../../../api';
-import { Base, Flex, LayoutAvatarImageView } from '../../../../../common';
+import { GetGroupChatData, GetSessionDataManager, LocalizeText, MessengerGroupType, MessengerThread, MessengerThreadChat, MessengerThreadChatGroup } from '../../../../../api';
+import { Base, Flex, LayoutAvatarImageView, Text } from '../../../../../common';
 
 export const FriendsMessengerThreadGroup: FC<{ thread: MessengerThread, group: MessengerThreadChatGroup }> = props =>
 {
     const { thread = null, group = null } = props;
 
-    const groupChatData = useMemo(() => ((group.type === GroupType.GROUP_CHAT) && GetGroupChatData(group.chats[0].extraData)), [ group ]);
+    const groupChatData = useMemo(() => ((group.type === MessengerGroupType.GROUP_CHAT) && GetGroupChatData(group.chats[0].extraData)), [ group ]);
 
     const isOwnChat = useMemo(() =>
     {
         if(!thread || !group) return false;
         
-        if((group.type === GroupType.PRIVATE_CHAT) && (group.userId === GetSessionDataManager().userId)) return true;
+        if((group.type === MessengerGroupType.PRIVATE_CHAT) && (group.userId === GetSessionDataManager().userId)) return true;
 
         if(groupChatData && group.chats.length && (groupChatData.userId === GetSessionDataManager().userId)) return true;
 
@@ -49,24 +50,33 @@ export const FriendsMessengerThreadGroup: FC<{ thread: MessengerThread, group: M
     }
     
     return (
-        <Flex fullWidth justifyContent={ isOwnChat ? 'end' : 'start' } gap={ 2 }>
-            <Base shrink className="message-avatar">
-                { ((group.type === GroupType.PRIVATE_CHAT) && !isOwnChat) &&
-                    <LayoutAvatarImageView figure={ thread.participant.figure } direction={ 2 } /> }
+        <>
+            <Flex fullWidth justifyContent={ isOwnChat ? 'end' : 'start' } gap={ 2 }>
+                { ((group.type === MessengerGroupType.PRIVATE_CHAT) && !isOwnChat) &&
+                    <Base shrink className="message-avatar">
+                        <LayoutAvatarImageView figure={ thread.participant.figure } direction={ 2 } />
+                    </Base> }
                 { (groupChatData && !isOwnChat) &&
-                    <LayoutAvatarImageView figure={ groupChatData.figure } direction={ 2 } /> }
-            </Base>
-            <Base className={ 'message-bubble text-black mt-2 py-1 px-2 messages-group-' + (isOwnChat ? 'right' : 'left') }>
-                <Base className="fw-bold username">
-                    { isOwnChat && GetSessionDataManager().userName }
-                    { !isOwnChat && (groupChatData ? groupChatData.username : thread.participant.name) }
+                    <Base shrink className="message-avatar">
+                        <LayoutAvatarImageView figure={ groupChatData.figure } direction={ 2 } />
+                    </Base> }
+                <Base className={ 'message-bubble text-black mt-2 py-1 px-2 messages-group-' + (isOwnChat ? 'right' : 'left') }>
+                    <Base className="username">
+                        { isOwnChat && GetSessionDataManager().userName }
+                        { !isOwnChat && (groupChatData ? groupChatData.username : thread.participant.name) }
+                    </Base>
+                    { group.chats.map((chat, index) => <Base key={ index } className="text-break">{ chat.message }</Base>) }
                 </Base>
-                { group.chats.map((chat, index) => <Base key={ index } className="text-break">{ chat.message }</Base>) }
-            </Base>
-            { isOwnChat &&
-                <Base shrink className="message-avatar">
-                    <LayoutAvatarImageView figure={ GetSessionDataManager().figure } direction={ 4 } />
-                </Base> }
-        </Flex>
+                { isOwnChat &&
+                    <Base shrink className="message-avatar">
+                        <LayoutAvatarImageView figure={ GetSessionDataManager().figure } direction={ 4 } />
+                    </Base> }
+            </Flex>
+            { (group.chats.length > 0) &&
+                <Flex className={ `text-black ${ !isOwnChat ? 'px-5' : '' }` }>
+                    <Text variant="muted" className={ !isOwnChat ? 'px-3' : 'px-1' }>{ FriendlyTime.format(((new Date().getTime() - group.chats[group.chats.length - 1].date.getTime()) / 1000), '.ago', 2) }</Text>
+                </Flex>
+            }
+        </>
     );
 }

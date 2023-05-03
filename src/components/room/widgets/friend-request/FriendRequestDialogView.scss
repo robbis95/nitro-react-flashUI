@@ -1,13 +1,13 @@
 .nitro-friend-request-dialog {
     width: unset;
     max-width: 200px;
-    border-image-source: url(../../../../assets/flash/boxes/card/friend_req_bg.png);
+    border-image-source: url(@/assets/flash/boxes/card/friend_req_bg.png);
     border-image-slice: 6 6 6 6 fill;
     border-image-width: 6px 6px 6px 6px;
 
     &:after {
         content: "";
-        background-image: url(../../../../assets/flash/boxes/card/friend_req_pointer.png);
+        background-image: url(@/assets/flash/boxes/card/friend_req_pointer.png);
         background-repeat: no-repeat;
         width: 11px;
         height: 9px;
@@ -27,17 +27,17 @@
 
     .friend-req-close {
         cursor: pointer;
-        background-image: url(../../../../assets/flash/boxes/card/close.png);
+        background-image: url(@/assets/flash/boxes/card/close.png);
         background-repeat: no-repeat;
         width: 19px;
         height: 20px;
 
         &:hover {
-            background-image: url(../../../../assets/flash/boxes/card/close_hover.png);
+            background-image: url(@/assets/flash/boxes/card/close_hover.png);
         }
 
         &:active {
-            background-image: url(../../../../assets/flash/boxes/card/close_click.png);
+            background-image: url(@/assets/flash/boxes/card/close_click.png);
         }
     }
 }

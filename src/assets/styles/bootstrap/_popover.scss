@@ -11,7 +11,7 @@
   @include font-size($popover-font-size);
   // Allow breaking very long words so they don't overflow the popover's bounds
   word-wrap: break-word;
-  border-image-source: url(../../flash/navigator/info_bg.png);
+  border-image-source: url(@/assets/flash/navigator/info_bg.png);
   border-image-slice: 6 6 6 6 fill;
   border-image-width: 6px 6px 6px 6px;
   image-rendering: pixelated;
@@ -21,7 +21,7 @@
     display: block;
     width: 11px;
     height: 18px;
-    background-image: url(../../flash/navigator/info_pointer.png);
+    background-image: url(@/assets/flash/navigator/info_pointer.png);
 
 
     &::before,

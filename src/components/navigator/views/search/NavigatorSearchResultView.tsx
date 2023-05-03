@@ -1,8 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavigatorSearchResultList } from '@nitrots/nitro-renderer';
+import { NavigatorSearchComposer, NavigatorSearchResultList } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { LocalizeText, NavigatorSearchResultViewDisplayMode } from '../../../../api';
+import { FaBars, FaMinus, FaPlus, FaTh, FaWindowMaximize, FaWindowRestore } from 'react-icons/fa';
+import { LocalizeText, NavigatorSearchResultViewDisplayMode, SendMessageComposer } from '../../../../api';
 import { AutoGrid, AutoGridProps, Column, Flex, Grid, Text } from '../../../../common';
+import { useNavigator } from '../../../../hooks';
 import { NavigatorSearchResultItemView } from './NavigatorSearchResultItemView';
 
 export interface NavigatorSearchResultViewProps extends AutoGridProps
@@ -13,15 +14,16 @@ export interface NavigatorSearchResultViewProps extends AutoGridProps
 export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = props =>
 {
     const { searchResult = null, ...rest } = props;
-
     const [ isExtended, setIsExtended ] = useState(true);
     const [ displayMode, setDisplayMode ] = useState<number>(0);
+
+    const { topLevelContext = null } = useNavigator();
 
     const getResultTitle = () =>
     {
         let name = searchResult.code;
 
-        if(!name || !name.length) return searchResult.data;
+        if(!name || !name.length || LocalizeText('navigator.searchcode.title.' + name) == ('navigator.searchcode.title.' + name)) return searchResult.data;
 
         if(name.startsWith('${')) return name.slice(2, (name.length - 1));
 
@@ -38,25 +40,38 @@ export const NavigatorSearchResultView: FC<NavigatorSearchResultViewProps> = pro
         });
     }
 
+    const showMore = () =>
+    {
+        if(searchResult.action == 1) SendMessageComposer(new NavigatorSearchComposer(searchResult.code, ''));
+        else if(searchResult.action == 2 && topLevelContext) SendMessageComposer(new NavigatorSearchComposer(topLevelContext.code,''));
+    }
+
     useEffect(() =>
     {
         if(!searchResult) return;
 
-        //setIsExtended(searchResult.closed);
+        setIsExtended(!searchResult.closed);
+
         setDisplayMode(searchResult.mode);
-    }, [ searchResult,props ]);
+    }, [ searchResult ]);
 
     const gridHasTwoColumns = (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS);
-    
+
     return (
         <Column className="bg-white" gap={ 0 }>
             <Flex fullWidth alignItems="center" justifyContent="between" className="px-2 py-1">
                 <Flex grow pointer alignItems="center" gap={ 1 } onClick={ event => setIsExtended(prevValue => !prevValue) }>
-                    <i className={ isExtended ? 'icon icon-nav-minus' : 'icon icon-nav-plus' } />
+                    { isExtended && <FaMinus className="text-secondary fa-icon" /> }
+                    { !isExtended && <FaPlus className="text-secondary fa-icon" /> }
                     <div className="nav-category"> { LocalizeText(getResultTitle()) }</div>
                 </Flex>
-                <i className={ ((displayMode === NavigatorSearchResultViewDisplayMode.LIST) ? 'icon icon-nav-thumbnail' : (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) ? 'icon icon-nav-inline' : null) } onClick={ toggleDisplayMode } />
-            </Flex> { isExtended && 
+                <Flex gap={ 2 }>
+                    { (displayMode === NavigatorSearchResultViewDisplayMode.LIST) && <FaTh className="text-secondary fa-icon" onClick={ toggleDisplayMode } /> }
+                    { (displayMode >= NavigatorSearchResultViewDisplayMode.THUMBNAILS) && <FaBars className="text-secondary fa-icon" onClick={ toggleDisplayMode } /> }
+                    { (searchResult.action > 0) && (searchResult.action === 1) && <FaWindowMaximize className="text-secondary fa-icon" onClick={ showMore } /> }
+                    { (searchResult.action > 0) && (searchResult.action !== 1) && <FaWindowRestore className="text-secondary fa-icon" onClick={ showMore } /> }
+                </Flex>
+            </Flex> { isExtended &&
                 <>
                     {
                         gridHasTwoColumns ? <AutoGrid columnCount={ 3 } { ...rest } columnMinWidth={ 110 } columnMinHeight={ 130 } className="mx-2">

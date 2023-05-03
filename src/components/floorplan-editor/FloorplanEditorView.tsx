@@ -1,8 +1,8 @@
 import { FloorHeightMapEvent, ILinkEventTracker, NitroPoint, RoomEngineEvent, RoomVisualizationSettingsEvent, UpdateFloorPropertiesMessageComposer } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../api';
 import { Button, ButtonGroup, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
-import { UseMessageEventHook, UseRoomEngineEvent } from '../../hooks';
+import { useMessageEvent, useRoomEngineEvent } from '../../hooks';
 import { FloorplanEditor } from './common/FloorplanEditor';
 import { IFloorplanSettings } from './common/IFloorplanSettings';
 import { IVisualizationSettings } from './common/IVisualizationSettings';
@@ -54,14 +54,9 @@ export const FloorplanEditorView: FC<{}> = props =>
         FloorplanEditor.instance.renderTiles();
     }
 
-    const onRoomEngineEvent = useCallback((event: RoomEngineEvent) =>
-    {
-        setIsVisible(false);
-    }, []);
+    useRoomEngineEvent<RoomEngineEvent>(RoomEngineEvent.DISPOSED, event => setIsVisible(false));
 
-    UseRoomEngineEvent(RoomEngineEvent.DISPOSED, onRoomEngineEvent);
-
-    const onFloorHeightMapEvent = useCallback((event: FloorHeightMapEvent) =>
+    useMessageEvent<FloorHeightMapEvent>(FloorHeightMapEvent, event =>
     {
         const parser = event.getParser();
 
@@ -83,11 +78,9 @@ export const FloorplanEditorView: FC<{}> = props =>
 
             return newValue;
         });
-    }, []);
+    });
 
-    UseMessageEventHook(FloorHeightMapEvent, onFloorHeightMapEvent);
-
-    const onRoomVisualizationSettingsEvent = useCallback((event: RoomVisualizationSettingsEvent) =>
+    useMessageEvent<RoomVisualizationSettingsEvent>(RoomVisualizationSettingsEvent, event =>
     {
         const parser = event.getParser();
 
@@ -110,9 +103,7 @@ export const FloorplanEditorView: FC<{}> = props =>
 
             return newValue;
         });
-    }, []);
-
-    UseMessageEventHook(RoomVisualizationSettingsEvent, onRoomVisualizationSettingsEvent);
+    });
 
     useEffect(() =>
     {

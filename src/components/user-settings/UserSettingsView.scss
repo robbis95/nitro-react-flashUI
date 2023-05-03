@@ -4,22 +4,22 @@
     resize: none;
 
     input[type=range] {
-        background: url(../../assets/flash/settings/range.png);
+        background: url(@/assets/flash/settings/range.png);
         height: 8px;
         -webkit-appearance: none;
         margin: 10px 0;
         width: 139px;
 
-        &::-webkit-slider-thumb { 
+        &::-webkit-slider-thumb {
             -webkit-appearance: none;
-            background: url(../../assets/flash/settings/thumb.png);
+            background: url(@/assets/flash/settings/thumb.png);
             width: 12px;
             height: 15px;
         }
     }
 
     .number-range {
-        background: url(../../assets/flash/settings/number_range.png);
+        background: url(@/assets/flash/settings/number_range.png);
         background-repeat: no-repeat;
         width: 137px;
         height: 8px;
@@ -28,7 +28,7 @@
     }
 
     .content-area {
-        
+
         .fas,
         .svg-inline--fa {
             width: 20px;

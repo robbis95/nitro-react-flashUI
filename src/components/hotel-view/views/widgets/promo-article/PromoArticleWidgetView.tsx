@@ -1,20 +1,18 @@
 import { GetPromoArticlesComposer, PromoArticleData, PromoArticlesMessageEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { LocalizeText, NotificationUtilities, SendMessageComposer } from '../../../../../api';
-import { UseMessageEventHook } from '../../../../../hooks';
+import { FC, useEffect, useState } from 'react';
+import { LocalizeText, OpenUrl, SendMessageComposer } from '../../../../../api';
+import { useMessageEvent } from '../../../../../hooks';
 
 export const PromoArticleWidgetView: FC<{}> = props =>
 {
     const [ articles, setArticles ] = useState<PromoArticleData[]>(null);
     const [ index, setIndex ] = useState(0);
 
-    const onPromoArticlesMessageEvent = useCallback((event: PromoArticlesMessageEvent) =>
+    useMessageEvent<PromoArticlesMessageEvent>(PromoArticlesMessageEvent, event =>
     {
         const parser = event.getParser();
         setArticles(parser.articles);
-    }, []);
-
-    UseMessageEventHook(PromoArticlesMessageEvent, onPromoArticlesMessageEvent);
+    });
 
     useEffect(() =>
     {
@@ -40,7 +38,7 @@ export const PromoArticleWidgetView: FC<{}> = props =>
                     <div className="col-3 d-flex flex-column h-100">
                         <h3 className="my-0">{ articles[index].title }</h3>
                         <b>{ articles[index].bodyText }</b>
-                        <button className="btn btn-sm mt-auto btn-gainsboro" onClick={ event => NotificationUtilities.openUrl(articles[index].linkContent) }>{ articles[index].buttonText }</button>
+                        <button className="btn btn-sm mt-auto btn-gainsboro" onClick={ event => OpenUrl(articles[index].linkContent) }>{ articles[index].buttonText }</button>
                     </div>
                 </div> }
         </div>

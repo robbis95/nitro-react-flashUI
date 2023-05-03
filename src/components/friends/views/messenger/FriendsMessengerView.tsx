@@ -1,9 +1,9 @@
 import { FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { AddEventLinkTracker, GetUserProfile, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../../../api';
+import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
 import { ButtonGroup, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
-import { useMessenger } from '../../../../hooks';
+import { useHelp, useMessenger } from '../../../../hooks';
 import { FriendsMessengerThreadView } from './messenger-thread/FriendsMessengerThreadView';
 
 export const FriendsMessengerView: FC<{}> = props =>
@@ -12,6 +12,7 @@ export const FriendsMessengerView: FC<{}> = props =>
     const [ lastThreadId, setLastThreadId ] = useState(-1);
     const [ messageText, setMessageText ] = useState('');
     const { visibleThreads = [], activeThread = null, getMessageThread = null, sendMessage = null, setActiveThreadId = null, closeThread = null } = useMessenger();
+    const { report = null } = useHelp();
     const messagesBox = useRef<HTMLDivElement>();
 
     const followFriend = () => (activeThread && activeThread.participant && SendMessageComposer(new FollowFriendMessageComposer(activeThread.participant.id)));
@@ -21,7 +22,7 @@ export const FriendsMessengerView: FC<{}> = props =>
     {
         if(!activeThread || !messageText.length) return;
 
-        sendMessage(activeThread, messageText);
+        sendMessage(activeThread, GetSessionDataManager().userId, messageText);
 
         setMessageText('');
     }
@@ -48,15 +49,20 @@ export const FriendsMessengerView: FC<{}> = props =>
 
                         return;
                     }
-                    else
+
+                    if(parts[1] === 'toggle')
                     {
-                        const thread = getMessageThread(parseInt(parts[1]));
+                        setIsVisible(prevValue => !prevValue);
 
-                        if(!thread) return;
-
-                        setActiveThreadId(thread.threadId);
-                        setIsVisible(true);
+                        return;
                     }
+
+                    const thread = getMessageThread(parseInt(parts[1]));
+
+                    if(!thread) return;
+
+                    setActiveThreadId(thread.threadId);
+                    setIsVisible(true);
                 }
             },
             eventUrlPrefix: 'friends-messenger/'
@@ -73,6 +79,12 @@ export const FriendsMessengerView: FC<{}> = props =>
 
         messagesBox.current.scrollTop = messagesBox.current.scrollHeight;
     }, [ isVisible, activeThread ]);
+
+    useEffect(() =>
+    {
+        if (visibleThreads.length === 0) setIsVisible(false);
+        
+    }, [ visibleThreads ]);
 
     useEffect(() =>
     {
@@ -101,7 +113,7 @@ export const FriendsMessengerView: FC<{}> = props =>
 
     return (
         <NitroCardView className="nitro-friends-messenger" uniqueKey="nitro-friends-messenger" theme="messenger">
-            <NitroCardHeaderView headerText={ LocalizeText('messenger.window.title', [ 'OPEN_CHAT_COUNT' ], [ visibleThreads.length.toString() ]) } onCloseClick={ event => setIsVisible(false) } />
+            <NitroCardHeaderView headerText={ LocalizeText('messenger.window.title', [ 'OPEN_CHAT_COUNT' ], [ visibleThreads.length.toString() ]) } hideButtonClose={ true } onCloseClick={ event => setIsVisible(false) } />
             <NitroCardContentView>
                 <Column fullWidth size={ 4 }>
                     <div className="d-flex h-100 overflow-auto gap-2">
@@ -132,10 +144,10 @@ export const FriendsMessengerView: FC<{}> = props =>
                                 <Flex alignItems="center" justifyContent="between" gap={ 1 }>
                                     <Flex gap={ 1 }>
                                         <ButtonGroup className="gap-1">
-                                            <button className="follow" onClick={ followFriend } />
-                                            <button className="profile" onClick={ openProfile } />
+                                            <button className="follow" title={ LocalizeText('messenger.followfriend.tooltip') } onClick={ followFriend } />
+                                            <button className="profile" title={ LocalizeText('guide.help.common.profile.tooltip') } onClick={ openProfile } />
                                         </ButtonGroup>
-                                        <button className="messenger-button fw-bold px-3" onClick={ openProfile }>
+                                        <button className="report" title={ LocalizeText('messenger.window.button.report.tooltip') } onClick={ () => report(ReportType.IM, { reportedUserId: activeThread.participant.id }) }>
                                             { LocalizeText('messenger.window.button.report') }
                                         </button>
                                     </Flex>

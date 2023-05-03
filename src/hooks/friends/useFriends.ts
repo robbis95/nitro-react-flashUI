@@ -1,14 +1,15 @@
-import { AcceptFriendMessageComposer, DeclineFriendMessageComposer, FollowFriendMessageComposer, FriendListFragmentEvent, FriendListUpdateEvent, FriendParser, FriendRequestsEvent, GetFriendRequestsComposer, MessengerInitComposer, MessengerInitEvent, NewFriendRequestEvent, RequestFriendComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { AcceptFriendMessageComposer, DeclineFriendMessageComposer, FollowFriendMessageComposer, FriendListFragmentEvent, FriendListUpdateComposer, FriendListUpdateEvent, FriendParser, FriendRequestsEvent, GetFriendRequestsComposer, MessengerInitComposer, MessengerInitEvent, NewFriendRequestEvent, RequestFriendComposer, SetRelationshipStatusComposer } from '@nitrots/nitro-renderer';
+import { useEffect, useMemo, useState } from 'react';
 import { useBetween } from 'use-between';
-import { CloneObject, MessengerFriend, MessengerRequest, MessengerSettings, SendMessageComposer } from '../../api';
-import { UseMessageEventHook } from '../messages';
+import { CloneObject, GetSessionDataManager, MessengerFriend, MessengerRequest, MessengerSettings, SendMessageComposer } from '../../api';
+import { useMessageEvent } from '../events';
 
 const useFriendsState = () =>
 {
     const [ friends, setFriends ] = useState<MessengerFriend[]>([]);
     const [ requests, setRequests ] = useState<MessengerRequest[]>([]);
     const [ sentRequests, setSentRequests ] = useState<number[]>([]);
+    const [ dismissedRequestIds, setDismissedRequestIds ] = useState<number[]>([]);
     const [ settings, setSettings ] = useState<MessengerSettings>(null);
 
     const onlineFriends = useMemo(() =>
@@ -43,10 +44,11 @@ const useFriendsState = () =>
         return offlineFriends;
     }, [ friends ]);
 
-    const followFriend = useCallback((friend: MessengerFriend) => SendMessageComposer(new FollowFriendMessageComposer(friend.id)), []);
-    const updateRelationship = useCallback((friend: MessengerFriend, type: number) => ((type !== friend.relationshipStatus) && SendMessageComposer(new SetRelationshipStatusComposer(friend.id, type))), []);
+    const followFriend = (friend: MessengerFriend) => SendMessageComposer(new FollowFriendMessageComposer(friend.id));
 
-    const getFriend = useCallback((userId: number) =>
+    const updateRelationship = (friend: MessengerFriend, type: number) => ((type !== friend.relationshipStatus) && SendMessageComposer(new SetRelationshipStatusComposer(friend.id, type)));
+
+    const getFriend = (userId: number) =>
     {
         for(const friend of friends)
         {
@@ -54,10 +56,12 @@ const useFriendsState = () =>
         }
 
         return null;
-    }, [ friends ]);
+    }
 
-    const canRequestFriend = useCallback((userId: number) =>
+    const canRequestFriend = (userId: number) =>
     {
+        if(userId === GetSessionDataManager().userId) return false;
+        
         if(getFriend(userId)) return false;
 
         if(requests.find(request => (request.requesterUserId === userId))) return false;
@@ -65,9 +69,9 @@ const useFriendsState = () =>
         if(sentRequests.indexOf(userId) >= 0) return false;
 
         return true;
-    }, [ requests, sentRequests, getFriend ]);
+    }
 
-    const requestFriend = useCallback((userId: number, userName: string) =>
+    const requestFriend = (userId: number, userName: string) =>
     {
         if(!canRequestFriend(userId)) return false;
 
@@ -81,9 +85,9 @@ const useFriendsState = () =>
         });
 
         SendMessageComposer(new RequestFriendComposer(userName));
-    }, [ canRequestFriend ]);
+    }
 
-    const requestResponse = useCallback((requestId: number, flag: boolean) =>
+    const requestResponse = (requestId: number, flag: boolean) =>
     {
         if(requestId === -1 && !flag)
         {
@@ -114,9 +118,9 @@ const useFriendsState = () =>
                 return newRequests;
             });
         }
-    }, []);
+    }
 
-    const onMessengerInitEvent = useCallback((event: MessengerInitEvent) =>
+    useMessageEvent<MessengerInitEvent>(MessengerInitEvent, event =>
     {
         const parser = event.getParser();
 
@@ -127,11 +131,9 @@ const useFriendsState = () =>
             parser.categories));
 
         SendMessageComposer(new GetFriendRequestsComposer());
-    }, []);
+    });
 
-    UseMessageEventHook(MessengerInitEvent, onMessengerInitEvent);
-
-    const onFriendsFragmentEvent = useCallback((event: FriendListFragmentEvent) =>
+    useMessageEvent<FriendListFragmentEvent>(FriendListFragmentEvent, event =>
     {
         const parser = event.getParser();
 
@@ -151,11 +153,9 @@ const useFriendsState = () =>
 
             return newValue;
         });
-    }, []);
+    });
 
-    UseMessageEventHook(FriendListFragmentEvent, onFriendsFragmentEvent);
-
-    const onFriendsUpdateEvent = useCallback((event: FriendListUpdateEvent) =>
+    useMessageEvent<FriendListUpdateEvent>(FriendListUpdateEvent, event =>
     {
         const parser = event.getParser();
 
@@ -193,11 +193,9 @@ const useFriendsState = () =>
 
             return newValue;
         });
-    }, []);
+    });
 
-    UseMessageEventHook(FriendListUpdateEvent, onFriendsUpdateEvent);
-
-    const onFriendRequestsEvent = useCallback((event: FriendRequestsEvent) =>
+    useMessageEvent<FriendRequestsEvent>(FriendRequestsEvent, event =>
     {
         const parser = event.getParser();
 
@@ -225,11 +223,9 @@ const useFriendsState = () =>
 
             return newValue;
         });
-    }, []);
+    });
 
-    UseMessageEventHook(FriendRequestsEvent, onFriendRequestsEvent);
-
-    const onNewFriendRequestEvent = useCallback((event: NewFriendRequestEvent) =>
+    useMessageEvent<NewFriendRequestEvent>(NewFriendRequestEvent, event =>
     {
         const parser = event.getParser();
         const request = parser.request;
@@ -250,16 +246,21 @@ const useFriendsState = () =>
 
             return newRequests;
         });
-    }, []);
-
-    UseMessageEventHook(NewFriendRequestEvent, onNewFriendRequestEvent);
+    });
 
     useEffect(() =>
     {
         SendMessageComposer(new MessengerInitComposer());
+
+        const interval = setInterval(() => SendMessageComposer(new FriendListUpdateComposer()), 120000);
+
+        return () =>
+        {
+            clearInterval(interval);
+        }
     }, []);
 
-    return { friends, requests, sentRequests, settings, onlineFriends, offlineFriends, getFriend, canRequestFriend, requestFriend, requestResponse, followFriend, updateRelationship };
+    return { friends, requests, sentRequests, dismissedRequestIds, setDismissedRequestIds, settings, onlineFriends, offlineFriends, getFriend, canRequestFriend, requestFriend, requestResponse, followFriend, updateRelationship };
 }
 
 export const useFriends = () => useBetween(useFriendsState);

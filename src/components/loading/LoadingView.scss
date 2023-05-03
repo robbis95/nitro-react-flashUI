@@ -1,108 +1,64 @@
 .nitro-loading {
     position: relative;
     background: #09161f;
-
+  
     .percent {
-        font-size: 17px;
-        color: #999999;
+      font-size: 17px;
+      color: #999999;
     }
-
+  
     .loading-stories {
-        background-image: url(../../assets/flash/loadingscreen/background.png);
+      background-image: url("@/assets/flash/loadingscreen/background.png");
+      width: 500px;
+      height: 434px;
+      position: relative;
+      filter: drop-shadow(1px 3px 20px #36445d);
+  
+      .loadingPhoto {
+        width: 320px;
+        height: 320px;
+        top: 51px;
+        left: 94px;
+  
+        @for $i from 1 through 30 {
+          &[data-image="#{$i}"] {
+            background-image: url("@/assets/flash/loadingscreen/image-#{$i}.png");
+          }
+        }
+      }
+  
+      .imageOverlay {
+        background-image: url("@/assets/flash/loadingscreen/overlay.png");
         width: 500px;
         height: 434px;
-        position: relative;
-        -webkit-filter: drop-shadow(1px 3px 20px #36445D);
-
-        .loadingPhoto {
-            width: 320px;
-            height: 320px;
-            top: 51px;
-            left: 94px;
-
-            @for $i from 1 through 30 {
-                &[data-image="#{$i}"] {
-                    background-image: url(../../assets/flash/loadingscreen/image-#{$i}.png);
-                }
-            }
-        }
-
-        .imageOverlay {
-            background-image: url(../../assets/flash/loadingscreen/overlay.png);
-            width: 500px;
-            height: 434px;
-        }
+      }
     }
-
+  
     .nitro-loading-bar {
-        border: 1px solid white;
-        padding: 3px;
-        height: 25px;
-        width: 400px;
-        border-radius: 3px;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-
-        &::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            margin: 3px;
-            border-radius: 4px;
-            background: #000;
-            z-index: 0;
-        }
-
-        .nitro-loading-bar-inner {
-            height: 100%;
-            z-index: 4;
-            transition: all 1s;
-            background: linear-gradient(#bfd1d9 50%, #93acb7 50%);
-        }
+      border: 1px solid white;
+      padding: 3px;
+      height: 25px;
+      width: 400px;
+      border-radius: 3px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+  
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        margin: 3px;
+        border-radius: 4px;
+        background: #000;
+        z-index: 0;
+      }
+  
+      .nitro-loading-bar-inner {
+        height: 100%;
+        z-index: 4;
+        transition: width 1s;
+        background: linear-gradient(#bfd1d9 50%, #93acb7 50%);
+      }
     }
-}
-
-@keyframes connecting-duck {
-    0% {
-        background-position: 0 0;
-        width: 235px;
-        height: 127px;
-    }
-
-    15% {
-        background-position: 0 -132px;
-        width: 280px;
-        height: 151px;
-    }
-
-    30% {
-        background-position: 0 -288px;
-        width: 326px;
-        height: 174px;
-    }
-
-    45% {
-        background-position: 0 -467px;
-        width: 235px;
-        height: 127px;
-    }
-
-    60% {
-        background-position: 0 -599px;
-        width: 280px;
-        height: 151px;
-    }
-
-    75% {
-        background-position: 0 -755px;
-        width: 326px;
-        height: 174px;
-    }
-
-    90% {
-        background-position: 0 -934px;
-        width: 190px;
-        height: 104px;
-    }
-}
+  }  

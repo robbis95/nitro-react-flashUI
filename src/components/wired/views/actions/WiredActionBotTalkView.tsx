@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import { LocalizeText, WiredFurniType, WIRED_STRING_DELIMETER } from '../../../../api';
+import { GetConfiguration, LocalizeText, WiredFurniType, WIRED_STRING_DELIMETER } from '../../../../api';
 import { Column, Flex, Text } from '../../../../common';
-import { useWiredContext } from '../../WiredContext';
+import { useWired } from '../../../../hooks';
 import { WiredActionBaseView } from './WiredActionBaseView';
 
 export const WiredActionBotTalkView: FC<{}> = props =>
@@ -9,7 +9,7 @@ export const WiredActionBotTalkView: FC<{}> = props =>
     const [ botName, setBotName ] = useState('');
     const [ message, setMessage ] = useState('');
     const [ talkMode, setTalkMode ] = useState(-1);
-    const { trigger = null, setStringParam = null, setIntParams = null } = useWiredContext();
+    const { trigger = null, setStringParam = null, setIntParams = null } = useWired();
 
     const save = () =>
     {
@@ -35,7 +35,7 @@ export const WiredActionBotTalkView: FC<{}> = props =>
             </Column>
             <Column gap={ 1 }>
                 <Text gfbold>{ LocalizeText('wiredfurni.params.message') }</Text>
-                <input type="text" className="form-control form-control-sm" maxLength={ 64 } value={ message } onChange={ event => setMessage(event.target.value) } />
+                <input type="text" className="form-control form-control-sm" maxLength={ GetConfiguration<number>('wired.action.bot.talk.max.length', 64) } value={ message } onChange={ event => setMessage(event.target.value) } />
             </Column>
             <Column gap={ 1 }>
                 <Flex alignItems="center" gap={ 1 }>

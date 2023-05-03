@@ -1,53 +1,58 @@
 import { RoomObjectType } from '@nitrots/nitro-renderer';
 import { FC, useMemo, useState } from 'react';
-import { LocalizeText } from '../../../api';
+import { ChatEntryType, IChatEntry, LocalizeText, ReportState, ReportType } from '../../../api';
 import { AutoGrid, Button, Column, Flex, LayoutGridItem, Text } from '../../../common';
-import { ChatEntryType } from '../../chat-history/common/ChatEntryType';
-import { GetChatHistory } from '../../chat-history/common/GetChatHistory';
-import { IChatEntry } from '../../chat-history/common/IChatEntry';
-import { useHelpContext } from '../HelpContext';
+import { useChatHistory, useHelp } from '../../../hooks';
 
 export const SelectReportedChatsView: FC<{}> = props =>
 {
-    const [ selectedChats, setSelectedChats ] = useState<Map<number, IChatEntry>>(new Map());
-    const { helpReportState = null, setHelpReportState = null } = useHelpContext();
-    const { reportedUserId = -1 } = helpReportState;
+    const [ selectedChats, setSelectedChats ] = useState<IChatEntry[]>([]);
+    const { activeReport = null, setActiveReport = null } = useHelp();
+    const { chatHistory = [], messengerHistory = [] } = useChatHistory();
 
     const userChats = useMemo(() =>
     {
-        return GetChatHistory().chats.filter(chat => (chat.type === ChatEntryType.TYPE_CHAT) && (chat.entityId === reportedUserId) && (chat.entityType === RoomObjectType.USER));
-    }, [ reportedUserId ]);
+        switch(activeReport.reportType)
+        {
+            case ReportType.BULLY:
+            case ReportType.EMERGENCY:
+                return chatHistory.filter(chat => (chat.type === ChatEntryType.TYPE_CHAT) && (chat.webId === activeReport.reportedUserId) && (chat.entityType === RoomObjectType.USER));
+            case ReportType.IM:
+                return messengerHistory.filter(chat => (chat.webId === activeReport.reportedUserId) && (chat.type === ChatEntryType.TYPE_IM));
+        }
+
+        return [];
+    }, [ activeReport, chatHistory, messengerHistory ]);
 
     const selectChat = (chatEntry: IChatEntry) =>
     {
-        const chats = new Map(selectedChats);
+        setSelectedChats(prevValue =>
+        {
+            const newValue = [ ...prevValue ];
+            const index = newValue.indexOf(chatEntry);
 
-        if(chats.has(chatEntry.id)) chats.delete(chatEntry.id);
-        else chats.set(chatEntry.id, chatEntry);
+            if(index >= 0) newValue.splice(index, 1);
+            else newValue.push(chatEntry);
 
-        setSelectedChats(chats);
+            return newValue;
+        });
     }
 
     const submitChats = () =>
     {
-        if(!selectedChats || (selectedChats.size <= 0)) return;
+        if(!selectedChats || (selectedChats.length <= 0)) return;
 
-        setHelpReportState(prevValue =>
+        setActiveReport(prevValue =>
         {
-            const reportedChats = Array.from(selectedChats.values());
-            const currentStep = 3;
-
-            return { ...prevValue, reportedChats, currentStep };
+            return { ...prevValue, reportedChats: selectedChats, currentStep: ReportState.SELECT_TOPICS };
         });
     }
 
     const back = () =>
     {
-        setHelpReportState(prevValue =>
+        setActiveReport(prevValue =>
         {
-            const currentStep = (prevValue.currentStep - 1);
-
-            return { ...prevValue, currentStep };
+            return { ...prevValue, currentStep: (prevValue.currentStep - 1) };
         });
     }
 
@@ -58,14 +63,14 @@ export const SelectReportedChatsView: FC<{}> = props =>
                 <Text>{ LocalizeText('help.emergency.chat_report.description') }</Text>
             </Column>
             <Column gap={ 1 } overflow="hidden">
-                { !!!userChats.length &&
+                { !userChats || !userChats.length &&
                     <Text>{ LocalizeText('help.cfh.error.no_user_data') }</Text> }
                 { (userChats.length > 0) &&
                     <AutoGrid gap={ 1 } columnCount={ 1 } columnMinHeight={ 25 } overflow="auto">
                         { userChats.map((chat, index) =>
                         {
                             return (
-                                <LayoutGridItem key={ chat.id } onClick={ event => selectChat(chat) } itemActive={ selectedChats.has(chat.id) }>
+                                <LayoutGridItem key={ chat.id } onClick={ event => selectChat(chat) } itemActive={ (selectedChats.indexOf(chat) >= 0) }>
                                     <Text>{ chat.message }</Text>
                                 </LayoutGridItem>
                             );
@@ -73,10 +78,10 @@ export const SelectReportedChatsView: FC<{}> = props =>
                     </AutoGrid> }
             </Column>
             <Flex gap={ 2 } justifyContent="between">
-                <Button variant="secondary" onClick={ back }>
+                <Button variant="secondary" onClick={ back } disabled={ (activeReport.reportType === ReportType.IM) }>
                     { LocalizeText('generic.back') }
                 </Button>
-                <Button disabled={ (selectedChats.size <= 0) } onClick={ submitChats }>
+                <Button disabled={ (selectedChats.length <= 0) } onClick={ submitChats }>
                     { LocalizeText('help.emergency.main.submit.button') }
                 </Button>
             </Flex>

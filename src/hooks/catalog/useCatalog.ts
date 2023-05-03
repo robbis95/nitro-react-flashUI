@@ -1,10 +1,10 @@
-import { BuildersClubFurniCountMessageEvent, BuildersClubPlaceRoomItemMessageComposer, BuildersClubPlaceWallItemMessageComposer, BuildersClubQueryFurniCountMessageComposer, BuildersClubSubscriptionStatusMessageEvent, CatalogPageMessageEvent, CatalogPagesListEvent, CatalogPublishedMessageEvent, ClubGiftInfoEvent, FrontPageItem, FurniturePlaceComposer, FurniturePlacePaintComposer, GetCatalogIndexComposer, GetCatalogPageComposer, GetClubGiftInfo, GetGiftWrappingConfigurationComposer, GiftWrappingConfigurationEvent, GuildMembershipsMessageEvent, HabboClubOffersMessageEvent, LegacyDataType, LimitedEditionSoldOutEvent, MarketplaceMakeOfferResult, NodeData, ProductOfferEvent, PurchaseErrorMessageEvent, PurchaseFromCatalogComposer, PurchaseNotAllowedMessageEvent, PurchaseOKMessageEvent, RoomControllerLevel, RoomEngineObjectPlacedEvent, RoomObjectCategory, RoomObjectPlacementSource, RoomObjectType, RoomObjectVariable, RoomPreviewer, SellablePetPalettesMessageEvent, Vector3d } from '@nitrots/nitro-renderer';
+import { BuildersClubFurniCountMessageEvent, BuildersClubPlaceRoomItemMessageComposer, BuildersClubPlaceWallItemMessageComposer, BuildersClubQueryFurniCountMessageComposer, BuildersClubSubscriptionStatusMessageEvent, CatalogPageMessageEvent, CatalogPagesListEvent, CatalogPublishedMessageEvent, ClubGiftInfoEvent, FrontPageItem, FurniturePlaceComposer, FurniturePlacePaintComposer, GetCatalogIndexComposer, GetCatalogPageComposer, GetClubGiftInfo, GetGiftWrappingConfigurationComposer, GetTickerTime, GiftWrappingConfigurationEvent, GuildMembershipsMessageEvent, HabboClubOffersMessageEvent, LegacyDataType, LimitedEditionSoldOutEvent, MarketplaceMakeOfferResult, NodeData, ProductOfferEvent, PurchaseErrorMessageEvent, PurchaseFromCatalogComposer, PurchaseNotAllowedMessageEvent, PurchaseOKMessageEvent, RoomControllerLevel, RoomEngineObjectPlacedEvent, RoomObjectCategory, RoomObjectPlacementSource, RoomObjectType, RoomObjectVariable, RoomPreviewer, SellablePetPalettesMessageEvent, Vector3d } from '@nitrots/nitro-renderer';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useBetween } from 'use-between';
-import { BuilderFurniPlaceableStatus, CatalogNode, CatalogPage, CatalogPetPalette, CatalogType, CreateLinkEvent, FurniCategory, GetFurnitureData, GetNitroInstance, GetProductDataForLocalization, GetRoomEngine, GetRoomSession, GiftWrappingConfiguration, ICatalogNode, ICatalogOptions, ICatalogPage, IPageLocalization, IProduct, IPurchasableOffer, IPurchaseOptions, LocalizeText, NotificationAlertType, NotificationUtilities, Offer, PageLocalization, PlacedObjectPurchaseData, PlaySound, Product, ProductTypeEnum, RequestedPage, SearchResult, SendMessageComposer, SoundNames } from '../../api';
+import { BuilderFurniPlaceableStatus, CatalogNode, CatalogPage, CatalogPetPalette, CatalogType, CreateLinkEvent, DispatchUiEvent, FurniCategory, GetFurnitureData, GetProductDataForLocalization, GetRoomEngine, GetRoomSession, GiftWrappingConfiguration, ICatalogNode, ICatalogOptions, ICatalogPage, IPageLocalization, IProduct, IPurchasableOffer, IPurchaseOptions, LocalizeText, NotificationAlertType, Offer, PageLocalization, PlacedObjectPurchaseData, PlaySound, Product, ProductTypeEnum, RequestedPage, SearchResult, SendMessageComposer, SoundNames } from '../../api';
 import { CatalogPurchasedEvent, CatalogPurchaseFailureEvent, CatalogPurchaseNotAllowedEvent, CatalogPurchaseSoldOutEvent, InventoryFurniAddedEvent } from '../../events';
-import { DispatchUiEvent, UseRoomEngineEvent, UseUiEvent } from '../events';
-import { UseMessageEventHook } from '../messages';
+import { useMessageEvent, useRoomEngineEvent, useUiEvent } from '../events';
+import { useNotification } from '../notification';
 import { useCatalogPlaceMultipleItems } from './useCatalogPlaceMultipleItems';
 import { useCatalogSkipPurchaseConfirmation } from './useCatalogSkipPurchaseConfirmation';
 
@@ -40,6 +40,7 @@ const useCatalogState = () =>
     const [ secondsLeft, setSecondsLeft ] = useState(0);
     const [ updateTime, setUpdateTime ] = useState(0);
     const [ secondsLeftWithGrace, setSecondsLeftWithGrace ] = useState(0);
+    const { simpleAlert = null } = useNotification();
     const requestedPage = useRef(new RequestedPage());
 
     const resetState = useCallback(() =>
@@ -264,7 +265,7 @@ const useCatalogState = () =>
     const loadCatalogPage = useCallback((pageId: number, offerId: number) =>
     {
         if(pageId < 0) return;
-        
+
         setIsBusy(true);
         setPageId(pageId);
 
@@ -284,9 +285,9 @@ const useCatalogState = () =>
             for(const offer of catalogPage.offers)
             {
                 if(offer.offerId !== offerId) continue;
-                
+
                 setCurrentOffer(offer)
-    
+
                 break;
             }
         }
@@ -350,13 +351,13 @@ const useCatalogState = () =>
 
             return nodes;
         });
-            
+
         if(targetNode.pageId > -1) loadCatalogPage(targetNode.pageId, offerId);
     }, [ setActiveNodes, loadCatalogPage, cancelObjectMover ]);
 
     const openPageById = useCallback((id: number) =>
     {
-        setSearchResult(null);
+        if(id !== -1) setSearchResult(null);
 
         if(!isVisible)
         {
@@ -415,7 +416,7 @@ const useCatalogState = () =>
 
     }, []);
 
-    const onCatalogPagesListEvent = useCallback((event: CatalogPagesListEvent) =>
+    useMessageEvent<CatalogPagesListEvent>(CatalogPagesListEvent, event =>
     {
         const parser = event.getParser();
         const offers: Map<number, ICatalogNode[]> = new Map();
@@ -439,11 +440,9 @@ const useCatalogState = () =>
 
         setRootNode(getCatalogNode(parser.root, 0, null));
         setOffersToNodes(offers);
-    }, [ setRootNode, setOffersToNodes ]);
+    });
 
-    UseMessageEventHook(CatalogPagesListEvent, onCatalogPagesListEvent);
-
-    const onCatalogPageMessageEvent = useCallback((event: CatalogPageMessageEvent) =>
+    useMessageEvent<CatalogPageMessageEvent>(CatalogPageMessageEvent, event =>
     {
         const parser = event.getParser();
 
@@ -478,47 +477,37 @@ const useCatalogState = () =>
         {
             showCatalogPage(parser.pageId, parser.layoutCode, new PageLocalization(parser.localization.images.concat(), parser.localization.texts.concat()), purchasableOffers, parser.offerId, parser.acceptSeasonCurrencyAsCredits);
         }
-    }, [ currentType, pageId, setFrontPageItems, setIsBusy, showCatalogPage ]);
+    });
 
-    UseMessageEventHook(CatalogPageMessageEvent, onCatalogPageMessageEvent);
-
-    const onPurchaseOKMessageEvent = useCallback((event: PurchaseOKMessageEvent) =>
+    useMessageEvent<PurchaseOKMessageEvent>(PurchaseOKMessageEvent, event =>
     {
         const parser = event.getParser();
 
         DispatchUiEvent(new CatalogPurchasedEvent(parser.offer));
-    }, []);
+    });
 
-    UseMessageEventHook(PurchaseOKMessageEvent, onPurchaseOKMessageEvent);
-
-    const onPurchaseErrorMessageEvent = useCallback((event: PurchaseErrorMessageEvent) =>
+    useMessageEvent<PurchaseErrorMessageEvent>(PurchaseErrorMessageEvent, event =>
     {
         const parser = event.getParser();
 
         DispatchUiEvent(new CatalogPurchaseFailureEvent(parser.code));
-    }, []);
+    });
 
-    UseMessageEventHook(PurchaseErrorMessageEvent, onPurchaseErrorMessageEvent);
-
-    const onPurchaseNotAllowedMessageEvent = useCallback((event: PurchaseNotAllowedMessageEvent) =>
+    useMessageEvent<PurchaseNotAllowedMessageEvent>(PurchaseNotAllowedMessageEvent, event =>
     {
         const parser = event.getParser();
 
         DispatchUiEvent(new CatalogPurchaseNotAllowedEvent(parser.code));
-    }, []);
+    });
 
-    UseMessageEventHook(PurchaseNotAllowedMessageEvent, onPurchaseNotAllowedMessageEvent);
-
-    const onLimitedEditionSoldOutEvent = useCallback((event: LimitedEditionSoldOutEvent) =>
+    useMessageEvent<LimitedEditionSoldOutEvent>(LimitedEditionSoldOutEvent, event =>
     {
         const parser = event.getParser();
 
         DispatchUiEvent(new CatalogPurchaseSoldOutEvent());
-    }, []);
+    });
 
-    UseMessageEventHook(LimitedEditionSoldOutEvent, onLimitedEditionSoldOutEvent);
-
-    const onProductOfferEvent = useCallback((event: ProductOfferEvent) =>
+    useMessageEvent<ProductOfferEvent>(ProductOfferEvent, event =>
     {
         const parser = event.getParser();
         const offerData = parser.offer;
@@ -555,19 +544,17 @@ const useCatalogState = () =>
             setPurchaseOptions(prevValue =>
             {
                 const newValue = { ...prevValue };
-    
+
                 newValue.extraData =( offer.product.extraParam || null);
-    
+
                 return newValue;
             });
         }
 
         // (this._isObjectMoverRequested) && (this._purchasableOffer)
-    }, [ currentType, currentPage, setCurrentOffer, setPurchaseOptions ]);
+    });
 
-    UseMessageEventHook(ProductOfferEvent, onProductOfferEvent);
-
-    const onSellablePetPalettesMessageEvent = useCallback((event: SellablePetPalettesMessageEvent) =>
+    useMessageEvent<SellablePetPalettesMessageEvent>(SellablePetPalettesMessageEvent, event =>
     {
         const parser = event.getParser();
         const petPalette = new CatalogPetPalette(parser.productCode, parser.palettes.slice());
@@ -589,16 +576,14 @@ const useCatalogState = () =>
                     break;
                 }
             }
-                
+
             petPalettes.push(petPalette);
 
             return { ...prevValue, petPalettes };
         });
-    }, [ setCatalogOptions ]);
+    });
 
-    UseMessageEventHook(SellablePetPalettesMessageEvent, onSellablePetPalettesMessageEvent);
-
-    const onHabboClubOffersMessageEvent = useCallback((event: HabboClubOffersMessageEvent) =>
+    useMessageEvent<HabboClubOffersMessageEvent>(HabboClubOffersMessageEvent, event =>
     {
         const parser = event.getParser();
 
@@ -608,11 +593,9 @@ const useCatalogState = () =>
 
             return { ...prevValue, clubOffers };
         });
-    }, [ setCatalogOptions ]);
+    });
 
-    UseMessageEventHook(HabboClubOffersMessageEvent, onHabboClubOffersMessageEvent);
-
-    const onGuildMembershipsMessageEvent = useCallback((event: GuildMembershipsMessageEvent) =>
+    useMessageEvent<GuildMembershipsMessageEvent>(GuildMembershipsMessageEvent, event =>
     {
         const parser = event.getParser();
 
@@ -622,11 +605,9 @@ const useCatalogState = () =>
 
             return { ...prevValue, groups };
         });
-    }, [ setCatalogOptions ]);
+    });
 
-    UseMessageEventHook(GuildMembershipsMessageEvent, onGuildMembershipsMessageEvent);
-
-    const onGiftWrappingConfigurationEvent = useCallback((event: GiftWrappingConfigurationEvent) =>
+    useMessageEvent<GiftWrappingConfigurationEvent>(GiftWrappingConfigurationEvent, event =>
     {
         const parser = event.getParser();
 
@@ -636,11 +617,9 @@ const useCatalogState = () =>
 
             return { ...prevValue, giftConfiguration };
         });
-    }, [ setCatalogOptions ]);
+    });
 
-    UseMessageEventHook(GiftWrappingConfigurationEvent, onGiftWrappingConfigurationEvent);
-
-    const onMarketplaceMakeOfferResult = useCallback((event: MarketplaceMakeOfferResult) =>
+    useMessageEvent<MarketplaceMakeOfferResult>(MarketplaceMakeOfferResult, event =>
     {
         const parser = event.getParser();
 
@@ -657,13 +636,11 @@ const useCatalogState = () =>
         }
 
         const message = LocalizeText(`inventory.marketplace.result.${ parser.result }`);
-        
-        NotificationUtilities.simpleAlert(message, NotificationAlertType.DEFAULT, null, null, title);
-    }, []);
 
-    UseMessageEventHook(MarketplaceMakeOfferResult, onMarketplaceMakeOfferResult);
+        simpleAlert(message, NotificationAlertType.DEFAULT, null, null, title);
+    });
 
-    const onClubGiftInfoEvent = useCallback((event: ClubGiftInfoEvent) =>
+    useMessageEvent<ClubGiftInfoEvent>(ClubGiftInfoEvent, event =>
     {
         const parser = event.getParser();
 
@@ -673,55 +650,42 @@ const useCatalogState = () =>
 
             return { ...prevValue, clubGifts };
         });
-    }, [ setCatalogOptions ]);
+    });
 
-    UseMessageEventHook(ClubGiftInfoEvent, onClubGiftInfoEvent);
-
-    const onCatalogPublishedMessageEvent = useCallback((event: CatalogPublishedMessageEvent) =>
+    useMessageEvent<CatalogPublishedMessageEvent>(CatalogPublishedMessageEvent, event =>
     {
         const wasVisible = isVisible;
 
         resetState();
 
-        if(wasVisible) NotificationUtilities.simpleAlert(LocalizeText('catalog.alert.published.description'), NotificationAlertType.ALERT, null, null, LocalizeText('catalog.alert.published.title'));
-    }, [ isVisible, resetState ]);
+        if(wasVisible) simpleAlert(LocalizeText('catalog.alert.published.description'), NotificationAlertType.ALERT, null, null, LocalizeText('catalog.alert.published.title'));
+    });
 
-    UseMessageEventHook(CatalogPublishedMessageEvent, onCatalogPublishedMessageEvent);
-
-    const onBuildersClubFurniCountMessageEvent = useCallback((event: BuildersClubFurniCountMessageEvent) =>
+    useMessageEvent<BuildersClubFurniCountMessageEvent>(BuildersClubFurniCountMessageEvent, event =>
     {
         const parser = event.getParser();
 
         setFurniCount(parser.furniCount);
 
         refreshBuilderStatus();
-    }, [ refreshBuilderStatus ]);
+    });
 
-    UseMessageEventHook(BuildersClubFurniCountMessageEvent, onBuildersClubFurniCountMessageEvent);
-
-    const onBuildersClubSubscriptionStatusMessageEvent = useCallback((event: BuildersClubSubscriptionStatusMessageEvent) =>
+    useMessageEvent<BuildersClubSubscriptionStatusMessageEvent>(BuildersClubSubscriptionStatusMessageEvent, event =>
     {
         const parser = event.getParser();
 
-        setFurniLimit(parser._Str_15864);
-        setMaxFurniLimit(parser._Str_24094);
-        setSecondsLeft(parser._Str_3709);
-        setUpdateTime(GetNitroInstance().time);
-        setSecondsLeftWithGrace(parser._Str_24379);
+        setFurniLimit(parser.furniLimit);
+        setMaxFurniLimit(parser.maxFurniLimit);
+        setSecondsLeft(parser.secondsLeft);
+        setUpdateTime(GetTickerTime());
+        setSecondsLeftWithGrace(parser.secondsLeftWithGrace);
 
         refreshBuilderStatus();
-    }, [ refreshBuilderStatus ]);
+    });
 
-    UseMessageEventHook(BuildersClubSubscriptionStatusMessageEvent, onBuildersClubSubscriptionStatusMessageEvent);
+    useUiEvent<CatalogPurchasedEvent>(CatalogPurchasedEvent.PURCHASE_SUCCESS, event => PlaySound(SoundNames.CREDITS));
 
-    const onCatalogPurchasedEvent = useCallback((event: CatalogPurchasedEvent) =>
-    {
-        PlaySound(SoundNames.CREDITS);
-    }, []);
-
-    UseUiEvent(CatalogPurchasedEvent.PURCHASE_SUCCESS, onCatalogPurchasedEvent);
-
-    const onRoomEngineObjectPlacedEvent = useCallback((event: RoomEngineObjectPlacedEvent) =>
+    useRoomEngineEvent<RoomEngineObjectPlacedEvent>(RoomEngineObjectPlacedEvent.PLACED, event =>
     {
         if(!objectMoverRequested || (event.type !== RoomEngineObjectPlacedEvent.PLACED)) return;
 
@@ -793,7 +757,7 @@ const useCatalogState = () =>
 
                 if(roomObject) roomObject.model.setValue(RoomObjectVariable.FURNITURE_ALPHA_MULTIPLIER, 0.5);
 
-                if(catalogSkipPurchaseConfirmation) 
+                if(catalogSkipPurchaseConfirmation)
                 {
                     SendMessageComposer(new PurchaseFromCatalogComposer(pageId, purchasableOffer.offerId, product.extraParam, 1));
 
@@ -829,11 +793,9 @@ const useCatalogState = () =>
                 break;
             }
         }
-    }, [ objectMoverRequested, purchasableOffer, catalogPlaceMultipleObjects, catalogSkipPurchaseConfirmation, currentType, pageId, resetPlacedOfferData, resetObjectMover, resetRoomPaint, requestOfferToMover ]);
+    });
 
-    UseRoomEngineEvent(RoomEngineObjectPlacedEvent.PLACED, onRoomEngineObjectPlacedEvent);
-
-    const onInventoryFurniAddedEvent = useCallback((event: InventoryFurniAddedEvent) =>
+    useUiEvent<InventoryFurniAddedEvent>(InventoryFurniAddedEvent.FURNI_ADDED, event =>
     {
         const roomEngine = GetRoomEngine();
 
@@ -864,18 +826,16 @@ const useCatalogState = () =>
         }
 
         if(!catalogPlaceMultipleObjects) resetPlacedOfferData();
-    }, [ placedObjectPurchaseData, catalogPlaceMultipleObjects, resetPlacedOfferData ]);
-
-    UseUiEvent(InventoryFurniAddedEvent.FURNI_ADDED, onInventoryFurniAddedEvent);
+    });
 
     useEffect(() =>
     {
         return () => setCurrentOffer(null);
     }, [ currentPage ]);
-    
+
     useEffect(() =>
     {
-        if(!isVisible || !rootNode || !requestedPage.current) return;
+        if(!isVisible || !rootNode || !offersToNodes || !requestedPage.current) return;
 
         switch(requestedPage.current.requestType)
         {
@@ -908,13 +868,20 @@ const useCatalogState = () =>
                 requestedPage.current.resetRequest();
                 return;
         }
-    }, [ isVisible, rootNode, currentPage, activateNode, openPageById, openPageByOfferId, openPageByName ]);
+    }, [ isVisible, rootNode, offersToNodes, currentPage, activateNode, openPageById, openPageByOfferId, openPageByName ]);
 
     useEffect(() =>
     {
         if(!searchResult && currentPage && (currentPage.pageId === -1)) openPageById(previousPageId);
     }, [ searchResult, currentPage, previousPageId, openPageById ]);
-    
+
+    useEffect(() =>
+    {
+        if(!currentOffer) return;
+
+        setPurchaseOptions({ quantity: 1, extraData: null, extraParamRequired: false, previewStuffData: null });
+    }, [ currentOffer ]);
+
     useEffect(() =>
     {
         if(!isVisible || rootNode) return;

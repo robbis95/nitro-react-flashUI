@@ -1,9 +1,8 @@
 import { BadgePointLimitsEvent, ILinkEventTracker, IRoomSession, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomPreviewer, RoomSessionEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { AddEventLinkTracker, GetLocalization, GetRoomEngine, LocalizeText, RemoveLinkEventTracker, UnseenItemCategory } from '../../api';
-import { isObjectMoverRequested, setObjectMoverRequested } from '../../api/inventory/InventoryUtilities';
+import { FC, useEffect, useState } from 'react';
+import { AddEventLinkTracker, GetLocalization, GetRoomEngine, isObjectMoverRequested, LocalizeText, RemoveLinkEventTracker, setObjectMoverRequested, UnseenItemCategory } from '../../api';
 import { NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
-import { useInventoryTrade, useInventoryUnseenTracker, UseMessageEventHook, UseRoomEngineEvent, UseRoomSessionManagerEvent } from '../../hooks';
+import { useInventoryTrade, useInventoryUnseenTracker, useMessageEvent, useRoomEngineEvent, useRoomSessionManagerEvent } from '../../hooks';
 import { InventoryBadgeView } from './views/badge/InventoryBadgeView';
 import { InventoryBotView } from './views/bot/InventoryBotView';
 import { InventoryFurnitureView } from './views/furniture/InventoryFurnitureView';
@@ -26,25 +25,26 @@ export const InventoryView: FC<{}> = props =>
     const { isTrading = false, stopTrading = null } = useInventoryTrade();
     const { getCount = null, resetCategory = null } = useInventoryUnseenTracker();
 
-    const close = () =>
+    const onClose = () =>
     {
         if(isTrading) stopTrading();
 
         setIsVisible(false);
     }
 
-    const onRoomEngineObjectPlacedEvent = useCallback((event: RoomEngineObjectPlacedEvent) =>
+    useRoomEngineEvent<RoomEngineObjectPlacedEvent>(RoomEngineObjectEvent.PLACED, event =>
     {
         if(!isObjectMoverRequested()) return;
 
         setObjectMoverRequested(false);
 
         if(!event.placedInRoom) setIsVisible(true);
-    }, []);
+    });
 
-    UseRoomEngineEvent(RoomEngineObjectEvent.PLACED, onRoomEngineObjectPlacedEvent);
-
-    const onRoomSessionEvent = useCallback((event: RoomSessionEvent) =>
+    useRoomSessionManagerEvent<RoomSessionEvent>([
+        RoomSessionEvent.CREATED,
+        RoomSessionEvent.ENDED
+    ], event =>
     {
         switch(event.type)
         {
@@ -56,19 +56,14 @@ export const InventoryView: FC<{}> = props =>
                 setIsVisible(false);
                 return;
         }
-    }, []);
+    });
 
-    UseRoomSessionManagerEvent(RoomSessionEvent.CREATED, onRoomSessionEvent);
-    UseRoomSessionManagerEvent(RoomSessionEvent.ENDED, onRoomSessionEvent);
-
-    const onBadgePointLimitsEvent = useCallback((event: BadgePointLimitsEvent) =>
+    useMessageEvent<BadgePointLimitsEvent>(BadgePointLimitsEvent, event =>
     {
         const parser = event.getParser();
 
         for(const data of parser.data) GetLocalization().setBadgePointLimit(data.badgeId, data.limit);
-    }, []);
-
-    UseMessageEventHook(BadgePointLimitsEvent, onBadgePointLimitsEvent);
+    });
 
     useEffect(() =>
     {
@@ -124,7 +119,7 @@ export const InventoryView: FC<{}> = props =>
 
     return (
         <NitroCardView uniqueKey={ 'inventory' } className={ isTrading ? 'nitro-inventory trading' : 'nitro-inventory' } theme={ isTrading ? 'primary' : '' } >
-            <NitroCardHeaderView headerText={ LocalizeText('inventory.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText('inventory.title') } onCloseClick={ onClose } />
             { !isTrading &&
                 <>
                     <NitroCardTabsView>
@@ -150,7 +145,7 @@ export const InventoryView: FC<{}> = props =>
                 </> }
             { isTrading &&
                 <NitroCardContentView>
-                    <InventoryTradeView cancelTrade={ close } />
+                    <InventoryTradeView cancelTrade={ onClose } />
                 </NitroCardContentView> }
         </NitroCardView>
     );

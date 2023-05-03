@@ -1,9 +1,8 @@
 import { GroupInformationParser, GroupRemoveMemberComposer } from '@nitrots/nitro-renderer';
-import { FC, useCallback } from 'react';
-import { CatalogPageName, CreateLinkEvent, GetGroupManager, GetGroupMembers, GetSessionDataManager, LocalizeText, NotificationUtilities, SendMessageComposer, TryJoinGroup, TryVisitRoom } from '../../../api';
+import { FC } from 'react';
+import { CatalogPageName, CreateLinkEvent, GetGroupManager, GetGroupMembers, GetSessionDataManager, GroupMembershipType, GroupType, LocalizeText, SendMessageComposer, TryJoinGroup, TryVisitRoom } from '../../../api';
 import { Button, Column, Flex, Grid, GridProps, LayoutBadgeImageView, Text } from '../../../common';
-import { GroupMembershipType } from '../common/GroupMembershipType';
-import { GroupType } from '../common/GroupType';
+import { useNotification } from '../../../hooks';
 
 const STATES: string[] = [ 'regular', 'exclusive', 'private' ];
 
@@ -17,6 +16,7 @@ interface GroupInformationViewProps extends GridProps
 export const GroupInformationView: FC<GroupInformationViewProps> = props =>
 {
     const { groupInformation = null, onClose = null, overflow = 'hidden', ...rest } = props;
+    const { showConfirm = null } = useNotification();
 
     const isRealOwner = (groupInformation && (groupInformation.ownerName === GetSessionDataManager().userName));
 
@@ -24,7 +24,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
 
     const leaveGroup = () =>
     {
-        NotificationUtilities.confirm(LocalizeText('group.leaveconfirm.desc'), () =>
+        showConfirm(LocalizeText('group.leaveconfirm.desc'), () =>
         {
             SendMessageComposer(new GroupRemoveMemberComposer(groupInformation.id, GetSessionDataManager().userId));
 
@@ -47,7 +47,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
     {
         if(isRealOwner) return 'group.youareowner';
 
-        if(groupInformation.type === GroupType.PRIVATE) return '';
+        if(groupInformation.type === GroupType.PRIVATE && groupInformation.membershipType !== GroupMembershipType.MEMBER) return '';
 
         if(groupInformation.membershipType === GroupMembershipType.MEMBER) return 'group.leave';
 
@@ -72,7 +72,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
         joinGroup();
     }
 
-    const handleAction = useCallback((action: string) =>
+    const handleAction = (action: string) =>
     {
         switch(action)
         {
@@ -95,7 +95,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
                 CreateLinkEvent('navigator/search/groups');
                 break;
         }
-    }, [ groupInformation ]);
+    }
 
     if(!groupInformation) return null;
 
@@ -135,7 +135,7 @@ export const GroupInformationView: FC<GroupInformationViewProps> = props =>
                         <Text small underline pointer onClick={ () => handleAction('furniture') }>{ LocalizeText('group.buyfurni') }</Text>
                         <Text small underline pointer onClick={ () => handleAction('popular_groups') }>{ LocalizeText('group.showgroups') }</Text>
                     </Column>
-                    { (groupInformation.type !== GroupType.PRIVATE) &&
+                    { (groupInformation.type !== GroupType.PRIVATE || groupInformation.type === GroupType.PRIVATE && groupInformation.membershipType === GroupMembershipType.MEMBER) &&
                         <Button disabled={ (groupInformation.membershipType === GroupMembershipType.REQUEST_PENDING) || isRealOwner } onClick={ handleButtonClick }>
                             { LocalizeText(getButtonText()) }
                         </Button> }

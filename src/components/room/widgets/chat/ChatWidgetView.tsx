@@ -1,26 +1,14 @@
-import { GetGuestRoomResultEvent, IWorkerEventTracker, NitroPoint, RoomChatSettings, RoomChatSettingsEvent, RoomDragEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { AddWorkerEventTracker, GetConfiguration, IRoomChatSettings, RemoveWorkerEventTracker, RoomChatFormatter, RoomWidgetChatSelectAvatarMessage, RoomWidgetRoomObjectMessage, RoomWidgetUpdateChatEvent, SendWorkerEvent } from '../../../../api';
-import { UseEventDispatcherHook, UseMessageEventHook, UseRoomEngineEvent } from '../../../../hooks';
-import { useRoomContext } from '../../RoomContext';
+import { RoomChatSettings } from '@nitrots/nitro-renderer';
+import { FC, useCallback, useEffect, useRef } from 'react';
+import { ChatBubbleMessage, DoChatsOverlap, GetConfiguration } from '../../../../api';
+import { useChatWidget } from '../../../../hooks';
+import IntervalWebWorker from '../../../../workers/IntervalWebWorker';
+import { WorkerBuilder } from '../../../../workers/WorkerBuilder';
 import { ChatWidgetMessageView } from './ChatWidgetMessageView';
-import { ChatBubbleMessage } from './common/ChatBubbleMessage';
-import { DoChatsOverlap } from './common/DoChatsOverlap';
-
-let TIMER_TRACKER: number = 0;
 
 export const ChatWidgetView: FC<{}> = props =>
 {
-    const [ chatSettings, setChatSettings ] = useState<IRoomChatSettings>({
-        mode: RoomChatSettings.CHAT_MODE_FREE_FLOW,
-        weight: RoomChatSettings.CHAT_BUBBLE_WIDTH_NORMAL,
-        speed: RoomChatSettings.CHAT_SCROLL_SPEED_NORMAL,
-        distance: 50,
-        protection: RoomChatSettings.FLOOD_FILTER_NORMAL
-    });
-    const [ chatMessages, setChatMessages ] = useState<ChatBubbleMessage[]>([]);
-    const [ timerId, setTimerId ] = useState(TIMER_TRACKER++);
-    const { roomSession = null, eventDispatcher = null, widgetHandler = null } = useRoomContext();
+    const { chatMessages = [], setChatMessages = null, chatSettings = null, getScrollSpeed = 6000 } = useChatWidget();
     const elementRef = useRef<HTMLDivElement>();
 
     const removeHiddenChats = useCallback(() =>
@@ -36,53 +24,23 @@ export const ChatWidgetView: FC<{}> = props =>
 
             return prevValue;
         })
-    }, []);
-
-    const moveAllChatsUp = useCallback((amount: number) =>
-    {
-        setChatMessages(prevValue =>
-        {
-            if(prevValue)
-            {
-                prevValue.forEach(chat =>
-                {
-                    if(chat.skipMovement)
-                    {
-                        chat.skipMovement = false;
-            
-                        return;
-                    }
-            
-                    chat.top -= amount;
-                });
-            }
-
-            return prevValue;
-        });
-
-        removeHiddenChats();
-    }, [ removeHiddenChats ]);
+    }, [ setChatMessages ]);
 
     const checkOverlappingChats = useCallback((chat: ChatBubbleMessage, moved: number, tempChats: ChatBubbleMessage[]) => 
     {
-        const totalChats = chatMessages.length;
-
-        if(!totalChats) return;
-
-        for(let i = (totalChats - 1); i >= 0; i--)
+        for(let i = (chatMessages.indexOf(chat) - 1); i >= 0; i--)
         {
             const collides = chatMessages[i];
 
-            if(!collides || (chat === collides) || (tempChats.indexOf(collides) >= 0) || ((collides.top - moved) >= (chat.top + chat.height))) continue;
+            if(!collides || (chat === collides) || (tempChats.indexOf(collides) >= 0) || (((collides.top + collides.height) - moved) > (chat.top + chat.height))) continue;
 
-            if(DoChatsOverlap(chat, collides, -moved, 4))
+            if(DoChatsOverlap(chat, collides, -moved, 0))
             {
                 const amount = Math.abs((collides.top + collides.height) - chat.top);
 
                 tempChats.push(collides);
 
                 collides.top -= amount;
-
                 collides.skipMovement = true;
 
                 checkOverlappingChats(collides, amount, tempChats);
@@ -109,93 +67,26 @@ export const ChatWidgetView: FC<{}> = props =>
 
             if(spaceAvailable < requiredSpace)
             {
-                chatMessages.forEach(existingChat =>
+                setChatMessages(prevValue =>
                 {
-                    if(existingChat === chat) return;
+                    prevValue.forEach(prevChat =>
+                    {
+                        if(prevChat === chat) return;
 
-                    existingChat.top -= amount;
+                        prevChat.top -= amount;
+                    });
+
+                    return prevValue;
                 });
 
                 removeHiddenChats();
             }
         }
-    }, [ chatSettings, chatMessages, removeHiddenChats, checkOverlappingChats ]);
-
-    const onRoomWidgetUpdateChatEvent = useCallback((event: RoomWidgetUpdateChatEvent) =>
-    {
-        const chatMessage = new ChatBubbleMessage(
-            event.userId,
-            event.userCategory,
-            event.roomId,
-            event.text,
-            RoomChatFormatter(event.text),
-            event.userName,
-            new NitroPoint(event.userX, event.userY),
-            event.chatType,
-            event.styleId,
-            event.userImage,
-            (event.userColor && (('#' + (event.userColor.toString(16).padStart(6, '0'))) || null)));
-
-        setChatMessages(prevValue => [ ...prevValue, chatMessage ]);
-    }, []);
-
-    UseEventDispatcherHook(RoomWidgetUpdateChatEvent.CHAT_EVENT, eventDispatcher, onRoomWidgetUpdateChatEvent);
-
-    const onRoomDragEvent = useCallback((event: RoomDragEvent) =>
-    {
-        if(!chatMessages.length || (event.roomId !== roomSession.roomId)) return;
-
-        const offsetX = event.offsetX;
-
-        chatMessages.forEach(chat => (chat.elementRef && (chat.left += offsetX)));
-    }, [ roomSession, chatMessages ]);
-
-    UseRoomEngineEvent(RoomDragEvent.ROOM_DRAG, onRoomDragEvent);
-
-    const onChatClicked = useCallback((chat: ChatBubbleMessage) =>
-    {
-        widgetHandler.processWidgetMessage(new RoomWidgetRoomObjectMessage(RoomWidgetRoomObjectMessage.GET_OBJECT_INFO, chat.senderId, chat.senderCategory));
-        widgetHandler.processWidgetMessage(new RoomWidgetChatSelectAvatarMessage(RoomWidgetChatSelectAvatarMessage.MESSAGE_SELECT_AVATAR, chat.senderId, chat.username, chat.roomId));
-    }, [ widgetHandler ]);
-
-    const getScrollSpeed = useCallback(() =>
-    {
-        if(!chatSettings) return 6000;
-
-        switch(chatSettings.speed)
-        {
-            case RoomChatSettings.CHAT_SCROLL_SPEED_FAST:
-                return 3000;
-            case RoomChatSettings.CHAT_SCROLL_SPEED_NORMAL:
-                return 6000;
-            case RoomChatSettings.CHAT_SCROLL_SPEED_SLOW:
-                return 12000;
-        }
-    }, [ chatSettings ])
-
-    const onGetGuestRoomResultEvent = useCallback((event: GetGuestRoomResultEvent) =>
-    {
-        const parser = event.getParser();
-
-        if(!parser.roomEnter) return;
-        
-        setChatSettings(parser.chat);
-    }, []);
-
-    UseMessageEventHook(GetGuestRoomResultEvent, onGetGuestRoomResultEvent);
-
-    const onRoomChatSettingsEvent = useCallback((event: RoomChatSettingsEvent) =>
-    {
-        const parser = event.getParser();
-        
-        setChatSettings(parser.chat);
-    }, []);
-
-    UseMessageEventHook(RoomChatSettingsEvent, onRoomChatSettingsEvent);
+    }, [ chatSettings, checkOverlappingChats, removeHiddenChats, setChatMessages ]);
 
     useEffect(() =>
     {
-        const resize = (event: UIEvent) =>
+        const resize = (event: UIEvent = null) =>
         {
             if(!elementRef || !elementRef.current) return;
 
@@ -217,53 +108,53 @@ export const ChatWidgetView: FC<{}> = props =>
 
         window.addEventListener('resize', resize);
 
-        resize(null);
+        resize();
 
         return () =>
         {
             window.removeEventListener('resize', resize);
         }
-    }, []);
-
-    const workerMessageReceived = useCallback((message: { [index: string]: any }) =>
-    {
-        switch(message.type)
-        {
-            case 'MOVE_CHATS':
-                moveAllChatsUp(15);
-                return;
-        }
-    }, [ moveAllChatsUp ]);
+    }, [ setChatMessages ]);
 
     useEffect(() =>
     {
-        const workerTracker: IWorkerEventTracker = {
-            workerMessageReceived
-        };
+        const moveAllChatsUp = (amount: number) =>
+        {
+            setChatMessages(prevValue =>
+            {
+                prevValue.forEach(chat =>
+                {
+                    if(chat.skipMovement)
+                    {
+                        chat.skipMovement = false;
+            
+                        return;
+                    }
+            
+                    chat.top -= amount;
+                });
 
-        AddWorkerEventTracker(workerTracker);
+                return prevValue;
+            });
 
-        SendWorkerEvent({
-            type: 'CREATE_INTERVAL',
-            time: getScrollSpeed(),
-            timerId: timerId,
-            response: { type: 'MOVE_CHATS' }
-        });
+            removeHiddenChats();
+        }
+
+        const worker = new WorkerBuilder(IntervalWebWorker);
+
+        worker.onmessage = () => moveAllChatsUp(15);
+
+        worker.postMessage({ action: 'START', content: getScrollSpeed });
 
         return () =>
         {
-            SendWorkerEvent({
-                type: 'REMOVE_INTERVAL',
-                timerId
-            });
-            
-            RemoveWorkerEventTracker(workerTracker);
+            worker.postMessage({ action: 'STOP' });
         }
-    }, [ timerId, workerMessageReceived, getScrollSpeed ]);
+    }, [ getScrollSpeed, removeHiddenChats, setChatMessages ]);
 
     return (
         <div ref={ elementRef } className="nitro-chat-widget">
-            { chatMessages.map(chat => <ChatWidgetMessageView key={ chat.id } chat={ chat } makeRoom={ makeRoom } onChatClicked={ onChatClicked } bubbleWidth={ chatSettings.weight } />) }
+            { chatMessages.map(chat => <ChatWidgetMessageView key={ chat.id } chat={ chat } makeRoom={ makeRoom } bubbleWidth={ chatSettings.weight } />) }
         </div>
     );
 }

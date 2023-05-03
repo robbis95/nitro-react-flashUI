@@ -1,8 +1,8 @@
 import { SelectClubGiftComposer } from '@nitrots/nitro-renderer';
-import { FC, useCallback } from 'react';
-import { LocalizeText, NotificationUtilities, SendMessageComposer } from '../../../../../../api';
+import { FC, useCallback, useMemo } from 'react';
+import { LocalizeText, SendMessageComposer } from '../../../../../../api';
 import { AutoGrid, Text } from '../../../../../../common';
-import { useCatalog, usePurse } from '../../../../../../hooks';
+import { useCatalog, useNotification, usePurse } from '../../../../../../hooks';
 import { CatalogLayoutProps } from '../CatalogLayout.types';
 import { VipGiftItem } from './VipGiftItemView';
 
@@ -11,6 +11,7 @@ export const CatalogLayoutVipGiftsView: FC<CatalogLayoutProps> = props =>
     const { purse = null } = usePurse();
     const { catalogOptions = null, setCatalogOptions = null } = useCatalog();
     const { clubGifts = null } = catalogOptions;
+    const { showConfirm = null } = useNotification();
     
     const giftsAvailable = useCallback(() =>
     {
@@ -27,7 +28,7 @@ export const CatalogLayoutVipGiftsView: FC<CatalogLayoutProps> = props =>
 
     const selectGift = useCallback((localizationId: string) =>
     {
-        NotificationUtilities.confirm(LocalizeText('catalog.club_gift.confirm'), () =>
+        showConfirm(LocalizeText('catalog.club_gift.confirm'), () =>
         {
             SendMessageComposer(new SelectClubGiftComposer(localizationId));
 
@@ -38,13 +39,23 @@ export const CatalogLayoutVipGiftsView: FC<CatalogLayoutProps> = props =>
                 return { ...prevValue };
             });
         }, null);
-    }, [ setCatalogOptions ]);
+    }, [ setCatalogOptions, showConfirm ]);
+
+    const sortGifts = useMemo(() => 
+    {
+        let gifts = clubGifts.offers.sort((a,b) => 
+        {
+            return clubGifts.getOfferExtraData(a.offerId).daysRequired - clubGifts.getOfferExtraData(b.offerId).daysRequired;
+        })
+        return gifts;
+    },[ clubGifts ]);
+    
     
     return (
         <>
             <Text truncate shrink fontWeight="bold">{ giftsAvailable() }</Text>
             <AutoGrid columnCount={ 1 } className="nitro-catalog-layout-vip-gifts-grid">
-                { (clubGifts.offers.length > 0) && clubGifts.offers.map(offer => <VipGiftItem key={ offer.offerId } offer={ offer } isAvailable={ (clubGifts.getOfferExtraData(offer.offerId).isSelectable && (clubGifts.giftsAvailable > 0)) } onSelect={ selectGift }/>) }
+                { (clubGifts.offers.length > 0) && sortGifts.map(offer => <VipGiftItem key={ offer.offerId } offer={ offer } isAvailable={ (clubGifts.getOfferExtraData(offer.offerId).isSelectable && (clubGifts.giftsAvailable > 0)) } onSelect={ selectGift } daysRequired={ clubGifts.getOfferExtraData(offer.offerId).daysRequired }/>) }
             </AutoGrid>
         </>
     )

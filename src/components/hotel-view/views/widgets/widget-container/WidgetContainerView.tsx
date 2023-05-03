@@ -1,5 +1,6 @@
-import { FC, useCallback } from 'react';
-import { GetConfigurationManager, LocalizeText, NotificationUtilities } from '../../../../../api';
+import { NitroConfiguration } from '@nitrots/nitro-renderer';
+import { FC } from 'react';
+import { LocalizeText, OpenUrl } from '../../../../../api';
 
 export interface WidgetContainerViewProps
 {
@@ -10,7 +11,7 @@ export const WidgetContainerView: FC<WidgetContainerViewProps> = props =>
 {
     const { conf = null } = props;
 
-    const getOption = useCallback((key: string) =>
+    const getOption = (key: string) =>
     {
         const option = conf[key];
 
@@ -19,11 +20,11 @@ export const WidgetContainerView: FC<WidgetContainerViewProps> = props =>
         switch(key)
         {
             case 'image':
-                return GetConfigurationManager().interpolate(option);
+                return NitroConfiguration.interpolate(option);
         }
 
         return option;
-    }, [ conf ]);
+    }
 
   	return (
         <div className="widgetcontainer widget d-flex flex-row overflow-hidden">
@@ -31,7 +32,7 @@ export const WidgetContainerView: FC<WidgetContainerViewProps> = props =>
             <div className="d-flex flex-column align-self-center">
                 <h3 className="my-0">{ LocalizeText(`landing.view.${ getOption('texts') }.header`) }</h3>
                 <i>{ LocalizeText(`landing.view.${ getOption('texts') }.body`) }</i>
-                <button className="btn btn-sm btn-gainsboro align-self-start px-3 mt-auto" onClick={ event => NotificationUtilities.openUrl(getOption('btnLink')) }>{ LocalizeText(`landing.view.${ getOption('texts') }.button`) }</button>
+                <button className="btn btn-sm btn-gainsboro align-self-start px-3 mt-auto" onClick={ event => OpenUrl(getOption('btnLink')) }>{ LocalizeText(`landing.view.${ getOption('texts') }.button`) }</button>
             </div>
         </div>
   	);

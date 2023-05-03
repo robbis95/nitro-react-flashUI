@@ -1,9 +1,8 @@
 import { GroupBuyComposer, GroupBuyDataComposer, GroupBuyDataEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { HasHabboClub, LocalizeText, SendMessageComposer } from '../../../api';
+import { FC, useEffect, useState } from 'react';
+import { HasHabboClub, IGroupData, LocalizeText, SendMessageComposer } from '../../../api';
 import { Base, Button, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
-import { UseMessageEventHook } from '../../../hooks';
-import { IGroupData } from '../common/IGroupData';
+import { useMessageEvent } from '../../../hooks';
 import { GroupTabBadgeView } from './tabs/GroupTabBadgeView';
 import { GroupTabColorsView } from './tabs/GroupTabColorsView';
 import { GroupTabCreatorConfirmationView } from './tabs/GroupTabCreatorConfirmationView';
@@ -25,7 +24,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
     const [ availableRooms, setAvailableRooms ] = useState<{ id: number, name: string }[]>(null);
     const [ purchaseCost, setPurchaseCost ] = useState<number>(0);
 
-    const close = () =>
+    const onCloseClose = () =>
     {
         setCloseAction(null);
         setGroupData(null);
@@ -86,7 +85,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
         setCurrentTab(value => (value === 4 ? value : value + 1));
     }
 
-    const onGroupBuyDataEvent = useCallback((event: GroupBuyDataEvent) =>
+    useMessageEvent<GroupBuyDataEvent>(GroupBuyDataEvent, event =>
     {
         const parser = event.getParser();
 
@@ -96,9 +95,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
 
         setAvailableRooms(rooms);
         setPurchaseCost(parser.groupCost);
-    }, []);
-
-    UseMessageEventHook(GroupBuyDataEvent, onGroupBuyDataEvent);
+    });
 
     useEffect(() =>
     {
@@ -122,7 +119,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
 
     return (
         <NitroCardView className="nitro-group-creator" theme="primary">
-            <NitroCardHeaderView headerText={ LocalizeText('group.create.title') } onCloseClick={ close } />
+            <NitroCardHeaderView headerText={ LocalizeText('group.create.title') } onCloseClick={ onClose } />
             <NitroCardContentView>
                 <Flex center className="creator-tabs">
                     { TABS.map((tab, index) =>
@@ -144,7 +141,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
                     </Flex>
                     <Column overflow="hidden">
                         { (currentTab === 1) &&
-                            <GroupTabIdentityView groupData={ groupData } setGroupData={ setGroupData } setCloseAction={ setCloseAction } close={ null } isCreator={ true } availableRooms={ availableRooms } /> }
+                            <GroupTabIdentityView groupData={ groupData } setGroupData={ setGroupData } setCloseAction={ setCloseAction } onClose={ null } isCreator={ true } availableRooms={ availableRooms } /> }
                         { (currentTab === 2) &&
                             <GroupTabBadgeView groupData={ groupData } setGroupData={ setGroupData } setCloseAction={ setCloseAction } /> }
                         { (currentTab === 3) &&

@@ -1,25 +1,25 @@
 import { FC, useEffect, useState } from 'react';
 import { LocalizeText, WiredFurniType } from '../../../../api';
 import { Column, Text } from '../../../../common';
-import { useWiredContext } from '../../WiredContext';
+import { useWired } from '../../../../hooks';
 import { WiredConditionBaseView } from './WiredConditionBaseView';
 
 export const WiredConditionActorIsWearingEffectView: FC<{}> = props =>
 {
     const [ effect, setEffect ] = useState(-1);
-    const { trigger = null, setIntParams = null } = useWiredContext();
+    const { trigger = null, setIntParams = null } = useWired();
 
     const save = () => setIntParams([ effect ]);
 
     useEffect(() =>
     {
-        setEffect((trigger.intData.length > 0) ? trigger.intData[0] : 0);
+        setEffect(trigger?.intData[0] ?? 0);
     }, [ trigger ]);
     
     return (
         <WiredConditionBaseView requiresFurni={ WiredFurniType.STUFF_SELECTION_OPTION_NONE } hasSpecialInput={ true } save={ save }>
             <Column gap={ 1 }>
-                <Text gfbold>{ LocalizeText('wiredfurni.params.effectid') }</Text>
+                <Text gfbold>{ LocalizeText('wiredfurni.tooltip.effectid') }</Text>
                 <input type="number" className="form-control form-control-sm" value={ effect } onChange={ event => setEffect(parseInt(event.target.value)) } />
             </Column>
         </WiredConditionBaseView>

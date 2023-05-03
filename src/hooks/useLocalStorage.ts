@@ -1,17 +1,18 @@
 import { NitroLogger } from '@nitrots/nitro-renderer';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { GetLocalStorage, SetLocalStorage } from '../api';
 
 const useLocalStorageState = <T>(key: string, initialValue: T): [ T, Dispatch<SetStateAction<T>>] =>
 {
-    const [ storedValue, setStoredValuie ] = useState<T>(() =>
+    const [ storedValue, setStoredValue ] = useState<T>(() =>
     {
         if(typeof window === 'undefined') return initialValue;
 
         try
         {
-            const item = window.localStorage.getItem(key);
+            const item = GetLocalStorage<T>(key);
 
-            return item ? JSON.parse(item) : initialValue;
+            return item ?? initialValue;
         }
 
         catch(error)
@@ -26,9 +27,9 @@ const useLocalStorageState = <T>(key: string, initialValue: T): [ T, Dispatch<Se
         {
             const valueToStore = value instanceof Function ? value(storedValue) : value;
 
-            setStoredValuie(valueToStore);
+            setStoredValue(valueToStore);
 
-            if(typeof window !== 'undefined') window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            if(typeof window !== 'undefined') SetLocalStorage(key, valueToStore);
         }
 
         catch(error)

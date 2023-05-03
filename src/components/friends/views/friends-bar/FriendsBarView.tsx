@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useRef, useState } from 'react';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { MessengerFriend } from '../../../../api';
 import { Button, Flex } from '../../../../common';
 import { FriendBarItemView } from './FriendBarItemView';

@@ -1,9 +1,8 @@
 import { GetRoomVisitsMessageComposer, RoomVisitsData, RoomVisitsEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useState } from 'react';
-import { AutoSizer, List, ListRowProps } from 'react-virtualized';
+import { FC, useEffect, useState } from 'react';
 import { SendMessageComposer, TryVisitRoom } from '../../../../api';
-import { Base, Column, DraggableWindowPosition, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
-import { UseMessageEventHook } from '../../../../hooks';
+import { Base, Column, DraggableWindowPosition, Grid, InfiniteScroll, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
+import { useMessageEvent } from '../../../../hooks';
 
 interface ModToolsUserRoomVisitsViewProps
 {
@@ -16,29 +15,14 @@ export const ModToolsUserRoomVisitsView: FC<ModToolsUserRoomVisitsViewProps> = p
     const { userId = null, onCloseClick = null } = props;
     const [ roomVisitData, setRoomVisitData ] = useState<RoomVisitsData>(null);
 
-    const onModtoolReceivedRoomsUserEvent = useCallback((event: RoomVisitsEvent) =>
+    useMessageEvent<RoomVisitsEvent>(RoomVisitsEvent, event =>
     {
         const parser = event.getParser();
 
-        if(!parser || (parser.data.userId !== userId)) return;
+        if(parser.data.userId !== userId) return;
 
         setRoomVisitData(parser.data);
-    }, [ userId ]);
-
-    UseMessageEventHook(RoomVisitsEvent, onModtoolReceivedRoomsUserEvent);
-
-    const RowRenderer = (props: ListRowProps) =>
-    {
-        const item = roomVisitData.rooms[props.index];
-
-        return (
-            <Grid key={ props.key } fullHeight={ false } style={ props.style } gap={ 1 } alignItems="center" className="text-black py-1 border-bottom">
-                <Text className="g-col-2">{ item.enterHour.toString().padStart(2, '0') }: { item.enterMinute.toString().padStart(2, '0') }</Text>
-                <Text className="g-col-7">{ item.roomName }</Text>
-                <Text gfbold underline pointer variant="primary" className="g-col-3" onClick={ event => TryVisitRoom(item.roomId) }>Visit Room</Text>
-            </Grid>
-        );
-    }
+    });
 
     useEffect(() =>
     {
@@ -59,24 +43,16 @@ export const ModToolsUserRoomVisitsView: FC<ModToolsUserRoomVisitsViewProps> = p
                             <Base className="g-col-3">Visit</Base>
                         </Grid>
                     </Column>
-                    <Column className="log-container striped-children" overflow="auto" gap={ 0 }>
-                        { roomVisitData &&
-                            <AutoSizer defaultWidth={ 400 } defaultHeight={ 200 }>
-                                { ({ height, width }) => 
-                                {
-                                    return (
-                                        <List
-                                            width={ width }
-                                            height={ height }
-                                            rowCount={ roomVisitData.rooms.length }
-                                            rowHeight={ 25 }
-                                            className={ 'log-entry-container' }
-                                            rowRenderer={ RowRenderer }
-                                        />
-                                    );
-                                } }
-                            </AutoSizer> }
-                    </Column>
+                    <InfiniteScroll rows={ roomVisitData?.rooms ?? [] } rowRender={ row =>
+                    {
+                        return (
+                            <Grid fullHeight={ false } gap={ 1 } alignItems="center" className="text-black py-1 border-bottom">
+                                <Text className="g-col-2">{ row.enterHour.toString().padStart(2, '0') }: { row.enterMinute.toString().padStart(2, '0') }</Text>
+                                <Text className="g-col-7">{ row.roomName }</Text>
+                                <Text bold underline pointer variant="primary" className="g-col-3" onClick={ event => TryVisitRoom(row.roomId) }>Visit Room</Text>
+                            </Grid>
+                        );
+                    } } />
                 </Column>
             </NitroCardContentView>
         </NitroCardView>

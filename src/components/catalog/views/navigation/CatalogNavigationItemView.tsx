@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC } from 'react';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { ICatalogNode } from '../../../../api';
-import { LayoutGridItem, Text } from '../../../../common';
+import { Base, LayoutGridItem, Text } from '../../../../common';
 import { useCatalog } from '../../../../hooks';
 import { CatalogIconView } from '../catalog-icon/CatalogIconView';
 import { CatalogNavigationSetView } from './CatalogNavigationSetView';
@@ -9,11 +9,12 @@ import { CatalogNavigationSetView } from './CatalogNavigationSetView';
 export interface CatalogNavigationItemViewProps
 {
     node: ICatalogNode;
+    child?: boolean;
 }
 
 export const CatalogNavigationItemView: FC<CatalogNavigationItemViewProps> = props =>
 {
-    const { node = null } = props;
+    const { node = null, child = false } = props;
     const { activateNode = null } = useCatalog();
     
     return (
@@ -22,10 +23,13 @@ export const CatalogNavigationItemView: FC<CatalogNavigationItemViewProps> = pro
                 <CatalogIconView icon={ node.iconId } />
                 <Text grow truncate>{ node.localization }</Text>
                 { node.isBranch &&
-                    <FontAwesomeIcon icon={ node.isOpen ? 'caret-up' : 'caret-down' } /> }
+                    <>
+                        { node.isOpen && <FaCaretUp className="fa-icon" /> }
+                        { !node.isOpen && <FaCaretDown className="fa-icon" /> }
+                    </> }
             </LayoutGridItem>
             { node.isOpen && node.isBranch &&
-                <CatalogNavigationSetView node={ node } /> }
+                <CatalogNavigationSetView node={ node } child={ true } /> }
         </>
     );
 }

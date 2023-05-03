@@ -1,9 +1,8 @@
 import { FriendlyTime, GetModeratorUserInfoMessageComposer, ModeratorUserInfoData, ModeratorUserInfoEvent } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { LocalizeText, SendMessageComposer } from '../../../../api';
+import { FC, useEffect, useMemo, useState } from 'react';
+import { CreateLinkEvent, LocalizeText, SendMessageComposer } from '../../../../api';
 import { Button, Column, DraggableWindowPosition, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
-import { ModToolsOpenUserChatlogEvent } from '../../../../events';
-import { DispatchUiEvent, UseMessageEventHook } from '../../../../hooks';
+import { useMessageEvent } from '../../../../hooks';
 import { ModToolsUserModActionView } from './ModToolsUserModActionView';
 import { ModToolsUserRoomVisitsView } from './ModToolsUserRoomVisitsView';
 import { ModToolsUserSendMessageView } from './ModToolsUserSendMessageView';
@@ -21,17 +20,6 @@ export const ModToolsUserView: FC<ModToolsUserViewProps> = props =>
     const [ sendMessageVisible, setSendMessageVisible ] = useState(false);
     const [ modActionVisible, setModActionVisible ] = useState(false);
     const [ roomVisitsVisible, setRoomVisitsVisible ] = useState(false);
-
-    const onModtoolUserInfoEvent = useCallback((event: ModeratorUserInfoEvent) =>
-    {
-        const parser = event.getParser();
-
-        if(!parser || parser.data.userId !== userId) return;
-
-        setUserInfo(parser.data);
-    }, [ userId ]);
-
-    UseMessageEventHook(ModeratorUserInfoEvent, onModtoolUserInfoEvent);
 
     const userProperties = useMemo(() =>
     {
@@ -98,6 +86,15 @@ export const ModToolsUserView: FC<ModToolsUserViewProps> = props =>
         ];
     }, [ userInfo ]);
 
+    useMessageEvent<ModeratorUserInfoEvent>(ModeratorUserInfoEvent, event =>
+    {
+        const parser = event.getParser();
+    
+        if(!parser || parser.data.userId !== userId) return;
+    
+        setUserInfo(parser.data);
+    });
+
     useEffect(() =>
     {
         SendMessageComposer(new GetModeratorUserInfoMessageComposer(userId));
@@ -132,7 +129,7 @@ export const ModToolsUserView: FC<ModToolsUserViewProps> = props =>
                             </table>
                         </Column>
                         <Column size={ 4 } gap={ 1 }>
-                            <Button onClick={ event => DispatchUiEvent(new ModToolsOpenUserChatlogEvent(userId)) }>
+                            <Button onClick={ event => CreateLinkEvent(`mod-tools/open-user-chatlog/${ userId }`) }>
                                 Room Chat
                             </Button>
                             <Button onClick={ event => setSendMessageVisible(!sendMessageVisible) }>

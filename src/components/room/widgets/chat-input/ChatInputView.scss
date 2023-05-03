@@ -6,7 +6,7 @@
     left: 30vw;
     right: 30vw;
     height: 38px;
-    border-image-source: url(../../../../assets/flash/room/chatinput.png);
+    border-image-source: url(@/assets/flash/room/chatinput.png);
     border-image-slice:8 8 8 8 fill;
     border-image-width:8px 8px 8px 8px;
     background: #e4e4e4;
@@ -28,7 +28,7 @@
         vertical-align: top;
         height: 100%;
         padding-right: 10px;
-        
+
         &::after,
         input,
         textarea {
@@ -42,7 +42,7 @@
             border: none;
             outline: none;
         }
-        
+
         &::after {
             content: attr(data-value) '  ';
             visibility: hidden;
@@ -86,7 +86,7 @@
 }
 
 .chatstyles-selector {
-    background: url(../../../../assets/flash/room/chatstyles_selector.png);
+    background: url(@/assets/flash/room/chatstyles_selector.png);
     background-repeat: no-repeat;
     min-width: 59px;
     height: 34px;
@@ -94,7 +94,7 @@
 }
 
 .bubble-window {
-    border-image-source: url(../../../../assets/flash/room/chatstyles_selector_window.png);
+    border-image-source: url(@/assets/flash/room/chatstyles_selector_window.png);
     border-image-slice:9 9 9 9 fill;
     border-image-width:9px 9px 9px 9px;
     margin-bottom: -13px;

@@ -1,8 +1,8 @@
-import { RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType, UserCurrentBadgesComposer, UserCurrentBadgesEvent, UserProfileEvent, UserProfileParser, UserRelationshipsComposer } from '@nitrots/nitro-renderer';
-import { FC, useCallback, useState } from 'react';
+import { ExtendedProfileChangedMessageEvent, RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType, UserCurrentBadgesComposer, UserCurrentBadgesEvent, UserProfileEvent, UserProfileParser, UserRelationshipsComposer } from '@nitrots/nitro-renderer';
+import { FC, useState } from 'react';
 import { CreateLinkEvent, GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText, SendMessageComposer } from '../../api';
 import { Column, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
-import { UseMessageEventHook, UseRoomEngineEvent } from '../../hooks';
+import { useMessageEvent, useRoomEngineEvent } from '../../hooks';
 import { BadgesContainerView } from './views/BadgesContainerView';
 import { FriendsContainerView } from './views/FriendsContainerView';
 import { GroupsContainerView } from './views/GroupsContainerView';
@@ -21,41 +21,37 @@ export const UserProfileView: FC<{}> = props =>
         setUserRelationships(null);
     }
 
-    const onLeaveGroup = useCallback(() =>
+    const onLeaveGroup = () =>
     {
         if(!userProfile || (userProfile.id !== GetSessionDataManager().userId)) return;
-        
+
         GetUserProfile(userProfile.id);
-    }, [ userProfile ]);
-    
-    const onUserCurrentBadgesEvent = useCallback((event: UserCurrentBadgesEvent) =>
+    }
+
+    useMessageEvent<UserCurrentBadgesEvent>(UserCurrentBadgesEvent, event =>
     {
         const parser = event.getParser();
 
         if(!userProfile || (parser.userId !== userProfile.id)) return;
-        
+
         setUserBadges(parser.badges);
-    }, [ userProfile ]);
+    });
 
-    UseMessageEventHook(UserCurrentBadgesEvent, onUserCurrentBadgesEvent);
-
-    const onUserRelationshipsEvent = useCallback((event: RelationshipStatusInfoEvent) =>
+    useMessageEvent<RelationshipStatusInfoEvent>(RelationshipStatusInfoEvent, event =>
     {
         const parser = event.getParser();
 
         if(!userProfile || (parser.userId !== userProfile.id)) return;
-        
+
         setUserRelationships(parser);
-    }, [ userProfile ]);
+    });
 
-    UseMessageEventHook(RelationshipStatusInfoEvent, onUserRelationshipsEvent);
-
-    const onUserProfileEvent = useCallback((event: UserProfileEvent) =>
+    useMessageEvent<UserProfileEvent>(UserProfileEvent, event =>
     {
         const parser = event.getParser();
 
         let isSameProfile = false;
-        
+
         setUserProfile(prevValue =>
         {
             if(prevValue && prevValue.id) isSameProfile = (prevValue.id === parser.id);
@@ -71,14 +67,21 @@ export const UserProfileView: FC<{}> = props =>
 
         SendMessageComposer(new UserCurrentBadgesComposer(parser.id));
         SendMessageComposer(new UserRelationshipsComposer(parser.id));
-    }, []);
+    });
 
-    UseMessageEventHook(UserProfileEvent, onUserProfileEvent);
+    useMessageEvent<ExtendedProfileChangedMessageEvent>(ExtendedProfileChangedMessageEvent, event =>
+    {
+        const parser = event.getParser();
 
-    const onRoomEngineObjectEvent = useCallback((event: RoomEngineObjectEvent) =>
+        if(parser.userId != userProfile?.id) return;
+
+        GetUserProfile(parser.userId);
+    });
+
+    useRoomEngineEvent<RoomEngineObjectEvent>(RoomEngineObjectEvent.SELECTED, event =>
     {
         if(!userProfile) return;
-        
+
         if(event.category !== RoomObjectCategory.UNIT) return;
 
         const userData = GetRoomSession().userDataManager.getUserDataByIndex(event.objectId);
@@ -86,9 +89,7 @@ export const UserProfileView: FC<{}> = props =>
         if(userData.type !== RoomObjectType.USER) return;
 
         GetUserProfile(userData.webID);
-    }, [ userProfile ]);
-
-    UseRoomEngineEvent(RoomEngineObjectEvent.SELECTED, onRoomEngineObjectEvent);
+    });
 
     if(!userProfile) return null;
 

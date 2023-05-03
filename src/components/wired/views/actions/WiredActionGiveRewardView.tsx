@@ -1,12 +1,9 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import ReactSlider from 'react-slider';
 import { LocalizeText, WiredFurniType } from '../../../../api';
-import { Button } from '../../../../common/Button';
-import { Column } from '../../../../common/Column';
-import { Flex } from '../../../../common/Flex';
-import { Text } from '../../../../common/Text';
-import { useWiredContext } from '../../WiredContext';
+import { Button, Column, Flex, Text } from '../../../../common';
+import { useWired } from '../../../../hooks';
 import { WiredActionBaseView } from './WiredActionBaseView';
 
 export const WiredActionGiveRewardView: FC<{}> = props =>
@@ -17,14 +14,11 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
     const [ rewardsLimit, setRewardsLimit ] = useState(1);
     const [ limitationInterval, setLimitationInterval ] = useState(1);
     const [ rewards, setRewards ] = useState<{ isBadge: boolean, itemCode: string, probability: number }[]>([]);
-    const { trigger = null, setIntParams = null, setStringParam = null } = useWiredContext();
+    const { trigger = null, setIntParams = null, setStringParam = null } = useWired();
 
-    const addReward = useCallback(() =>
-    {
-        setRewards(rewards => [ ...rewards, { isBadge: false, itemCode: '', probability: null } ]);
-    }, [ setRewards ]);
+    const addReward = () => setRewards(rewards => [ ...rewards, { isBadge: false, itemCode: '', probability: null } ]);
 
-    const removeReward = useCallback((index: number) =>
+    const removeReward = (index: number) =>
     {
         setRewards(prevValue =>
         {
@@ -34,9 +28,9 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
 
             return newValues;
         });
-    }, [ setRewards ]);
+    }
 
-    const updateReward = useCallback((index: number, isBadge: boolean, itemCode: string, probability: number) =>
+    const updateReward = (index: number, isBadge: boolean, itemCode: string, probability: number) =>
     {
         const rewardsClone = Array.from(rewards);
         const reward = rewardsClone[index];
@@ -48,9 +42,9 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
         reward.probability = probability;
 
         setRewards(rewardsClone);
-    }, [ rewards, setRewards ]);
+    }
 
-    const save = useCallback(() =>
+    const save = () =>
     {       
         let stringRewards = [];
 
@@ -67,7 +61,7 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
             setStringParam(stringRewards.join(';'));
             setIntParams([ rewardTime, uniqueRewards ? 1 : 0, rewardsLimit, limitationInterval ]);
         }
-    }, [ rewardTime, uniqueRewards, rewardsLimit, limitationInterval, rewards, setIntParams, setStringParam ]);
+    }
 
     useEffect(() =>
     {
@@ -139,7 +133,7 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
             <Flex justifyContent="between" alignItems="center">
                 <Text gfbold>Rewards</Text>
                 <Button variant="success" onClick={ addReward }>
-                    <FontAwesomeIcon icon="plus" />
+                    <FaPlus className="fa-icon" />
                 </Button>
             </Flex>
             <Column gap={ 1 }>
@@ -155,7 +149,7 @@ export const WiredActionGiveRewardView: FC<{}> = props =>
                             <input type="number" className="form-control form-control-sm" value={ reward.probability } onChange={ e => updateReward(index, reward.isBadge, reward.itemCode, Number(e.target.value)) } placeholder="Probability" />
                             { (index > 0) &&
                             <Button variant="danger" onClick={ event => removeReward(index) }>
-                                <FontAwesomeIcon icon="trash" />
+                                <FaTrash className="fa-icon" />
                             </Button> }
                         </Flex>
                     )

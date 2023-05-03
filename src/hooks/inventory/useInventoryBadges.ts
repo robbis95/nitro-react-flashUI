@@ -1,8 +1,8 @@
 import { BadgeReceivedEvent, BadgesEvent, RequestBadgesComposer, SetActivatedBadgesComposer } from '@nitrots/nitro-renderer';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useBetween } from 'use-between';
-import { UseMessageEventHook } from '..';
 import { GetConfiguration, SendMessageComposer, UnseenItemCategory } from '../../api';
+import { useMessageEvent } from '../events';
 import { useSharedVisibility } from '../useSharedVisibility';
 import { useInventoryUnseenTracker } from './useInventoryUnseenTracker';
 
@@ -10,7 +10,7 @@ const useInventoryBadgesState = () =>
 {
     const [ needsUpdate, setNeedsUpdate ] = useState(true);
     const [ badgeCodes, setBadgeCodes ] = useState<string[]>([]);
-    const [ badgeIds, setBadgeIds ] = useState<number[]>([]);
+    const [ badgeIds, setBadgeIds ] = useState<Map<string, number>>(new Map<string, number>());
     const [ activeBadgeCodes, setActiveBadgeCodes ] = useState<string[]>([]);
     const [ selectedBadgeCode, setSelectedBadgeCode ] = useState<string>(null);
     const { isVisible = false, activate = null, deactivate = null } = useSharedVisibility();
@@ -41,7 +41,7 @@ const useInventoryBadgesState = () =>
 
             const composer = new SetActivatedBadgesComposer();
 
-            for(let i = 0; i < maxBadgeCount; i++) composer.addActivatedBadge(newValue[i] || null);
+            for(let i = 0; i < maxBadgeCount; i++) composer.addActivatedBadge(newValue[i] ?? '');
 
             SendMessageComposer(composer);
 
@@ -55,25 +55,38 @@ const useInventoryBadgesState = () =>
 
         if(index === -1) return 0;
 
-        return (badgeIds[index] || 0);
+        return (badgeIds.get(badgeCode) ?? 0);
     }
 
-    const onBadgesEvent = useCallback((event: BadgesEvent) =>
+    useMessageEvent<BadgesEvent>(BadgesEvent, event =>
     {
         const parser = event.getParser();
-        const newBadgeCodes = parser.getAllBadgeCodes();
-        const newBadgeIds: number[] = [];
+        const badgesToAdd: string[] = [];
 
-        for(const newBadgeCode of newBadgeCodes) newBadgeIds.push(parser.getBadgeId(newBadgeCode));
+        setBadgeIds(prevValue =>
+        {
+            const newValue = new Map(prevValue);
 
-        setBadgeCodes(newBadgeCodes);
-        setBadgeIds(newBadgeIds);
+            parser.getAllBadgeCodes().forEach(code =>
+            {
+                const exists = badgeCodes.indexOf(code) >= 0;
+                const badgeId = parser.getBadgeId(code);
+
+                newValue.set(code, badgeId);
+
+                if(exists) return;
+
+                badgesToAdd.push(code);
+            });
+            
+            return newValue;
+        });
+
         setActiveBadgeCodes(parser.getActiveBadgeCodes());
-    }, []);
+        setBadgeCodes(prev => [ ...prev, ...badgesToAdd ]);
+    });
 
-    UseMessageEventHook(BadgesEvent, onBadgesEvent);
-
-    const onBadgeReceivedEvent = useCallback((event: BadgeReceivedEvent) =>
+    useMessageEvent<BadgeReceivedEvent>(BadgeReceivedEvent, event =>
     {
         const parser = event.getParser();
         const unseen = isUnseen(UnseenItemCategory.BADGE, parser.badgeId);
@@ -90,16 +103,13 @@ const useInventoryBadgesState = () =>
 
         setBadgeIds(prevValue =>
         {
-            const newValue = [ ...prevValue ];
+            const newValue = new Map(prevValue);
 
-            if(unseen) newValue.unshift(parser.badgeId)
-            else newValue.push(parser.badgeId);
+            newValue.set(parser.badgeCode, parser.badgeId);
 
             return newValue;
         });
-    }, [ isUnseen ]);
-
-    UseMessageEventHook(BadgeReceivedEvent, onBadgeReceivedEvent);
+    });
 
     useEffect(() =>
     {

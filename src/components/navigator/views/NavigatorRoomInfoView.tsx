@@ -1,11 +1,11 @@
-import { RoomMuteComposer, RoomSettingsComposer, RoomStaffPickComposer, SecurityLevel, UserHomeRoomComposer } from '@nitrots/nitro-renderer';
-import classNames from 'classnames';
+import { GetCustomRoomFilterMessageComposer, NavigatorSearchComposer, RoomMuteComposer, RoomSettingsComposer, SecurityLevel, ToggleStaffPickMessageComposer, UpdateHomeRoomMessageComposer } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { CreateLinkEvent, GetGroupInformation, GetSessionDataManager, LocalizeText, SendMessageComposer } from '../../../api';
-import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text, UserProfileIconView } from '../../../common';
+import { FaLink } from 'react-icons/fa';
+import { CreateLinkEvent, DispatchUiEvent, GetGroupInformation, GetSessionDataManager, LocalizeText, ReportType, SendMessageComposer } from '../../../api';
+import { Base, Button, classNames, Column, Flex, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text, UserProfileIconView } from '../../../common';
+
 import { RoomWidgetThumbnailEvent } from '../../../events';
-import { DispatchUiEvent } from '../../../hooks';
-import { useNavigatorContext } from '../NavigatorContext';
+import { useHelp, useNavigator } from '../../../hooks';
 
 export class NavigatorRoomInfoViewProps
 {
@@ -17,8 +17,8 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
     const { onCloseClick = null } = props;
     const [ isRoomPicked, setIsRoomPicked ] = useState(false);
     const [ isRoomMuted, setIsRoomMuted ] = useState(false);
-    const { navigatorData = null } = useNavigatorContext();
-
+    const { report = null } = useHelp();
+    const { navigatorData = null } = useNavigator();
 
     const hasPermission = (permission: string) =>
     {
@@ -31,7 +31,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
             default: return false;
         }
     }
-    
+
     const processAction = (action: string, value?: string) =>
     {
         if(!navigatorData || !navigatorData.enteredGuestRoom) return;
@@ -46,9 +46,11 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                     newRoomId = navigatorData.enteredGuestRoom.roomId;
                 }
 
-                if(newRoomId > 0) SendMessageComposer(new UserHomeRoomComposer(newRoomId));
+                if(newRoomId > 0) SendMessageComposer(new UpdateHomeRoomMessageComposer(newRoomId));
                 return;
             case 'navigator_search_tag':
+                CreateLinkEvent(`navigator/search/${ value }`);
+                SendMessageComposer(new NavigatorSearchComposer('hotel_view', `tag:${ value }`));
                 return;
             case 'open_room_thumbnail_camera':
                 DispatchUiEvent(new RoomWidgetThumbnailEvent(RoomWidgetThumbnailEvent.TOGGLE_THUMBNAIL));
@@ -64,20 +66,26 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                 return;
             case 'toggle_pick':
                 setIsRoomPicked(value => !value);
-                SendMessageComposer(new RoomStaffPickComposer(navigatorData.enteredGuestRoom.roomId));
+                SendMessageComposer(new ToggleStaffPickMessageComposer(navigatorData.enteredGuestRoom.roomId));
                 return;
             case 'toggle_mute':
                 setIsRoomMuted(value => !value);
                 SendMessageComposer(new RoomMuteComposer());
                 return;
+            case 'room_filter':
+                SendMessageComposer(new GetCustomRoomFilterMessageComposer(navigatorData.enteredGuestRoom.roomId));
+                return;
             case 'open_floorplan_editor':
                 CreateLinkEvent('floor-editor/toggle');
+                return;
+            case 'report_room':
+                report(ReportType.ROOM, { roomId: navigatorData.enteredGuestRoom.roomId, roomName: navigatorData.enteredGuestRoom.roomName });
                 return;
             case 'close':
                 onCloseClick();
                 return;
         }
-        
+
     }
 
     useEffect(() =>
@@ -85,12 +93,12 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
         if(!navigatorData) return;
 
         setIsRoomPicked(navigatorData.currentRoomIsStaffPick);
-        
+
         if(navigatorData.enteredGuestRoom) setIsRoomMuted(navigatorData.enteredGuestRoom.allInRoomMuted);
     }, [ navigatorData ]);
 
     if(!navigatorData.enteredGuestRoom) return null;
-    
+
     return (
         <NitroCardView className="nitro-room-info" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('navigator.roomsettings.roominfo') } onCloseClick={ () => processAction('close') } />
@@ -102,7 +110,8 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                                 <Flex gap={ 1 }>
                                     <Column grow gap={ 1 }>
                                         <Flex gap={ 1 }>
-                                            <Text small bold>{ navigatorData.enteredGuestRoom.roomName }</Text>
+                                            <i onClick={ () => processAction('set_home_room') } className={ classNames('flex-shrink-0 icon icon-house-small cursor-pointer', ((navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId) && 'gray')) } />
+                                            <Text bold>{ navigatorData.enteredGuestRoom.roomName }</Text>
                                         </Flex>
                                         { navigatorData.enteredGuestRoom.showOwner &&
                                             <Flex alignItems="center" gap={ 1 }>
@@ -125,7 +134,9 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                                             </Flex> }
                                     </Column>
                                     <Column alignItems="center" gap={ 1 }>
-                                        <i onClick={ () => processAction('set_home_room') } className={ 'flex-shrink-0 icon icon-house-small cursor-pointer' + classNames({ ' gray': navigatorData.homeRoomId !== navigatorData.enteredGuestRoom.roomId }) } />
+                                        { hasPermission('settings') &&
+                                            <i className="icon icon-cog cursor-pointer" title={ LocalizeText('navigator.room.popup.info.room.settings') } onClick={ event => processAction('open_room_settings') } /> }
+                                        <FaLink title={ LocalizeText('navigator.embed.caption') } className="cursor-pointer fa-icon" onClick={ event => CreateLinkEvent('navigator/toggle-room-link') } />
                                     </Column>
                                 </Flex>
                                 <Text small overflow="auto" style={ { maxHeight: 50 } }>{ navigatorData.enteredGuestRoom.description }</Text>
@@ -153,7 +164,7 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                             <Button onClick={ () => processAction('toggle_pick') }>
                                 { LocalizeText(isRoomPicked ? 'navigator.staffpicks.unpick' : 'navigator.staffpicks.pick') }
                             </Button> }
-                            <Button variant="danger" disabled>
+                            <Button variant="danger" onClick={ () => processAction('report_room') }>
                                 { LocalizeText('help.emergency.main.report.room') }
                             </Button>
                             { hasPermission('settings') &&
@@ -164,13 +175,16 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props =>
                                 <Button onClick={ () => processAction('toggle_mute') }>
                                     { LocalizeText(isRoomMuted ? 'navigator.muteall_on' : 'navigator.muteall_off') }
                                 </Button>
+                                <Button onClick={ () => processAction('room_filter') }>
+                                    { LocalizeText('navigator.roomsettings.roomfilter') }
+                                </Button>
                                 <Button onClick={ () => processAction('open_floorplan_editor') }>
                                     { LocalizeText('open.floor.plan.editor') }
                                 </Button>
                             </> }
                         </Column>
                     </> }
-                
+
             </NitroCardContentView>
         </NitroCardView>
     );

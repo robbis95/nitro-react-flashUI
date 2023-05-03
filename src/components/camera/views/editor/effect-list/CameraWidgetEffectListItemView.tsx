@@ -1,10 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRoomCameraWidgetEffect } from '@nitrots/nitro-renderer';
 import { FC } from 'react';
+import { FaLock, FaTimes } from 'react-icons/fa';
 import { LocalizeText } from '../../../../../api';
-import { Button } from '../../../../../common/Button';
-import { LayoutGridItem } from '../../../../../common/layout/LayoutGridItem';
-import { Text } from '../../../../../common/Text';
+import { Button, LayoutGridItem, Text } from '../../../../../common';
 
 export interface CameraWidgetEffectListItemViewProps
 {
@@ -24,7 +22,7 @@ export const CameraWidgetEffectListItemView: FC<CameraWidgetEffectListItemViewPr
         <LayoutGridItem title={ LocalizeText(!isLocked ? (`camera.effect.name.${ effect.name }`) : `camera.effect.required.level ${ effect.minLevel }`) } itemActive={ isActive } onClick={ event => (!isActive && selectEffect()) }>
             { isActive &&
                 <Button variant="danger" className="rounded-circle remove-effect" onClick={ removeEffect }>
-                    <FontAwesomeIcon icon="times" />
+                    <FaTimes className="fa-icon" />
                 </Button> }
             { !isLocked && (thumbnailUrl && thumbnailUrl.length > 0) &&
                 <div className="effect-thumbnail-image border">
@@ -33,7 +31,7 @@ export const CameraWidgetEffectListItemView: FC<CameraWidgetEffectListItemViewPr
             { isLocked &&
                 <Text center bold>
                     <div>
-                        <FontAwesomeIcon icon="lock" />
+                        <FaLock className="fa-icon" />
                     </div>
                     { effect.minLevel }
                 </Text> }

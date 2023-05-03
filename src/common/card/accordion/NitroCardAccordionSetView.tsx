@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { Column, ColumnProps, Flex, Text } from '../..';
 import { useNitroCardAccordionContext } from './NitroCardAccordionContext';
 
@@ -18,11 +18,11 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
     const onClick = () =>
     {
         closeAll();
-        
+
         setIsOpen(prevValue => !prevValue);
     }
 
-    const close = useCallback(() => setIsOpen(false), []);
+    const onClose = useCallback(() => setIsOpen(false), []);
 
     const getClassNames = useMemo(() =>
     {
@@ -42,7 +42,7 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
 
     useEffect(() =>
     {
-        const closeFunction = close;
+        const closeFunction = onClose;
 
         setClosers(prevValue =>
         {
@@ -62,17 +62,18 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
                 const index = newClosers.indexOf(closeFunction);
 
                 if(index >= 0) newClosers.splice(index, 1);
-    
+
                 return newClosers;
             });
         }
-    }, [ close, setClosers ]);
+    }, [ onClose, setClosers ]);
 
     return (
         <Column classNames={ getClassNames } gap={ gap } { ...rest }>
             <Flex pointer justifyContent="between" className="nitro-card-accordion-set-header px-2 py-1" onClick={ onClick }>
                 <div className="friend-header-text d-inline">{ headerText }</div>
-                <FontAwesomeIcon icon={ isOpen ? 'caret-up' : 'caret-down' } />
+                { isOpen && <FaCaretUp className="fa-icon" /> }
+                { !isOpen && <FaCaretDown className="fa-icon" /> }
             </Flex>
             { isOpen &&
                 <Column fullHeight overflow="auto" gap={ 0 } className="nitro-card-accordion-set-content p-1">
