@@ -84,7 +84,7 @@
         "bearbaby",
         "terrierbaby",
         "gnome",
-        "gnome",
+        "leprechaun",
         "kittenbaby",
         "puppybaby",
         "pigletbaby",
@@ -93,9 +93,7 @@
         "pterosaur",
         "velociraptor",
         "cow",
-        "LeetPen",
-        "bbwibb",
-        "elephants"
+        "dragondog"
     ],
     "preload.assets.urls": [
         "${asset.url}/bundled/generic/avatar_additions.nitro",
