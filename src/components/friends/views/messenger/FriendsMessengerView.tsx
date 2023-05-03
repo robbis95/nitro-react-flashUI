@@ -1,8 +1,7 @@
 import { FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
-import { Base, Button, ButtonGroup, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, LayoutGridItem, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
+import { ButtonGroup, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
 import { useHelp, useMessenger } from '../../../../hooks';
 import { FriendsMessengerThreadView } from './messenger-thread/FriendsMessengerThreadView';
@@ -83,6 +82,12 @@ export const FriendsMessengerView: FC<{}> = props =>
 
     useEffect(() =>
     {
+        if (visibleThreads.length === 0) setIsVisible(false);
+        
+    }, [ visibleThreads ]);
+
+    useEffect(() =>
+    {
         if(isVisible && !activeThread)
         {
             if(lastThreadId > 0)
@@ -108,7 +113,7 @@ export const FriendsMessengerView: FC<{}> = props =>
 
     return (
         <NitroCardView className="nitro-friends-messenger" uniqueKey="nitro-friends-messenger" theme="messenger">
-            <NitroCardHeaderView headerText={ LocalizeText('messenger.window.title', [ 'OPEN_CHAT_COUNT' ], [ visibleThreads.length.toString() ]) } onCloseClick={ event => setIsVisible(false) } />
+            <NitroCardHeaderView headerText={ LocalizeText('messenger.window.title', [ 'OPEN_CHAT_COUNT' ], [ visibleThreads.length.toString() ]) } hideButtonClose={ true } onCloseClick={ event => setIsVisible(false) } />
             <NitroCardContentView>
                 <Column fullWidth size={ 4 }>
                     <div className="d-flex h-100 overflow-auto gap-2">
@@ -139,12 +144,12 @@ export const FriendsMessengerView: FC<{}> = props =>
                                 <Flex alignItems="center" justifyContent="between" gap={ 1 }>
                                     <Flex gap={ 1 }>
                                         <ButtonGroup className="gap-1">
-                                            <button className="follow" onClick={ followFriend } />
-                                            <button className="profile" onClick={ openProfile } />
+                                            <button className="follow" title={ LocalizeText('messenger.followfriend.tooltip') } onClick={ followFriend } />
+                                            <button className="profile" title={ LocalizeText('guide.help.common.profile.tooltip') } onClick={ openProfile } />
                                         </ButtonGroup>
-                                        <Button variant="danger" onClick={ () => report(ReportType.IM, { reportedUserId: activeThread.participant.id }) }>
+                                        <button className="report" title={ LocalizeText('messenger.window.button.report.tooltip') } onClick={ () => report(ReportType.IM, { reportedUserId: activeThread.participant.id }) }>
                                             { LocalizeText('messenger.window.button.report') }
-                                        </Button>
+                                        </button>
                                     </Flex>
                                     <button className="clear" onClick={ event => closeThread(activeThread.threadId) } />
                                 </Flex>
