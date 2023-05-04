@@ -1,6 +1,5 @@
 import { AvatarAction, AvatarExpressionEnum, RoomControllerLevel, RoomObjectCategory, RoomUnitDropHandItemComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetCanStandUp, GetCanUseExpression, GetOwnPosture, GetUserProfile, HasHabboClub, HasHabboVip, IsRidingHorse, LocalizeText, PostureTypeEnum, SendMessageComposer } from '../../../../../api';
 import { Column, Flex, LayoutCurrencyIcon } from '../../../../../common';
 import { HelpNameChangeEvent } from '../../../../../events';
@@ -117,7 +116,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
     return (
         <ContextMenuView objectId={ avatarInfo.roomIndex } category={ RoomObjectCategory.UNIT } userType={ avatarInfo.userType } onClose={ onClose } collapsable={ true }>
 
-            <ContextMenuHeaderView className="cursor-pointer" onClick={ event => GetUserProfile(avatarInfo.webID) }>
+            <ContextMenuHeaderView className="cursor-pointer" title={ LocalizeText('guide.help.common.profile.tooltip') } onClick={ event => GetUserProfile(avatarInfo.webID) }>
                 { avatarInfo.name }
             </ContextMenuHeaderView>
             { !hide && (
@@ -139,14 +138,12 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         <ContextMenuListItemView onClick={ event => processAction('dance_menu') }>
                             <Flex gap={ 1 }>
                                 { LocalizeText('widget.memenu.dance') }
-                                <i className="icon icon-context-arrow-right mt-auto mb-auto"/>
                             </Flex>
                         </ContextMenuListItemView> }
                     { (!isDancing && !HasHabboClub() && !isRidingHorse) &&
                         <ContextMenuListItemView onClick={ event => processAction('dance') }>
                             <Flex gap={ 1 }>
                                 { LocalizeText('widget.memenu.dance') }
-                                <i className="icon icon-context-arrow-right mt-auto mb-auto"/>
                             </Flex>
                         </ContextMenuListItemView> }
                     { (isDancing && !HasHabboClub() && !isRidingHorse) &&
@@ -156,13 +153,11 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                     <ContextMenuListItemView onClick={ event => processAction('expressions') }>
                         <Flex gap={ 1 }>
                             { LocalizeText('infostand.link.expressions') }
-                            <i className="icon icon-context-arrow-right mt-auto mb-auto"/>
                         </Flex>
                     </ContextMenuListItemView>
                     <ContextMenuListItemView onClick={ event => processAction('signs') }>
                         <Flex gap={ 1 }>
                             { LocalizeText('infostand.show.signs') }
-                            <i className="icon icon-context-arrow-right mt-auto mb-auto"/>
                         </Flex>
                     </ContextMenuListItemView>
                     { (avatarInfo.carryItem > 0) &&
@@ -190,7 +185,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                     </ContextMenuListItemView>
                     <ContextMenuListItemView onClick={ event => processAction('back') }>
                         <Flex gap={ 1 }>
-                            <i className="icon icon-context-arrow-left mt-auto mb-auto"/>
                             { LocalizeText('generic.back') }
                         </Flex>
                     </ContextMenuListItemView>
@@ -224,7 +218,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                     </ContextMenuListItemView>
                     <ContextMenuListItemView onClick={ event => processAction('back') }>
                         <Flex gap={ 1 }>
-                            <i className="icon icon-context-arrow-left mt-auto mb-auto"/>
                             { LocalizeText('generic.back') }
                         </Flex>
                     </ContextMenuListItemView>
@@ -299,7 +292,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                     </Flex>
                     <ContextMenuListItemView onClick={ event => processAction('back') }>
                         <Flex gap={ 1 }>
-                            <i className="icon icon-context-arrow-left mt-auto mb-auto"/>
                             { LocalizeText('generic.back') }
                         </Flex>
                     </ContextMenuListItemView>
