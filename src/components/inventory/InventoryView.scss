@@ -1,6 +1,6 @@
 .nitro-inventory {
     width: $inventory-width;
-    height: $inventory-height;
+    min-height: $inventory-height;
     min-width: 326px;
     color: #000;
 
