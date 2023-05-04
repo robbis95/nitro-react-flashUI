@@ -224,14 +224,14 @@ export const NavigatorView: FC<{}> = props =>
                                         { LocalizeText('navigator.createroom.create') }
                                     </Text>
                                 </Flex>
-                                { (searchResult.code !== 'myworld_view' && searchResult.code !== 'roomads_view') &&
+                                { (searchResult?.code !== 'myworld_view' && searchResult?.code !== 'roomads_view') &&
                                     <Flex className="nav-random-room">
                                         <Text variant="white" bold className="nav-bottom-buttons-text">
                                             { LocalizeText('navigator.random.room') }
                                         </Text>
                                     </Flex>
                                 }
-                                { (searchResult.code === 'myworld_view' || searchResult.code === 'roomads_view') &&
+                                { (searchResult?.code === 'myworld_view' || searchResult?.code === 'roomads_view') &&
                                     <Flex className="nav-promote-room" onClick={ () => CreateLinkEvent('catalog/open/room_event') }>
                                         <Text variant="white" bold className="nav-bottom-buttons-text">
                                             { LocalizeText('navigator.promote.room') }
