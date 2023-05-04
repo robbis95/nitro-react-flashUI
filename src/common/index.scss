@@ -64,7 +64,7 @@
             position: absolute;
             top: 1px;
             animation: MoveUpDown 1.7s linear infinite;
-            
+
             @keyframes MoveUpDown {
                 0%, 100% {
                   top: 1px;
@@ -361,6 +361,7 @@
     background-repeat: no-repeat;
     background-position: center;
 
+
     .badge-information {
         display: none;
     }
@@ -383,22 +384,11 @@
         bottom: -15px;
         z-index: 100;
         font-size: 9px;
+        min-height: 80px;
     }
 
     .badge-desc {
         font-family: Goldfish;
-
-        &:before {
-            position: absolute;
-            content: ' ';
-            width: 0;
-            height: 0;
-            border-left: 10px solid $white;
-            border-bottom: 10px solid transparent;
-            border-top: 10px solid transparent;
-            top: 10px;
-            right: -10px;
-        }
     }
 }
 
