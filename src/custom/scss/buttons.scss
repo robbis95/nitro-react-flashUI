@@ -1,0 +1,160 @@
+.ton-button {
+    cursor: pointer;
+    text-align: center;
+    border-image-repeat: repeat repeat;
+    color: black;
+
+    will-change: border-image-source;
+
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    &[data-style="0"],
+    &[data-style="1"] {
+        color: black;
+        font-size: 9px;
+        -webkit-font-smoothing: none;
+    }
+
+    &[data-style="0"] {
+        border-image-source: url("@/custom/images/buttons/button0/button_0.png");
+        border-image-slice: 4 fill;
+        border-image-width: 4px;
+        padding: 6px 8px;
+        font-family: Volter, sans-serif;
+
+        &:hover {
+            border-image-source: url("@/custom/images/buttons/button0/button_0_hover.png");
+        }
+
+        &:active {
+            border-image-source: url("@/custom/images/buttons/button0/button_0_active.png");
+        }
+    }
+
+    &[data-style="1"] {
+        border-image-source: url("@/custom/images/buttons/button1/button_1.png");
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+        font-family: VolterBold, sans-serif;
+        padding: 6px 8px;
+
+        &:hover {
+            border-image-source: url("@/custom/images/buttons/button1/button_1_hover.png");
+        }
+
+        &:active {
+            border-image-source: url("@/custom/images/buttons/button1/button_1_active.png");
+        }
+    }
+
+    &[data-style="2"] {
+        border-image-source: url("@/custom/images/buttons/button2/button_2.png") !important;
+        text-shadow: 1px 1px black;
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+        padding: 3px 10px;
+
+        font-family: UbuntuBold;
+        -webkit-font-smoothing: antialiased;
+        font-size: 12px;
+
+        max-height: 25px;
+
+        text-shadow: 1px 1px rgba(black, 0.2);
+
+        color: white;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+    }
+
+    &[data-style="3"] {
+        border-image-source: url("@/custom/images/buttons/button3/button_3.png");
+        border-image-slice: 4 fill;
+        border-image-width: 4px;
+        padding: 6px 8px;
+        font-family: Volter, sans-serif;
+        color: #fff;
+
+        &:hover {
+            border-image-source: url("@/custom/images/buttons/button3/button_3_hover.png");
+        }
+
+        &:active {
+            border-image-source: url("@/custom/images/buttons/button3/button_3_active.png");
+        }
+    }
+
+    &[data-style="4"] {
+        border-image-source: url("@/custom/images/buttons/button4/button_4.png");
+        border-image-slice: 5 fill;
+        border-image-width: 5px;
+        padding: 7px 8px;
+        font-family: Volter, sans-serif;
+    }
+
+    &[data-style="5"] {
+        border-image-source: url("@/custom/images/buttons/button5/button_5.png") !important;
+        text-shadow: 1px 1px black;
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+
+        padding: 3px 10px;
+        height: 23px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        padding-bottom: 4px;
+
+        text-shadow: none;
+
+        color: black;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+    }
+
+    &[data-style="6"] {
+        border-image-source: url("@/custom/images/buttons/button6/button_6.png");
+        text-shadow: 1px 1px black;
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+
+        padding: 3px 10px;
+        height: 23px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        padding-bottom: 4px;
+
+        font-family: VolterBold;
+
+        text-shadow: none;
+
+        color: white;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+    }
+}
+
+.gift-color-btn {
+    outline: 1px solid #000;
+    border: 3px solid #d2d2d2;
+    min-height: 22px;
+    min-width: 23px;
+
+    &:hover {
+        border-color: #fff;
+    }
+
+    &.active {
+        border-color: #fff;
+    }
+}

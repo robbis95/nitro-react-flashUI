@@ -1,8 +1,8 @@
 import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
-import { Base, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
+import { Base, Column, Flex, NitroCardContentView, NitroCardTabsItemView, NitroCardTabsView, Text } from '../../common';
+import { Frame } from '../../custom/components/layout';
 import { useNavigator, useRoomSessionManagerEvent } from '../../hooks';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
 import { NavigatorRoomCreatorView } from './views/NavigatorRoomCreatorView';
@@ -197,43 +197,42 @@ export const NavigatorView: FC<{}> = props =>
     return (
         <>
             { isVisible &&
-                <NitroCardView uniqueKey="navigator" className="nitro-navigator">
-                    <NitroCardHeaderView headerText={ LocalizeText('navigator.title') } onCloseClick={ event => setIsVisible(false) } />
-                    <NitroCardTabsView>
-                        { topLevelContexts && (topLevelContexts.length > 0) && topLevelContexts.map((context, index) =>
-                        {
-                            return (
-                                <NitroCardTabsItemView key={ index } isActive={ ((topLevelContext === context)) } onClick={ event => sendSearch('', context.code) }>
-                                    { LocalizeText(('navigator.toplevelview.' + context.code)) }
-                                </NitroCardTabsItemView>
-                            );
-                        }) }
-                    </NitroCardTabsView>
-                    <NitroCardContentView position="relative">
-                        { isLoading &&
+            <Frame uniqueKey="navigator" className="nitro-navigator" title={ LocalizeText('navigator.title') } onCloseClick={ event => setIsVisible(false) }>
+                <NitroCardTabsView>
+                    { topLevelContexts && (topLevelContexts.length > 0) && topLevelContexts.map((context, index) =>
+                    {
+                        return (
+                            <NitroCardTabsItemView key={ index } isActive={ ((topLevelContext === context)) } onClick={ event => sendSearch('', context.code) }>
+                                { LocalizeText(('navigator.toplevelview.' + context.code)) }
+                            </NitroCardTabsItemView>
+                        );
+                    }) }
+                </NitroCardTabsView>
+                <NitroCardContentView position="relative">
+                    { isLoading &&
                             <Base fit position="absolute" className="top-0 start-0 z-index-1 bg-muted opacity-0-5" /> }
-                        <>
-                            <NavigatorSearchView sendSearch={ sendSearch } />
-                            <Column overflow="auto">
-                                { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
-                            </Column>
-                        </>
-                        <Flex className="nav-bottom">
-                            <Flex className="nav-bottom-buttons position-absolute">
-                                <Flex className="nav-create-room" onClick={ (event) => setCreatorOpen(value => !value) }>
-                                    <Text variant="white" bold className="nav-bottom-buttons-text">
-                                        { LocalizeText('navigator.createroom.create') }
-                                    </Text>
-                                </Flex>
-                                <Flex className="nav-random-room">
-                                    <Text variant="white" bold className="nav-bottom-buttons-text">
-                                        { LocalizeText('navigator.random.room') }
-                                    </Text>
-                                </Flex>
+                    <>
+                        <NavigatorSearchView sendSearch={ sendSearch } />
+                        <Column overflow="auto">
+                            { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
+                        </Column>
+                    </>
+                    <Flex className="nav-bottom">
+                        <Flex className="nav-bottom-buttons position-absolute">
+                            <Flex className="nav-create-room" onClick={ (event) => setCreatorOpen(value => !value) }>
+                                <Text variant="white" bold className="nav-bottom-buttons-text">
+                                    { LocalizeText('navigator.createroom.create') }
+                                </Text>
+                            </Flex>
+                            <Flex className="nav-random-room">
+                                <Text variant="white" bold className="nav-bottom-buttons-text">
+                                    { LocalizeText('navigator.random.room') }
+                                </Text>
                             </Flex>
                         </Flex>
-                    </NitroCardContentView>
-                </NitroCardView> }
+                    </Flex>
+                </NitroCardContentView>
+            </Frame> }
             { isCreatorOpen && <NavigatorRoomCreatorView /> }
             <NavigatorDoorStateView />
             { isRoomInfoOpen && <NavigatorRoomInfoView onCloseClick={ () => setRoomInfoOpen(false) } /> }

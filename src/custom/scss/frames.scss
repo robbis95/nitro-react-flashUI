@@ -1,0 +1,111 @@
+.ton-frame {
+    position: relative;
+    filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.3333333333));
+
+    &[data-style="0"],
+    &[data-style="1"] {
+        border-image-source: url("@/custom/images/skin-0/ubuntu-frame.png");
+        border-image-slice: 33 7 8 7 fill;
+        border-image-width: 0 7px 8px 7px;
+        border-image-repeat: repeat repeat;
+        background-image: none !important;
+        display: flex;
+        flex-direction: column;
+        color: #000000;
+
+        > div {
+            z-index: 3;
+        }
+    }
+
+    &[data-style="1"] {
+        &:before {
+            border-image-source: url("@/custom/images/skin-1/1-frame-overlay.png");
+            opacity: 0.25;
+        }
+    }
+
+    &[data-style="4"] {
+        border-image-source: url("@/custom/images/skin-4/border-moodlight.png");
+        border-image-slice: 47 48 45 44;
+        border-image-width: 47px 48px 45px 44px;
+        border-image-repeat: repeat repeat;
+        border-style: solid;
+        padding: 6px;
+        display: flex;
+        flex-direction: column;
+
+        background-image: url(@/custom/images/room/moodlight/content-bg.png);
+        border-radius: 23px;
+    }
+
+    &[data-style="5"] {
+        border-image-source: url("@/custom/images/room-o-matic/border.png");
+        border-image-slice: 27 27 31 27;
+        border-image-width: 27px 27px 31px 27px;
+        border-image-repeat: repeat repeat;
+        border-style: solid;
+        padding: 3px;
+        display: flex;
+        flex-direction: column;
+
+        background-image: url(@/custom/images/room-o-matic/content-bg.png);
+        border-radius: 23px;
+    }
+
+    &[data-style="6"] {
+        border-image-source: url("@/custom/images/room-o-matic/border-1.png");
+        border-image-slice: 64 151 61 153;
+        border-image-width: 64px 151px 61px 153px;
+        border-image-repeat: repeat repeat;
+        border-style: solid;
+        padding: 29px 3px 40px 3px;
+
+        background-image: url(@/custom/images/room-o-matic/content-bg.png);
+    }
+
+    &[data-style="7"] {
+        border-image-source: url(@/custom/images/skin-7/illumina-frame.png);
+        border-image-slice: 8 fill;
+        border-image-width: 8px;
+        border-image-repeat: repeat repeat;
+        padding: 6px;
+        background-image: none !important;
+        display: flex;
+        flex-direction: column;
+        font-size: 9px !important;
+    }
+
+    &[data-style="8"] {
+        border-image-source: url(@/custom/images/skin-8/frame-8.png);
+        border-image-slice: 9 14 22 10 fill;
+        border-image-width: 9px 14px 22px 10px;
+    }
+
+    &[data-style="9"] {
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-image-source: url(@/custom/images/skin-9/tv-frame.png);
+            border-image-slice: 58 fill;
+            border-image-width: 58px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ton-frame-header-bg {
+            opacity: 0;
+        }
+
+        > div {
+            z-index: 2;
+        }
+
+        > div:nth-of-type(2) > div:nth-child(1) {
+            position: relative;
+            padding: 16px 20px 41px 20px;
+            z-index: -1;
+        }
+    }
+}

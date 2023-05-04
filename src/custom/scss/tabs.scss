@@ -1,0 +1,37 @@
+.ton-tab {
+    &[data-style="0"] {
+        border-image-source: url("@/custom/images/tabs/tabs-0-inactive.png");
+        border-image-slice: 7 fill;
+        border-image-width: 7px;
+        border-image-repeat: repeat repeat;
+        margin-bottom: -3px;
+        color: black;
+        padding: .2rem .8rem;
+
+        &.active {
+            border-image-source: url("@/custom/images/tabs/tabs-0.png");
+        }
+
+        &:hover {
+            filter: brightness(1.1);
+        }
+
+        &:not(:first-child) {
+            margin-left: -1px;
+        }
+
+        .ton-item-count {
+            color: #ffffff;
+        }
+    }
+}
+
+.ton-tab-context {
+    &[data-style="0"] {
+        z-index: 1;
+        display: flex;
+        flex-direction: row;
+        margin-bottom: -1px;
+        margin-left: 5px;
+    }
+}

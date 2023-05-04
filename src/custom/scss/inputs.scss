@@ -1,0 +1,55 @@
+.ton-input {
+    border: 0px solid;
+    background: transparent;
+    width: 100%;
+    outline: none !important;
+
+    &.black-border {
+        border-image-source: url("@/custom/images/borders/border-0.png");
+        border-image-slice: 6 fill;
+        border-image-width: 6px;
+        border-image-repeat: repeat repeat;
+        min-height: 20px;
+        padding: 7px;
+    }
+
+    &[type="color"] {
+        height: 20px;
+    }
+}
+
+.text-white input {
+    &::placeholder {
+        color: rgba(white, 0.7);
+    }
+}
+
+.ql-container {
+    overflow: auto;
+}
+
+.ql-editor {
+    overflow-y: unset;
+
+    .ql-align-right {
+        float: right;
+    }
+
+    em {
+        font-family: UbuntuItalics !important;
+    }
+}
+
+.ql-toolbar.ql-snow {
+    padding: 4px;
+}
+
+.ql-toolbar.ql-snow,
+.ql-container.ql-snow {
+    border-color: black;
+}
+
+.ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar button {
+    width: 25px;
+}

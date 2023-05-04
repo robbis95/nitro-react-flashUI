@@ -1,0 +1,51 @@
+.ton-frame-header {
+    position: relative;
+}
+
+.ton-frame-header-bg {
+    position: relative;
+
+    &[data-style="0"]{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        font-size: 14px;
+        border-image-source: url("@/custom/images/skin-0/ubuntu-frame-header.png");
+        border-image-slice: 7 fill;
+        border-image-width: 7px;
+        border-image-repeat: repeat repeat;
+        color: #fff;
+        height: 34px;
+        min-height: 34px;
+        line-height: 34px;
+    }
+
+    &[data-style="1"] {
+        background: transparent;
+
+        &:before {
+            background-image: url("@/custom/images/skin-1/1-header.png");
+            border-radius: 3px 0 0 0;
+        }
+    }
+}
+
+.ton-frame-header-text {
+    position: relative;
+    font-family: UbuntuBold;
+
+    &[data-style="0"],
+    &[data-style="1"] {
+        border-image-slice: 1 fill;
+        border-image-width: 1px;
+        border-image-repeat: repeat repeat;
+        z-index: 2;
+        padding: 1px 6px 2px 6px;
+        background-image: url("@/custom/images/skin-0/volter-frame-cover.png");
+    }
+
+    &[data-style="1"] {
+        color: rgba(black, 0.5);
+    }
+}

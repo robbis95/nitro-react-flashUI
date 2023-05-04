@@ -19,6 +19,8 @@ export interface DraggableWindowProps
     offsetLeft?: number;
     offsetTop?: number;
     children?: ReactNode;
+    modal?: boolean;
+
 }
 
 export const DraggableWindow: FC<DraggableWindowProps> = props =>
@@ -253,7 +255,7 @@ export const DraggableWindow: FC<DraggableWindowProps> = props =>
     {
         if(!uniqueKey) return;
 
-        const localStorage = JSON.parse(window.localStorage.getItem(`nitro.windows.${ uniqueKey }`)) as WindowSaveOptions;
+        const localStorage = GetLocalStorage<WindowSaveOptions>(`nitro.windows.${ uniqueKey }`);
 
         if(!localStorage || !localStorage.offset) return;
 

@@ -1,0 +1,94 @@
+.ton-frame-close {
+    z-index: 10;
+    cursor: pointer;
+
+    &[data-style="0"] {
+        background-image: url("@/custom/images/skin-0/ubuntu-close-buttons.png");
+        width: 19px;
+        height: 20px;
+        flex-shrink: 0;
+        position: absolute;
+        right: 7px;
+        top: 7px;    
+
+        &:hover {
+            background-position-x: -38px;
+        }
+
+        &:active {
+            background-position-x: -19px;
+        }
+    }
+
+    &[data-style="1"] {
+        background-image: url("@/custom/images/skin-1/1-close-buttons.png");
+        width: 13px;
+        height: 13px;
+        margin-left: 2px;
+        flex-shrink: 0;
+
+        &:hover {
+            background-position-x: -13px;
+        }
+
+        &:active {
+            background-position-x: 13px;
+        }
+    }
+
+    &[data-style="4"] {
+        background-image: url("@/custom/images/skin-4/close-moodlight.png");
+        width: 11px;
+        height: 11px;
+        align-self: center;
+        margin-right: 6px;
+        flex-shrink: 0;
+    }
+
+    &[data-style="5"] {
+        background-image: url("@/custom/images/skin-4/close-moodlight.png");
+        width: 11px;
+        height: 11px;
+        align-self: center;
+        margin-right: 3px;
+        flex-shrink: 0;
+    }
+
+    &[data-style="6"] {
+        background-image: url("@/custom/images/room-o-matic/close.png");
+        width: 14px;
+        height: 13px;
+        align-self: center;
+        margin-right: 12px;
+        margin-top: 6px;
+        flex-shrink: 0;
+    }
+
+    &[data-style="7"] {
+        background-image: url("@/custom/images/skin-7/illumina-close.png");
+        height: 20px;
+        width: 20px;
+        flex-shrink: 0;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
+    }
+
+    &[data-style="8"] {
+        background-image: url("@/custom/images/skin-1/1-close-buttons.png");
+        width: 13px;
+        height: 13px;
+        margin-right: 8px;
+        margin-top: 6px;
+        flex-shrink: 0;
+
+        &:hover {
+            background-position-x: -13px;
+        }
+
+        &:active {
+            background-position-x: 13px;
+        }
+    }
+}
