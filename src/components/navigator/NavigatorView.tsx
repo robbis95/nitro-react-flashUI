@@ -1,7 +1,6 @@
 import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
-import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
+import { AddEventLinkTracker, CreateLinkEvent, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
 import { Base, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
 import { useNavigator, useRoomSessionManagerEvent } from '../../hooks';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
@@ -225,11 +224,20 @@ export const NavigatorView: FC<{}> = props =>
                                         { LocalizeText('navigator.createroom.create') }
                                     </Text>
                                 </Flex>
-                                <Flex className="nav-random-room">
-                                    <Text variant="white" bold className="nav-bottom-buttons-text">
-                                        { LocalizeText('navigator.random.room') }
-                                    </Text>
-                                </Flex>
+                                { (searchResult.code !== 'myworld_view' && searchResult.code !== 'roomads_view') &&
+                                    <Flex className="nav-random-room">
+                                        <Text variant="white" bold className="nav-bottom-buttons-text">
+                                            { LocalizeText('navigator.random.room') }
+                                        </Text>
+                                    </Flex>
+                                }
+                                { (searchResult.code === 'myworld_view' || searchResult.code === 'roomads_view') &&
+                                    <Flex className="nav-promote-room" onClick={ () => CreateLinkEvent('catalog/open/room_event') }>
+                                        <Text variant="white" bold className="nav-bottom-buttons-text">
+                                            { LocalizeText('navigator.promote.room') }
+                                        </Text>
+                                    </Flex>
+                                }
                             </Flex>
                         </Flex>
                     </NitroCardContentView>
