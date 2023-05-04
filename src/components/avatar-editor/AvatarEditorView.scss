@@ -212,6 +212,48 @@
     }
 }
 
+.saved-outfit-container {
+    display: flex;
+    width: 100% !important;
+    height: 100%;
+
+    .avatar-image {
+        width: 30px !important;
+        z-index: 4;
+        transform: scale(0.4);
+    }
+
+    .nitro-avatar-editor-wardrobe-container {
+        background-color: #cacaca;
+        border-radius: 0.3rem;
+        border: solid 1px #000;
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+
+    .avatar-container {
+        height: 55px;
+        border-radius: 0.3rem;
+        background-color: #a7a6a2;
+        width: 30px;
+    }
+
+    .avatar-figure {
+        margin-top: -42px;
+        margin-left: -4px;
+    }
+
+    .saved-outfit-button {
+        margin-top: -3px;
+        background-color: transparent;
+        border: none;
+    }
+}
+
+
 .nitro-avatar-editor-wardrobe-figure-preview {
     border-image-source: url(@/assets/flash/avatareditor/wardrobe_user_bg.png);
     border-image-slice: 4 4 4 4 fill;
@@ -219,14 +261,6 @@
     background-color: transparent;
     overflow: hidden;
     z-index: 1;
-
-    .avatar-image {
-        position: absolute;
-        bottom: -15px;
-        margin: 0 auto;
-        z-index: 4;
-
-    }
 
     .avatar-shadow {
         position: absolute;
@@ -249,8 +283,11 @@
 }
 
 .nitro-avatar-editor {
-    width: $avatar-editor-width;
     height: $avatar-editor-height;
+    min-width: $avatar-editor-width;
+    min-height: $avatar-editor-height;
+    max-width: $avatar-editor-width;
+    max-height: $avatar-editor-height;
 
     .category-item {
         height: 40px;
@@ -308,8 +345,13 @@
     }
 }
 
+.nitro-avatar-editor.expanded {
+    max-width: $avatar-editor-width + 164px;
+    min-width: $avatar-editor-width + 164px;
+}
+
     .choose-clothing {
-        width: 298px;
+        width: 370px;
     }
 
     .color-picker-frame {
@@ -344,6 +386,40 @@
     .avatar-editor-tabs {
         position: relative;
         background-color: #1c3d4f !important;
+
+        .tab {
+            background-position-x: 0;
+            background-position-y: 0;
+            width: 34px;
+            height: 22px;
+        }
+
+        .hd {
+            background: url(@/assets/flash/wardrobe/hd.png) no-repeat center;
+        }
+
+        .head {
+            background: url(@/assets/flash/wardrobe/head.png) no-repeat center;
+        }
+
+        .torso {
+            background: url(@/assets/flash/wardrobe/torso.png) no-repeat center;
+        }
+
+        .legs {
+            background: url(@/assets/flash/wardrobe/legs.png) no-repeat center;
+        }
+
+        .tab-wardrobe {
+            width: 40px;
+            height: 28px;
+            background-size: 38px 28px;
+            background-image: url(@/assets/flash/wardrobe/wardrobe.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: contrast(1.2) brightness(1.05);
+        }
+
 
         .nav-tabs .nav-link {
             position: relative;
@@ -382,3 +458,41 @@
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
+
+    .avatar-container {
+        padding: 3px;
+    }
+
+    .avatar-parts {
+        border: none !important;
+        height: 42px;
+        width: 42px;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 2rem !important;
+        overflow: visible !important;
+        background-color: transparent;
+
+        &:hover {
+            box-shadow: 0 0 0 3px #dbdad5 !important;
+            background-color: #cecdc8 !important;
+        }
+
+        &:active,
+        &.part-selected {
+            box-shadow: 0 0 0 3px #c5c3c0 !important;
+            background-color: #b1b1b1 !important;
+        }
+    }
+
+.avatar-parts-container {
+    height: 70%;
+}
+
+.avatar-color-palette-container {
+    height: 30%;
+}
+
+.action-buttons {
+    gap: 5px;
+}

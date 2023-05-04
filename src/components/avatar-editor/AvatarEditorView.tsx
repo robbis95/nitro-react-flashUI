@@ -2,7 +2,18 @@ import { AvatarEditorFigureCategory, FigureSetIdsMessageEvent, GetWardrobeMessag
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { FaDice, FaTrash, FaUndo } from 'react-icons/fa';
 import { AddEventLinkTracker, AvatarEditorAction, AvatarEditorUtilities, BodyModel, FigureData, generateRandomFigure, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, HeadModel, IAvatarEditorCategoryModel, LegModel, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TorsoModel } from '../../api';
-import { Button, ButtonGroup, Column, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import {
+    Button,
+    ButtonGroup,
+    Column,
+    Flex,
+    Grid,
+    NitroCardContentView,
+    NitroCardHeaderView,
+    NitroCardTabsItemView,
+    NitroCardTabsView,
+    NitroCardView
+} from '../../common';
 import { useMessageEvent } from '../../hooks';
 import { AvatarEditorFigurePreviewView } from './views/AvatarEditorFigurePreviewView';
 import { AvatarEditorModelView } from './views/AvatarEditorModelView';
@@ -185,18 +196,8 @@ export const AvatarEditorView: FC<{}> = props =>
 
     useEffect(() =>
     {
-        if(!isWardrobeVisible) return;
-
-        setActiveCategory(null);
         SendMessageComposer(new GetWardrobeMessageComposer());
-    }, [ isWardrobeVisible ]);
-
-    useEffect(() =>
-    {
-        if(!activeCategory) return;
-
-        setIsWardrobeVisible(false);
-    }, [ activeCategory ]);
+    }, []);
 
     useEffect(() =>
     {
@@ -264,8 +265,10 @@ export const AvatarEditorView: FC<{}> = props =>
 
     if(!isVisible || !figureData) return null;
 
+    const avatarEditorClasses = `nitro-avatar-editor ${ isWardrobeVisible ? 'expanded' : '' }`;
+
     return (
-        <NitroCardView uniqueKey="avatar-editor" className="nitro-avatar-editor">
+        <NitroCardView uniqueKey="avatar-editor" className={ avatarEditorClasses }>
             <NitroCardHeaderView headerText={ LocalizeText('avatareditor.title') } onCloseClick={ event => setIsVisible(false) } />
             <NitroCardTabsView className="avatar-editor-tabs">
                 { categories && (categories.size > 0) && Array.from(categories.keys()).map(category =>
@@ -274,43 +277,47 @@ export const AvatarEditorView: FC<{}> = props =>
 
                     return (
                         <NitroCardTabsItemView key={ category } isActive={ isActive } onClick={ event => selectCategory(category) }>
-                            { LocalizeText(`avatareditor.category.${ category }`) }
+                            <div className={ `tab ${ category }` }></div>
                         </NitroCardTabsItemView>
                     );
                 }) }
-                <NitroCardTabsItemView isActive={ isWardrobeVisible } onClick={ event => setIsWardrobeVisible(true) }>
-                    { LocalizeText('avatareditor.category.wardrobe') }
+                <NitroCardTabsItemView onClick={ event => setIsWardrobeVisible(!isWardrobeVisible) }>
+                    <div className="tab-wardrobe"></div>
                 </NitroCardTabsItemView>
             </NitroCardTabsView>
             <NitroCardContentView>
                 <Grid>
-                    <Column size={ 6 } overflow="hidden">
-                        { (activeCategory && !isWardrobeVisible) &&
-                            <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } /> }
-                        { isWardrobeVisible &&
-                            <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } /> }
+                    <Column size={ isWardrobeVisible ? 6 : 8 } overflow="hidden">
+                        { (activeCategory) &&
+                            <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } />
+                        }
                     </Column>
-                    <Column size={ 3 } overflow="hidden">
-                        <AvatarEditorFigurePreviewView figureData={ figureData } />
-                        <Column className="randomize-container position-absolute">
-                            <i className="icon randomize-icon" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) } />
-                        </Column>
-                        <Column grow gap={ 1 }>
-                            <ButtonGroup>
-                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
-                                    <FaUndo className="fa-icon" />
-                                </Button>
-                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_CLEAR) }>
-                                    <FaTrash className="fa-icon" />
-                                </Button>
-                                <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
-                                    <FaDice className="fa-icon" />
-                                </Button>
-                            </ButtonGroup>
-                            <Button className="w-100" variant="success" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
-                                { LocalizeText('avatareditor.save') }
-                            </Button>
-                        </Column>
+                    <Column size={ isWardrobeVisible ? 6 : 4 } overflow="hidden">
+                        <Flex gap={ 2 } className="w-100 h-100">
+                            <Flex column={ true } className="w-100">
+                                <AvatarEditorFigurePreviewView figureData={ figureData } />
+                                <Column grow gap={ 1 }>
+                                    <ButtonGroup className="action-buttons w-100">
+                                        <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
+                                            <FaUndo className="fa-icon" />
+                                        </Button>
+                                        <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_CLEAR) }>
+                                            <FaTrash className="fa-icon" />
+                                        </Button>
+                                        <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RANDOMIZE) }>
+                                            <FaDice className="fa-icon" />
+                                        </Button>
+                                    </ButtonGroup>
+                                    <Button className="w-10" variant="success" onClick={ event => processAction(AvatarEditorAction.ACTION_SAVE) }>
+                                        { LocalizeText('avatareditor.save') }
+                                    </Button>
+                                </Column>
+                            </Flex>
+                            { isWardrobeVisible &&
+                                <Column overflow="hidden" className="w-100">
+                                    <AvatarEditorWardrobeView figureData={ figureData } savedFigures={ savedFigures } setSavedFigures={ setSavedFigures } loadAvatarInEditor={ loadAvatarInEditor } />
+                                </Column> }
+                        </Flex>
                     </Column>
                 </Grid>
             </NitroCardContentView>
