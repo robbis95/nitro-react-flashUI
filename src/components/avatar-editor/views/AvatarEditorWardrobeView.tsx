@@ -11,7 +11,7 @@ import {
     LayoutCurrencyIcon,
     LayoutGridItem
 } from '../../../common';
-import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/all";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/all';
 
 export interface AvatarEditorWardrobeViewProps
 {
@@ -51,6 +51,22 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
         SendMessageComposer(new SaveWardrobeOutfitMessageComposer((index + 1), figure, gender));
     }, [ figureData, savedFigures, setSavedFigures ]);
 
+    const getClubLevel = useCallback(() =>
+    {
+        let highestClubLevel = 0;
+
+        savedFigures.forEach(([ figureContainer, gender ]) =>
+        {
+            if (figureContainer)
+            {
+                const clubLevel = GetAvatarRenderManager().getFigureClubLevel(figureContainer, gender);
+                highestClubLevel = Math.max(highestClubLevel, clubLevel);
+            }
+        });
+
+        return highestClubLevel;
+    }, [ savedFigures ]);
+
     const figures = useMemo(() =>
     {
         if(!savedFigures || !savedFigures.length) return [];
@@ -65,11 +81,11 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
 
             items.push(
                 <Flex key={ index } alignItems={ 'center' } justifyContent={ 'center' }>
-                    { !hcDisabled && clubLevel > 0 && (
-                        <LayoutCurrencyIcon className="position-absolute top-1 start-1" type="hc" />
-                    ) }
                     <Flex gap={ 1 } column={ true } className="button-container">
-                        <button className="saved-outfit-button" onClick={ event => saveFigureAtWardrobeIndex(index) }>
+                        <button
+                            className="saved-outfit-button"
+                            onClick={ event => saveFigureAtWardrobeIndex(index) }
+                            disabled={ clubLevel > GetClubMemberLevel() }>
                             <MdKeyboardArrowRight />
                         </button>
                         { figureContainer && (
@@ -92,14 +108,24 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
         });
 
         return items;
-    }, [ savedFigures, hcDisabled, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
+    }, [ savedFigures, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
 
     return (
-        <div className="saved-outfit-container">
-            <div className="nitro-avatar-editor-wardrobe-container">
-                { figures }
+        <div>
+            <div className="d-flex flex-column align-items-center">
+                <span className="saved-outfits-title">
+                    { LocalizeText('wardrobe.saved.outfits.title') }
+                </span>
+                <span className="mt-2">
+                    { !hcDisabled && getClubLevel() > 0 && (
+                        <LayoutCurrencyIcon type="hc" />
+                    ) }
+                </span>
+            </div>
+            <div className="saved-outfit-container mt-2">
+                <div className="nitro-avatar-editor-wardrobe-container">{ figures }</div>
             </div>
         </div>
-
     );
+
 }
