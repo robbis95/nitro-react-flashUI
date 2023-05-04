@@ -47,7 +47,7 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
     const isLimitedSoldOut = useMemo(() =>
     {
         if(!currentOffer) return false;
-        
+
         if(purchaseOptions.extraParamRequired && (!purchaseOptions.extraData || !purchaseOptions.extraData.length)) return false;
 
         if(currentOffer.pricingModel === Offer.PRICING_MODEL_SINGLE)
@@ -130,7 +130,11 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
 
         if(GetClubMemberLevel() < currentOffer.clubLevel) return <Button variant="danger" disabled>{ LocalizeText('catalog.alert.hc.required') }</Button>;
 
-        if(isLimitedSoldOut) return <Button variant="danger" disabled>{ LocalizeText('catalog.alert.limited_edition_sold_out.title') }</Button>;
+        if(isLimitedSoldOut) return <div className="unique-sold-out-blocker">
+            <div>
+                { LocalizeText('catalog.alert.limited_edition_sold_out.title') }
+            </div>
+        </div>;
 
         if(priceCredits > getCurrencyAmount(-1)) return <Button variant="danger" disabled>{ LocalizeText('catalog.alert.notenough.title') }</Button>;
 
@@ -154,7 +158,7 @@ export const CatalogPurchaseWidgetView: FC<CatalogPurchaseWidgetViewProps> = pro
 
     return (
         <>
-            { (!noGiftOption && !currentOffer.isRentOffer) &&
+            { (!noGiftOption && !currentOffer.isRentOffer && !currentOffer.product.isUniqueLimitedItem) &&
                 <Button disabled={ ((purchaseOptions.quantity > 1) || !currentOffer.giftable || isLimitedSoldOut || (purchaseOptions.extraParamRequired && (!purchaseOptions.extraData || !purchaseOptions.extraData.length))) } onClick={ event => purchase(true) }>
                     { LocalizeText('catalog.purchase_confirmation.gift') }
                 </Button> }

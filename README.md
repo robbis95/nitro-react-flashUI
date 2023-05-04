@@ -10,6 +10,7 @@ Dev branch will be more updated but their will be risk for bugs, if you find any
 If you ever see a branch with the name "bug-fixes" or something similar do not use it on your hotel because that is only a branch for developers, that branch is when we pull all the updates from original Nitro V2 and there might be issues that needs to be fixed first before its ready to use.
 
 Please join our Discord so that you are always being up-to-date with info [here.](https://discord.gg/KGYG5V2vf3)
+
 ## Contribution
 
 Feel free to help out and contribute to make this UI replicate flash as much as possible, would be fun if the community could help out to make this UI great!
@@ -21,9 +22,9 @@ Thanks to everyone that has helped out contributing to this UI:
 - Dennis
 - Object
 
-## Nitro Client installation
+# Nitro Client installation
 
-Requirements:
+Prerequisites:
 
 -   [Git](https://git-scm.com/)
 -   [NodeJS](https://nodejs.org/) >= 18
@@ -53,7 +54,7 @@ Usage:
 -   To use Nitro you need `.nitro` assets generated, see [nitro-converter](https://git.krews.org/nitro/nitro-converter) for instructions
 -   See [Morningstar Websockets](https://git.krews.org/nitro/ms-websockets) for instructions on configuring websockets on your server
 
-Development mode:
+Development:
 
 Run Nitro in development mode when you are editing the files, this way you can see the changes in your browser instantly
 
@@ -61,7 +62,7 @@ Run Nitro in development mode when you are editing the files, this way you can s
 yarn start
 ```
 
-Build for production:
+Production:
 
 To build a production version of Nitro just run the following command
 
@@ -69,5 +70,5 @@ To build a production version of Nitro just run the following command
 yarn build:prod
 ```
 
--   A `dist` folder will be generated, these are the files that must be uploaded to your webserver
+-   A `build` folder will be generated, these are the files that must be uploaded to your webserver
 -   Consult your CMS documentation for compatibility with Nitro and how to add the production files

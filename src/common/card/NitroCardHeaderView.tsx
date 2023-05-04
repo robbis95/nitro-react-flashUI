@@ -1,20 +1,20 @@
 import { FC, MouseEvent, useMemo } from 'react';
 import { FaFlag, FaTimes } from 'react-icons/fa';
 import { Base, Column, ColumnProps, Flex } from '..';
-import { Text } from '../../common';
 
 interface NitroCardHeaderViewProps extends ColumnProps
 {
     headerText: string;
     isGalleryPhoto?: boolean;
     noCloseButton?: boolean;
+    hideButtonClose?: boolean;
     onReportPhoto?: (event: MouseEvent) => void;
     onCloseClick: (event: MouseEvent) => void;
 }
 
 export const NitroCardHeaderView: FC<NitroCardHeaderViewProps> = props =>
 {
-    const { headerText = null, isGalleryPhoto = false, noCloseButton = false, onReportPhoto = null, onCloseClick = null, justifyContent = 'center', alignItems = 'center', classNames = [], children = null, ...rest } = props;
+    const { headerText = null, isGalleryPhoto = false, noCloseButton = false, hideButtonClose = false, onReportPhoto = null, onCloseClick = null, justifyContent = 'center', alignItems = 'center', classNames = [], children = null, ...rest } = props;
 
     const getClassNames = useMemo(() =>
     {
@@ -41,7 +41,7 @@ export const NitroCardHeaderView: FC<NitroCardHeaderViewProps> = props =>
                     </Base>
                 }
                 <Flex center position="absolute" className="end-2 nitro-card-header-close" onMouseDownCapture={ onMouseDown } onClick={ onCloseClick }>
-                    <FaTimes className="fa-icon w-12 h-12" />
+                    { (!hideButtonClose) && <FaTimes className="fa-icon w-12 h-12" /> }
                 </Flex>
             </Flex>
         </Column>
