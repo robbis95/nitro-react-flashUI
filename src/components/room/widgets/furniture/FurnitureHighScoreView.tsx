@@ -19,39 +19,45 @@ export const FurnitureHighScoreView: FC<{}> = props =>
             {
                 return (
                     <ObjectLocationView key={ index } objectId={ objectId } category={ RoomObjectCategory.FLOOR }>
-                        <Column className="nitro-widget-high-score nitro-context-menu" gap={ 0 }>
-                            <ContextMenuHeaderView>
-                                { LocalizeText('high.score.display.caption', [ 'scoretype', 'cleartype' ], [ LocalizeText(`high.score.display.scoretype.${ getScoreType(stuffData.scoreType) }`), LocalizeText(`high.score.display.cleartype.${ getClearType(stuffData.clearType) }`) ]) }
-                            </ContextMenuHeaderView>
-                            <ContextMenuListView overflow="hidden" gap={ 1 } className="h-100">
-                                <Column gap={ 1 }>
-                                    <Flex alignItems="center">
-                                        <Text center bold variant="white" className="col-8">
-                                            { LocalizeText('high.score.display.users.header') }
-                                        </Text>
-                                        <Text center bold variant="white" className="col-4">
-                                            { LocalizeText('high.score.display.score.header') }
-                                        </Text>
+                        <div className="high-score-wired">
+                            <Column className="nitro-widget-high-score nitro-context-menu" gap={ 0 }>
+                                <ContextMenuHeaderView className="header">
+                                    <Flex alignItems="center" className="mt-1">
+                                        { LocalizeText('high.score.display.caption', [ 'scoretype', 'cleartype' ], [ LocalizeText(`high.score.display.scoretype.${ getScoreType(stuffData.scoreType) }`), LocalizeText(`high.score.display.cleartype.${ getClearType(stuffData.clearType) }`) ]) }
                                     </Flex>
-                                    <hr className="m-0" />
-                                </Column>
-                                <Column overflow="auto" gap={ 1 } className="overflow-y-scroll">
-                                    { stuffData.entries.map((entry, index) =>
-                                    {
-                                        return (
-                                            <Flex key={ index } alignItems="center">
-                                                <Text center variant="white" className="col-8">
-                                                    { entry.users.join(', ') }
-                                                </Text>
-                                                <Text center variant="white" className="col-4">
-                                                    { entry.score }
-                                                </Text>
-                                            </Flex>
-                                        );
-                                    }) }
-                                </Column>
-                            </ContextMenuListView>
-                        </Column>
+                                </ContextMenuHeaderView>
+                                <ContextMenuListView overflow="hidden" gap={ 1 } className="h-100 mt-2">
+                                    <Column gap={ 1 }>
+                                        <Flex alignItems="center">
+                                            <Text variant="black" className="col-8 section-border rounded p-1">
+                                                { LocalizeText('high.score.display.users.header') }
+                                            </Text>
+                                            <Text variant="black" className="col-4 align-right section-border rounded p-1">
+                                                { LocalizeText('high.score.display.score.header') }
+                                            </Text>
+                                        </Flex>
+                                    </Column>
+                                    <Column overflow="auto" gap={ 1 } className="overflow-y-scroll high-score-content">
+                                        { stuffData.entries.map((entry, index) =>
+                                        {
+                                            return (
+                                                <Flex key={ index } alignItems="center">
+                                                    <Text center className="col-8 score-color">
+                                                        { entry.users.join(', ') }
+                                                    </Text>
+                                                    <Text center className="col-4 score-color">
+                                                        { entry.score }
+                                                    </Text>
+                                                </Flex>
+                                            );
+                                        }) }
+                                    </Column>
+                                    <Text center className="score-footer mb-1">
+                                        { LocalizeText('high.score.footer.congratulations') }
+                                    </Text>
+                                </ContextMenuListView>
+                            </Column>
+                        </div>
                     </ObjectLocationView>
                 );
             }) }
