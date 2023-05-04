@@ -148,6 +148,11 @@
         .motto-content {
             min-height: 18px;
             font-family: Goldfish;
+            cursor: text;
+        }
+
+        .color-motto {
+            color: #9EA39D;
         }
 
         .motto-input {
@@ -165,6 +170,7 @@
 
             &:focus {
                 font-style: italic;
+                color: #9EA39D;
             }
         }
 

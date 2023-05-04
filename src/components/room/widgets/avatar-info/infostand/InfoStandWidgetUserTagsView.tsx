@@ -22,7 +22,6 @@ export const InfoStandWidgetUserTagsView: FC<InfoStandWidgetUserTagsViewProps> =
 
     return (
         <>
-            <hr className="m-0" />
             <Flex className="flex-tags">
                 { tags && (tags.length > 0) && tags.map((tag, index) => <Text key={ index } variant="white" className="text-tags" onClick={ event => processAction(tag) }>{ tag }</Text>) }
             </Flex>
