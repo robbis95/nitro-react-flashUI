@@ -1,7 +1,17 @@
 import { IAvatarFigureContainer, SaveWardrobeOutfitMessageComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from 'react';
 import { FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, LocalizeText, SendMessageComposer } from '../../../api';
-import { AutoGrid, Base, Button, Flex, LayoutAvatarImageView, LayoutCurrencyIcon, LayoutGridItem } from '../../../common';
+import {
+    AutoGrid,
+    Base,
+    Button,
+    Column,
+    Flex,
+    LayoutAvatarImageView,
+    LayoutCurrencyIcon,
+    LayoutGridItem
+} from '../../../common';
+import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/all";
 
 export interface AvatarEditorWardrobeViewProps
 {
@@ -54,17 +64,30 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
             if(figureContainer) clubLevel = GetAvatarRenderManager().getFigureClubLevel(figureContainer, gender);
 
             items.push(
-                <LayoutGridItem key={ index } position="relative" overflow="hidden" className="nitro-avatar-editor-wardrobe-figure-preview">
-                    { figureContainer &&
-                    <LayoutAvatarImageView figure={ figureContainer.getFigureString() } gender={ gender } direction={ 2 } /> }
-                    <Base className="avatar-shadow" />
-                    { !hcDisabled && (clubLevel > 0) && <LayoutCurrencyIcon className="position-absolute top-1 start-1" type="hc" /> }
-                    <Flex gap={ 1 } className="button-container">
-                        <Button fullWidth onClick={ event => saveFigureAtWardrobeIndex(index) }>{ LocalizeText('avatareditor.wardrobe.save') }</Button>
-                        { figureContainer &&
-                        <Button fullWidth onClick={ event => wearFigureAtIndex(index) } disabled={ (clubLevel > GetClubMemberLevel()) }>{ LocalizeText('generic_usable.button.use') }</Button> }
+                <Flex key={ index } alignItems={ 'center' } justifyContent={ 'center' }>
+                    { !hcDisabled && clubLevel > 0 && (
+                        <LayoutCurrencyIcon className="position-absolute top-1 start-1" type="hc" />
+                    ) }
+                    <Flex gap={ 1 } column={ true } className="button-container">
+                        <button className="saved-outfit-button" onClick={ event => saveFigureAtWardrobeIndex(index) }>
+                            <MdKeyboardArrowRight />
+                        </button>
+                        { figureContainer && (
+                            <button
+                                className="saved-outfit-button"
+                                onClick={ event => wearFigureAtIndex(index) }
+                                disabled={ clubLevel > GetClubMemberLevel() }
+                            >
+                                <MdKeyboardArrowLeft />
+                            </button>
+                        ) }
                     </Flex>
-                </LayoutGridItem>
+                    <div className="avatar-container">
+                        { figureContainer && (
+                            <LayoutAvatarImageView className="avatar-figure" figure={ figureContainer.getFigureString() } gender={ gender } direction={ 4 } />
+                        ) }
+                    </div>
+                </Flex>
             );
         });
 
@@ -72,8 +95,11 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
     }, [ savedFigures, hcDisabled, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
 
     return (
-        <AutoGrid columnCount={ 5 } columnMinWidth={ 80 } columnMinHeight={ 140 }>
-            { figures }
-        </AutoGrid>
+        <div className="saved-outfit-container">
+            <div className="nitro-avatar-editor-wardrobe-container">
+                { figures }
+            </div>
+        </div>
+
     );
 }

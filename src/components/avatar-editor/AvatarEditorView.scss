@@ -212,6 +212,48 @@
     }
 }
 
+.saved-outfit-container {
+    display: flex;
+    width: 100% !important;
+    height: 100%;
+
+    .avatar-image {
+        width: 30px !important;
+        z-index: 4;
+        transform: scale(0.4);
+    }
+
+    .nitro-avatar-editor-wardrobe-container {
+        background-color: #cacaca;
+        border-radius: 0.3rem;
+        border: solid 1px #000;
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+
+    .avatar-container {
+        height: 55px;
+        border-radius: 0.3rem;
+        background-color: #a7a6a2;
+        width: 30px;
+    }
+
+    .avatar-figure {
+        margin-top: -42px;
+        margin-left: -4px;
+    }
+
+    .saved-outfit-button {
+        margin-top: -3px;
+        background-color: transparent;
+        border: none;
+    }
+}
+
+
 .nitro-avatar-editor-wardrobe-figure-preview {
     border-image-source: url(@/assets/flash/avatareditor/wardrobe_user_bg.png);
     border-image-slice: 4 4 4 4 fill;
@@ -219,14 +261,6 @@
     background-color: transparent;
     overflow: hidden;
     z-index: 1;
-
-    .avatar-image {
-        position: absolute;
-        bottom: -15px;
-        margin: 0 auto;
-        z-index: 4;
-
-    }
 
     .avatar-shadow {
         position: absolute;
@@ -249,7 +283,6 @@
 }
 
 .nitro-avatar-editor {
-    width: $avatar-editor-width;
     height: $avatar-editor-height;
     min-width: $avatar-editor-width;
     min-height: $avatar-editor-height;
@@ -310,6 +343,11 @@
             z-index: 2;
         }
     }
+}
+
+.nitro-avatar-editor.expanded {
+    max-width: $avatar-editor-width + 164px;
+    min-width: $avatar-editor-width + 164px;
 }
 
     .choose-clothing {
@@ -436,8 +474,8 @@
         background-color: transparent;
 
         &:hover {
-            box-shadow: 0 0 0 3px rgba(218, 218, 214, 0.76);
-            background-color: rgba(203, 201, 201, 0.58) !important;
+            box-shadow: 0 0 0 3px #dbdad5 !important;
+            background-color: #cecdc8 !important;
         }
 
         &:active,
