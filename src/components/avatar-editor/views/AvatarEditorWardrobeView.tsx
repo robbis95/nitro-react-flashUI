@@ -1,17 +1,10 @@
 import { IAvatarFigureContainer, SaveWardrobeOutfitMessageComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from 'react';
-import { FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, LocalizeText, SendMessageComposer } from '../../../api';
-import {
-    AutoGrid,
-    Base,
-    Button,
-    Column,
-    Flex,
-    LayoutAvatarImageView,
-    LayoutCurrencyIcon,
-    LayoutGridItem
-} from '../../../common';
-import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/all";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/all';
+import { FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, SendMessageComposer } from '../../../api';
+import { Flex, LayoutAvatarImageView, LayoutCurrencyIcon } from '../../../common';
+import { Border } from '../../../custom/components/layout';
+import { VolterColours } from '../../../custom/common';
 
 export interface AvatarEditorWardrobeViewProps
 {
@@ -95,11 +88,11 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
     }, [ savedFigures, hcDisabled, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
 
     return (
-        <div className="saved-outfit-container">
+        <Border colour={ VolterColours.light_grey } className="saved-outfit-container">
             <div className="nitro-avatar-editor-wardrobe-container">
                 { figures }
             </div>
-        </div>
+        </Border>
 
     );
 }
