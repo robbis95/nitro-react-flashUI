@@ -197,7 +197,7 @@ export const NavigatorView: FC<{}> = props =>
         <>
             { isVisible &&
                 <NitroCardView uniqueKey="navigator" className="nitro-navigator">
-                    <NitroCardHeaderView headerText={ LocalizeText('navigator.title') } onCloseClick={ event => setIsVisible(false) } />
+                    <NitroCardHeaderView headerText={ LocalizeText('navigator.title') } isInfoToHabboPages={ true } onClickInfoHabboPages={ () => CreateLinkEvent('habbopages/navigator') } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardTabsView>
                         { topLevelContexts && (topLevelContexts.length > 0) && topLevelContexts.map((context, index) =>
                         {

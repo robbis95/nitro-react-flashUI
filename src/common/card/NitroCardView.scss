@@ -49,6 +49,22 @@ $nitro-card-tabs-height: 35px;
 
                 }
             }
+
+            .nitro-card-header-info-habbopages {
+                cursor: pointer;
+                background-image: url("@/assets/flash/boxes/card/questionmark.png");
+                width: 19px;
+                height: 20px;
+                right: 32px;
+
+                    &:hover {
+                        background-image: url("@/assets/flash/boxes/card/questionmark_hover.png");
+        
+                    &:active {
+                        background-image: url("@/assets/flash/boxes/card/questionmark_click.png");
+                    }
+                }
+            }
         }
 
         .nitro-card-tabs {

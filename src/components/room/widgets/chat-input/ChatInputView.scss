@@ -11,7 +11,6 @@
     background: #e4e4e4;
     border-radius: 9px;
     padding-right: 10px;
-    overflow: hidden;
     z-index: 31;
 
     @include media-breakpoint-down(sm) {
@@ -99,4 +98,21 @@
     border-image-slice:9 9 9 9 fill;
     border-image-width:9px 9px 9px 9px;
     margin-bottom: -13px;
+}
+
+.info-habbopages {
+    cursor: pointer;
+    background-image: url("@/assets/flash/boxes/card/questionmark.png");
+    width: 19px;
+    height: 20px;
+    right: -18px;
+    position: absolute;
+
+        &:hover {
+            background-image: url("@/assets/flash/boxes/card/questionmark_hover.png");
+
+        &:active {
+            background-image: url("@/assets/flash/boxes/card/questionmark_click.png");
+        }
+    }
 }

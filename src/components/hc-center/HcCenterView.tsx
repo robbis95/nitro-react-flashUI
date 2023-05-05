@@ -130,7 +130,7 @@ export const HcCenterView: FC<{}> = props =>
 
     return (
         <NitroCardView theme="primary" className="nitro-hc-center">
-            <NitroCardHeaderView headerText={ LocalizeText('generic.hccenter') } onCloseClick={ () => setIsVisible(false) } />
+            <NitroCardHeaderView headerText={ LocalizeText('generic.hccenter') } isInfoToHabboPages={ true } onClickInfoHabboPages={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['benefits.habbopage']) } onCloseClick={ () => setIsVisible(false) } />
             <Flex position="relative" className="bg-muted p-2 hc-logo">
                 <Column gap={ 1 } justifyContent="end" className="px-2">
                     <Flex>
