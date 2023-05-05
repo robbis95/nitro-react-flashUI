@@ -47,6 +47,20 @@
 
 .nitro-room-info {
     width: $room-info-width;
+    resize: none;
+}
+
+.text-tag {
+    font-size: 10px;
+    background-color: #CEE9FA;
+}
+
+.text-tag:hover {
+    background-color: #449FCF;
+}
+
+.text-embed {
+    font-size: 10px;
 }
 
 .nitro-room-link {

@@ -345,10 +345,29 @@
         height: 14px;
     }
 
+    &.icon-favourite-room-active {
+        background: url('@/assets/images/icons/favourite-room-active.png');
+        width: 14px;
+        height: 14px;
+    }
+
+    &.icon-favourite-room-inactive {
+        background: url('@/assets/images/icons/favourite-room-inactive.png');
+        width: 12px;
+        height: 11px;
+    }
+
     &.icon-camera-small {
         background: url('@/assets/images/icons/camera-small.png');
         width: 17px;
         height: 15px;
+    }
+
+    &.icon-report-room {
+        background: url('@/assets/flash/room/report-room.png');
+        width: 19px;
+        height: 19px;
+        margin-right: 10px;
     }
 
     &.icon-small-room {
