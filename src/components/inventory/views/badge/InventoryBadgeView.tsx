@@ -1,8 +1,8 @@
-import {FC, useEffect, useState} from 'react';
-import {LocalizeBadgeName, LocalizeText, UnseenItemCategory} from '../../../../api';
-import {AutoGrid, Button, Column, Flex, Grid, LayoutBadgeImageView, Text} from '../../../../common';
-import {useAchievements, useInventoryBadges, useInventoryUnseenTracker} from '../../../../hooks';
-import {InventoryBadgeItemView} from './InventoryBadgeItemView';
+import { FC, useEffect, useState } from 'react';
+import { LocalizeBadgeName, LocalizeText, UnseenItemCategory } from '../../../../api';
+import { AutoGrid, Button, Column, Flex, Grid, LayoutBadgeImageView, Text } from '../../../../common';
+import { useAchievements, useInventoryBadges, useInventoryUnseenTracker } from '../../../../hooks';
+import { InventoryBadgeItemView } from './InventoryBadgeItemView';
 
 export const InventoryBadgeView: FC<{}> = props =>
 {
