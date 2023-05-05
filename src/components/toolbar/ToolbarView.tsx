@@ -18,7 +18,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
     const { requests = [] } = useFriends();
     const { iconState = MessengerIconState.HIDDEN } = useMessenger();
     const isMod = GetSessionDataManager().isModerator;
-    
+
     useMessageEvent<PerkAllowancesMessageEvent>(PerkAllowancesMessageEvent, event =>
     {
         const parser = event.getParser();
@@ -33,7 +33,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             const target = (document.body.getElementsByClassName(iconName)[0] as HTMLElement);
 
             if(!target) return;
-            
+
             image.className = 'toolbar-icon-animation';
             image.style.visibility = 'visible';
             image.style.left = (x + 'px');
@@ -70,7 +70,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             <TransitionAnimation type={ TransitionAnimationTypes.FADE_IN } inProp={ isMeExpanded } timeout={ 300 }>
                 <ToolbarMeView useGuideTool={ useGuideTool } unseenAchievementCount={ getTotalUnseen } setMeExpanded={ setMeExpanded } />
             </TransitionAnimation>
-            <Flex alignItems="center" id="toolbar-chat-input-container" />
+            <Flex alignItems="center" justifyContent="center" id="toolbar-chat-input-container" />
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
                 <button className={ leftSideCollapsed ? 'toolbar-left-collapse' : 'toolbar-left-collapse-active' } onClick={ () => setLeftSideCollapsed((collapsed) => !collapsed) }/>
                 <Flex gap={ 2 } alignItems="center" className="toolbar-left-side">

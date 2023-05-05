@@ -237,7 +237,7 @@ export const ChatInputView: FC<{}> = props =>
         createPortal(
             <div className="nitro-chat-input-container">
                 <ChatInputStyleSelectorView chatStyleId={ chatStyleId } chatStyleIds={ chatStyleIds } selectChatStyleId={ updateChatStyleId } />
-                <div className="input-sizer align-items-center">
+                <div className="input-sizer w-100">
                     { !floodBlocked &&
                         <input ref={ inputRef } type="text" className="chat-input" placeholder={ LocalizeText('widgets.chatinput.default') } value={ chatValue } maxLength={ maxChatLength } onChange={ event => updateChatInput(event.target.value) } onMouseDown={ event => setInputFocus() } /> }
                     { floodBlocked &&

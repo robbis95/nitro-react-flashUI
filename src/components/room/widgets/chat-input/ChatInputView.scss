@@ -2,9 +2,8 @@
     display: flex;
     align-items: center;
     position: absolute;
+    width: 50vw;
     bottom:65px;
-    left: 30vw;
-    right: 30vw;
     height: 38px;
     border-image-source: url(@/assets/flash/room/chatinput.png);
     border-image-slice:8 8 8 8 fill;
@@ -19,20 +18,22 @@
         display: flex;
         position: absolute;
         bottom: 70px;
-        left: calc(100% / 3);
-        width: 200px;
+        left: 30px;
+        width: 85vw;
     }
 
     .input-sizer {
-        display: inline-grid;
-        vertical-align: top;
-        height: 100%;
+        align-content: center;
+        display: flex;
         padding-right: 10px;
+
+        .chat-input {
+            width: 100%;
+        }
 
         &::after,
         input,
         textarea {
-            width: auto;
             min-width: 1em;
             grid-area: 1 / 2;
             margin: 0;
