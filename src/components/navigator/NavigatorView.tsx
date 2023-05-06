@@ -1,4 +1,4 @@
-import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
+import { ConvertGlobalRoomIdMessageComposer, FindNewFriendsMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { AddEventLinkTracker, CreateLinkEvent, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
 import { Base, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
@@ -225,7 +225,7 @@ export const NavigatorView: FC<{}> = props =>
                                     </Text>
                                 </Flex>
                                 { (searchResult?.code !== 'myworld_view' && searchResult?.code !== 'roomads_view') &&
-                                    <Flex className="nav-random-room">
+                                    <Flex className="nav-random-room" onClick={ () => SendMessageComposer(new FindNewFriendsMessageComposer()) }>
                                         <Text variant="white" bold className="nav-bottom-buttons-text">
                                             { LocalizeText('navigator.random.room') }
                                         </Text>
