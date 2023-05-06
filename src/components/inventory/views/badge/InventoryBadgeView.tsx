@@ -76,12 +76,12 @@ export const InventoryBadgeView: FC<{}> = props =>
                 </Column>
             </Grid>
             { !!selectedBadgeCode &&
-                <Flex className="bg-white py-1 px-2 rounded mt-2" justifyContent={ 'between' } alignItems={ 'end' } gap={ 2 }>
+                <Flex className="bg-white pb-1 px-2 rounded mt-2" style={ { height: '50px' } } justifyContent={ 'between' } alignItems={ 'end' } gap={ 2 }>
                     <Flex alignItems="start" gap={ 2 }>
                         <LayoutBadgeImageView shrink badgeCode={ selectedBadgeCode } />
-                        <Text className="font-bold">{ LocalizeBadgeName(selectedBadgeCode) }</Text>
+                        <Text className="font-bold mt-2">{ LocalizeBadgeName(selectedBadgeCode) }</Text>
                     </Flex>
-                    <Button className="btn btn-primary" style={ { fontSize: '12px' } } disabled={ !isWearingBadge(selectedBadgeCode) && !canWearBadges() } onClick={ event => toggleBadge(selectedBadgeCode) }>{ LocalizeText(isWearingBadge(selectedBadgeCode) ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge') }</Button>
+                    <Button className="btn btn-primary mb-1" style={ { fontSize: '12px' } } disabled={ !isWearingBadge(selectedBadgeCode) && !canWearBadges() } onClick={ event => toggleBadge(selectedBadgeCode) }>{ LocalizeText(isWearingBadge(selectedBadgeCode) ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge') }</Button>
                 </Flex> }
             <div className="nitro-progress-bar text-white mt-1">
                 <Text small center style={ { marginTop: '-1px' } }>{ LocalizeText('achievements.categories.score', [ 'score' ], [ achievementScore.toString() ]) }</Text>

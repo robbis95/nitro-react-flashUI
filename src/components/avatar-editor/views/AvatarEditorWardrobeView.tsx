@@ -85,14 +85,14 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
                         <button
                             className="saved-outfit-button"
                             onClick={ event => saveFigureAtWardrobeIndex(index) }
-                            disabled={ clubLevel > GetClubMemberLevel() }>
+                            disabled={ clubLevel > GetClubMemberLevel() && !hcDisabled }>
                             <MdKeyboardArrowRight />
                         </button>
                         { figureContainer && (
                             <button
                                 className="saved-outfit-button"
                                 onClick={ event => wearFigureAtIndex(index) }
-                                disabled={ clubLevel > GetClubMemberLevel() }
+                                disabled={ clubLevel > GetClubMemberLevel() && !hcDisabled }
                             >
                                 <MdKeyboardArrowLeft />
                             </button>
