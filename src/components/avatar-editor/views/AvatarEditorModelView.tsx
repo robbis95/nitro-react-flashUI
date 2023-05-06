@@ -53,7 +53,7 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
 
     return (
         <Grid>
-            <Column className="choose-clothing overflow-auto">
+            <Column className="choose-clothing overflow-y-auto overflow-x-hidden">
                 <Flex className="px-3" gap={ 4 }>
                     { model.canSetGender &&
                     <>
@@ -80,7 +80,9 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
                 <Column className="avatar-parts-container" size={ 5 } overflow="hidden">
                     <AvatarEditorFigureSetView model={ model } category={ activeCategory } setMaxPaletteCount={ setMaxPaletteCount } />
                 </Column>
-                <Column size={ 5 } overflow="hidden" className="avatar-color-palette-container">
+                <Column overflow="hidden" className={
+                    maxPaletteCount === 2 ? 'avatar-color-palette-container dual-palette' : 'avatar-color-palette-container'
+                }>
                     { (maxPaletteCount >= 1) &&
                     <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(0) } paletteIndex={ 0 } /> }
                     { (maxPaletteCount === 2) &&
