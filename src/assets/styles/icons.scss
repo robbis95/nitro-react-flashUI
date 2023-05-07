@@ -357,6 +357,24 @@
         height: 11px;
     }
 
+    &.icon-room-promote {
+        background: url('@/assets/images/icons/room-promote.png');
+        width: 16px;
+        height: 19px;
+    }
+
+    &.icon-notification_arrow_left {
+        background: url('@/assets/flash/notifications/notification_arrow_left.png');
+        width: 18px;
+        height: 19px;
+    }
+
+    &.icon-notification_arrow_down {
+        background: url('@/assets/flash/notifications/notification_arrow_down.png');
+        width: 18px;
+        height: 19px;
+    }
+
     &.icon-camera-small {
         background: url('@/assets/images/icons/camera-small.png');
         width: 17px;

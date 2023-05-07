@@ -702,4 +702,37 @@
 .notification-height {
     max-height: 85px;
 }
+
+.remove-outline {
+    outline: 0;
+}
+
+.input-error {
+    background-color: #F18F9B;
+}
+
+.nitro-input-error-popup {
+    user-select: none;
+    position: absolute;
+    width: auto;
+    height: 21px;
+    background: white;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid black;
+    margin-left: 20px;
+    margin-top: -10px;
+    
+    &:before {
+        border: 10px solid white;
+        content: '';
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        position: absolute;
+        bottom: -20px;
+        left: calc(50% - 15px);
+    }
+}
+
 @import './card/NitroCardView';

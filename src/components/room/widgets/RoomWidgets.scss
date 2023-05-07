@@ -145,6 +145,19 @@
     margin-right: 4px;
 }
 
+.text-no-promote {
+    font-size: 13px;
+}
+
+.icon-style {
+    margin-top: 1px;
+    margin-left: 4px;
+}
+
+.arrow-right-style {
+    margin-right: 4px;
+}
+
 @import './avatar-info/AvatarInfoWidgetView';
 @import './chat/ChatWidgetView';
 @import './chat-input/ChatInputView';
