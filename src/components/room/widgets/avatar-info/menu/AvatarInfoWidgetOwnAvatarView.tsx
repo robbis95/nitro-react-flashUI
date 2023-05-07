@@ -131,7 +131,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         <ContextMenuListItemView onClick={ event => processAction('decorate') }>
                             { LocalizeText('widget.avatar.decorate') }
                         </ContextMenuListItemView> }
-                    <ContextMenuListItemView onClick={ event => processAction('change_looks') }>
+                    <ContextMenuListItemView className="text-decoration-underline" onClick={ event => processAction('change_looks') }>
                         { LocalizeText('widget.memenu.myclothes') }
                     </ContextMenuListItemView>
                     { (HasHabboClub() && !isRidingHorse) &&
