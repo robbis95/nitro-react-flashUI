@@ -1,7 +1,7 @@
 import { PetRespectComposer, PetType } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { AvatarInfoPet, CreateLinkEvent, GetConfiguration, LocalizeText, SendMessageComposer } from '../../../../../api';
-import { Base, Column, Flex, LayoutPetImageView, Text } from '../../../../../common';
+import { Base, Button, Column, Flex, LayoutPetImageView, Text } from '../../../../../common';
 import { useRoom, useSessionInfo } from '../../../../../hooks';
 
 interface InfoStandWidgetPetViewProps
@@ -73,73 +73,101 @@ export const InfoStandWidgetPetView: FC<InfoStandWidgetPetViewProps> = props =>
     }
 
     return (
-        <Column className="nitro-infostand rounded">
-            <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
-                <Column gap={ 1 }>
-                    <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                        &nbsp;
-                        <Text variant="white" center bold small wrap>{ avatarInfo.name }</Text>
-                        <Base className="infostand-close" onClick={ onClose } />
-                    </Flex>
-                    <Text variant="white" center small wrap>{ LocalizeText(`pet.breed.${ avatarInfo.petType }.${ avatarInfo.petBreed }`) }</Text>
-                </Column>
-                <Column gap={ 1 }>
-                    <Flex justifyContent="between">
-                        <Column fullWidth overflow="hidden" className="body-image pet p-1">
-                            <LayoutPetImageView figure={ avatarInfo.petFigure } posture={ avatarInfo.posture } direction={ 4 } />
-                        </Column>
-                        <Text variant="white" center small wrap className="px-2">{ LocalizeText('pet.level', [ 'level', 'maxlevel' ], [ avatarInfo.level.toString(), avatarInfo.maximumLevel.toString() ]) }</Text>
-                    </Flex>
-                    <Flex gap={ 1 }>
-                        <Column grow gap={ 1 }>
-                            <Column alignItems="center" gap={ 1 }>
-                                <Text variant="white" truncate>{ LocalizeText('infostand.pet.text.happiness') }</Text>
-                                <Flex fit position="absolute">
-                                    <Base className="icon-happiness" />
-                                </Flex>
-                                <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark border border-light border-left height-bar">
-                                    <Flex fit center position="absolute">
-                                        <Text variant="white" small>{ avatarInfo.happyness + '/' + avatarInfo.maximumHappyness }</Text>
-                                    </Flex>
-                                    <Base className="bg-info pet-stats" style={ { width: (avatarInfo.happyness / avatarInfo.maximumHappyness) * 100 + '%' } } />
-                                </Base>
+        <Column gap={ 1 } alignItems="end">
+            <Column className="nitro-infostand">
+                <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
+                    <Column gap={ 1 }>
+                        <Flex alignItems="center" justifyContent="between" gap={ 1 }>
+                            &nbsp;
+                            <Text variant="white" center bold small wrap>{ avatarInfo.name }</Text>
+                            <Base className="infostand-close" onClick={ onClose } />
+                        </Flex>
+                        <Text variant="white" center small wrap>{ LocalizeText(`pet.breed.${ avatarInfo.petType }.${ avatarInfo.petBreed }`) }</Text>
+                    </Column>
+                    <Column gap={ 1 }>
+                        <Flex justifyContent="between">
+                            <Column fullWidth overflow="hidden" className="body-image pet p-1">
+                                <LayoutPetImageView figure={ avatarInfo.petFigure } posture={ avatarInfo.posture } direction={ 4 } />
                             </Column>
-                            <Column alignItems="center" gap={ 1 }>
-                                <Text variant="white" truncate>{ LocalizeText('infostand.pet.text.experience') }</Text>
-                                <Flex fit position="absolute">
-                                    <Base className="icon-experience" />
-                                </Flex>
-                                <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark border border-light border-left height-bar">
-                                    <Flex fit center position="absolute">
-                                        <Text variant="white" small>{ avatarInfo.experience + '/' + avatarInfo.levelExperienceGoal }</Text>
+                            <Text variant="white" center small wrap className="px-2">{ LocalizeText('pet.level', [ 'level', 'maxlevel' ], [ avatarInfo.level.toString(), avatarInfo.maximumLevel.toString() ]) }</Text>
+                        </Flex>
+                        <Flex gap={ 1 }>
+                            <Column grow gap={ 1 }>
+                                <Column alignItems="center" gap={ 1 }>
+                                    <Text variant="white" truncate>{ LocalizeText('infostand.pet.text.happiness') }</Text>
+                                    <Flex className="start-0" position="absolute">
+                                        <Base className="icon-happiness" />
                                     </Flex>
-                                    <Base className="bg-purple pet-stats" style={ { width: (avatarInfo.experience / avatarInfo.levelExperienceGoal) * 100 + '%' } } />
-                                </Base>
-                            </Column>
-                            <Column alignItems="center" gap={ 1 }>
-                                <Text variant="white" truncate>{ LocalizeText('infostand.pet.text.energy') }</Text>
-                                <Flex fit position="absolute">
-                                    <Base className="icon-energy" />
-                                </Flex>
-                                <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark border border-light border-left height-bar">
-                                    <Flex fit center position="absolute">
-                                        <Text variant="white" small>{ avatarInfo.energy + '/' + avatarInfo.maximumEnergy }</Text>
+                                    <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark border border-light border-left height-bar">
+                                        <Flex fit center position="absolute">
+                                            <Text variant="white" small>{ avatarInfo.happyness + '/' + avatarInfo.maximumHappyness }</Text>
+                                        </Flex>
+                                        <Base className="bg-info pet-stats" style={ { width: (avatarInfo.happyness / avatarInfo.maximumHappyness) * 100 + '%' } } />
+                                    </Base>
+                                </Column>
+                                <Column alignItems="center" gap={ 1 }>
+                                    <Text variant="white" truncate>{ LocalizeText('infostand.pet.text.experience') }</Text>
+                                    <Flex className="start-0" position="absolute">
+                                        <Base className="icon-experience" />
                                     </Flex>
-                                    <Base className="bg-success pet-stats" style={ { width: (avatarInfo.energy / avatarInfo.maximumEnergy) * 100 + '%' } } />
-                                </Base>
+                                    <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark border border-light border-left height-bar">
+                                        <Flex fit center position="absolute">
+                                            <Text variant="white" small>{ avatarInfo.experience + '/' + avatarInfo.levelExperienceGoal }</Text>
+                                        </Flex>
+                                        <Base className="bg-purple pet-stats" style={ { width: (avatarInfo.experience / avatarInfo.levelExperienceGoal) * 100 + '%' } } />
+                                    </Base>
+                                </Column>
+                                <Column alignItems="center" gap={ 1 }>
+                                    <Text variant="white" truncate>{ LocalizeText('infostand.pet.text.energy') }</Text>
+                                    <Flex className="start-0" position="absolute">
+                                        <Base className="icon-energy" />
+                                    </Flex>
+                                    <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark border border-light border-left height-bar">
+                                        <Flex fit center position="absolute">
+                                            <Text variant="white" small>{ avatarInfo.energy + '/' + avatarInfo.maximumEnergy }</Text>
+                                        </Flex>
+                                        <Base className="bg-success pet-stats" style={ { width: (avatarInfo.energy / avatarInfo.maximumEnergy) * 100 + '%' } } />
+                                    </Base>
+                                </Column>
                             </Column>
-                        </Column>
-                    </Flex>
-                </Column>
-                <Column gap={ 1 } className="mt-4" alignItems="center" justifyContent="center">
-                    <Text variant="white" small wrap>
-                        { LocalizeText('infostand.text.petrespect', [ 'count' ], [ avatarInfo.respect.toString() ]) }
-                        <Base className="icon-petting" />
-                    </Text>
-                    <Text variant="white" small wrap>{ LocalizeText('pet.age', [ 'age' ], [ avatarInfo.age.toString() ]) }</Text>
-                    <Text variant="white" small wrap>{ LocalizeText('infostand.text.petowner', [ 'name' ], [ avatarInfo.ownerName ]) }</Text>
+                        </Flex>
+                    </Column>
+                    <Column gap={ 1 } className="mt-4" alignItems="center" justifyContent="center">
+                        <Text variant="white" small wrap>
+                            { LocalizeText('infostand.text.petrespect', [ 'count' ], [ avatarInfo.respect.toString() ]) }
+                            <Base className="icon-petting" />
+                        </Text>
+                        <Text variant="white" small wrap>{ LocalizeText('pet.age', [ 'age' ], [ avatarInfo.age.toString() ]) }</Text>
+                        <Text variant="white" small wrap>{ LocalizeText('infostand.text.petowner', [ 'name' ], [ avatarInfo.ownerName ]) }</Text>
+                    </Column>
                 </Column>
             </Column>
+            <Flex gap={ 2 } justifyContent="end">
+                { (avatarInfo.petType !== PetType.MONSTERPLANT) &&
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('buyfood') }>
+                        { LocalizeText('infostand.button.buyfood') }
+                    </Button> }
+                { avatarInfo.isOwner && (avatarInfo.petType !== PetType.MONSTERPLANT) &&
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('train') }>
+                        { LocalizeText('infostand.button.train') }
+                    </Button> }
+                { !avatarInfo.dead && ((avatarInfo.energy / avatarInfo.maximumEnergy) < 0.98) && (avatarInfo.petType === PetType.MONSTERPLANT) &&
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('treat') }>
+                        { LocalizeText('infostand.button.pettreat') }
+                    </Button> }
+                { roomSession?.isRoomOwner && (avatarInfo.petType === PetType.MONSTERPLANT) &&
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('compost') }>
+                        { LocalizeText('infostand.button.compost') }
+                    </Button> }
+                { avatarInfo.isOwner &&
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('pick_up') }>
+                        { LocalizeText('inventory.pets.pickup') }
+                    </Button> }
+                { (petRespectRemaining > 0) && (avatarInfo.petType !== PetType.MONSTERPLANT) &&
+                    <Button className="infostand-buttons px-2" onClick={ event => processButtonAction('respect') }>
+                        { LocalizeText('infostand.button.petrespect', [ 'count' ], [ petRespectRemaining.toString() ]) }
+                    </Button> }
+            </Flex>
         </Column>
     );
 }
