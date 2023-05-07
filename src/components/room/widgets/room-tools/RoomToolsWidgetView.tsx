@@ -179,11 +179,11 @@ export const RoomToolsWidgetView: FC<{}> = props =>
                                 <Column className="nitro-room-tools-info rounded py-2 px-3">
                                     <Column gap={ 1 }>
                                         <Text wrap variant="white" fontSize={ 4 }>{ roomName }</Text>
-                                        <Text variant="muted" fontSize={ 5 }>{ roomOwner }</Text>
+                                        <Text variant="muted" fontSize={ 5 }>{ LocalizeText('room.tool.room.owner.prefix') + ' ' + roomOwner }</Text>
                                     </Column>
                                     { roomTags && roomTags.length > 0 &&
                                         <Flex gap={ 2 }>
-                                            { roomTags.map((tag, index) => <Text key={ index } small pointer variant="white" className="rounded bg-primary p-1" onClick={ () => handleToolClick('navigator_search_tag', tag) }>#{ tag }</Text>) }
+                                            { roomTags.map((tag, index) => <Text key={ index } small pointer className="tags rounded p-1" onClick={ () => handleToolClick('navigator_search_tag', tag) }>#{ tag }</Text>) }
                                         </Flex> }
                                 </Column>
                             </Column>
