@@ -42,6 +42,10 @@
         font-family: Goldfish;
         font-size: 9px;
 
+        .size-pets {
+            font-size: 10px;
+        }
+
         .form-control-sm {
             height: 20px;
             min-height: 20px;
@@ -93,6 +97,16 @@
 
         .icon-energy {
             background: url('@/assets/flash/infostand/pets/energy.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .icon-wellbeing {
+            background: url('@/assets/flash/infostand/pets/wellbeing.png');
             background-repeat: no-repeat;
             width: 18px !important;
             height: 18px;

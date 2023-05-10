@@ -735,4 +735,9 @@
     }
 }
 
+.text-stroke {
+    color: black !important;
+    text-shadow: -1px -1px 1px #4d4d4d, 1px -1px 1px #4d4d4d, -1px 1px 1px #4d4d4d, 1px 1px 1px #4d4d4d;
+}
+
 @import './card/NitroCardView';
