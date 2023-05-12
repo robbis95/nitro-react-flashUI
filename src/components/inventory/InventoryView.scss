@@ -39,5 +39,25 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        width: 230px;
+    }
+
+    .quantity-input {
+        width: 49px;
+    }
+
+    .lock-design-left {
+        margin-left: 21px;
+        margin-right: 33px;
+    }
+
+    .lock-design-right {
+        margin-left: 21px;
+    }
+
+    .divisor {
+        height: 180px;
+        border-left: 2px solid #B4B4B4;
+        margin-top: 15px;
     }
 }

@@ -1,3 +1,4 @@
+import { AdvancedMap } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { GroupItem, LocalizeText, TradeState } from '../../../../api';
 import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutGridItem, Text } from '../../../../common';
@@ -29,6 +30,11 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
         {
             return <Base className="mt-auto mb-5 pb-5 icon icon-lock-open" />
         }
+    }
+
+    const getTotalCredits = (items: AdvancedMap<string, GroupItem>): number =>
+    {
+        return items.getValues().map( item => Number(item.iconUrl.split('/')[item.iconUrl.split('/').length - 1]?.split('_')[1]) * item.items.length ).reduce((acc, cur) => acc + (isNaN(cur) ? 0 : cur), 0); 
     }
 
     useEffect(() =>
@@ -67,7 +73,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                 { currentTab === TAB_FURNITURE &&
                     <>
                         <Text small>{ LocalizeText('inventory.trading.info.add') }</Text>
-                        <Grid overflow="hidden" className="px-2">
+                        <Grid gap={ 0 } overflow="hidden" className="px-2">
                             <Column size={ 4 } overflow="hidden">
                                 <Flex>
                                     { (ownUser.accepts) && <Base className="icon icon-confirmed" /> }
@@ -90,10 +96,13 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                 </AutoGrid>
                                 <Column gap={ 0 } fullWidth>
                                     <Text>{ LocalizeText('inventory.trading.info.itemcount', [ 'value' ], [ ownUser.itemCount.toString() ]) }</Text>
-                                    <Text className="credits-align">{ LocalizeText('inventory.trading.info.creditvalue.own', [ 'value' ], [ ownUser.userItems.length.toString() ]) }</Text>
+                                    <Text className="credits-align">{ LocalizeText('inventory.trading.info.creditvalue.own', [ 'value' ], [ getTotalCredits(ownUser.userItems).toString() ]) }</Text>
                                 </Column>
                             </Column>
-                            { getLockIcon(ownUser.accepts) }
+                            <Flex className="lock-design-left">
+                                { getLockIcon(ownUser.accepts) }
+                            </Flex>
+                            <Flex className="divisor"></Flex>
                             <Column size={ 4 } overflow="hidden">
                                 <Flex>
                                     { (otherUser.accepts) && <Base className="icon icon-confirmed" /> }
@@ -111,10 +120,12 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                 </AutoGrid>
                                 <Column gap={ 0 } fullWidth>
                                     <Text>{ LocalizeText('inventory.trading.info.itemcount', [ 'value' ], [ otherUser.itemCount.toString() ]) }</Text>
-                                    <Text>{ LocalizeText('inventory.trading.info.creditvalue', [ 'value' ], [ otherUser.userItems.length.toString() ]) }</Text>
+                                    <Text>{ LocalizeText('inventory.trading.info.creditvalue', [ 'value' ], [ getTotalCredits(otherUser.userItems).toString() ]) }</Text>
                                 </Column>
                             </Column>
-                            { getLockIcon(otherUser.accepts) }
+                            <Flex className="lock-design-right">
+                                { getLockIcon(otherUser.accepts) }
+                            </Flex>
                         </Grid>
                     </>
                 }

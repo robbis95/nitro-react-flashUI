@@ -87,9 +87,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
     }
 
     const attemptItemOffer = (count: number) =>
-    {
-        console.log('item', groupItem);
-        
+    {        
         if(!groupItem) return;
 
         const tradeItems = groupItem.getTradeItems(count);
@@ -143,6 +141,8 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
         {
             simpleAlert(LocalizeText('trading.items.too_many_items.desc'), NotificationAlertType.DEFAULT, null, null, LocalizeText('trading.items.too_many_items.title'));
         }
+
+        setGroupItem(selectedItem);
     }
 
     useEffect(() =>
@@ -222,6 +222,11 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
         return () => setIsVisible(false);
     }, []);
 
+    useEffect(() =>
+    {
+        setQuantity(1);
+    }, [ filteredGroupItems ]);
+
     if(!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={ LocalizeText('inventory.empty.title') } desc={ LocalizeText('inventory.empty.desc') } />;
 
     return (
@@ -258,8 +263,8 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
                             }
                             { (isTrading) &&
                                 <Column gap={ 1 } alignItems="start">
-                                    <input type="number" className="w-50 quantity-input remove-outline" placeholder={ LocalizeText('catalog.bundlewidget.spinner.select.amount') } disabled={ selectedItem.getUnlockedCount() === 0 } value={ quantity } onChange={ event => setQuantity(event.target.valueAsNumber) } />
-                                    <Button variant="secondary" disabled={ selectedItem.getUnlockedCount() === 0 } onClick={ event => changeCount(selectedItem.getUnlockedCount()) }>{ LocalizeText('inventory.trading.areoffering') }</Button>
+                                    <input type="number" className="quantity-input remove-outline" placeholder={ LocalizeText('catalog.bundlewidget.spinner.select.amount') } disabled={ selectedItem.getUnlockedCount() === 0 } value={ !quantity ? '' : quantity } onChange={ event => setQuantity(event.target.valueAsNumber) } />
+                                    <Button variant="secondary" disabled={ !quantity || selectedItem.getUnlockedCount() === 0 } onClick={ event => !quantity ? null : changeCount(selectedItem.getUnlockedCount()) }>{ LocalizeText('inventory.trading.areoffering') }</Button>
                                 </Column>
                             }
                         </Column>
