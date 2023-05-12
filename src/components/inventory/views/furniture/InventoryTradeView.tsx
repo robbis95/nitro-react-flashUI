@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { GroupItem, LocalizeText, TradeState } from '../../../../api';
 import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutGridItem, Text } from '../../../../common';
 import { useInventoryTrade } from '../../../../hooks';
-import { TABS, TAB_FURNITURE } from '../../InventoryView';
+import { MAX_ITEMS_TO_TRADE, TABS, TAB_FURNITURE } from '../../constants';
 
 interface InventoryTradeViewProps
 {
@@ -10,8 +10,6 @@ interface InventoryTradeViewProps
     setCurrentTab: (value: string) => void;
     cancelTrade: () => void;
 }
-
-export const MAX_ITEMS_TO_TRADE: number = 9;
 
 export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
 {

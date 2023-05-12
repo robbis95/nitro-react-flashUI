@@ -4,10 +4,10 @@ import { DispatchUiEvent, FurniCategory, GetRoomEngine, GetSessionDataManager, G
 import { AutoGrid, Button, Column, Grid, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, LayoutRoomPreviewerView, Text } from '../../../../common';
 import { CatalogPostMarketplaceOfferEvent } from '../../../../events';
 import { useInventoryFurni, useInventoryTrade, useInventoryUnseenTracker, useNotification } from '../../../../hooks';
+import { MAX_ITEMS_TO_TRADE } from '../../constants';
 import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryFurnitureItemView } from './InventoryFurnitureItemView';
 import { InventoryFurnitureSearchView } from './InventoryFurnitureSearchView';
-import { MAX_ITEMS_TO_TRADE } from './InventoryTradeView';
 
 interface InventoryFurnitureViewProps
 {
