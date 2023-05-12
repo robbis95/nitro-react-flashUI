@@ -290,17 +290,24 @@
     }
 
     &.icon-lock-open {
-        background: url(@/assets/flash/inventory/lock_open.png);
+        background: url('@/assets/flash/inventory/lock_open.png');
         background-repeat: no-repeat;
         height: 43px;
         width: 29px;
     }
 
     &.icon-lock-locked {
-        background: url(@/assets/flash/inventory/lock_locked.png);
+        background: url('@/assets/flash/inventory/lock_locked.png');
         background-repeat: no-repeat;
         height: 44px;
         width: 36px;
+    }
+
+    &.icon-confirmed {
+        background: url('@/assets/flash/inventory/confirmed.png');
+        background-repeat: no-repeat;
+        height: 18px;
+        width: 18px;
     }
 
     &.icon-sign-heart {
