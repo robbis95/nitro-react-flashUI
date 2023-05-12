@@ -13,7 +13,7 @@ interface InventoryFurnitureViewProps
 {
     roomSession: IRoomSession;
     roomPreviewer: RoomPreviewer;
-    isTrading?: boolean;
+    isTrading: boolean;
 }
 
 const attemptPlaceMarketplaceOffer = (groupItem: GroupItem) =>
