@@ -1,7 +1,7 @@
+import { RoomObjectCategory, RoomObjectVariable } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import { GetUserProfile, IPhotoData, LocalizeText } from '../../../api';
-import { Flex, Grid, Text } from '../../../common';
+import { GetRoomEngine, GetUserProfile, IPhotoData, LocalizeText } from '../../../api';
+import { Base, Flex, Text } from '../../../common';
 
 export interface CameraWidgetShowPhotoViewProps
 {
@@ -40,6 +40,13 @@ export const CameraWidgetShowPhotoView: FC<CameraWidgetShowPhotoViewProps> = pro
         });
     }
 
+    const getUserData = (roomId: number, objectId: number, type: string): number | string =>
+    {
+        const roomObject = GetRoomEngine().getRoomObject(roomId, objectId, RoomObjectCategory.WALL);
+    
+        return type == 'username' ? roomObject.model.getValue<number>(RoomObjectVariable.FURNITURE_OWNER_NAME) : roomObject.model.getValue<number>(RoomObjectVariable.FURNITURE_OWNER_ID);
+    }
+
     useEffect(() =>
     {
         setImageIndex(currentIndex);
@@ -48,24 +55,27 @@ export const CameraWidgetShowPhotoView: FC<CameraWidgetShowPhotoViewProps> = pro
     if(!currentImage) return null;
 
     return (
-        <Grid style={ { display: 'flex', flexDirection: 'column' } }>
+        <Flex>
             <Flex center className="picture-preview border border-black" style={ currentImage.w ? { backgroundImage: 'url(' + currentImage.w + ')' } : {} }>
-                { !currentImage.w &&
-                    <Text bold>{ LocalizeText('camera.loading') }</Text> }
+                { !currentImage.w && <Text bold>{ LocalizeText('camera.loading') }</Text> }
             </Flex>
-            { currentImage.m && currentImage.m.length &&
-                <Text center>{ currentImage.m }</Text> }
-            <Flex alignItems="center" justifyContent="between">
-                <Text>{ (currentImage.n || '') }</Text>
-                <Text>{ new Date(currentImage.t * 1000).toLocaleDateString() }</Text>
+            { currentImage.m && currentImage.m.length && <Text center>{ currentImage.m }</Text> }
+            <Flex position="absolute" className="bottom-5 px-2">
+                <Text small>{ new Date(currentImage.t * 1000).toLocaleDateString() }</Text>
+            </Flex>
+            <Flex position="absolute" className="bottom-5 end-5 px-5">
+                <Text pointer small underline onClick={ () => GetUserProfile(Number(getUserData(currentImage.s, Number(currentImage.u), 'id'))) }>{ getUserData(currentImage.s, Number(currentImage.u), 'username') }</Text>
             </Flex>
             { (currentPhotos.length > 1) &&
-                <Flex className="picture-preview-buttons">
-                    <FaArrowLeft className="cursor-pointer picture-preview-buttons-previous fa-icon" onClick={ previous } />
-                    <Text underline className="cursor-pointer" onClick={ event => GetUserProfile(currentImage.oi) }>{ currentImage.o }</Text>
-                    <FaArrowRight className="cursor-pointer picture-preview-buttons-next fa-icon" onClick={ next } />
-                </Flex>
+                <>
+                    <Flex position="absolute" className="start-2 center-buttons">
+                        <Base className="icon nitro-camera-button-left" onClick={ previous } />
+                    </Flex>
+                    <Flex position="absolute" className="end-2 center-buttons">
+                        <Base className="icon nitro-camera-button-right" onClick={ next } />
+                    </Flex>
+                </>
             }
-        </Grid>
+        </Flex>
     );
 }
