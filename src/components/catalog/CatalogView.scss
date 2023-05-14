@@ -335,4 +335,25 @@
     }
 }
 
+.club-content {
+    height: 73px;
+    background-color: #DEDEDE;
+    border-radius: 12px;
+    border: 1px solid #959595;
+
+    .content-title {
+        height: 25px;
+        background-color: #959595;
+        border-radius: 6px;
+    
+        .margin-image {
+            margin-right: 27px;
+        }
+
+        .margin-text {
+            margin-top: -2px;
+        }
+    }
+}
+
 @import './views/targeted-offer/Offer.scss';
