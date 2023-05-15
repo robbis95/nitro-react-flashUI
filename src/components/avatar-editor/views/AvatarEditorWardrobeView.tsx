@@ -106,7 +106,7 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
         <div>
             <div className="d-flex flex-column align-items-center">
                 <span className="saved-outfits-title">
-                    { LocalizeText('wardrobe.saved.outfits.title') }
+                    { LocalizeText('avatareditor.wardrobe.title') }
                 </span>
                 <span className="mt-2">
                     { !hcDisabled && getClubLevel() > 0 && (
@@ -119,5 +119,4 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
             </div>
         </div>
     );
-
 }
