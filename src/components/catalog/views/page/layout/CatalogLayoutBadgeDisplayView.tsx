@@ -31,15 +31,11 @@ export const CatalogLayoutBadgeDisplayView: FC<CatalogLayoutProps> = props =>
                         <>
                             <Base position="relative" overflow="hidden">
                                 <CatalogViewProductWidgetView />
+                                <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                                <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
                             </Base>
                             <Column grow gap={ 1 }>
                                 <CatalogLimitedItemWidgetView fullWidth />
-                                <Text grow truncate>
-                                    { currentOffer.localizationName }
-                                </Text>
-                                <Flex justifyContent="end">
-                                    <CatalogTotalPriceWidget alignItems="end" />
-                                </Flex>
                             </Column>
                         </>
                     }
