@@ -233,7 +233,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
         <Grid>
             <Column size={ 7 } overflow="hidden">
                 <InventoryFurnitureSearchView groupItems={ groupItems } setGroupItems={ setFilteredGroupItems } />
-                <AutoGrid columnCount={ 5 }>
+                <AutoGrid columnCount={ 5 } className={ isTrading ? 'trading-inventory' : '' }>
                     { filteredGroupItems && (filteredGroupItems.length > 0) && filteredGroupItems.map((item, index) => <InventoryFurnitureItemView key={ index } groupItem={ item } isTrading={ isTrading } attemptItemOffer={ (e) => attemptItemOffer(e) } setGroupItem={ (e) => setGroupItem(e) } />) }
                 </AutoGrid>
             </Column>
