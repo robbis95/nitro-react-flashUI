@@ -20,19 +20,13 @@ export const CatalogLayoutBadgeDisplayView: FC<CatalogLayoutProps> = props =>
         <>
             <CatalogFirstProductSelectorWidgetView />
             <Grid>
-                <Column size={ 7 } overflow="hidden">
-                    <CatalogItemGridWidgetView shrink />
-                    <Column gap={ 1 } overflow="hidden">
-                        <Text truncate shrink fontWeight="bold">{ LocalizeText('catalog_selectbadge') }</Text>
-                        <CatalogBadgeSelectorWidgetView />
-                    </Column>
-                </Column>
-                <Column center={ !currentOffer } size={ 5 } overflow="hidden">
+                <Column center={ !currentOffer } size={ 12 }>
                     { !currentOffer &&
                         <>
                             { !!page.localization.getImage(1) && <img alt="" src={ page.localization.getImage(1) } /> }
                             <Text center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
-                        </> }
+                        </> 
+                    }
                     { currentOffer &&
                         <>
                             <Base position="relative" overflow="hidden">
@@ -40,13 +34,33 @@ export const CatalogLayoutBadgeDisplayView: FC<CatalogLayoutProps> = props =>
                             </Base>
                             <Column grow gap={ 1 }>
                                 <CatalogLimitedItemWidgetView fullWidth />
-                                <Text grow truncate>{ currentOffer.localizationName }</Text>
+                                <Text grow truncate>
+                                    { currentOffer.localizationName }
+                                </Text>
                                 <Flex justifyContent="end">
                                     <CatalogTotalPriceWidget alignItems="end" />
                                 </Flex>
-                                <CatalogPurchaseWidgetView />
                             </Column>
-                        </> }
+                        </>
+                    }
+                </Column>
+                <Column size={ 6 } overflow="auto" className="grid-bg p-2">
+                    <Column overflow="auto">
+                        <CatalogItemGridWidgetView shrink />
+                    </Column>
+                    <Text>
+                        { LocalizeText('catalog_selectproduct') }
+                    </Text>
+                </Column>
+                <Column size={ 6 } overflow="hidden">
+                    <Column gap={ 1 } overflow="hidden">
+                        <CatalogBadgeSelectorWidgetView />
+                    </Column>
+                </Column>
+                <Column size={ 12 } overflow="hidden">
+                    <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
+                        <CatalogPurchaseWidgetView />
+                    </Flex>
                 </Column>
             </Grid>
         </>
