@@ -1,4 +1,4 @@
-import { CanCreateRoomEventEvent, CantConnectMessageParser, DoorbellMessageEvent, FlatAccessDeniedMessageEvent, FlatCreatedEvent, FollowFriendMessageComposer, GenericErrorEvent, GetGuestRoomMessageComposer, GetGuestRoomResultEvent, GetUserEventCatsMessageComposer, GetUserFlatCatsMessageComposer, HabboWebTools, LegacyExternalInterface, NavigatorCategoryDataParser, NavigatorEventCategoryDataParser, NavigatorHomeRoomEvent, NavigatorMetadataEvent, NavigatorOpenRoomCreatorEvent, NavigatorSearchEvent, NavigatorSearchResultSet, NavigatorTopLevelContext, RoomDataParser, RoomDoorbellAcceptedEvent, RoomEnterErrorEvent, RoomEntryInfoMessageEvent, RoomForwardEvent, RoomScoreEvent, RoomSettingsUpdatedEvent, SecurityLevel, ThumbnailStatusMessageEvent, UserEventCatsEvent, UserFlatCatsEvent, UserInfoEvent, UserPermissionsEvent } from '@nitrots/nitro-renderer';
+import { CanCreateRoomEventEvent, CantConnectMessageParser, DoorbellMessageEvent, FlatAccessDeniedMessageEvent, FlatCreatedEvent, FollowFriendMessageComposer, GenericErrorEvent, GetGuestRoomMessageComposer, GetGuestRoomResultEvent, GetUserEventCatsMessageComposer, GetUserFlatCatsMessageComposer, HabboWebTools, LegacyExternalInterface, NavigatorCategoryDataParser, NavigatorEventCategoryDataParser, NavigatorHomeRoomEvent, NavigatorMetadataEvent, NavigatorOpenRoomCreatorEvent, NavigatorSavedSearch, NavigatorSearchEvent, NavigatorSearchResultSet, NavigatorSearchesEvent, NavigatorTopLevelContext, RoomDataParser, RoomDoorbellAcceptedEvent, RoomEnterErrorEvent, RoomEntryInfoMessageEvent, RoomForwardEvent, RoomScoreEvent, RoomSettingsUpdatedEvent, SecurityLevel, ThumbnailStatusMessageEvent, UserEventCatsEvent, UserFlatCatsEvent, UserInfoEvent, UserPermissionsEvent } from '@nitrots/nitro-renderer';
 import { useState } from 'react';
 import { useBetween } from 'use-between';
 import { CreateLinkEvent, CreateRoomSession, DoorStateType, GetConfiguration, GetSessionDataManager, INavigatorData, LocalizeText, NotificationAlertType, SendMessageComposer, TryVisitRoom, VisitDesktop } from '../../api';
@@ -13,6 +13,7 @@ const useNavigatorState = () =>
     const [ topLevelContexts, setTopLevelContexts ] = useState<NavigatorTopLevelContext[]>(null);
     const [ doorData, setDoorData ] = useState<{ roomInfo: RoomDataParser, state: number }>({ roomInfo: null, state: DoorStateType.NONE });
     const [ searchResult, setSearchResult ] = useState<NavigatorSearchResultSet>(null);
+    const [ navigatorSearches, setNavigatorSearches ] = useState<NavigatorSavedSearch[]>(null);
     const [ navigatorData, setNavigatorData ] = useState<INavigatorData>({
         settingsReceived: false,
         homeRoomId: 0,
@@ -455,7 +456,16 @@ const useNavigatorState = () =>
 
     useMessageEvent<NavigatorOpenRoomCreatorEvent>(NavigatorOpenRoomCreatorEvent, event => CreateLinkEvent('navigator/show'));
 
-    return { categories, doorData, setDoorData, topLevelContext, topLevelContexts, searchResult, navigatorData };
+    useMessageEvent<NavigatorSearchesEvent>(NavigatorSearchesEvent, event =>
+    {
+        const parser = event.getParser();
+
+        if (!parser) return;
+
+        setNavigatorSearches(parser.searches);
+    });
+
+    return { categories, doorData, setDoorData, topLevelContext, topLevelContexts, searchResult, navigatorData, navigatorSearches };
 }
 
 export const useNavigator = () => useBetween(useNavigatorState);

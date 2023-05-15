@@ -4,6 +4,11 @@
     max-width: $navigator-width;
     min-height: $navigator-min-height;
 
+    &.expanded {
+        max-width: $navigator-width + 153px;
+        min-width: $navigator-width + 153px;
+    }
+
     .nav-form {
         width: 275px;
     }
@@ -255,4 +260,32 @@
 .navigator-search-button {
     right: 10px;
     top: 11px;
+}
+
+.nitro-navigator-search-saves-result {
+    background-color: #fff;
+    width: 141px;
+    min-height: 494px;
+    max-height: 350px;
+    border-radius: 10px;
+
+    .bg-orange {
+        background-color: #FAA700;
+    }
+}
+
+.nitro-navigator-search-delete {
+    cursor: pointer;
+    background-image: url("@/assets/flash/navigator/saves-search/delete_search.png");
+    width: 18px;
+    height: 18px;
+
+    &:hover {
+        background-image: url("@/assets/flash/navigator/saves-search/delete_search_hover.png");
+
+        &:active {
+            background-image: url("@/assets/flash/navigator/saves-search/delete_search_click.png");
+        }
+
+    }
 }

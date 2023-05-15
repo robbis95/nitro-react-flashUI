@@ -874,6 +874,12 @@
         height: 38px;
     }
 
+    &.icon-search_save {
+        background-image: url('@/assets/flash/navigator/saves-search/search_save.png');
+        width: 18px;
+        height: 18px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }
