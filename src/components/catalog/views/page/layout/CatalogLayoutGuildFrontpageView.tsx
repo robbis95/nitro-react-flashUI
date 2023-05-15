@@ -16,14 +16,13 @@ export const CatalogLayouGuildFrontpageView: FC<CatalogLayoutProps> = props =>
         <Column>
             <Column gap={ 4 } overflow="hidden" className="p-3">
                 <Text bold dangerouslySetInnerHTML={ { __html: page.localization.getText(2) } } />
-                <Text overflow="auto" dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
                 <Text dangerouslySetInnerHTML={ { __html: page.localization.getText(1) } } />
             </Column>
             <Column center size={ 5 } overflow="hidden">
-                <LayoutImage imageUrl={ page.localization.getImage(1) } />
                 <Button onClick={ () => CreateLinkEvent('groups/create') }>
                     { LocalizeText('catalog.start.guild.purchase.button') }
                 </Button>
+                <LayoutImage imageUrl={ page.localization.getImage(1) } />
             </Column>
         </Column>
     );
