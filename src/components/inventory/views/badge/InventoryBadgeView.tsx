@@ -49,7 +49,7 @@ export const InventoryBadgeView: FC<{}> = props =>
     }, []);
 
     return (
-        <div>
+        <div className="badge-wrapper">
             <Grid gap={ 2 } className="badges-list">
                 <Column size={ 8 } overflow="hidden">
                     <Flex gap={ 1 } className="position-relative">

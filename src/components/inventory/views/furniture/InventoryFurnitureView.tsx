@@ -87,7 +87,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
     }
 
     const attemptItemOffer = (count: number) =>
-    {        
+    {
         if(!groupItem) return;
 
         const tradeItems = groupItem.getTradeItems(count);
@@ -263,7 +263,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
                             }
                             { (isTrading) &&
                                 <Column gap={ 1 } alignItems="start">
-                                    <input type="number" className="quantity-input remove-outline" placeholder={ LocalizeText('catalog.bundlewidget.spinner.select.amount') } disabled={ selectedItem.getUnlockedCount() === 0 } value={ !quantity ? '' : quantity } onChange={ event => setQuantity(event.target.valueAsNumber) } />
+                                    <input type="number" className="quantity-input remove-outline form-control" placeholder={ LocalizeText('catalog.bundlewidget.spinner.select.amount') } disabled={ selectedItem.getUnlockedCount() === 0 } value={ !quantity ? '' : quantity } onChange={ event => setQuantity(event.target.valueAsNumber) } />
                                     <Button variant="secondary" disabled={ !quantity || selectedItem.getUnlockedCount() === 0 } onClick={ event => !quantity ? null : changeCount(selectedItem.getUnlockedCount()) }>{ LocalizeText('inventory.trading.areoffering') }</Button>
                                 </Column>
                             }

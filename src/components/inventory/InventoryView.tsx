@@ -67,7 +67,7 @@ export const InventoryView: FC<{}> = props =>
                 const parts = url.split('/');
 
                 if(parts.length < 2) return;
-        
+
                 switch(parts[1])
                 {
                     case 'show':
@@ -112,7 +112,7 @@ export const InventoryView: FC<{}> = props =>
     if(!isVisible) return null;
 
     return (
-        <NitroCardView uniqueKey={ 'inventory' } className={ `${ isTrading ? 'nitro-inventory trading' : 'nitro-inventory' } no-resize` } theme={ isTrading ? 'primary' : '' } >
+        <NitroCardView uniqueKey={ 'inventory' } className={ `${ isTrading ? 'nitro-inventory trading  no-resize' : 'nitro-inventory' }` } theme={ isTrading ? 'primary' : '' } >
             <NitroCardHeaderView headerText={ LocalizeText('inventory.title') } onCloseClick={ onClose } />
             <>
                 <NitroCardTabsView>
@@ -128,9 +128,9 @@ export const InventoryView: FC<{}> = props =>
                 <NitroCardContentView>
                     { (currentTab === TAB_FURNITURE ) &&
                             <InventoryFurnitureView roomSession={ roomSession } roomPreviewer={ roomPreviewer } isTrading={ isTrading } /> }
-                    { (currentTab === TAB_PETS ) && 
+                    { (currentTab === TAB_PETS ) &&
                             <InventoryPetView roomSession={ roomSession } roomPreviewer={ roomPreviewer } /> }
-                    { (currentTab === TAB_BADGES ) && 
+                    { (currentTab === TAB_BADGES ) &&
                             <InventoryBadgeView /> }
                     { (currentTab === TAB_BOTS ) &&
                             <InventoryBotView roomSession={ roomSession } roomPreviewer={ roomPreviewer } /> }

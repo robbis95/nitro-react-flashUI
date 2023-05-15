@@ -34,7 +34,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
 
     const getTotalCredits = (items: AdvancedMap<string, GroupItem>): number =>
     {
-        return items.getValues().map( item => Number(item.iconUrl.split('/')[item.iconUrl.split('/').length - 1]?.split('_')[1]) * item.items.length ).reduce((acc, cur) => acc + (isNaN(cur) ? 0 : cur), 0); 
+        return items.getValues().map( item => Number(item.iconUrl.split('/')[item.iconUrl.split('/').length - 1]?.split('_')[1]) * item.items.length ).reduce((acc, cur) => acc + (isNaN(cur) ? 0 : cur), 0);
     }
 
     useEffect(() =>
@@ -77,7 +77,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                             <Column size={ 4 } overflow="hidden">
                                 <Flex>
                                     { (ownUser.accepts) && <Base className="icon icon-confirmed" /> }
-                                    <Text className="px-2"><b>{ LocalizeText('inventory.trading.you') }</b> { LocalizeText('inventory.trading.areoffering') }</Text>
+                                    <small className={ ownUser.accepts ? 'px-2' : '' }><b>{ LocalizeText('inventory.trading.you') }</b> { LocalizeText('inventory.trading.areoffering') }</small>
                                 </Flex>
                                 <AutoGrid columnCount={ 3 }>
                                     { Array.from(Array(MAX_ITEMS_TO_TRADE), (e, i) =>
@@ -95,8 +95,8 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                     }) }
                                 </AutoGrid>
                                 <Column gap={ 0 } fullWidth>
-                                    <Text>{ LocalizeText('inventory.trading.info.itemcount', [ 'value' ], [ ownUser.itemCount.toString() ]) }</Text>
-                                    <Text className="credits-align">{ LocalizeText('inventory.trading.info.creditvalue.own', [ 'value' ], [ getTotalCredits(ownUser.userItems).toString() ]) }</Text>
+                                    <small>{ LocalizeText('inventory.trading.info.itemcount', [ 'value' ], [ ownUser.itemCount.toString() ]) }</small>
+                                    <small className="credits-align">{ LocalizeText('inventory.trading.info.creditvalue.own', [ 'value' ], [ getTotalCredits(ownUser.userItems).toString() ]) }</small>
                                 </Column>
                             </Column>
                             <Flex className="lock-design-left">
@@ -106,7 +106,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                             <Column size={ 4 } overflow="hidden">
                                 <Flex>
                                     { (otherUser.accepts) && <Base className="icon icon-confirmed" /> }
-                                    <Text className="px-2"><b>{ otherUser.userName }</b> { LocalizeText('inventory.trading.isoffering') }</Text>
+                                    <small className={ otherUser.accepts ? 'px-2' : '' }><b>{ otherUser.userName }</b> { LocalizeText('inventory.trading.isoffering') }</small>
                                 </Flex>
                                 <AutoGrid columnCount={ 3 }>
                                     { Array.from(Array(MAX_ITEMS_TO_TRADE), (e, i) =>
@@ -119,8 +119,8 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                     }) }
                                 </AutoGrid>
                                 <Column gap={ 0 } fullWidth>
-                                    <Text>{ LocalizeText('inventory.trading.info.itemcount', [ 'value' ], [ otherUser.itemCount.toString() ]) }</Text>
-                                    <Text>{ LocalizeText('inventory.trading.info.creditvalue', [ 'value' ], [ getTotalCredits(otherUser.userItems).toString() ]) }</Text>
+                                    <small>{ LocalizeText('inventory.trading.info.itemcount', [ 'value' ], [ otherUser.itemCount.toString() ]) }</small>
+                                    <small>{ LocalizeText('inventory.trading.info.creditvalue', [ 'value' ], [ getTotalCredits(otherUser.userItems).toString() ]) }</small>
                                 </Column>
                             </Column>
                             <Flex className="lock-design-right">
