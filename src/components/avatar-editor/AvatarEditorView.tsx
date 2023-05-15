@@ -265,7 +265,7 @@ export const AvatarEditorView: FC<{}> = props =>
 
     if(!isVisible || !figureData) return null;
 
-    const avatarEditorClasses = `nitro-avatar-editor ${ isWardrobeVisible ? 'expanded' : '' }`;
+    const avatarEditorClasses = `nitro-avatar-editor no-resize ${ isWardrobeVisible ? 'expanded' : '' }`;
 
     return (
         <NitroCardView uniqueKey="avatar-editor" className={ avatarEditorClasses }>
