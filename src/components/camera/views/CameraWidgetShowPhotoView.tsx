@@ -61,14 +61,10 @@ export const CameraWidgetShowPhotoView: FC<CameraWidgetShowPhotoViewProps> = pro
             </Flex>
             { currentImage.m && currentImage.m.length && <Text center>{ currentImage.m }</Text> }
             <Flex position="absolute" className="bottom-5 px-2">
-                <Text small>
-                    {new Date(currentImage.t || 0).toLocaleDateString('nl-NL', {day: 'numeric', month: 'long', year: 'numeric'})}
-                </Text>
+                <Text small>{ new Date(currentImage.t * 1000).toLocaleDateString() }</Text>
             </Flex>
             <Flex position="absolute" className="bottom-5 end-5 px-5">
-                <Text pointer small underline onClick={ () => GetUserProfile(Number(getUserData(currentImage.s, Number(currentImage.u), 'id'))) }>
-                    { getUserData(currentImage.s, Number(currentImage.u), 'username') }
-                </Text>
+                <Text pointer small underline onClick={ () => GetUserProfile(Number(getUserData(currentImage.s, Number(currentImage.u), 'id'))) }>{ getUserData(currentImage.s, Number(currentImage.u), 'username') }</Text>
             </Flex>
             { (currentPhotos.length > 1) &&
                 <>
