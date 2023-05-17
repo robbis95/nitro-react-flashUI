@@ -18,7 +18,7 @@ export const CurrencyView: FC<CurrencyViewProps> = props =>
     {
         return (
             <Flex justifyContent="end" pointer gap={ 1 } className="nitro-purse-button rounded">
-                <Text bold truncate textEnd variant="white" grow title={ amount > 99999 ? LocalizeFormattedNumber(amount) : '' }>{ amount > 99999 ? '99 999' : (short ? LocalizeShortNumber(amount) : LocalizeFormattedNumber(amount)) }</Text>
+                <Text bold truncate textEnd variant="white" grow title={ LocalizeFormattedNumber(amount) }>{ short ? LocalizeShortNumber(amount) : LocalizeFormattedNumber(amount) }</Text>
                 <LayoutCurrencyIcon type={ type } />
             </Flex>);
     }, [ amount, short, type ]);
@@ -30,7 +30,7 @@ export const CurrencyView: FC<CurrencyViewProps> = props =>
             placement="left"
             overlay={
                 <Tooltip id={ `tooltip-${ type }` }>
-                    { amount > 99999 ? LocalizeFormattedNumber(amount) : '' }
+                    { LocalizeFormattedNumber(amount) }
                 </Tooltip>
             }>
             { element }

@@ -19,7 +19,7 @@ export function LocalizeShortNumber(number: number): string
 
     for(const power of powers)
     {
-        let reduced = abs / power.value;
+        let reduced = parseFloat((abs / power.value).toFixed(0));
 
         reduced = Math.round(reduced * rounder) / rounder;
 
