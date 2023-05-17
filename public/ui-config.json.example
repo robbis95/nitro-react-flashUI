@@ -88,13 +88,13 @@
             "slot.7.conf": {}
         },
         "images": {
-            "background": "${asset.url}/images/reception/stretch_blue.png",
-            "background.colour": "#6eadc8",
-            "sun": "${asset.url}/images/reception/sun.png",
-            "drape": "${asset.url}/images/reception/drape.png",
-            "left": "${asset.url}/images/reception/ts.png",
-            "right": "${asset.url}/images/reception/US_right.png",
-            "right.repeat": "${asset.url}/images/reception/US_top_right.png"
+            "background": "${image.library.url}reception/background_gradient_May23.png",
+            "background.colour": "",
+            "sun": "",
+            "drape": "${image.library.url}reception/reception_logo_drape.png",
+            "left": "${image.library.url}reception/background_left_May23.png",
+            "right": "${image.library.url}reception/background_right.png",
+            "right.repeat": ""
         }
     },
     "achievements.unseen.ignored": [
