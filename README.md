@@ -1,7 +1,6 @@
 # FlashUI (Nitro React client)
 
 A modified UI for the Nitro React client from Billsonnn.
-Installation process is the same as for setting up the normal client.
 
 We recommend you to use the main-branch because thats the one that probably will be most stable.
 
@@ -30,7 +29,7 @@ Prerequisites:
 -   [Git](https://git-scm.com/)
 -   [NodeJS](https://nodejs.org/) >= 18
     - If using NodeJS < 18 remove `--openssl-legacy-provider` from the package.json scripts
--   [Yarn](https://yarnpkg.com/) `npm i yarn -g`
+-   [npm](https://www.npmjs.com/) `npm install -g`
 
 Installation:
 
@@ -38,7 +37,7 @@ Installation:
 -   Clone Nitro
     -   `git clone https://github.com/robbis95/nitro-react-flashUI.git`
 -   Install the dependencies
-    -   `yarn install`
+    -   `npm install`
     -   This may take some time, please be patient
 -   Rename a few files
     -   Rename `public/renderer-config.json.example` to `public/renderer-config.json`
@@ -60,7 +59,7 @@ Development:
 Run Nitro in development mode when you are editing the files, this way you can see the changes in your browser instantly
 
 ```
-yarn start
+npm run start
 ```
 
 Production:
@@ -68,7 +67,7 @@ Production:
 To build a production version of Nitro just run the following command
 
 ```
-yarn build:prod
+npm run build
 ```
 
 -   A `dist` folder will be generated, these are the files that must be uploaded to your webserver
