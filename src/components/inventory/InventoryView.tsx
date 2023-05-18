@@ -125,7 +125,7 @@ export const InventoryView: FC<{}> = props =>
                         );
                     }) }
                 </NitroCardTabsView>
-                <NitroCardContentView>
+                <NitroCardContentView overflow={ `${ isTrading ? 'hidden' : 'auto' }` }>
                     { (currentTab === TAB_FURNITURE ) &&
                             <InventoryFurnitureView roomSession={ roomSession } roomPreviewer={ roomPreviewer } isTrading={ isTrading } /> }
                     { (currentTab === TAB_PETS ) &&
