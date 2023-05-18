@@ -17,7 +17,7 @@
         min-height: $inventory-height + 290px !important;
 
         .trading-inventory {
-            height: 200px;
+            max-height: 200px;
         }
     }
 
