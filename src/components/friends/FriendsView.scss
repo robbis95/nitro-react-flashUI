@@ -223,7 +223,6 @@
 .nitro-friends-messenger {
     width: $messenger-width;
     height: $messenger-height;
-    resize: none;
     font-size: 10px;
 
 
@@ -269,9 +268,10 @@
         background: transparent;
         height: 27px;
         position: absolute;
-        width: 270px;
+        width: calc(100% - 16px);
         bottom: 14px;
         outline: 0px;
+        padding-right: 76px;
     }
 
     .thread-message {
