@@ -886,6 +886,12 @@
         height: 18px;
     }
 
+    &.icon-sheet {
+        background-image: url('@/assets/flash/hotelview/halloffame/sheet.png');
+        width: 16px;
+        height: 12px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }
