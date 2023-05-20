@@ -892,6 +892,18 @@
         height: 12px;
     }
 
+    &.icon-tiles {
+        background-image: url('@/assets/flash/navigator/room-creator/tiles.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-tiles_room_selected {
+        background-image: url('@/assets/flash/navigator/room-creator/tiles_room_selected.png');
+        width: 16px;
+        height: 12px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }
