@@ -44,7 +44,7 @@ export const CatalogLayoutBadgeDisplayView: FC<CatalogLayoutProps> = props =>
                     <Column overflow="auto">
                         <CatalogItemGridWidgetView shrink />
                     </Column>
-                    <Text>
+                    <Text className="selectproduct-title bottom-5">
                         { LocalizeText('catalog_selectproduct') }
                     </Text>
                 </Column>
