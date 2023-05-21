@@ -23,6 +23,7 @@
     "wired.action.chat.max.length": 100,
     "wired.action.kick.from.room.max.length": 100,
     "wired.action.mute.user.max.length": 100,
+    "camera.enabled": true,
     "game.center.enabled": false,
     "guides.enabled": true,
     "toolbar.hide.quests": true,
