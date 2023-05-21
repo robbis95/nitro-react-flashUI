@@ -111,8 +111,10 @@
 
 .nitro-toolbar-me {
     position: absolute;
-    bottom: 52px;
-    left: 15px;
+    height: 53px;
+    width: 362px;
+    left: 3px;
+    bottom: 45px;
     z-index: $toolbar-memenu-zindex;
     border-image-source: url(@/assets/flash/toolbar/me_menu_bg.png);
     border-image-slice: 6 6 6 6 fill;
