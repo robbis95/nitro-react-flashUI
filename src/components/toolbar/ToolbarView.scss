@@ -118,9 +118,13 @@
     border-image-slice: 6 6 6 6 fill;
     border-image-width: 6px 6px 6px 6px;
 
-    .me-text {
-        font-size: 10px;
-    }
+	.me-text {
+		font-size: 9px;
+		color: white;
+		&:hover {
+			color: #20c4e6;
+		}
+	}
 
     .navigation-item {
         transition: filter .2s ease-out;
