@@ -1,7 +1,6 @@
 # FlashUI (Nitro React client)
 
 A modified UI for the Nitro React client from Billsonnn.
-Installation process is the same as for setting up the normal client.
 
 We recommend you to use the main-branch because thats the one that probably will be most stable.
 
