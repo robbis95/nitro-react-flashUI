@@ -170,7 +170,13 @@
         width: 38px;
         height: 45px;
     }
-
+    
+    &.icon-buildersclub {
+        background-image: url('@/assets/images/toolbar/icons/buildersclub.png');
+        width: 32px;
+        height: 33px;
+    }
+    
     &.icon-message {
         background-image: url('@/assets/images/toolbar/icons/message.png');
         width: 36px;
