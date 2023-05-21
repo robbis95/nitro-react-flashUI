@@ -100,7 +100,7 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                                 <LayoutItemCountView count={ getTotalUnseen } />
 							}
 						</Flex>
-                        { (!isInRoom && GetConfiguration('camera.enabled')) &&	
+                        { (isInRoom && GetConfiguration('camera.enabled')) &&	
 							<Base pointer className="navigation-item icon icon-camera" title={ LocalizeText('camera.interface.title') } onClick={ event => CreateLinkEvent('camera/toggle') } />
 						}
 						{ isMod &&
