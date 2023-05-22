@@ -25,7 +25,7 @@
     "wired.action.mute.user.max.length": 100,
     "game.center.enabled": false,
     "builders.club.enabled": true,
-	"camera.enabled": true,
+    "camera.enabled": true,
     "guides.enabled": true,
     "toolbar.hide.quests": true,
     "navigator.room.models": [
