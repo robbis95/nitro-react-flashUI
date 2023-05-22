@@ -73,10 +73,10 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
             <Flex alignItems="center" justifyContent="between" gap={ 2 } className="nitro-toolbar py-1 px-3">
                 <button className={ leftSideCollapsed ? 'toolbar-left-collapse' : 'toolbar-left-collapse-active' } onClick={ () => setLeftSideCollapsed((collapsed) => !collapsed) }/>
                 <Flex gap={ 2 } alignItems="center" className="toolbar-left-side">
-                    <Flex alignItems="center" gap={ 2 }>
+                    <Flex alignItems="center" gap={ 3 }>
                         
 						{ leftSideCollapsed &&
-							<Flex gap={ 2 }>
+							<Flex gap={ 3 }>
 								{ isInRoom &&
 									<Base pointer className="navigation-item icon icon-habbo" title={ LocalizeText('toolbar.icon.tooltip.exitroom.hotelview') } onClick={ event => VisitDesktop() } />
 								}
