@@ -10,7 +10,6 @@
     border-image-width:8px 8px 8px 8px;
     background: #e4e4e4;
     border-radius: 9px;
-    padding-right: 10px;
     z-index: 71;
 
     @include media-breakpoint-down(sm) {
@@ -23,8 +22,6 @@
 
     .input-sizer {
         align-content: center;
-        display: flex;
-        padding-right: 10px;
 
         .chat-input {
             width: 388px;
