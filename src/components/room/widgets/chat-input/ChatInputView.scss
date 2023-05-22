@@ -3,8 +3,9 @@
     align-items: center;
     position: absolute;
     width: 23.49%;
-    bottom:65px;
     height: 38px;
+    bottom:65px;
+    margin-left: -22px;
     border-image-source: url(@/assets/flash/room/chatinput.png);
     border-image-slice:8 8 8 8 fill;
     border-image-width:8px 8px 8px 8px;
