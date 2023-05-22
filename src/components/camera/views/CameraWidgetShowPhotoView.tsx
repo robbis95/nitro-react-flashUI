@@ -46,7 +46,6 @@ export const CameraWidgetShowPhotoView: FC<CameraWidgetShowPhotoViewProps> = pro
 		if (roomObject && roomObject.model) {    
         return type == 'username' ? roomObject.model.getValue<number>(RoomObjectVariable.FURNITURE_OWNER_NAME) : roomObject.model.getValue<number>(RoomObjectVariable.FURNITURE_OWNER_ID);
 		}
-		return '';
     }
 
     useEffect(() =>
