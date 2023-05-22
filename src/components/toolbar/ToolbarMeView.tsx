@@ -72,7 +72,7 @@ export const ToolbarMeView: FC<PropsWithChildren<ToolbarMeViewProps>> = props =>
             <Column className="me-text" gap={ 1 } alignItems="center" onClick={ event => CreateLinkEvent('avatar-editor/toggle') }>
                 <Base pointer className="navigation-item icon icon-me-clothing" />
                 <Text>
-					{ LocalizeText('widget.memenu.myclothes') }
+					{ LocalizeText('widget.memenu.editavatar') }
 				</Text>
             </Column>
             <Column className="me-text" gap={ 1 } alignItems="center" onClick={ event => CreateLinkEvent('forums/toggle') }>
