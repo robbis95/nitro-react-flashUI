@@ -11,6 +11,7 @@
     background: #e4e4e4;
     border-radius: 9px;
     z-index: 71;
+    overflow: hidden;
 
     @include media-breakpoint-down(sm) {
         display: flex;
