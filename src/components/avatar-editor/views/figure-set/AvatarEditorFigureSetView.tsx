@@ -26,7 +26,7 @@ export const AvatarEditorFigureSetView: FC<AvatarEditorFigureSetViewProps> = pro
 
         if(index === -1) return;
 
-        if (item.isHC && GetSessionDataManager().clubLevel === 0) return CreateLinkEvent('habboUI/open/hccenter');
+        if (item.isHC && GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB) return CreateLinkEvent('habboUI/open/hccenter');
 
         model.selectPart(category.name, index);
 
