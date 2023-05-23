@@ -101,12 +101,12 @@ export const ToolbarView: FC<{ isInRoom: boolean }> = props =>
                     </Flex>
                 </Flex>
                 <Flex alignItems="center" gap={ 2 } className={ rightSideCollapsed ? 'toolbar-right-side' : '' }>
-                    <Flex gap={ 2 } className="pe-5">
+                    <Flex gap={ 2 } className={ ((iconState === MessengerIconState.SHOW) || (iconState === MessengerIconState.UNREAD)) ? '' : 'margin-friends' }>
                         <Base pointer className="navigation-item icon icon-friendall" title={ LocalizeText('friend.bar.friends.title') } onClick={ event => CreateLinkEvent('friends/toggle') }>
                             { (requests.length > 0) &&
                                 <LayoutItemCountView count={ requests.length } /> }
                         </Base>
-                        <Base pointer className="navigation-item icon icon-friendsearch" title={ LocalizeText('friendlist.tip.search') } onClick={ event => CreateLinkEvent('friends/toggle') }></Base>
+                        <Base pointer className="navigation-item icon icon-friendsearch" title={ LocalizeText('friendlist.tip.search') } onClick={ event => CreateLinkEvent('friends/search') }></Base>
                         { ((iconState === MessengerIconState.SHOW) || (iconState === MessengerIconState.UNREAD)) &&
                             <Base pointer className={ `navigation-item icon icon-message ${ (iconState === MessengerIconState.UNREAD) && 'is-unseen' }` } onClick={ event => OpenMessengerChat() } /> }
                     </Flex>

@@ -904,6 +904,36 @@
         height: 12px;
     }
 
+    &.icon-friendlist_arrow_black_down {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_black_down.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_black_right {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_black_right.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_white_down {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_white_down.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_white_right {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_white_right.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friend_message {
+        background-image: url('@/assets/flash/friendlist/friend_message.png');
+        width: 16px;
+        height: 14px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }

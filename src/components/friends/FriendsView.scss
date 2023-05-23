@@ -9,6 +9,7 @@
     &.icon-heart {
         width: 16px; height: 14px;
         background-position: -5px -67px;
+        margin-bottom: -3px;
     }
 
     &.icon-new-message {
@@ -18,7 +19,8 @@
 
     &.icon-none {
         width: 16px; height: 14px;
-        background-position: -31px -67px;
+        background-position: 7px 0px;
+        margin-bottom: -3px;
     }
 
     &.icon-profile {
@@ -39,6 +41,7 @@
     &.icon-smile {
         width: 16px; height: 14px;
         background-position: -57px -67px;
+        margin-bottom: -3px;
     }
 
     &.icon-warning {
@@ -105,14 +108,45 @@
         border: 0;
         border-bottom: 1px solid rgba($black, 0.2);
     }
+
+    .friendlist-bottom {
+        margin-left: 106px;
+        overflow: hidden;
+    }
+
+    .avatar {
+        width: 29px;
+        height: 0px;
+        margin-top: 16px;
+        margin-left: -15px;
+        position: relative;
+    }
+
+    .selected-user {
+        background-color: #3CB8FF !important;
+    }
+}
+
+.select-relation {
+    width: 27px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 1px;
+    background-color: #eee;
 }
 
 .nitro-friends-room-invite {
-    width: $friends-list-width;
+    width: 211px;
+    height: 175px;
+
+    .textarea-invite {
+        height: 69px;
+    }
 }
 
 .nitro-friends-remove-confirmation {
-    width: $friends-list-width;
+    width: 160px;
+    height: 200px;
 }
 
 .friend-bar {
