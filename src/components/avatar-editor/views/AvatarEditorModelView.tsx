@@ -11,6 +11,7 @@ export interface AvatarEditorModelViewProps
 {
     model: IAvatarEditorCategoryModel;
     gender: string;
+    isFromFootballGate: boolean;
     setGender: Dispatch<SetStateAction<string>>;
 }
 
@@ -75,15 +76,15 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
 
                         return (
                             <div key={ name }>
-                            <Flex center pointer className="category-item" onClick={ event => selectCategory(name) }>
-                                { (isFromFootballGate && CATEGORY_FOOTBALL_GATE.includes(category.name)) &&
+                                <Flex center pointer className="category-item" onClick={ event => selectCategory(name) }>
+                                    { (isFromFootballGate && CATEGORY_FOOTBALL_GATE.includes(category.name)) &&
                                     <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
-                                }
-                                { (!isFromFootballGate) &&
+                                    }
+                                    { (!isFromFootballGate) &&
                                     <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
-                                }
-                            </Flex>
-                        </div>
+                                    }
+                                </Flex>
+                            </div>
                         );
                     }) }
                 </Flex>

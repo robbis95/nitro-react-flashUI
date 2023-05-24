@@ -1,3 +1,4 @@
+import { HabboClubLevelEnum } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef } from 'react';
 import { AvatarEditorGridPartItem, CategoryData, CreateLinkEvent, GetSessionDataManager, IAvatarEditorCategoryModel } from '../../../../api';
 import { AutoGrid } from '../../../../common';
@@ -12,6 +13,7 @@ export interface AvatarEditorFigureSetViewProps
 {
     model: IAvatarEditorCategoryModel;
     category: CategoryData;
+    isFromFootballGate: boolean;
     setMaxPaletteCount: Dispatch<SetStateAction<number>>;
 }
 
@@ -48,6 +50,6 @@ export const AvatarEditorFigureSetView: FC<AvatarEditorFigureSetViewProps> = pro
                 (!isFromFootballGate || (isFromFootballGate && TSHIRT_FOOTBALL_GATE.includes(item.id) || NUMBER_BEHIND_FOOTBALL_GATE.includes(item.id) || PANTS_FOOTBALL_GATE.includes(item.id) || SHOES_FOOTBALL_GATE.includes(item.id))) &&
                     <AvatarEditorFigureSetItemView key={ item.id } partItem={ item } onClick={ event => selectPart(item) } />)
             }
-			</AutoGrid>
+        </AutoGrid>
     );
 }

@@ -16,17 +16,17 @@ export const FurnitureFootballGateView: FC<{}> = props =>
     if(objectId === -1) return null;
 
     return (
-        <NitroCardView className="nitro-football-gate no-resize" theme="primary-slim">
+        <NitroCardView className="nitro-football-gate no-resize" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('widget.furni.clothingchange.gender.title') } onCloseClick={ onClose } />
             <NitroCardContentView className="football-gate-content">
                 <Flex fullWidth center>
                     <Column>{ LocalizeText('widget.furni.clothingchange.gender.info') }</Column>
                 </Flex>
                 <Flex className="mt-4 px-2" justifyContent="between">
-                    <Button className="size-buttons" onClick={ (e) => onGender(FigureData.MALE) }>
+                    <Button className="volter-button size-buttons" onClick={ (e) => onGender(FigureData.MALE) }>
                         { LocalizeText('widget.furni.clothingchange.gender.male') }
                     </Button>
-                    <Button className="size-buttons" onClick={ (e) => onGender(FigureData.FEMALE) }>
+                    <Button className="volter-button size-buttons" onClick={ (e) => onGender(FigureData.FEMALE) }>
                         { LocalizeText('widget.furni.clothingchange.gender.female') }
                     </Button>
                 </Flex>
