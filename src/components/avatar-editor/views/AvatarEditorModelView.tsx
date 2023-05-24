@@ -4,6 +4,9 @@ import { Column, Flex, Grid, Text } from '../../../common';
 import { AvatarEditorIcon } from './AvatarEditorIcon';
 import { AvatarEditorFigureSetView } from './figure-set/AvatarEditorFigureSetView';
 import { AvatarEditorPaletteSetView } from './palette-set/AvatarEditorPaletteSetView';
+
+const CATEGORY_FOOTBALL_GATE = [ 'ch', 'cp', 'lg', 'sh' ];
+
 export interface AvatarEditorModelViewProps
 {
     model: IAvatarEditorCategoryModel;
@@ -13,7 +16,7 @@ export interface AvatarEditorModelViewProps
 
 export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
 {
-    const { model = null, gender = null, setGender = null } = props;
+    const { model = null, gender = null, isFromFootballGate = false, setGender = null } = props;
     const [ activeCategory, setActiveCategory ] = useState<CategoryData>(null);
     const [ maxPaletteCount, setMaxPaletteCount ] = useState(1);
 
@@ -71,14 +74,21 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
                         const category = model.categories.get(name);
 
                         return (
-                            <Flex center pointer key={ name } className="category-item" onClick={ event => selectCategory(name) }>
-                                <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
+                            <div key={ name }>
+                            <Flex center pointer className="category-item" onClick={ event => selectCategory(name) }>
+                                { (isFromFootballGate && CATEGORY_FOOTBALL_GATE.includes(category.name)) &&
+                                    <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
+                                }
+                                { (!isFromFootballGate) &&
+                                    <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
+                                }
                             </Flex>
+                        </div>
                         );
                     }) }
                 </Flex>
                 <Column className="avatar-parts-container" size={ 5 } overflow="hidden">
-                    <AvatarEditorFigureSetView model={ model } category={ activeCategory } setMaxPaletteCount={ setMaxPaletteCount } />
+                    <AvatarEditorFigureSetView model={ model } category={ activeCategory } isFromFootballGate={ isFromFootballGate } setMaxPaletteCount={ setMaxPaletteCount } />
                 </Column>
                 <Column overflow="hidden" className={
                     maxPaletteCount === 2 ? 'avatar-color-palette-container dual-palette' : 'avatar-color-palette-container'
