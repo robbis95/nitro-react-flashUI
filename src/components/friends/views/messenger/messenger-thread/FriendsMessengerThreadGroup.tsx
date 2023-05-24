@@ -32,9 +32,14 @@ export const FriendsMessengerThreadGroup: FC<{ thread: MessengerThread, group: M
                         <Flex key={ index } fullWidth gap={ 2 } justifyContent="start">
                             <Base className="w-100 text-break">
                                 { (chat.type === MessengerThreadChat.SECURITY_NOTIFICATION) &&
-                                    <Flex gap={ 2 } alignItems="center" className="thread-message mb-2 px-2 py-1 ">
+                                    <Flex gap={ 2 } alignItems="center" className="thread-message mb-1 px-2 py-1">
                                         <Base className="nitro-friends-spritesheet icon-warning flex-shrink-0 px-3" />
                                         <Base>{ chat.message }</Base>
+                                    </Flex> }
+                                { (!thread.participant.online) &&
+                                    <Flex gap={ 2 } alignItems="center" className="thread-message mb-2 px-2 py-1 ">
+                                        <Base className="nitro-friends-spritesheet icon-warning flex-shrink-0 px-3" />
+                                        <Base>{ LocalizeText('messenger.notification.persisted_messages') }</Base>
                                     </Flex> }
                                 { (chat.type === MessengerThreadChat.ROOM_INVITE) &&
                                     <Flex gap={ 2 } alignItems="center" className="bg-light rounded mb-2 px-2 py-1 small text-black">
