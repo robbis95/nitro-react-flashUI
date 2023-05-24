@@ -79,7 +79,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                     { (ownUser.accepts) && <Base className="icon icon-confirmed" /> }
                                     <small className={ ownUser.accepts ? 'px-2' : '' }><b>{ LocalizeText('inventory.trading.you') }</b> { LocalizeText('inventory.trading.areoffering') }</small>
                                 </Flex>
-                                <AutoGrid columnCount={ 3 }>
+                                <AutoGrid columnCount={ 3 } columnMinWidth={ 35 } columnMinHeight={ 35 }>
                                     { Array.from(Array(MAX_ITEMS_TO_TRADE), (e, i) =>
                                     {
                                         const item = (ownUser.userItems.getWithIndex(i) || null);
@@ -108,7 +108,7 @@ export const InventoryTradeView: FC<InventoryTradeViewProps> = props =>
                                     { (otherUser.accepts) && <Base className="icon icon-confirmed" /> }
                                     <small className={ otherUser.accepts ? 'px-2' : '' }><b>{ otherUser.userName }</b> { LocalizeText('inventory.trading.isoffering') }</small>
                                 </Flex>
-                                <AutoGrid columnCount={ 3 }>
+                                <AutoGrid columnCount={ 3 } columnMinWidth={ 35 } columnMinHeight={ 35 }>
                                     { Array.from(Array(MAX_ITEMS_TO_TRADE), (e, i) =>
                                     {
                                         const item = (otherUser.userItems.getWithIndex(i) || null);
