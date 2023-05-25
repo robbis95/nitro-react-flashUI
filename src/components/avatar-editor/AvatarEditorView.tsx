@@ -272,9 +272,11 @@ export const AvatarEditorView: FC<{}> = props =>
 
         return () =>
         {
+            setupFigures();
+            setIsWardrobeVisible(false);
             setNeedsReset(true);
         }
-    }, [ isVisible, genderFootballGate ]);
+    }, [ isVisible, genderFootballGate, setupFigures ]);
 
     useEffect(() =>
     {
@@ -292,7 +294,7 @@ export const AvatarEditorView: FC<{}> = props =>
 
     return (
         <NitroCardView uniqueKey="avatar-editor" className={ avatarEditorClasses }>
-            <NitroCardHeaderView headerText={ LocalizeText('avatareditor.title') } onCloseClick={ event => setIsVisible(false) } />
+            <NitroCardHeaderView headerText={ !genderFootballGate ? LocalizeText('avatareditor.title') : LocalizeText('widget.furni.clothingchange.editor.title') } onCloseClick={ onClose } />
             <NitroCardTabsView className="avatar-editor-tabs">
                 { categories && (categories.size > 0) && Array.from(categories.keys()).map(category =>
                 {
@@ -313,7 +315,7 @@ export const AvatarEditorView: FC<{}> = props =>
             <NitroCardContentView>
                 <Grid>
                     <Column size={ isWardrobeVisible ? 6 : 8 } overflow="hidden">
-                        { (activeCategory && !isWardrobeVisible) &&
+                        { (activeCategory) &&
                             <AvatarEditorModelView model={ activeCategory } gender={ figureData.gender } setGender={ setGender } /> 
                         }
                     </Column>
@@ -323,7 +325,7 @@ export const AvatarEditorView: FC<{}> = props =>
                                 <AvatarEditorFigurePreviewView figureData={ figureData } />
                                 <Column grow gap={ 1 }>
                                     { (!genderFootballGate) &&
-                                        <ButtonGroup>
+                                        <ButtonGroup className="action-buttons w-100">
                                             <Button variant="secondary" onClick={ event => processAction(AvatarEditorAction.ACTION_RESET) }>
                                                 <FaUndo className="fa-icon" />
                                             </Button>
