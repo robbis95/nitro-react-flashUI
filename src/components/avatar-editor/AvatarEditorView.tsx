@@ -142,7 +142,7 @@ export const AvatarEditorView: FC<{}> = props => {
                 onClose();
                 return;
         }
-    }, [figureData, lastFigure, lastGender, figureSetIds, loadAvatarInEditor, resetCategories])
+    }, [figureData, lastFigure, lastGender, figureSetIds, loadAvatarInEditor, resetCategories, genderFootballGate, objectFootballGate])
 
     const setGender = useCallback((gender: string) => {
         gender = AvatarEditorUtilities.getGender(gender);
