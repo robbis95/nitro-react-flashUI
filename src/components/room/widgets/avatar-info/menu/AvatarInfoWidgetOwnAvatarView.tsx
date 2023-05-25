@@ -1,6 +1,6 @@
-import { AvatarAction, AvatarExpressionEnum, RoomControllerLevel, RoomObjectCategory, RoomUnitDropHandItemComposer } from '@nitrots/nitro-renderer';
+import { AvatarAction, AvatarExpressionEnum, HabboClubLevelEnum, RoomControllerLevel, RoomObjectCategory, RoomUnitDropHandItemComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetCanStandUp, GetCanUseExpression, GetOwnPosture, GetUserProfile, HasHabboClub, HasHabboVip, IsRidingHorse, LocalizeText, PostureTypeEnum, SendMessageComposer } from '../../../../../api';
+import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetCanStandUp, GetCanUseExpression, GetOwnPosture, GetSessionDataManager, GetUserProfile, HasHabboClub, IsRidingHorse, LocalizeText, PostureTypeEnum, SendMessageComposer } from '../../../../../api';
 import { Column, Flex, LayoutCurrencyIcon } from '../../../../../common';
 import { HelpNameChangeEvent } from '../../../../../events';
 import { useRoom } from '../../../../../hooks';
@@ -67,9 +67,11 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         roomSession.sendExpressionMessage(AvatarExpressionEnum.WAVE.ordinal);
                         break;
                     case 'blow':
+                        if (GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB) return CreateLinkEvent('habboUI/open/hccenter');
                         roomSession.sendExpressionMessage(AvatarExpressionEnum.BLOW.ordinal);
                         break;
                     case 'laugh':
+                        if (GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB) return CreateLinkEvent('habboUI/open/hccenter');
                         roomSession.sendExpressionMessage(AvatarExpressionEnum.LAUGH.ordinal);
                         break;
                     case 'idle':
@@ -204,13 +206,13 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                             { LocalizeText('widget.memenu.wave') }
                         </ContextMenuListItemView> }
                     { GetCanUseExpression() &&
-                        <ContextMenuListItemView disabled={ !HasHabboVip() } onClick={ event => processAction('laugh') }>
-                            { !HasHabboVip() && <LayoutCurrencyIcon type="hc" /> }
+                        <ContextMenuListItemView className={ GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB ? 'text-muted' : '' } onClick={ event => processAction('laugh') }>
+                            { GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon className="end-1" type="hc" /> }
                             { LocalizeText('widget.memenu.laugh') }
                         </ContextMenuListItemView> }
                     { GetCanUseExpression() &&
-                        <ContextMenuListItemView disabled={ !HasHabboVip() } onClick={ event => processAction('blow') }>
-                            { !HasHabboVip() && <LayoutCurrencyIcon type="hc" /> }
+                        <ContextMenuListItemView className={ GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB ? 'text-muted' : '' } onClick={ event => processAction('blow') }>
+                            { GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon className="end-1" type="hc" /> }
                             { LocalizeText('widget.memenu.blow') }
                         </ContextMenuListItemView> }
                     <ContextMenuListItemView onClick={ event => processAction('idle') }>
