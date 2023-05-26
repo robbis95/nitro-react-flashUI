@@ -26,33 +26,19 @@
     &.icon-catalog {
         background-image: url('@/assets/images/toolbar/icons/catalog.png');
         width: 37px;
-        height: 37px;
-        margin-left: 4px;
-        margin-bottom: 2px;
+        height: 36px;
     }
 
     &.icon-game {
         background-image: url('@/assets/images/toolbar/icons/game.png');
-        width: 29px;
-        height: 39px;
-        margin-left: 1px;
-        margin-bottom: -3px;
-    }
-
-    &.icon-snow_storm {
-        background-image: url('@/assets/images/toolbar/icons/snow_storm.png');
-        width: 29px;
-        height: 39px;
-        margin-left: 1px;
-        margin-bottom: -3px;
+        width: 44px;
+        height: 25px;
     }
 
     &.icon-rooms {
         background-image: url('@/assets/images/toolbar/icons/rooms.png');
         width: 44px;
         height: 30px;
-        margin-top: 3px;
-        margin-left: 1px;
     }
 
     &.icon-house {
@@ -69,7 +55,6 @@
         background-image: url('@/assets/images/toolbar/icons/inventory.png');
         height: 41px;
         width: 44px;
-        margin-left: -1px;
     }
 
     &.icon-modtools {
@@ -178,27 +163,14 @@
         background-image: url('@/assets/images/toolbar/icons/habbo.png');
         width: 28px;
         height: 28px;
-        margin-top: 3px;
-        margin-left: 0px;
     }
 
     &.icon-camera {
         background-image: url('@/assets/images/toolbar/icons/camera.png');
         width: 38px;
         height: 45px;
-        margin-left: -9px;
-        margin-right: -3px;
-        margin-top: 5px;
     }
-    
-    &.icon-buildersclub {
-        background-image: url('@/assets/images/toolbar/icons/buildersclub.png');
-        width: 32px;
-        height: 33px;
-        margin-left: 2px;
-        margin-top: -1px;
-    }
-    
+
     &.icon-message {
         background-image: url('@/assets/images/toolbar/icons/message.png');
         width: 36px;
@@ -318,17 +290,24 @@
     }
 
     &.icon-lock-open {
-        background: url(@/assets/flash/inventory/lock_open.png);
+        background: url('@/assets/flash/inventory/lock_open.png');
         background-repeat: no-repeat;
         height: 43px;
         width: 29px;
     }
 
     &.icon-lock-locked {
-        background: url(@/assets/flash/inventory/lock_locked.png);
+        background: url('@/assets/flash/inventory/lock_locked.png');
         background-repeat: no-repeat;
         height: 44px;
         width: 36px;
+    }
+
+    &.icon-confirmed {
+        background: url('@/assets/flash/inventory/confirmed.png');
+        background-repeat: no-repeat;
+        height: 18px;
+        width: 18px;
     }
 
     &.icon-sign-heart {
@@ -373,10 +352,59 @@
         height: 14px;
     }
 
+    &.icon-favourite-room-active {
+        background: url('@/assets/images/icons/favourite-room-active.png');
+        width: 14px;
+        height: 14px;
+    }
+
+    &.icon-favourite-room-inactive {
+        background: url('@/assets/images/icons/favourite-room-inactive.png');
+        width: 12px;
+        height: 11px;
+    }
+
+    &.icon-room-promote {
+        background: url('@/assets/images/icons/room-promote.png');
+        width: 16px;
+        height: 19px;
+    }
+
+    &.icon-notification_arrow_left {
+        background: url('@/assets/flash/notifications/notification_arrow_left.png');
+        width: 18px;
+        height: 19px;
+    }
+
+    &.icon-notification_arrow_down {
+        background: url('@/assets/flash/notifications/notification_arrow_down.png');
+        width: 18px;
+        height: 19px;
+    }
+
+    &.icon-nitro-card-header-close {
+        background: url('@/assets/flash/messenger/close.png');
+        width: 20px;
+        height: 20px;
+    }
+
+    &.icon-group_icon_room {
+        background: url('@/assets/images/groups/icons/group_icon_room.png');
+        width: 21px;
+        height: 16px;
+    }
+
     &.icon-camera-small {
         background: url('@/assets/images/icons/camera-small.png');
         width: 17px;
         height: 15px;
+    }
+
+    &.icon-report-room {
+        background: url('@/assets/flash/room/report-room.png');
+        width: 19px;
+        height: 19px;
+        margin-right: 10px;
     }
 
     &.icon-small-room {
@@ -844,6 +872,66 @@
         background-image: url('@/assets/images/icons/room-history-next-disabled.png');
         width: 34px;
         height: 38px;
+    }
+
+    &.icon-search_save {
+        background-image: url('@/assets/flash/navigator/saves-search/search_save.png');
+        width: 18px;
+        height: 18px;
+    }
+
+    &.icon-hc_mini {
+        background-image: url('@/assets/images/catalog/hc_mini.png');
+        width: 18px;
+        height: 18px;
+    }
+
+    &.icon-sheet {
+        background-image: url('@/assets/flash/hotelview/halloffame/sheet.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-tiles {
+        background-image: url('@/assets/flash/navigator/room-creator/tiles.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-tiles_room_selected {
+        background-image: url('@/assets/flash/navigator/room-creator/tiles_room_selected.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_black_down {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_black_down.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_black_right {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_black_right.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_white_down {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_white_down.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friendlist_arrow_white_right {
+        background-image: url('@/assets/flash/friendlist/friendlist_arrow_white_right.png');
+        width: 16px;
+        height: 12px;
+    }
+
+    &.icon-friend_message {
+        background-image: url('@/assets/flash/friendlist/friend_message.png');
+        width: 16px;
+        height: 14px;
     }
 
     &.spin {

@@ -11,7 +11,7 @@
     border-top: 1px solid #0000004d;
 
     .toolbar-left-side {
-        padding-left: 11px;
+        padding-left: 10px;
         padding-right: 15px;
         border-right: 1px solid #454442;
         height: 40px;
@@ -77,10 +77,8 @@
 
         &.item-avatar {
             width: 50px;
-            height: 40px;
+            height: 45px;
             overflow: hidden;
-            margin-left: -8px;
-            margin-top: 1px;
 
             .avatar-image {
                 margin-left: -5px;
@@ -109,28 +107,24 @@
             height: 0px;
         }
     }
+
+    .margin-friends {
+        margin-right: 44px;
+    }
 }
 
 .nitro-toolbar-me {
     position: absolute;
-    height: 53px;
-    left: 4px;
-    bottom: 46px;
+    bottom: 52px;
+    left: 15px;
     z-index: $toolbar-memenu-zindex;
     border-image-source: url(@/assets/flash/toolbar/me_menu_bg.png);
     border-image-slice: 6 6 6 6 fill;
     border-image-width: 6px 6px 6px 6px;
-    padding-right: 45px;
-    padding-left: 19px;
-    font-family: sans-serif;
 
-	.me-text {
-		font-size: 9px;
-		color: white;
-		&:hover {
-			color: #20c4e6;
-		}
-	}
+    .me-text {
+        font-size: 10px;
+    }
 
     .navigation-item {
         transition: filter .2s ease-out;
