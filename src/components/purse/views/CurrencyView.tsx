@@ -23,17 +23,5 @@ export const CurrencyView: FC<CurrencyViewProps> = props =>
             </Flex>);
     }, [ amount, short, type ]);
 
-    if(!short) return element;
-    
-    return (
-        <OverlayTrigger
-            placement="left"
-            overlay={
-                <Tooltip id={ `tooltip-${ type }` }>
-                    { LocalizeFormattedNumber(amount) }
-                </Tooltip>
-            }>
-            { element }
-        </OverlayTrigger>
-    );
+    return element;
 }
