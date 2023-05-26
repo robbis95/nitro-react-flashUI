@@ -2,16 +2,16 @@
     display: flex;
     align-items: center;
     position: absolute;
-    width: 40vw;
-    bottom:65px;
+    width: 23.49%;
     height: 38px;
+    bottom: 6px;
     border-image-source: url(@/assets/flash/room/chatinput.png);
     border-image-slice:8 8 8 8 fill;
     border-image-width:8px 8px 8px 8px;
     background: #e4e4e4;
     border-radius: 9px;
-    padding-right: 10px;
-    z-index: 31;
+    z-index: 71;
+    overflow: hidden;
 
     @include media-breakpoint-down(sm) {
         display: flex;
@@ -23,11 +23,11 @@
 
     .input-sizer {
         align-content: center;
-        display: flex;
-        padding-right: 10px;
 
         .chat-input {
-            width: 100%;
+            width: 388px;
+            height: 38px;
+            font-size: 17px;
         }
 
         &::after,
