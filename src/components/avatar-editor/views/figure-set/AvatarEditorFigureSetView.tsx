@@ -1,5 +1,6 @@
+import { HabboClubLevelEnum } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useCallback, useEffect, useRef } from 'react';
-import { AvatarEditorGridPartItem, CategoryData, IAvatarEditorCategoryModel } from '../../../../api';
+import { AvatarEditorGridPartItem, CategoryData, CreateLinkEvent, GetSessionDataManager, IAvatarEditorCategoryModel } from '../../../../api';
 import { AutoGrid } from '../../../../common';
 import { AvatarEditorFigureSetItemView } from './AvatarEditorFigureSetItemView';
 
@@ -21,6 +22,8 @@ export const AvatarEditorFigureSetView: FC<AvatarEditorFigureSetViewProps> = pro
 
         if(index === -1) return;
 
+        if (item.isHC && GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB) return CreateLinkEvent('habboUI/open/hccenter');
+
         model.selectPart(category.name, index);
 
         const partItem = category.getCurrentPart();
@@ -36,9 +39,10 @@ export const AvatarEditorFigureSetView: FC<AvatarEditorFigureSetViewProps> = pro
     }, [ model, category ]);
 
     return (
-        <AutoGrid innerRef={ elementRef } columnCount={ 3 } columnMinHeight={ 50 }>
-            { (category.parts.length > 0) && category.parts.map((item, index) =>
-                <AvatarEditorFigureSetItemView key={ index } partItem={ item } onClick={ event => selectPart(item) } />) }
+        <AutoGrid className="clothing-container" innerRef={ elementRef } columnCount={ 3 } columnMinHeight={ 50 }>
+            { (category.parts.length > 0) && category.parts.map(item =>
+                <AvatarEditorFigureSetItemView key={ item.id } partItem={ item } onClick={ event => selectPart(item) } />)
+            }
         </AutoGrid>
     );
 }

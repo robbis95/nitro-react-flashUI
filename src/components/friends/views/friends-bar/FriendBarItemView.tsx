@@ -1,7 +1,7 @@
-import { MouseEventType } from '@nitrots/nitro-renderer';
+import { FindNewFriendsMessageComposer, MouseEventType } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useRef, useState } from 'react';
-import { GetUserProfile, LocalizeText, MessengerFriend, OpenMessengerChat } from '../../../../api';
-import { Base, LayoutAvatarImageView, LayoutBadgeImageView } from '../../../../common';
+import { GetUserProfile, LocalizeText, MessengerFriend, OpenMessengerChat, SendMessageComposer } from '../../../../api';
+import { Base, Button, LayoutAvatarImageView, LayoutBadgeImageView } from '../../../../common';
 import { useFriends } from '../../../../hooks';
 
 export const FriendBarItemView: FC<{ friend: MessengerFriend }> = props =>
@@ -33,9 +33,15 @@ export const FriendBarItemView: FC<{ friend: MessengerFriend }> = props =>
     if(!friend)
     {
         return (
-            <div ref={ elementRef } className="btn find-friends friend-bar-item friend-bar-search">
+            <div ref={ elementRef } className={ 'btn find-friends friend-bar-item friend-bar-search ' + (isVisible ? 'bottom-5 friend-bar-item-active' : '') } onClick={ event => setVisible(prevValue => !prevValue) }>
                 <div className="friend-bar-item-head position-absolute"/>
                 <div className="friend-bar-text">{ LocalizeText('friend.bar.find.title') }</div>
+                { isVisible &&
+                    <div className="search-content mt-3">
+                        <div className="bg-white text-black">{ LocalizeText('friend.bar.find.text') }</div>
+                        <Button className="mt-2" variant="white" onClick={ () => SendMessageComposer(new FindNewFriendsMessageComposer()) }>{ LocalizeText('friend.bar.find.button') }</Button>
+                    </div>
+                }
             </div>
         );
     }

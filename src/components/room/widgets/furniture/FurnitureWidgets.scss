@@ -49,24 +49,66 @@
 }
 
 .nitro-external-image-widget {
+
+    border-top: 71px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 71px solid rgba(0, 0, 0, 0.5);
+    border-right: 84px solid rgba(0, 0, 0, 0.5);
+    border-left: 84px solid rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+
+    .nitro-card-header-close {
+        cursor: pointer;
+        background-image: url("@/assets/flash/boxes/card/close.png");
+        width: 19px;
+        height: 20px;
+
+        &:hover {
+            background-image: url("@/assets/flash/boxes/card/close_hover.png");
+
+            &:active {
+                background-image: url("@/assets/flash/boxes/card/close_click.png");
+            }
+
+        }
+    }
+
+    .nitro-camera-report {
+        cursor: pointer;
+        background-image: url("@/assets/flash/camera/report.png");
+        width: 19px;
+        height: 20px;
+
+        &:hover {
+            background-image: url("@/assets/flash/camera/report_hover.png");
+
+            &:active {
+                background-image: url("@/assets/flash/camera/report_click.png");
+            }
+
+        }
+    }
+
     .picture-preview {
         width: 320px;
         height: 320px;
     }
 
-    .picture-preview-buttons {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: black;
+    .center-buttons {
+        top: 45%;
     }
 
-    .picture-preview-buttons-previous,
-    .picture-preview-buttons-next {
-        color: #222;
-        background-color: white;
-        padding: 10px;
-        border-radius: 50%;
+    .nitro-camera-button-left {
+        cursor: pointer;
+        background-image: url("@/assets/flash/camera/camera_button_left.png");
+        width: 64px;
+        height: 64px;
+    }
+
+    .nitro-camera-button-right {
+        cursor: pointer;
+        background-image: url("@/assets/flash/camera/camera_button_right.png");
+        width: 64px;
+        height: 64px;
     }
 }
 
@@ -570,6 +612,21 @@
         .text-decoration
         {
             text-decoration: underline;
+        }
+    }
+}
+
+.nitro-football-gate
+{
+    width: 300px;
+
+    .football-gate-content
+    {
+        color: black;
+
+        .size-buttons
+        {
+            width: 100px;
         }
     }
 }

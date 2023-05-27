@@ -1,8 +1,7 @@
-import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
+import { ConvertGlobalRoomIdMessageComposer, FindNewFriendsMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
-import { Base, Column, Flex, NitroCardContentView, NitroCardTabsItemView, NitroCardTabsView, Text } from '../../common';
-import { Frame } from '../../custom/components/layout';
+import { AddEventLinkTracker, CreateLinkEvent, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
+import { Base, Column, Flex, LayoutSearchSavesView, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
 import { useNavigator, useRoomSessionManagerEvent } from '../../hooks';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
 import { NavigatorRoomCreatorView } from './views/NavigatorRoomCreatorView';
@@ -10,6 +9,7 @@ import { NavigatorRoomInfoView } from './views/NavigatorRoomInfoView';
 import { NavigatorRoomLinkView } from './views/NavigatorRoomLinkView';
 import { NavigatorRoomSettingsView } from './views/room-settings/NavigatorRoomSettingsView';
 import { NavigatorSearchResultView } from './views/search/NavigatorSearchResultView';
+import { NavigatorSearchSavesResultView } from './views/search/NavigatorSearchSavesResultView';
 import { NavigatorSearchView } from './views/search/NavigatorSearchView';
 
 export const NavigatorView: FC<{}> = props =>
@@ -19,10 +19,11 @@ export const NavigatorView: FC<{}> = props =>
     const [ isCreatorOpen, setCreatorOpen ] = useState(false);
     const [ isRoomInfoOpen, setRoomInfoOpen ] = useState(false);
     const [ isRoomLinkOpen, setRoomLinkOpen ] = useState(false);
+    const [ isOpenSavesSearchs, setIsOpenSavesSearchs ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
     const [ needsInit, setNeedsInit ] = useState(true);
     const [ needsSearch, setNeedsSearch ] = useState(false);
-    const { searchResult = null, topLevelContext = null, topLevelContexts = null, navigatorData = null } = useNavigator();
+    const { searchResult = null, topLevelContext = null, topLevelContexts = null, navigatorData = null, navigatorSearches = null } = useNavigator();
     const pendingSearch = useRef<{ value: string, code: string }>(null);
     const elementRef = useRef<HTMLDivElement>();
 
@@ -197,42 +198,63 @@ export const NavigatorView: FC<{}> = props =>
     return (
         <>
             { isVisible &&
-            <Frame uniqueKey="navigator" className="nitro-navigator" title={ LocalizeText('navigator.title') } onCloseClick={ event => setIsVisible(false) }>
-                <NitroCardTabsView>
-                    { topLevelContexts && (topLevelContexts.length > 0) && topLevelContexts.map((context, index) =>
-                    {
-                        return (
-                            <NitroCardTabsItemView key={ index } isActive={ ((topLevelContext === context)) } onClick={ event => sendSearch('', context.code) }>
-                                { LocalizeText(('navigator.toplevelview.' + context.code)) }
-                            </NitroCardTabsItemView>
-                        );
-                    }) }
-                </NitroCardTabsView>
-                <NitroCardContentView position="relative">
-                    { isLoading &&
-                            <Base fit position="absolute" className="top-0 start-0 z-index-1 bg-muted opacity-0-5" /> }
-                    <>
-                        <NavigatorSearchView sendSearch={ sendSearch } />
-                        <Column overflow="auto">
-                            { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
+                <NitroCardView uniqueKey="navigator" className={ `nitro-navigator ${ isOpenSavesSearchs ? 'expanded' : '' }` }>
+                    <NitroCardHeaderView headerText={ LocalizeText('navigator.title') } isInfoToHabboPages={ true } onClickInfoHabboPages={ () => CreateLinkEvent('habbopages/navigator') } onCloseClick={ event => setIsVisible(false) } />
+                    <NitroCardTabsView>
+                        <Base className="mt-1">
+                            <LayoutSearchSavesView style={ { marginRight: !isOpenSavesSearchs ? '11px' : '91px', marginLeft: '-2px', marginTop: '1px' } } title={ LocalizeText('navigator.tooltip.left.show.hide') } onClick={ () => setIsOpenSavesSearchs(prevValue => !prevValue) } />
+                        </Base>
+                        { topLevelContexts && (topLevelContexts.length > 0) && topLevelContexts.map((context, index) =>
+                        {
+                            return (
+                                <NitroCardTabsItemView key={ index } isActive={ ((topLevelContext === context)) } onClick={ event => sendSearch('', context.code) }>
+                                    { LocalizeText(('navigator.toplevelview.' + context.code)) }
+                                </NitroCardTabsItemView>
+                            );
+                        }) }
+                    </NitroCardTabsView>
+                    <NitroCardContentView position="relative">
+                        { isLoading && <Base fit position="absolute" className="top-0 start-0 z-index-1 bg-muted opacity-0-5" /> }
+                        <Column overflow="hidden">
+                            <Flex fullWidth fullHeight>
+                                { isOpenSavesSearchs &&
+                                    <Column overflow="hidden" className="pe-5">
+                                        <NavigatorSearchSavesResultView searchs={ navigatorSearches } />
+                                    </Column>
+                                }
+                                <Flex column={ true } className="w-100">
+                                    <NavigatorSearchView sendSearch={ sendSearch } />
+                                    <Column overflow="auto">
+                                        { (searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={ index } searchResult={ result } />)) }
+                                    </Column>
+                                    <Flex className="nav-bottom">
+                                        <Flex className="position-absolute bottom-3">
+                                            <Flex className="nav-create-room" onClick={ (event) => setCreatorOpen(value => !value) }>
+                                                <Text variant="white" bold className="nav-bottom-buttons-text">
+                                                    { LocalizeText('navigator.createroom.create') }
+                                                </Text>
+                                            </Flex>
+                                            { (searchResult?.code !== 'myworld_view' && searchResult?.code !== 'roomads_view') &&
+                                                <Flex className="nav-random-room" onClick={ () => SendMessageComposer(new FindNewFriendsMessageComposer()) }>
+                                                    <Text variant="white" bold className="nav-bottom-buttons-text">
+                                                        { LocalizeText('navigator.random.room') }
+                                                    </Text>
+                                                </Flex>
+                                            }
+                                            { (searchResult?.code === 'myworld_view' || searchResult?.code === 'roomads_view') &&
+                                                <Flex className="nav-promote-room" onClick={ () => CreateLinkEvent('catalog/open/room_event') }>
+                                                    <Text variant="white" bold className="nav-bottom-buttons-text">
+                                                        { LocalizeText('navigator.promote.room') }
+                                                    </Text>
+                                                </Flex>
+                                            }
+                                        </Flex>
+                                    </Flex>
+                                </Flex>
+                            </Flex>
                         </Column>
-                    </>
-                    <Flex className="nav-bottom">
-                        <Flex className="nav-bottom-buttons position-absolute">
-                            <Flex className="nav-create-room" onClick={ (event) => setCreatorOpen(value => !value) }>
-                                <Text variant="white" bold className="nav-bottom-buttons-text">
-                                    { LocalizeText('navigator.createroom.create') }
-                                </Text>
-                            </Flex>
-                            <Flex className="nav-random-room">
-                                <Text variant="white" bold className="nav-bottom-buttons-text">
-                                    { LocalizeText('navigator.random.room') }
-                                </Text>
-                            </Flex>
-                        </Flex>
-                    </Flex>
-                </NitroCardContentView>
-            </Frame> }
+                    </NitroCardContentView>
+                </NitroCardView> }
             { isCreatorOpen && <NavigatorRoomCreatorView /> }
             <NavigatorDoorStateView />
             { isRoomInfoOpen && <NavigatorRoomInfoView onCloseClick={ () => setRoomInfoOpen(false) } /> }

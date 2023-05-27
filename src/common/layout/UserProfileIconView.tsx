@@ -22,7 +22,11 @@ export const UserProfileIconView: FC<UserProfileIconViewProps> = props =>
     }, [ classNames ]);
 
     return (
-        <Base classNames={ getClassNames } pointer={ pointer } onClick={ event => GetUserProfile(userId) } { ... rest }>
+        <Base classNames={ getClassNames } pointer={ pointer } onClick={ event =>
+        {
+            event.stopPropagation();
+            GetUserProfile(userId)
+        } } { ... rest }>
             { children }
         </Base>
     );

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { CreateLinkEvent, LocalizeText } from '../../../../../api';
-import { Button, Flex, Grid, Text } from '../../../../../common';
+import { Flex, Text } from '../../../../../common';
 import { useRoomPromote } from '../../../../../hooks';
 
 interface RoomPromoteMyOwnEventWidgetViewProps
@@ -22,14 +22,13 @@ export const RoomPromoteMyOwnEventWidgetView: FC<RoomPromoteMyOwnEventWidgetView
 
     return (
         <>
-            <Flex alignItems="center" gap={ 2 } style={ { overflowWrap: 'anywhere' } }>
-                <Text variant="white">{ eventDescription }</Text>
+            <Flex className="px-2 py-2" alignItems="center" gap={ 2 } style={ { overflowWrap: 'anywhere', overflow: 'hidden', height: '60px' } }>
+                <Text variant="white" dangerouslySetInnerHTML={ { __html: eventDescription.replace(/\n/g,'<br />') } } />
             </Flex>
-            <br /><br />
-            <Grid className="d-flex align-items-center justify-content-end gap-2">
-                <Button className="btn btn-primary w-100 btn-sm" onClick={ event => setIsEditingPromote(true) }>{ LocalizeText('navigator.roominfo.editevent') }</Button>
-                <Button className="btn btn-success w-100 btn-sm" onClick={ event => extendPromote() }>{ LocalizeText('roomad.extend.event') }</Button>
-            </Grid>
+            <Flex className="mb-1" alignItems="center" justifyContent="around">
+                <Text pointer underline onClick={ event => setIsEditingPromote(true) }>{ LocalizeText('navigator.roominfo.editevent') }</Text>
+                <Text pointer underline onClick={ event => extendPromote() }>{ LocalizeText('roomad.extend.event') }</Text>
+            </Flex>
         </>
     );
 };

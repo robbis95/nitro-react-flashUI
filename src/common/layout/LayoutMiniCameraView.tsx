@@ -2,8 +2,8 @@ import { NitroRectangle, NitroRenderTexture } from '@nitrots/nitro-renderer';
 import { FC, useRef } from 'react';
 import { GetRoomEngine, LocalizeText, PlaySound, SoundNames } from '../../api';
 import { Button } from '../Button';
-import { DraggableWindow } from '../draggable-window';
 import { Flex } from '../Flex';
+import { DraggableWindow } from '../draggable-window';
 
 interface LayoutMiniCameraViewProps
 {
@@ -35,7 +35,7 @@ export const LayoutMiniCameraView: FC<LayoutMiniCameraViewProps> = props =>
     return (
         <DraggableWindow handleSelector=".nitro-room-thumbnail-camera">
             <Flex className="nitro-room-thumbnail-camera pt-2 px-1">
-                <Flex ref={ elementRef } className={ 'camera-frame' } />
+                <div ref={ elementRef } className={ 'camera-frame' } />
                 <Flex gap={ 1 } className="align-items-end camera-buttons">
                     <Button variant="danger" onClick={ onClose }>{ LocalizeText('cancel') }</Button>
                     <Button variant="success" onClick={ takePicture }>{ LocalizeText('navigator.thumbeditor.save') }</Button>

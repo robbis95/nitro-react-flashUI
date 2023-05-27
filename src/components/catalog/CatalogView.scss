@@ -66,6 +66,12 @@
         left: 10px;
     }
 
+    .selectproduct-title {
+		position: absolute;
+		font-size: 11px;
+		color: #62615f;
+	}
+
     .item-picker {
         max-height: 150px;
         min-height: 150px;
@@ -331,6 +337,27 @@
         box-sizing: border-box;
         &:hover {
             background-color: #ebf4ff;
+        }
+    }
+}
+
+.club-content {
+    height: 73px;
+    background-color: #DEDEDE;
+    border-radius: 12px;
+    border: 1px solid #959595;
+
+    .content-title {
+        height: 25px;
+        background-color: #959595;
+        border-radius: 6px;
+    
+        .margin-image {
+            margin-right: 27px;
+        }
+
+        .margin-text {
+            margin-top: -2px;
         }
     }
 }

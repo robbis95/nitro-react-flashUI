@@ -53,7 +53,7 @@ export const FurnitureHighScoreView: FC<{}> = props =>
                                         }) }
                                     </Column>
                                     <Text center className="score-footer mb-1">
-                                        { LocalizeText('high.score.footer.congratulations') }
+                                        { LocalizeText('high.score.display.congratulations.footer') }
                                     </Text>
                                 </ContextMenuListView>
                             </Column>

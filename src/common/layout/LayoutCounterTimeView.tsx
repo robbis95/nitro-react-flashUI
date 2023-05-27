@@ -27,15 +27,18 @@ export const LayoutCounterTimeView: FC<LayoutCounterTimeViewProps> = props =>
     return (
         <Flex gap={ 1 }>
             <Base classNames={ getClassNames } { ...rest }>
-                <div>{ day != '00' ? day : hour }{ day != '00' ? LocalizeText('countdown_clock_unit_days') : LocalizeText('countdown_clock_unit_hours') }</div>
+                <div>{ day != '00' ? day : hour }</div>
+                <div className="text-stroke">{ day != '00' ? LocalizeText('countdown_clock_unit_days') : LocalizeText('countdown_clock_unit_hours') }</div>
             </Base>
-            <Base style={ { marginTop: '3px' } }>:</Base>
+            <Base className="text-stroke" style={ { marginTop: '5px', color: 'black' } }>:</Base>
             <Base classNames={ getClassNames } { ...rest }>
-                <div>{ minutes }{ LocalizeText('countdown_clock_unit_minutes') }</div>
+                <div>{ minutes }</div>
+                <div className="text-stroke">{ LocalizeText('countdown_clock_unit_minutes') }</div>
             </Base>
-            <Base style={ { marginTop: '3px' } }>:</Base>
+            <Base className="text-stroke" style={ { marginTop: '5px', color: 'black' } }>:</Base>
             <Base classNames={ getClassNames } { ...rest }>
-                <div>{ seconds }{ LocalizeText('countdown_clock_unit_seconds') }</div>
+                <div>{ seconds }</div>
+                <div className="text-stroke">{ LocalizeText('countdown_clock_unit_seconds') }</div>
             </Base>
             { children }
         </Flex>

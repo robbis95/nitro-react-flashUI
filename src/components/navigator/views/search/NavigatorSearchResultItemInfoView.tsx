@@ -1,5 +1,5 @@
 import { RoomDataParser } from '@nitrots/nitro-renderer';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { Overlay, Popover } from 'react-bootstrap';
 import { FaUser } from 'react-icons/fa';
 import { LocalizeText } from '../../../../api';
@@ -15,6 +15,37 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
     const { roomData = null } = props;
     const [ isVisible, setIsVisible ] = useState(false);
     const elementRef = useRef<HTMLDivElement>();
+    const [ showProfile, setShowProfile ] = useState(false);
+
+    useEffect(() =>
+    {
+        if (showProfile)
+        {
+            setIsVisible(false);
+        }
+    }, [ showProfile ]);
+
+    useEffect(() =>
+    {
+        // add when mounted
+        document.addEventListener('mousedown', handleClick);
+        // return function to be called when unmounted
+        return () =>
+        {
+            document.removeEventListener('mousedown', handleClick);
+        };
+    }, []);
+
+    const handleClick = e =>
+    {
+        if (elementRef.current.contains(e.target))
+        {
+            // inside click
+            return;
+        }
+        // outside click
+        setIsVisible(false);
+    };
 
     const getUserCounterColor = () =>
     {
@@ -40,8 +71,12 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
 
     return (
         <>
-            <Base pointer innerRef={ elementRef } className="icon icon-navigator-info" onMouseOver={ event => setIsVisible(true) } onMouseLeave={ event => setIsVisible(false) } />
-            <Overlay show={ isVisible } target={ elementRef.current } placement="right">
+            <Base pointer innerRef={ elementRef } className="icon icon-navigator-info" onClick={ event =>
+            {
+                isVisible || showProfile ? setIsVisible(false) : setIsVisible(true);
+                event.stopPropagation();
+            } } />
+            <Overlay show={ isVisible } target={ elementRef.current } placement="right" rootClose={ true } >
                 <Popover>
                     <NitroCardContentView overflow="hidden" className="room-info bg-transparent">
                         <Flex gap={ 2 } overflow="hidden" className="room-info-bg p-2">
@@ -60,7 +95,10 @@ export const NavigatorSearchResultItemInfoView: FC<NavigatorSearchResultItemInfo
                                         { LocalizeText('navigator.roomownercaption') }
                                     </Text>
                                     <Flex alignItems="center" gap={ 1 }>
-                                        <UserProfileIconView userId={ roomData.ownerId } />
+                                        <UserProfileIconView userId={ roomData.ownerId } onClick={ event =>
+                                        {
+                                            setShowProfile(true);
+                                        } } />
                                         <Text italics>{ roomData.ownerName }</Text>
                                     </Flex>
                                 </Flex>

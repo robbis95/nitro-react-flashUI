@@ -1,11 +1,8 @@
-import { IAvatarFigureContainer, SaveWardrobeOutfitMessageComposer } from '@nitrots/nitro-renderer';
+import { HabboClubLevelEnum, IAvatarFigureContainer, SaveWardrobeOutfitMessageComposer } from '@nitrots/nitro-renderer';
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/all';
-import { FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, SendMessageComposer } from '../../../api';
+import { CreateLinkEvent, FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, LocalizeText, SendMessageComposer } from '../../../api';
 import { Flex, LayoutAvatarImageView, LayoutCurrencyIcon } from '../../../common';
-import { Border } from '../../../custom/components/layout';
-import { VolterColours } from '../../../custom/common';
-
 export interface AvatarEditorWardrobeViewProps
 {
     figureData: FigureData;
@@ -33,6 +30,8 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
     {
         if(!figureData || (index >= savedFigures.length) || (index < 0)) return;
 
+        if (GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB) return CreateLinkEvent('habboUI/open/hccenter');
+
         const newFigures = [ ...savedFigures ];
 
         const figure = figureData.getFigureString();
@@ -43,6 +42,22 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
         setSavedFigures(newFigures);
         SendMessageComposer(new SaveWardrobeOutfitMessageComposer((index + 1), figure, gender));
     }, [ figureData, savedFigures, setSavedFigures ]);
+
+    const getClubLevel = useCallback(() =>
+    {
+        let highestClubLevel = 0;
+
+        savedFigures.forEach(([ figureContainer, gender ]) =>
+        {
+            if (figureContainer)
+            {
+                const clubLevel = GetAvatarRenderManager().getFigureClubLevel(figureContainer, gender);
+                highestClubLevel = Math.max(highestClubLevel, clubLevel);
+            }
+        });
+
+        return highestClubLevel;
+    }, [ savedFigures ]);
 
     const figures = useMemo(() =>
     {
@@ -58,18 +73,18 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
 
             items.push(
                 <Flex key={ index } alignItems={ 'center' } justifyContent={ 'center' }>
-                    { !hcDisabled && clubLevel > 0 && (
-                        <LayoutCurrencyIcon className="position-absolute top-1 start-1" type="hc" />
-                    ) }
                     <Flex gap={ 1 } column={ true } className="button-container">
-                        <button className="saved-outfit-button" onClick={ event => saveFigureAtWardrobeIndex(index) }>
+                        <button
+                            className="saved-outfit-button"
+                            onClick={ event => saveFigureAtWardrobeIndex(index) }
+                            disabled={ clubLevel > GetClubMemberLevel() && !hcDisabled }>
                             <MdKeyboardArrowRight />
                         </button>
                         { figureContainer && (
                             <button
                                 className="saved-outfit-button"
                                 onClick={ event => wearFigureAtIndex(index) }
-                                disabled={ clubLevel > GetClubMemberLevel() }
+                                disabled={ clubLevel > GetClubMemberLevel() && !hcDisabled }
                             >
                                 <MdKeyboardArrowLeft />
                             </button>
@@ -85,14 +100,24 @@ export const AvatarEditorWardrobeView: FC<AvatarEditorWardrobeViewProps> = props
         });
 
         return items;
-    }, [ savedFigures, hcDisabled, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
+    }, [ savedFigures, saveFigureAtWardrobeIndex, wearFigureAtIndex ]);
 
     return (
-        <Border colour={ VolterColours.light_grey } className="saved-outfit-container">
-            <div className="nitro-avatar-editor-wardrobe-container">
-                { figures }
+        <div>
+            <div className="d-flex flex-column align-items-center">
+                <span className="saved-outfits-title">
+                    { LocalizeText('avatareditor.wardrobe.title') }
+                </span>
+                <span className="mt-2">
+                    { !hcDisabled && getClubLevel() > 0 && (
+                        <LayoutCurrencyIcon type="hc" />
+                    ) }
+                </span>
             </div>
-        </Border>
-
+            <div className="saved-outfit-container mt-2">
+                <div className="nitro-avatar-editor-wardrobe-container">{ figures }</div>
+            </div>
+        </div>
     );
+
 }
