@@ -29,3 +29,4 @@ Thumbs.db
 .env
 public/renderer-config*
 public/ui-config*
+public/

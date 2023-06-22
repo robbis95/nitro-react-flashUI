@@ -20,7 +20,7 @@ export const GetWidgetLayout: FC<GetWidgetLayoutProps> = props =>
         case 'achievementcompetition_hall_of_fame':
             return <HallOfFameWidgetView slot={ props.slot } conf={ props.widgetConf } />;
         case 'bonusrare':
-            return <BonusRareWidgetView />;
+            return <BonusRareWidgetView conf={ props.widgetConf } />;
         case 'widgetcontainer':
             return <WidgetContainerView conf={ props.widgetConf } />
         default:
