@@ -1,6 +1,6 @@
 import { BonusRareInfoMessageEvent, GetBonusRareInfoMessageComposer, NitroConfiguration } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { OpenUrl, SendMessageComposer } from '../../../../../api';
+import { LocalizeText, OpenUrl, SendMessageComposer } from '../../../../../api';
 import { useMessageEvent } from '../../../../../hooks';
 
 export interface BonusRareWidgetViewProps
@@ -53,13 +53,15 @@ export const BonusRareWidgetView: FC<BonusRareWidgetViewProps> = props =>
 
     return (
         <div className="bonus-rare">
-            <div className="bonusrare-image flex-shrink-0" style={ { backgroundImage: `url(${ getOption('image') })` } } />
+            {getOption('image') !== "" && (
+                <div className="bonusrare-image flex-shrink-0" style={ { backgroundImage: `url(${ getOption('image') })` } } />
+            )}
             <div className="flex flex-items justify-content-center align-items-center">
-                <p className="bonusrare-header">{ getOption('header') }</p>
-                <div className="bonus-bar-container ubuntu-bold">Faltam somente { (totalCoinsForBonus - coinsStillRequiredToBuy) + '/' + totalCoinsForBonus } créditos!</div>
-                <div className="bonus-bar-progress" style={ { width: ((totalCoinsForBonus - coinsStillRequiredToBuy) / totalCoinsForBonus) * 100 + '%' } }></div>
+                <p className="bonusrare-header">{ LocalizeText('landing.view.bonus.rare.header') }</p>
+                <div className="bonus-bar-container ubuntu-bold">{ LocalizeText('landing.view.bonus.rare.status') }</div>
+                <div className="bonus-bar-progress" style={ { width: '100%' } }></div>
             </div>
-            <button className="btn bonusrare-button ubuntu-bold" onClick={ event => OpenUrl(getOption('link')) }>{ getOption('button') }</button>
+            <button className="btn bonusrare-button ubuntu-bold" onClick={ event => OpenUrl(getOption('link')) }>{ LocalizeText('landing.view.bonus.rare.open.credits.page') }</button>
         </div>
     );
 }
