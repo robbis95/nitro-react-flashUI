@@ -52,16 +52,20 @@ export const BonusRareWidgetView: FC<BonusRareWidgetViewProps> = props =>
     }
 
     return (
-        <div className="bonus-rare">
+        <div className="bonus-rare widget d-flex">
             {getOption('image') !== "" && (
                 <div className="bonusrare-image flex-shrink-0" style={ { backgroundImage: `url(${ getOption('image') })` } } />
             )}
             <div className="flex flex-items justify-content-center align-items-center">
-                <p className="bonusrare-header">{ LocalizeText('landing.view.bonus.rare.header') }</p>
-                <div className="bonus-bar-container ubuntu-bold">{ LocalizeText('landing.view.bonus.rare.status') }</div>
-                <div className="bonus-bar-progress" style={ { width: '100%' } }></div>
+                <p className="bonusrare-header">{ LocalizeText('landing.view.bonus.rare.header', ['rarename', 'amount'], [ (productType).toString(), (totalCoinsForBonus).toString()]) }</p>
+                <div className="bg-light-dark rounded overflow-hidden position-relative bonus-bar-container">
+                    <div className="d-flex justify-content-center align-items-center w-100 h-100 position-absolute small top-0" style={{ zIndex: 2}}> 
+                    { LocalizeText('landing.view.bonus.rare.status', ['totalCoins', 'totalCoinsForBonus'], [ ((totalCoinsForBonus - coinsStillRequiredToBuy)).toString(), (totalCoinsForBonus).toString()]) }</div>
+                    <div className="small bg-info rounded position-absolute top-0 h-100" style={{ zIndex: 1, width: ((totalCoinsForBonus - coinsStillRequiredToBuy) / totalCoinsForBonus) * 100 + '%' }}></div>
+                </div>
             </div>
             <button className="btn bonusrare-button ubuntu-bold" onClick={ event => OpenUrl(getOption('link')) }>{ LocalizeText('landing.view.bonus.rare.open.credits.page') }</button>
         </div>
+
     );
 }

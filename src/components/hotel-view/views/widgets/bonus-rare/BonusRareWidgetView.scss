@@ -37,7 +37,6 @@
         border-radius: 0.450em;
         border: 2px ridge #fff;
         outline: 1px solid #000;
-        z-index: 1;
         font-size: small;
         text-align: center;
         font-weight: bold;
@@ -61,14 +60,4 @@
         align-items: center;
     }
 
-    .bonus-bar-progress {
-        height: 100%;
-        z-index: 1;
-        transition: all 1s;
-        border-radius: calc(#{$border-radius} / 2);
-        background: repeating-linear-gradient($tertiary,
-                $tertiary 50%,
-                $quaternary 50%,
-                $quaternary 100%);
-    }
 }

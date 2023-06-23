@@ -23,5 +23,36 @@
 			background-repeat: no-repeat;
 			background-position: top center;
 		}
+		
+		.promo-article-header {
+			font-size: large;
+			font-weight: bold;
+			color: white;
+			text-shadow: 1px 1px 1px gray;
+			margin-bottom: 0px;
+		}
+
+		.promo-article-body {
+			font-size: 0.775em;
+			font-weight: normal;
+			color: white;
+		}
+
+		.promo-article-button {
+			width: 175px;
+			height: 25px;
+			font-size: 0.675em;
+			font-weight: bold;
+			border-radius: 50%;
+			border-color: #919191;
+			background-color: gainsboro;
+			border-style: solid;
+			box-shadow: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+
 	}
 }
