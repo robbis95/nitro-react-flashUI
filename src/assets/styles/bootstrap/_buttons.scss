@@ -54,6 +54,20 @@
 
 }
 
+.btn-gray {
+  border-image-source: url("@/assets/flash/buttons/button_gray.png");
+  color: #fff;
+  font-family: ubuntuBold;
+
+  &:hover {
+    border-image-source: url("@/assets/flash/buttons/button_gray_hover.png");
+  }
+
+  &:active {
+    border-image-source: url("@/assets/flash/buttons/button_gray_active.png");
+  }
+}
+
 // scss-docs-end btn-variant-loops
 
 

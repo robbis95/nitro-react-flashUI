@@ -934,6 +934,12 @@
         height: 14px;
     }
 
+    &.icon-hc_gift_monthly {
+        background-image: url('@/assets/flash/habboclub/hc_gift_monthly.png');
+        width: 16px;
+        height: 14px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }
