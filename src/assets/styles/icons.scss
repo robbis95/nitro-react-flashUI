@@ -940,6 +940,18 @@
         height: 14px;
     }
 
+    &.icon-chevron_left_gift {
+        background-image: url('@/assets/flash/catalogue/chevron_left_gift.png');
+        width: 10px;
+        height: 10px;
+    }
+
+    &.icon-chevron_right_gift {
+        background-image: url('@/assets/flash/catalogue/chevron_right_gift.png');
+        width: 10px;
+        height: 10px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }

@@ -211,6 +211,9 @@
   outline: 1px solid #000;
   border: 3px solid #fff;
   min-height: 22px;
-  min-width: 23px;
+  min-width: 27px;
 
+  &.active {
+    border: 5px solid #fff;
+  }
 }

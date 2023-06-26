@@ -119,7 +119,8 @@
 }
 
 .nitro-catalog-gift {
-    width: 325px;
+    width: 362px;
+    height: 470px;
 
     .gift-preview {
         width: 80px;
@@ -128,6 +129,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F0F0F0;
+        border: 1px solid #5D5D5D;
+        border-radius: 8px;
     }
 
     .gift-color {
@@ -315,14 +319,13 @@
 
 .autocomplete-gift-container {
     background: #fff;
-    padding: 8px;
     list-style-type: none;
-    min-width: 307px;
+    min-width: 264px;
     border-radius: 0.2rem;
     position: absolute;
     font-size: 0.7875rem;
-    top: 81px;
-    left: 8px;
+    top: 65px;
+    left: 31px;
     border: 1px solid #b6c1ce;
     margin: 0;
     border-radius: 2px;
@@ -335,8 +338,17 @@
     .autocomplete-gift-item {
         width: 100%;
         box-sizing: border-box;
+        
         &:hover {
-            background-color: #ebf4ff;
+            background-color: #CCD1DA !important;
+        }
+
+        &:nth-child(odd) {
+            background-color: #EEEEEE;
+        }
+
+        &:nth-child(even) {
+            background-color: #FFFFFF;
         }
     }
 }
