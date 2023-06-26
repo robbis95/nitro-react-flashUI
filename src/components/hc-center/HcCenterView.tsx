@@ -84,7 +84,7 @@ export const HcCenterView: FC<{}> = props =>
             },
             eventUrlPrefix: 'habboUI/'
         };
-
+        
         AddEventLinkTracker(linkTracker);
 
         return () => RemoveLinkEventTracker(linkTracker);
@@ -113,7 +113,7 @@ export const HcCenterView: FC<{}> = props =>
     if(!isVisible) return null;
 
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={ { marginLeft: 15, width: '360px' }}>
             <Popover.Body className="text-black py-2 px-3">
                 <h5>{ LocalizeText('hccenter.breakdown.title') }</h5>
                 <div>{ LocalizeText('hccenter.breakdown.creditsspent', [ 'credits' ], [ kickbackData?.totalCreditsSpent.toString() ]) }</div>
@@ -121,7 +121,7 @@ export const HcCenterView: FC<{}> = props =>
                 <div>{ LocalizeText('hccenter.breakdown.streakbonus', [ 'credits' ], [ kickbackData?.creditRewardForStreakBonus.toString() ]) }</div>
                 <hr className="w-100 text-black my-1" />
                 <div>{ LocalizeText('hccenter.breakdown.total', [ 'credits', 'actual' ], [ getHcPaydayAmount(), ((((kickbackData?.kickbackPercentage * kickbackData?.totalCreditsSpent) + kickbackData?.creditRewardForStreakBonus) * 100) / 100).toString() ]) }</div>
-                <div className="btn btn-link text-primary p-0" onClick={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['payday.habbopage']) }>
+                <div className="text-primary p-0" style={{ textAlign: 'right' }} onClick={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['payday.habbopage']) }>
                     { LocalizeText('hccenter.special.infolink') }
                 </div>
             </Popover.Body>
@@ -170,11 +170,13 @@ export const HcCenterView: FC<{}> = props =>
                                     <Text bold className="ms-2">{ LocalizeText('hccenter.special.amount.title') }</Text>
                                     <Flex>
                                         <Text className="w-100 text-center ms-4n">{ getHcPaydayAmount() }</Text>
-                                        <OverlayTrigger trigger={ [ 'hover', 'focus' ] } placement="left" overlay={ popover }>
-                                            <Text underline small variant="primary" className="pt-4">
-                                                { LocalizeText('hccenter.breakdown.infolink') }
-                                            </Text>
-                                        </OverlayTrigger>
+                                            <OverlayTrigger trigger={['click']} placement="right" overlay={popover}>
+                                            <span onClick={() => popover} className="pt-4">
+                                                <Text underline small variant="primary">
+                                                {LocalizeText('hccenter.breakdown.infolink')}
+                                                </Text>
+                                            </span>
+                                            </OverlayTrigger>
                                     </Flex>
                                 </Column> }
                         </Column>
