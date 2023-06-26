@@ -49,4 +49,21 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+
+    .button {
+        background-image: url('@/assets/flash/messenger/button.png');
+        background-repeat: no-repeat;
+        height: 20px;
+    }
+
+    .text-link {
+        color: #05A3D8;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            color: #79b1d3;
+        }
+    }
 }

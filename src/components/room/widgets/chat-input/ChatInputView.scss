@@ -2,9 +2,8 @@
     display: flex;
     align-items: center;
     position: absolute;
+    width: 40vw;
     bottom:65px;
-    left: 30vw;
-    right: 30vw;
     height: 38px;
     border-image-source: url(@/assets/flash/room/chatinput.png);
     border-image-slice:8 8 8 8 fill;
@@ -12,27 +11,28 @@
     background: #e4e4e4;
     border-radius: 9px;
     padding-right: 10px;
-    overflow: hidden;
     z-index: 31;
 
     @include media-breakpoint-down(sm) {
         display: flex;
         position: absolute;
         bottom: 70px;
-        left: calc(100% / 3);
-        width: 200px;
+        left: 30px;
+        width: 85vw;
     }
 
     .input-sizer {
-        display: inline-grid;
-        vertical-align: top;
-        height: 100%;
+        align-content: center;
+        display: flex;
         padding-right: 10px;
+
+        .chat-input {
+            width: 100%;
+        }
 
         &::after,
         input,
         textarea {
-            width: auto;
             min-width: 1em;
             grid-area: 1 / 2;
             margin: 0;
@@ -98,4 +98,21 @@
     border-image-slice:9 9 9 9 fill;
     border-image-width:9px 9px 9px 9px;
     margin-bottom: -13px;
+}
+
+.info-habbopages {
+    cursor: pointer;
+    background-image: url("@/assets/flash/boxes/card/questionmark.png");
+    width: 19px;
+    height: 20px;
+    right: -18px;
+    position: absolute;
+
+        &:hover {
+            background-image: url("@/assets/flash/boxes/card/questionmark_hover.png");
+
+        &:active {
+            background-image: url("@/assets/flash/boxes/card/questionmark_click.png");
+        }
+    }
 }

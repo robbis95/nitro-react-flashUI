@@ -1,7 +1,10 @@
 .nitro-inventory {
-    width: $inventory-width;
     height: $inventory-height;
-    min-width: 326px;
+    min-height: $inventory-height;
+    max-height: $inventory-height + 150px;
+    width: $inventory-width;
+    min-width: $inventory-width;
+    max-width: $inventory-width + 150px;
     color: #000;
 
     input {
@@ -11,10 +14,10 @@
 
     &.trading {
         width: 535px;
-        min-height: 505px;
+        min-height: $inventory-height + 290px !important;
 
         .trading-inventory {
-            height: 200px;
+            max-height: 200px;
         }
     }
 
@@ -32,8 +35,34 @@
     }
 
     .trade-bg {
-        border-image-source: url(@/assets/flash/inventory/trading_bg.png);
+        border-image-source: url('@/assets/flash/inventory/trading_bg.png');
         border-image-slice: 15 15 15 15 fill;
         border-image-width: 15px 15px 15px 15px;
+    }
+
+    .credits-align {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 230px;
+    }
+
+    .quantity-input {
+        width: 49px;
+    }
+
+    .lock-design-left {
+        margin-left: 21px;
+        margin-right: 33px;
+    }
+
+    .lock-design-right {
+        margin-left: 21px;
+    }
+
+    .divisor {
+        height: 180px;
+        border-left: 2px solid #B4B4B4;
+        margin-top: 15px;
     }
 }

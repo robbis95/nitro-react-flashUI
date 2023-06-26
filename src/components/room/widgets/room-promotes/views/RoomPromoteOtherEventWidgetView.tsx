@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { LocalizeText } from '../../../../../api';
-import { Base, Column, Flex, Text } from '../../../../../common';
+import { Flex, Text } from '../../../../../common';
 
 interface RoomPromoteOtherEventWidgetViewProps
 {
@@ -13,18 +13,14 @@ export const RoomPromoteOtherEventWidgetView: FC<RoomPromoteOtherEventWidgetView
 
     return (
         <>
-            <Flex alignItems="center" gap={ 2 } style={ { overflowWrap: 'anywhere' } }>
-                <Text variant="white">{ eventDescription }</Text>
+            <Flex className="px-2 py-2" alignItems="center" gap={ 2 } style={ { overflowWrap: 'anywhere', overflow: 'hidden', height: '60px' } }>
+                <Text variant="white" dangerouslySetInnerHTML={ { __html: eventDescription.replace(/\n/g,'<br />') } } />
             </Flex>
-            <br /><br />
-            <Column alignItems="center" gap={ 1 }>
-                <Base fullWidth overflow="hidden" position="relative" className="bg-light-dark rounded">
-                    <Flex fit center position="absolute">
-                        <Text variant="white" center>{ LocalizeText('navigator.eventinprogress') }</Text>
-                    </Flex>
-                    <Text>&nbsp;</Text>
-                </Base>
-            </Column>
+            <Flex className="bg-light-dark rounded mt-4">
+                <Flex fit center>
+                    <Text variant="white" center>{ LocalizeText('navigator.eventinprogress') }</Text>
+                </Flex>
+            </Flex>
         </>
     );
 };

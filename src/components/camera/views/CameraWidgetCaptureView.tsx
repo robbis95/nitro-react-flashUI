@@ -1,7 +1,6 @@
 import { NitroRectangle, TextureUtils } from '@nitrots/nitro-renderer';
 import { FC, useRef } from 'react';
-import { FaTimes } from 'react-icons/fa';
-import { CameraPicture, GetRoomEngine, GetRoomSession, LocalizeText, PlaySound, SoundNames } from '../../../api';
+import { CameraPicture, CreateLinkEvent, GetRoomEngine, GetRoomSession, LocalizeText, PlaySound, SoundNames } from '../../../api';
 import { Column, DraggableWindow, Flex } from '../../../common';
 import { useCamera, useNotification } from '../../../hooks';
 
@@ -62,9 +61,8 @@ export const CameraWidgetCaptureView: FC<CameraWidgetCaptureViewProps> = props =
             <Column center className="nitro-camera-capture" gap={ 0 }>
                 { selectedPicture && <img alt="" className="camera-area" src={ selectedPicture.imageUrl } /> }
                 <div className="camera-canvas drag-handler">
-                    <div className="position-absolute header-close" onClick={ onClose }>
-                        <FaTimes className="fa-icon" />
-                    </div>
+                    <div className="position-absolute info-camera" onClick={ () => CreateLinkEvent('habbopages/camera') }></div>
+                    <div className="position-absolute header-close" onClick={ onClose }></div>
                     { !selectedPicture && <div ref={ elementRef } className="camera-area camera-view-finder" /> }
                     { selectedPicture &&
                         <div className="camera-area camera-frame">

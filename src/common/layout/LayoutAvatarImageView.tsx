@@ -49,19 +49,19 @@ export const LayoutAvatarImageView: FC<LayoutAvatarImageViewProps> = props =>
     useEffect(() =>
     {
         const avatarImage = GetAvatarRenderManager().createAvatarImage(figure, AvatarScaleType.LARGE, gender, {
-            resetFigure: figure => 
+            resetFigure: figure =>
             {
                 if(isDisposed.current) return;
 
                 setRandomValue(Math.random());
             },
-            dispose: () => 
+            dispose: () =>
             {},
             disposed: false
         }, null);
 
         if(!avatarImage) return;
-        
+
         let setType = AvatarSetType.FULL;
 
         if(headOnly) setType = AvatarSetType.HEAD;
@@ -84,6 +84,6 @@ export const LayoutAvatarImageView: FC<LayoutAvatarImageViewProps> = props =>
             isDisposed.current = true;
         }
     }, []);
-        
+
     return <Base classNames={ getClassNames } style={ getStyle } { ...rest } />;
 }

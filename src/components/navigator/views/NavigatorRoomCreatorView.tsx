@@ -2,7 +2,7 @@
 import { CreateFlatMessageComposer, HabboClubLevelEnum } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { CreateLinkEvent, GetClubMemberLevel, GetConfiguration, IRoomModel, LocalizeText, SendMessageComposer } from '../../../api';
-import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
+import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutInputErrorView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
 import { RoomCreatorGridItem } from '../../../common/layout/RoomCreatorGridItem';
 import { useNavigator } from '../../../hooks';
 
@@ -24,15 +24,19 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
 
     const selectModel = (model: IRoomModel, index: number) =>
     {
-        if(!model || (model.clubLevel > GetClubMemberLevel())) return;
+        if(!model) return;
+
+        if (GetClubMemberLevel() < model.clubLevel) return CreateLinkEvent('habboUI/open/hccenter');
 
         setSelectedModelName(roomModels[index].name);
-    };
+    }
 
     const createRoom = () =>
     {
+        if (!name || (name.length < 3)) return;
+
         SendMessageComposer(new CreateFlatMessageComposer(name, description, 'model_' + selectedModelName, Number(category), Number(visitorsCount), tradesSetting));
-    };
+    }
 
     useEffect(() =>
     {
@@ -64,7 +68,7 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
     }, []);
 
     return (
-        <NitroCardView className="nitro-room-creator" theme="primary">
+        <NitroCardView className="nitro-room-creator no-resize" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('navigator.createroom.title') } onCloseClick={ event => CreateLinkEvent('navigator/close-creator') } />
             <NitroCardContentView>
                 <Column overflow="hidden">
@@ -72,7 +76,8 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                         <Column size={ 5 } gap={ 1 } overflow="auto" className="px-2 py-1">
                             <Column gap={ 1 }>
                                 <Text gfbold>{ LocalizeText('navigator.createroom.roomnameinfo') }</Text>
-                                <input type="text" className="room-creator-form" maxLength={ 60 } onChange={ event => setName(event.target.value) } placeholder={ LocalizeText('navigator.createroom.roomnameinfo') } />
+                                <input type="text" className={ `room-creator-form ${ (!name || (name.length < 3)) ? 'input-error' : '' }` } maxLength={ 60 } onChange={ event => setName(event.target.value) } placeholder={ LocalizeText('navigator.createroom.roomnameinfo') } />
+                                { (!name || (name.length < 3)) && <LayoutInputErrorView text={ LocalizeText('navigator.createroom.nameerr') } /> }
                             </Column>
                             <Column grow gap={ 1 }>
                                 <Text gfbold>{ LocalizeText('navigator.createroom.roomdescinfo') }</Text>
@@ -105,21 +110,21 @@ export const NavigatorRoomCreatorView: FC<{}> = props =>
                                 </select>
                             </Column>
                             <Flex gap={ 2 }>
-                                <Button fullWidth className="volter-bold-button" onClick={ createRoom } disabled={ (!name || (name.length < 3)) }>{ LocalizeText('navigator.createroom.create') }</Button>
+                                <Button fullWidth className="volter-bold-button" onClick={ createRoom }>{ LocalizeText('navigator.createroom.create') }</Button>
                                 <Button fullWidth className="volter-button" onClick={ event => CreateLinkEvent('navigator/close-creator') } >{ LocalizeText('cancel') }</Button>
                             </Flex>
                         </Column>
                         <Column size={ 7 } gap={ 1 } overflow="auto">
-                            <AutoGrid className="room-creator-grid" columnCount={ 2 } columnMinWidth={ 100 } columnMinHeight={ 50 } overflow="unset">
+                            <AutoGrid className="room-creator-grid" gap={ 1 } columnCount={ 2 } columnMinWidth={ 100 } columnMinHeight={ 50 } overflow="unset">
                                 {
                                     roomModels.map((model, index )=>
                                     {
-                                        return (<RoomCreatorGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="py-3" disabled={ (GetClubMemberLevel() < model.clubLevel) }>
+                                        return (<RoomCreatorGridItem fullHeight key={ model.name } onClick={ () => selectModel(model, index) } itemActive={ (selectedModelName === model.name) } overflow="unset" gap={ 0 } className="py-3">
                                             <Flex fullHeight center overflow="hidden">
                                                 <img alt="" src={ getRoomModelImage(model.name) } />
                                             </Flex>
-                                            <Text position="absolute" className="bottom-1 start-1">{ model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
-                                            { !hcDisabled && model.clubLevel > HabboClubLevelEnum.NO_CLUB && <LayoutCurrencyIcon position="absolute" className="top-1 end-1" type="hc" /> }
+                                            <Text position="absolute" className="bottom-1 start-1"><Base className={ `icon ${ selectedModelName === model.name ? 'icon-tiles_room_selected' : 'icon-tiles' }` } /> { model.tileSize } { LocalizeText('navigator.createroom.tilesize') }</Text>
+                                            { !hcDisabled && model.clubLevel > HabboClubLevelEnum.NO_CLUB && <Base className="icon icon-hc_mini position-absolute top-1 end-1" /> }
                                             { selectedModelName && <i className="active-arrow"/> }
                                         </RoomCreatorGridItem>);
                                     })

@@ -1,7 +1,6 @@
 import { MysteryBoxKeysUpdateEvent } from '@nitrots/nitro-renderer';
 import { FC, useState } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { ColorUtils, LocalizeText } from '../../../../api';
+import { ColorUtils, CreateLinkEvent, LocalizeText } from '../../../../api';
 import { Base, Column, Flex, LayoutGridItem, Text } from '../../../../common';
 import { useSessionDataManagerEvent } from '../../../../hooks';
 
@@ -38,28 +37,31 @@ export const MysteryBoxExtensionView: FC<{}> = props =>
     if(keyColor === '' && boxColor === '') return null;
 
     return (
-        <Base className="nitro-notification-bubble rounded mysterybox-extension">
+        <Base className="nitro-notification-bubble mysterybox-extension">
             <Column>
-                <Flex alignItems="center" justifyContent="between" pointer onClick={ event => setIsOpen(value => !value) }>
-                    <Text variant="white">{ LocalizeText('mysterybox.tracker.title') }</Text>
-                    { isOpen && <FaChevronUp className="fa-icon" /> }
-                    { !isOpen && <FaChevronDown className="fa-icon" /> }
+                <Flex className="grouproom-header px-1" alignItems="center" justifyContent="between" pointer onClick={ event => setIsOpen(value => !value) }>
+                    <Text bold variant="white">{ LocalizeText('mysterybox.tracker.title') }</Text>
+                    <Base className="icon icon-nitro-card-header-close" />
                 </Flex>
                 { isOpen &&
                     <>
-                        <Text variant="white">{ LocalizeText('mysterybox.tracker.description') }</Text>
-                        <Flex justifyContent="center" alignItems="center" gap={ 2 }>
-                            <LayoutGridItem className="mysterybox-container">
-                                <div className="box-image flex-shrink-0" style={ { backgroundColor: getRgbColor(boxColor) } }>
-                                    <div className="chain-overlay-image" />
-                                </div>
-                            </LayoutGridItem>
-                            <LayoutGridItem className="mysterybox-container">
-                                <div className="key-image flex-shrink-0" style={ { backgroundColor: getRgbColor(keyColor ) } }>
-                                    <div className="key-overlay-image" />
-                                </div>
-                            </LayoutGridItem>
-                        </Flex>
+                        <Column className="px-2 pb-2">
+                            <Text variant="white">{ LocalizeText('mysterybox.tracker.description') }</Text>
+                            <Flex justifyContent="center" alignItems="center" gap={ 2 }>
+                                <LayoutGridItem className="mysterybox-container">
+                                    <div className="box-image flex-shrink-0" style={ { backgroundColor: getRgbColor(boxColor) } }>
+                                        <div className="chain-overlay-image" />
+                                    </div>
+                                </LayoutGridItem>
+                                <LayoutGridItem className="mysterybox-container">
+                                    <div className="key-image flex-shrink-0" style={ { backgroundColor: getRgbColor(keyColor ) } }>
+                                        <div className="key-overlay-image" />
+                                    </div>
+                                </LayoutGridItem>
+                            </Flex>
+                            <button className="report rounded px-2 overflow-hidden" onClick={ () => CreateLinkEvent('inventory/toggle') }>{ LocalizeText('mysterybox.tracker.return.button.text') }</button>
+                            <Text pointer className="text-link" onClick={ null }>{ LocalizeText('mysterybox.tracker.link') }</Text>
+                        </Column>
                     </> }
             </Column>
         </Base>

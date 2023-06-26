@@ -4,6 +4,7 @@ import { Column, Flex, Grid, Text } from '../../../common';
 import { AvatarEditorIcon } from './AvatarEditorIcon';
 import { AvatarEditorFigureSetView } from './figure-set/AvatarEditorFigureSetView';
 import { AvatarEditorPaletteSetView } from './palette-set/AvatarEditorPaletteSetView';
+
 export interface AvatarEditorModelViewProps
 {
     model: IAvatarEditorCategoryModel;
@@ -53,8 +54,8 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
 
     return (
         <Grid>
-            <Column className="choose-clothing overflow-auto">
-                <Flex justifyContent="center" gap={ 4 }>
+            <Column className="choose-clothing overflow-y-auto overflow-x-hidden">
+                <Flex className="px-3" gap={ 4 }>
                     { model.canSetGender &&
                     <>
                         <Flex center pointer className="category-item" gap={ 3 } onClick={ event => setGender(FigureData.MALE) }>
@@ -71,20 +72,22 @@ export const AvatarEditorModelView: FC<AvatarEditorModelViewProps> = props =>
                         const category = model.categories.get(name);
 
                         return (
-                            <Flex center pointer key={ name } className="category-item" onClick={ event => selectCategory(name) }>
-                                <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
-                            </Flex>
+                            <div key={ name }>
+                                <Flex center pointer className="category-item" onClick={ event => selectCategory(name) }>
+                                    <AvatarEditorIcon icon={ category.name } selected={ (activeCategory === category) } />
+                                </Flex>
+                            </div>
                         );
                     }) }
                 </Flex>
-                <Column className="h-50" size={ 5 } overflow="hidden">
+                <Column className="avatar-parts-container" size={ 5 } overflow="hidden">
                     <AvatarEditorFigureSetView model={ model } category={ activeCategory } setMaxPaletteCount={ setMaxPaletteCount } />
                 </Column>
-                <Column size={ 5 } overflow="hidden" className="h-50">
+                <Column overflow="hidden" className={ maxPaletteCount === 2 ? 'avatar-color-palette-container dual-palette' : 'avatar-color-palette-container' }>
                     { (maxPaletteCount >= 1) &&
-                    <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(0) } paletteIndex={ 0 } /> }
+                        <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(0) } paletteIndex={ 0 } /> }
                     { (maxPaletteCount === 2) &&
-                    <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(1) } paletteIndex={ 1 } /> }
+                        <AvatarEditorPaletteSetView model={ model } category={ activeCategory } paletteSet={ activeCategory.getPalette(1) } paletteIndex={ 1 } /> }
                 </Column>
             </Column>
         </Grid>

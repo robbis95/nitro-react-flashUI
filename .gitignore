@@ -29,4 +29,5 @@ Thumbs.db
 .env
 public/renderer-config*
 public/ui-config*
-public/nitro-assets
+renderer-config*
+ui-config*
