@@ -68,6 +68,20 @@
   }
 }
 
+.btn-mod-tools {
+  border-image-source: url("@/assets/flash/modtools/button.png");
+  color: #fff;
+  font-family: ubuntuBold;
+
+  &:hover {
+    border-image-source: url("@/assets/flash/modtools/button_hover.png");
+  }
+
+  &:active {
+    border-image-source: url("@/assets/flash/modtools/button_active.png");
+  }
+}
+
 // scss-docs-end btn-variant-loops
 
 
