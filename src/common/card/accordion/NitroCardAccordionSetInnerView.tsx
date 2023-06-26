@@ -1,7 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Column, ColumnProps, Flex, Text } from '../..';
+import { Base, Column, ColumnProps, Flex, Text } from '../..';
 import { useNitroCardAccordionContext } from './NitroCardAccordionContext';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 export interface NitroCardAccordionSetInnerViewProps extends ColumnProps
 {
@@ -25,7 +24,7 @@ export const NitroCardAccordionSetInnerView: FC<NitroCardAccordionSetInnerViewPr
 
     const getClassNames = useMemo(() =>
     {
-        const newClassNames = [ 'nitro-card-accordion-set' ];
+        const newClassNames = [ '' ];
 
         if(isOpen) newClassNames.push('active');
 
@@ -44,40 +43,43 @@ export const NitroCardAccordionSetInnerView: FC<NitroCardAccordionSetInnerViewPr
         const closeFunction = close;
 
         setClosers(prevValue =>
-            {
-                const newClosers = [ ...prevValue ];
+        {
+            const newClosers = [ ...prevValue ];
 
-                newClosers.push(closeFunction);
+            newClosers.push(closeFunction);
 
-                return newClosers;
-            });
+            return newClosers;
+        });
 
         return () =>
         {
             setClosers(prevValue =>
-                {
-                    const newClosers = [ ...prevValue ];
+            {
+                const newClosers = [ ...prevValue ];
 
-                    const index = newClosers.indexOf(closeFunction);
+                const index = newClosers.indexOf(closeFunction);
 
-                    if(index >= 0) newClosers.splice(index, 1);
+                if(index >= 0) newClosers.splice(index, 1);
 
-                    return newClosers;
-                });
+                return newClosers;
+            });
         }
     }, [ close, setClosers ]);
 
     return (
         <Column classNames={ getClassNames } gap={ gap } { ...rest }>
-            <Flex pointer justifyContent="between" className="nitro-card-accordion-set-header px-2 py-1" onClick={ onClick }>
-                <Text>{ headerText }</Text>
-                { isOpen && <FaChevronUp className="fa-icon" /> }
-                { !isOpen && <FaChevronDown className="fa-icon" /> }
-            </Flex>
-            { isOpen &&
-                <Column fullHeight overflow="auto" gap={ 0 } className="nitro-card-accordion-set-content p-1">
-                    { children }
-                </Column> }
+            <Column fullHeight gap={ 0 }>
+                <Flex pointer gap={ 0 } onClick={ onClick }>
+                    <Text gfbold variant="black" className=" px-2 py-1">{ headerText }</Text>
+                    { isOpen && <Base className="mt-1 icon icon-friendlist_arrow_black_down" /> }
+                    { !isOpen && <Base className="mt-1 icon icon-friendlist_arrow_black_right" /> }
+                </Flex>
+                { isOpen &&
+                    <Column fullHeight overflow="hidden" gap={ 0 } className="nitro-card-accordion-set-content cursor-pointer">
+                        { children }
+                    </Column>
+                }
+            </Column>
         </Column>
     );
 }

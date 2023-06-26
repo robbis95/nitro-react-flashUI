@@ -1,6 +1,5 @@
 import { RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomSessionFavoriteGroupUpdateEvent, RoomSessionUserBadgesEvent, RoomSessionUserFigureUpdateEvent, UserRelationshipsComposer } from '@nitrots/nitro-renderer';
-import { Dispatch, FC, FocusEvent, KeyboardEvent, SetStateAction, useEffect, useState } from 'react';
-import { FaPencilAlt, FaTimes } from 'react-icons/fa';
+import { Dispatch, FC, KeyboardEvent, SetStateAction, useEffect, useState } from 'react';
 import { AvatarInfoUser, CloneObject, GetConfiguration, GetGroupInformation, GetSessionDataManager, GetUserProfile, LocalizeText, SendMessageComposer } from '../../../../../api';
 import { Base, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, Text } from '../../../../../common';
 import { useMessageEvent, useRoom, useRoomSessionManagerEvent } from '../../../../../hooks';
@@ -30,8 +29,6 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
 
         setIsEditingMotto(false);
     }
-
-    const onMottoBlur = (event: FocusEvent<HTMLInputElement>) => saveMotto(event.target.value);
 
     const onMottoKeyDown = (event: KeyboardEvent<HTMLInputElement>) =>
     {
@@ -129,9 +126,9 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                     <Flex alignItems="center" justifyContent="between">
                         <Flex alignItems="center" gap={ 1 }>
                             <i className="icon icon-profile-house cursor-pointer" onClick={ event => GetUserProfile(avatarInfo.webID) }/>
-                            <Text gfbold variant="white" className="infostand-name" onClick={ event => GetUserProfile(avatarInfo.webID) }>{ avatarInfo.name }</Text>
+                            <Text gfbold variant="white" className="infostand-name" title={ LocalizeText('guide.help.common.profile.tooltip') } onClick={ event => GetUserProfile(avatarInfo.webID) }>{ avatarInfo.name }</Text>
                         </Flex>
-                        <FaTimes className="cursor-pointer fa-icon" onClick={ onClose } />
+                        <Base className="infostand-close" onClick={ onClose } />
                     </Flex>
                     <hr className="m-0" />
                 </Column>
@@ -178,21 +175,20 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                             </Flex> }
                         { avatarInfo.type === AvatarInfoUser.OWN_USER &&
                             <Flex grow alignItems="center" gap={ 2 }>
-                                <FaPencilAlt className="small fa-icon" />
+                                <Base className="icon pencil-icon" />
                                 <Flex grow alignItems="center" className="motto-content">
                                     { !isEditingMotto &&
-                                        <Text fullWidth pointer wrap textBreak variant="white" onClick={ event => setIsEditingMotto(true) }>{ motto }&nbsp;</Text> }
+                                        <Text fullWidth wrap textBreak className={ motto?.length === 0 ? 'color-motto' : 'text-white' } onClick={ event => setIsEditingMotto(true) }>{ motto?.length === 0 ? LocalizeText('infostand.motto.change') : motto }&nbsp;</Text> }
                                     { isEditingMotto &&
-                                        <input type="text" className="motto-input" maxLength={ GetConfiguration<number>('motto.max.length', 38) } value={ motto } onChange={ event => setMotto(event.target.value) } onBlur={ onMottoBlur } onKeyDown={ onMottoKeyDown } autoFocus={ true } /> }
+                                        <input type="text" className="motto-input" maxLength={ GetConfiguration<number>('motto.max.length', 38) } value={ motto } onChange={ event => setMotto(event.target.value) } onKeyDown={ onMottoKeyDown } autoFocus={ true } /> }
                                 </Flex>
                             </Flex> }
                     </Flex>
                     <hr className="m-0" />
                 </Column>
                 <Column gap={ 1 }>
-                    <Text gfbold variant="white" wrap>
-                        { LocalizeText('infostand.text.achievement_score') + ' ' + avatarInfo.achievementScore }
-                    </Text>
+                    <Text gfbold variant="white" wrap>{ LocalizeText('infostand.text.achievement_score') }</Text>
+                    <Text gfbold variant="white" wrap className="mt-1">{ avatarInfo.achievementScore }</Text>
                     { (avatarInfo.carryItem > 0) &&
                         <>
                             <hr className="m-0" />
@@ -201,7 +197,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
                             </Text>
                         </> }
                 </Column>
-                <Column gap={ 1 }>
+                <Column gap={ 1 } className="mt-1">
                     <InfoStandWidgetUserRelationshipsView relationships={ relationships } />
                 </Column>
                 { GetConfiguration('user.tags.enabled') &&

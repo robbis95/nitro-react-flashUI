@@ -1,7 +1,7 @@
-import { MouseEventType } from '@nitrots/nitro-renderer';
+import { HabboClubLevelEnum, MouseEventType } from '@nitrots/nitro-renderer';
 import { FC, MouseEvent, useMemo, useState } from 'react';
 import { IPurchasableOffer, Offer, ProductTypeEnum } from '../../../../../api';
-import { Column, Flex, LayoutAvatarImageView, LayoutGridItemProps } from '../../../../../common';
+import { Base, Column, Flex, LayoutAvatarImageView, LayoutGridItemProps } from '../../../../../common';
 import { LayoutCatalogGridItem } from '../../../../../common/layout/LayoutCatalogGridItem';
 import { useCatalog, useInventoryFurni } from '../../../../../hooks';
 import { CatalogPriceGridDisplayWidgetView } from '../widgets/CatalogPriceGridDisplayWidgetViev';
@@ -55,6 +55,7 @@ export const CatalogGridOfferView: FC<CatalogGridOfferViewProps> = props =>
     return (
         <Column className="catalog-grid-active cursor-pointer" gap={ 0 } itemActive={ itemActive } onMouseDown={ onMouseEvent } onMouseUp={ onMouseEvent } onMouseOut={ onMouseEvent }>
             <LayoutCatalogGridItem itemImage={ iconUrl } itemCount={ ((offer.pricingModel === Offer.PRICING_MODEL_MULTI) ? product.productCount : 1) } itemUniqueSoldout={ (product.uniqueLimitedItemSeriesSize && !product.uniqueLimitedItemsLeft) } itemUniqueNumber={ product.uniqueLimitedItemSeriesSize } { ...rest }>
+                { (offer.clubLevel !== HabboClubLevelEnum.NO_CLUB) && <Base className="icon icon-hc_mini position-absolute top-0 end-1" /> }
                 { (offer.product.productType === ProductTypeEnum.ROBOT) &&
                 <LayoutAvatarImageView figure={ offer.product.extraParam } headOnly={ true } direction={ 3 } /> }
             </LayoutCatalogGridItem>

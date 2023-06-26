@@ -24,8 +24,8 @@
 
 .nitro-infostand-container {
     position: absolute;
-    right: 10px;
-    bottom: $toolbar-height + 10px;
+    right: 4px;
+    bottom: $toolbar-height + 7px;
     pointer-events: none;
     z-index: $infostand-zindex;
     color: $white;
@@ -41,6 +41,10 @@
         border-image-width: 6px 6px 6px 6px;
         font-family: Goldfish;
         font-size: 9px;
+
+        .size-pets {
+            font-size: 10px;
+        }
 
         .form-control-sm {
             height: 20px;
@@ -60,6 +64,59 @@
             width: 13px;
             height: 13px;
             cursor: pointer;
+        }
+
+        .icon-petting {
+            background: url('@/assets/flash/infostand/pets/petting.png');
+            width: 13px;
+            height: 18px;
+            float: right;
+            margin-left: 4px;
+            margin-top: -4px;
+        }
+
+        .icon-happiness {
+            background: url('@/assets/flash/infostand/pets/happiness.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .icon-experience {
+            background: url('@/assets/flash/infostand/pets/experience.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .icon-energy {
+            background: url('@/assets/flash/infostand/pets/energy.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .icon-wellbeing {
+            background: url('@/assets/flash/infostand/pets/wellbeing.png');
+            background-repeat: no-repeat;
+            width: 18px !important;
+            height: 18px;
+            margin-top: 16px;
+            margin-left: 3px;
+            z-index: 1;
+        }
+
+        .height-bar {
+            height: 17px;
         }
 
         .body-image {
@@ -105,6 +162,11 @@
         .motto-content {
             min-height: 18px;
             font-family: Goldfish;
+            cursor: text;
+        }
+
+        .color-motto {
+            color: #9EA39D;
         }
 
         .motto-input {
@@ -122,6 +184,7 @@
 
             &:focus {
                 font-style: italic;
+                color: #9EA39D;
             }
         }
 
@@ -157,4 +220,8 @@
     &:hover {
         color: #91c2ff !important;
     }
+}
+
+.pet-training-window {
+    width: 193px;
 }
