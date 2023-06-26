@@ -36,9 +36,9 @@ export const PromoArticleWidgetView: FC<{}> = props =>
                 <div className="promo-article d-flex flex-row row mx-0">
                     <div className="promo-article-image" style={ { backgroundImage: `url(${ articles[index].imageUrl })` } }/>
                     <div className="col-3 d-flex flex-column h-100">
-                        <h3 className="my-0">{ articles[index].title }</h3>
-                        <b>{ articles[index].bodyText }</b>
-                        <button className="btn btn-sm mt-auto btn-gainsboro" onClick={ event => OpenUrl(articles[index].linkContent) }>{ articles[index].buttonText }</button>
+                        <h3 className="promo-article-header ubuntu-bold">{ articles[index].title }</h3>
+                        <p className="promo-article-body">{ articles[index].bodyText }</p>
+                        <button className="btn promo-article-button ubuntu-bold" onClick={ event => OpenUrl(articles[index].linkContent) }>{ articles[index].buttonText }</button>
                     </div>
                 </div> }
         </div>
