@@ -158,7 +158,7 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props =>
                                                     <LayoutCurrencyIcon type={ -1 } />
                                                 </Flex>
                                             }
-                                            { (offer.priceActivityPoints > 0) && <Text bold className="px-1 py-1">+</Text> }
+                                            { (offer.priceActivityPoints > 0) && <Text bold>+</Text> }
                                             { (offer.priceActivityPoints > 0) &&
                                                 <Flex alignItems="center" justifyContent="end" gap={ 1 }>
                                                     <Text bold>{ offer.priceActivityPoints }</Text>

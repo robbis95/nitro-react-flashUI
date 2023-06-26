@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { IPurchasableOffer } from '../../../../../api';
 import { Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
-import {FaPlus} from "react-icons/fa";
 interface CatalogPriceGridDisplayWidgetViewProps
 {
     offer: IPurchasableOffer;
@@ -24,10 +23,9 @@ export const CatalogPriceGridDisplayWidgetView: FC<CatalogPriceGridDisplayWidget
                     <Text bold>{ (offer.priceInCredits * quantity) }</Text>
                     <i className="icon icon-small-coin" />
                 </Flex> }
-            { separator && (offer.priceInCredits > 0) && (offer.priceInActivityPoints > 0) &&
-                <FaPlus className="fa-icon" /> }
             { (offer.priceInActivityPoints > 0) &&
                 <Flex alignItems="end" justifyContent="end" gap={ 1 } className="grid-price-view">
+                    { separator && (offer.priceInCredits > 0) && (offer.priceInActivityPoints > 0) && <Text bold>+</Text> }
                     <Text bold>{ (offer.priceInActivityPoints * quantity) }</Text>
                     <i className={ 'icon icon-small-' + offer.activityPointType } />
                 </Flex> }
