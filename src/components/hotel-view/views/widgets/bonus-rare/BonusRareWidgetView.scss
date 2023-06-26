@@ -1,10 +1,63 @@
 .bonus-rare {
-    height: 100px;
+    width: 585px;
+    height: 62px;
+    background-color: #3CAADE;
+    border-radius: 0.275em;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    outline: 1px solid #2391c6;
+    border-bottom: 1px solid #2391c5;
+    border-bottom-style: double;
+
+    .bonusrare-image {
+        padding: 1px;
+        width: 50px;
+        height: 59px;
+        margin-left: 20px;
+        margin-right: 25px;
+        background-repeat: no-repeat;
+        z-index: 1;
+    }
+
+    .bonusrare-header {
+        font-size: medium;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        margin-top: 2px;
+        margin-bottom: 0px;
+    }
 
     .bonus-bar-container {
-        height: 30px;
+        height: 23px;
         width: 300px;
-        border: 2px ridge #e2e2e2;
+        border-radius: 0.450em;
+        border: 2px ridge #fff;
+        outline: 1px solid #000;
+        font-size: small;
+        text-align: center;
+        font-weight: bold;
+        background-color: #59534E;
+        margin-left: 15px;
     }
+
+    .bonusrare-button {
+        width: 130px;
+        height: 25px;
+        font-size: 0.675em;
+        margin-left: 10px;
+        font-weight: bold;
+        border-radius: 5px;
+        border-color: #919191;
+        background-color: gainsboro;
+        border-style: solid;
+        box-shadow: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 }

@@ -1,9 +1,46 @@
 .widgetcontainer {
+
+    display: flex;
+    align-items: flex-start;
+    width: 480px;
+
     .widgetcontainer-image {
         width: 150px;
         height: 150px;
-        margin-right: 10px;
+        margin-left: 35px;
         background-repeat: no-repeat;
         background-position: top center;
+    }
+
+    .widgetcontainer-header {
+        font-size: large;
+        font-weight: bold;
+        margin-left: 35px;
+        color: white;
+        text-shadow: 1px 1px 1px gray;
+        margin-bottom: 0px;
+    }
+
+    .widgetcontainer-body {
+        font-size: 0.775em;
+        font-weight: normal;
+        margin-left: 35px;
+        color: white;
+    }
+
+    .widgetcontainer-button {
+        width: 175px;
+        height: 25px;
+        font-size: 0.675em;
+        font-weight: bold;
+        margin-left: 35px;
+        border-radius: 50%;
+        border-color: #919191;
+        background-color: gainsboro;
+        border-style: solid;
+        box-shadow: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
