@@ -113,7 +113,7 @@ export const HcCenterView: FC<{}> = props =>
     if(!isVisible) return null;
 
     const popover = (
-        <Popover id="popover-basic" style={ { marginLeft: 15, width: '360px' }}>
+        <Popover id="popover-basic" className="ms-3">
             <Popover.Body className="text-black py-2 px-3">
                 <h5>{ LocalizeText('hccenter.breakdown.title') }</h5>
                 <div>{ LocalizeText('hccenter.breakdown.creditsspent', [ 'credits' ], [ kickbackData?.totalCreditsSpent.toString() ]) }</div>
@@ -121,7 +121,7 @@ export const HcCenterView: FC<{}> = props =>
                 <div>{ LocalizeText('hccenter.breakdown.streakbonus', [ 'credits' ], [ kickbackData?.creditRewardForStreakBonus.toString() ]) }</div>
                 <hr className="w-100 text-black my-1" />
                 <div>{ LocalizeText('hccenter.breakdown.total', [ 'credits', 'actual' ], [ getHcPaydayAmount(), ((((kickbackData?.kickbackPercentage * kickbackData?.totalCreditsSpent) + kickbackData?.creditRewardForStreakBonus) * 100) / 100).toString() ]) }</div>
-                <div className="text-primary p-0" style={{ textAlign: 'right' }} onClick={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['payday.habbopage']) }>
+                <div className="text-primary p-0 text-end cursor-pointer" onClick={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['payday.habbopage']) }>
                     { LocalizeText('hccenter.special.infolink') }
                 </div>
             </Popover.Body>
@@ -146,17 +146,17 @@ export const HcCenterView: FC<{}> = props =>
             <NitroCardContentView>
                 <Flex gap={ 2 }>
                     <LayoutBadgeImageView badgeCode={ badgeCode } className="align-self-center flex-shrink-0 me-1" />
-                    <Column size={ 5 } className="streak-info" gap={ 0 }>
-                        <Text small>{ LocalizeText('hccenter.status.' + clubStatus) }</Text>
+                    <Column size={ 8 } className="streak-info" gap={ 0 }>
+                        <Text small bold>{ LocalizeText('hccenter.status.' + clubStatus) }</Text>
                         <Text small dangerouslySetInnerHTML={ { __html: getInfoText() } } />
                     </Column>
                 </Flex>
                 { GetConfiguration('hc.center')['payday.info'] &&
                     <Flex alignItems="center">
-                        <Column gap={ 1 } className="p-2 payday-special mb-1 ml-1">
+                        <Column gap={ 0 } className="p-2 payday-special mb-1 ml-1">
                             <Text variant="white" bold>{ LocalizeText('hccenter.special.title') }</Text>
                             <Text variant="white" small>{ LocalizeText('hccenter.special.info') }</Text>
-                            <Text variant="white" small underline className="pt-4 cursor-pointer" onClick={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['payday.habbopage']) }>{ LocalizeText('hccenter.special.infolink') }</Text>
+                            <Text variant="white" small underline className="pt-1 cursor-pointer" onClick={ () => CreateLinkEvent('habbopages/' + GetConfiguration('hc.center')['payday.habbopage']) }>{ LocalizeText('hccenter.special.infolink') }</Text>
 
                         </Column>
                         <Column gap={ 0 } className="payday flex-shrink-0 p-2">
@@ -170,13 +170,13 @@ export const HcCenterView: FC<{}> = props =>
                                     <Text bold className="ms-2">{ LocalizeText('hccenter.special.amount.title') }</Text>
                                     <Flex>
                                         <Text className="w-100 text-center ms-4n">{ getHcPaydayAmount() }</Text>
-                                            <OverlayTrigger trigger={['click']} placement="right" overlay={popover}>
-                                            <span onClick={() => popover} className="pt-4">
+                                        <OverlayTrigger trigger={ [ 'click' ] } placement="right" overlay={ popover }>
+                                            <span onClick={ () => popover } className="pt-4">
                                                 <Text underline small variant="primary">
-                                                {LocalizeText('hccenter.breakdown.infolink')}
+                                                    { LocalizeText('hccenter.breakdown.infolink') }
                                                 </Text>
                                             </span>
-                                            </OverlayTrigger>
+                                        </OverlayTrigger>
                                     </Flex>
                                 </Column> }
                         </Column>
