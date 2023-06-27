@@ -22,6 +22,7 @@ Thanks to everyone that has helped out contributing to this UI:
 - Dennis
 - Object
 - Habbobba
+- Tardelivinicius
 
 # Nitro Client installation
 
