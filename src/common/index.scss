@@ -111,6 +111,8 @@
 
 .catalog-grid-active {
 
+    width: 44px;
+
     &.active {
         border-image-source: url(@/assets/flash/catalogue/item_grid_highlight.png);
         border-image-slice: 6 6 6 6 fill;
