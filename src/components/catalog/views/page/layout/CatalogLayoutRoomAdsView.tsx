@@ -47,6 +47,8 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
     {
         if (!eventName || eventName.length < 5) return simpleAlert(LocalizeText('roomad.alert.name.empty'), null, null, null, LocalizeText('roomad.error.title'));
 
+        if (!roomId || roomId === -1) return simpleAlert(LocalizeText('roomad.no.available.room'), null, null, null, LocalizeText('roomad.error.title'));
+
         const pageId = page.pageId;
         const offerId = page.offers.length >= 1 ? page.offers[0].offerId : -1;
         const flatId = roomId;
@@ -94,7 +96,7 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
                     </Column>
                     <Column gap={ 0 } className="mt-2">
                         <Text small>{ LocalizeText('roomad.catalog_roomname') }</Text>
-                        <select className="form-select form-select-sm w-100" value={ !extended ? (availableRooms && availableRooms[0]?.roomId || '') : roomId } onChange={ event => setRoomId(Number(event.target.value)) } disabled={ extended }>
+                        <select className="form-select form-select-sm w-100" value={ roomId } onChange={ event => setRoomId(Number(event.target.value)) } disabled={ extended }>
                             <option value={ -1 } disabled>{ LocalizeText('roomad.catalog_roomname') }</option>
                             { availableRooms && availableRooms.map((room, index) => <option key={ index } value={ room.roomId }>{ room.roomName }</option>) }
                         </select>
