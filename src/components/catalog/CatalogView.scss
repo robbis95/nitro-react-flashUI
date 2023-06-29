@@ -3,6 +3,7 @@
     height: $catalog-height;
     min-width: $catalog-width;
     max-width: $catalog-width;
+    min-height: $catalog-height - 39px;
 
     font[size='16'] {
         font-size: 20px;
@@ -20,7 +21,7 @@
 
     .catalog-default-image {
         max-height: 250px;
-        height: 250px;
+        height: 243px;
     }
 
     .grid-price-view {
@@ -38,9 +39,8 @@
 
     .quantity-input {
         min-height: 17px;
-        width: 28px;
+        width: 34px;
         padding: 0 4px;
-        text-align: right;
     }
 
     .grid-bg {
@@ -51,6 +51,12 @@
 
     .credits-bg {
         border-image-source: url(@/assets/flash/catalogue/credits_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+    }
+
+    .duckets-bg {
+        border-image-source: url(@/assets/flash/catalogue/duckets_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
@@ -78,6 +84,12 @@
         min-height: 150px;
     }
 
+    .item-not-picker {
+        width: calc(100% - 203px);
+        max-height: 30px;
+        min-height: 30px;   
+    }
+
     .group-furni-picker {
         max-height: 110px;
         min-height: 110px;
@@ -85,6 +97,7 @@
 
     .quanity-container {
         height: 20px;
+        font-size: 13px;
     }
 
     .catalog-image-column {

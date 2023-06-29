@@ -100,7 +100,7 @@ export const CatalogView: FC<{}> = props =>
                                     { activeNodes && (activeNodes.length > 0) &&
                                         <CatalogNavigationView node={ activeNodes[0] } /> }
                                 </Column> }
-                            <Column size={ !navigationHidden ? 8 : 12 } overflow="hidden">
+                            <Column size={ !navigationHidden ? 8 : 12 } overflow="hidden" className="ms-1">
                                 { GetCatalogLayout(currentPage, () => setNavigationHidden(true)) }
                             </Column>
                         </Grid>

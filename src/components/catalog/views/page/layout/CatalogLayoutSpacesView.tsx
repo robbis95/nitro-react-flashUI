@@ -1,6 +1,7 @@
 import { NitroPoint } from '@nitrots/nitro-renderer';
 import { FC, useEffect } from 'react';
-import { Base, Column, Flex, Grid, Text } from '../../../../../common';
+import { getTypePrice } from '../../../../../api';
+import { Base, Column, Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 import { CatalogPurchaseWidgetView } from '../widgets/CatalogPurchaseWidgetView';
 import { CatalogSpacesWidgetView } from '../widgets/CatalogSpacesWidgetView';
@@ -30,7 +31,7 @@ export const CatalogLayoutSpacesView: FC<CatalogLayoutProps> = props =>
                     <>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
-                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                            <CatalogTotalPriceWidget className={ `credits-default-layout ${ getTypePrice(currentOffer.priceType) } py-1 px-2 bottom-2 end-2` } justifyContent="end" alignItems="end" />
                             <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
                         </Base>
                         <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">

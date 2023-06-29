@@ -1,14 +1,13 @@
 import { IFurnitureData } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { FaSearch, FaTimes } from 'react-icons/fa';
 import { CatalogPage, CatalogType, FilterCatalogNode, FurnitureOffer, GetOfferNodes, GetSessionDataManager, ICatalogNode, ICatalogPage, IPurchasableOffer, LocalizeText, PageLocalization, SearchResult } from '../../../../../api';
-import { Button, Flex } from '../../../../../common';
+import { Flex } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 
 export const CatalogSearchView: FC<{}> = props =>
 {
     const [ searchValue, setSearchValue ] = useState('');
-    const { currentType = null, rootNode = null, offersToNodes = null, searchResult = null, setSearchResult = null, setCurrentPage = null } = useCatalog();
+    const { currentType = null, rootNode = null, offersToNodes = null, setSearchResult = null, setCurrentPage = null } = useCatalog();
 
     useEffect(() =>
     {
@@ -81,14 +80,12 @@ export const CatalogSearchView: FC<{}> = props =>
     return (
         <Flex gap={ 1 } className="position-relative">
             <Flex fullWidth alignItems="center" position="relative">
-                <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('generic.search') } value={ searchValue } onChange={ event => setSearchValue(event.target.value) } />
+                <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('catalog.search') } value={ searchValue } onChange={ event => setSearchValue(event.target.value) } />
             </Flex>
             { (!searchValue || !searchValue.length) &&
                 <i className="icon icon-pen position-absolute catalog-search-button"/> }
             { searchValue && !!searchValue.length &&
-                <Button variant="primary" className="catalog-search-button" onClick={ event => setSearchValue('') }>
-                    <i className="icon icon-clear position-absolute catalog-clear-button" />
-                </Button> }
+                <i className="icon icon-clear position-absolute catalog-clear-button" onClick={ event => setSearchValue('') } /> }
         </Flex>
     );
 }

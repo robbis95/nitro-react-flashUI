@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Base, Column, Flex, Grid, Text } from '../../../../../common';
+import { getTypePrice } from '../../../../../api';
+import { Base, Column, Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 import { CatalogGuildBadgeWidgetView } from '../widgets/CatalogGuildBadgeWidgetView';
 import { CatalogGuildSelectorWidgetView } from '../widgets/CatalogGuildSelectorWidgetView';
@@ -27,7 +28,7 @@ export const CatalogLayouGuildCustomFurniView: FC<CatalogLayoutProps> = props =>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
                             <CatalogGuildBadgeWidgetView position="absolute" className="top-1 end-1" />
-                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                            <CatalogTotalPriceWidget className={ `credits-default-layout ${ getTypePrice(currentOffer.priceType) } py-1 px-2 bottom-2 end-2` } justifyContent="end" alignItems="end" />
                         </Base>
                         <Column grow gap={ 1 }>
                             <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
