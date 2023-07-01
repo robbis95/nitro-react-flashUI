@@ -90,10 +90,10 @@ export const CatalogLayoutTrophiesView: FC<CatalogLayoutProps> = props =>
                     { colors.map(color => <GiftColorButton key={ color.id } variant="dark" className="color-trophy cursor-pointer" active={ (color.id === trophyColor) } style={ { backgroundColor: color.color, borderRadius: '4px' } } onClick={ () => setTrophyColor(color.id) } />) }
                 </ButtonGroup>
             </Column>
-            <Column size={ 3 } overflow="hidden">
+            <Column size={ 3 } position="absolute" overflow="hidden" style={ { height: 'calc(100% - 510px)', width: '64%' } }>
                 <textarea className="flex-grow-1 form-control w-40 trophy-text mt-2" defaultValue={ trophyText || '' } onChange={ event => setTrophyText(event.target.value) } />
             </Column>
-            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
+            <Flex gap={ 2 } position="absolute" className="purchase-buttons align-items-end bottom-3" style={ { width: '64%' } }>
                 <CatalogPurchaseWidgetView />
             </Flex>
 
