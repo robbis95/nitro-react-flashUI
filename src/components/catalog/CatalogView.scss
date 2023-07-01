@@ -129,7 +129,7 @@
 }
 
 .trophy-text {
-    height: 150px;
+    height: 120px;
 }
 
 .nitro-catalog-gift {
@@ -390,6 +390,12 @@
 
 .height-roomads-description {
     height: 137px;
+}
+
+.color-trophy {
+    width: 38px;
+    height: 30px;
+    margin-right: 4px;
 }
 
 @import './views/targeted-offer/Offer.scss';
