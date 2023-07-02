@@ -196,6 +196,10 @@
   &:active {
     border-image-source: url(@/assets/flash/buttons/volter_normal_btn_active.png);
   }
+
+  &.active {
+    border-image-source: url(@/assets/flash/buttons/volter_normal_btn_active.png);
+  }
 }
 
 .notification-buttons {

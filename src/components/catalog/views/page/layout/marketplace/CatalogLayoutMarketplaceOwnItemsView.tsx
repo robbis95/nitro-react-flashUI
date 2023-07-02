@@ -1,6 +1,6 @@
 import { CancelMarketplaceOfferMessageComposer, GetMarketplaceOwnOffersMessageComposer, MarketplaceCancelOfferResultEvent, MarketplaceOwnOffersEvent, RedeemMarketplaceOfferCreditsMessageComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { LocalizeText, MarketplaceOfferData, MarketPlaceOfferState, NotificationAlertType, SendMessageComposer } from '../../../../../../api';
+import { LocalizeText, MarketPlaceOfferState, MarketplaceOfferData, NotificationAlertType, SendMessageComposer } from '../../../../../../api';
 import { Button, Column, Text } from '../../../../../../common';
 import { useMessageEvent, useNotification } from '../../../../../../hooks';
 import { CatalogLayoutProps } from '../CatalogLayout.types';
@@ -77,21 +77,19 @@ export const CatalogLayoutMarketplaceOwnItemsView: FC<CatalogLayoutProps> = prop
     return (
         <Column overflow="hidden">
             { (creditsWaiting <= 0) &&
-                <Text center className="bg-muted rounded p-1">
+                <Text className="font-italic px-2 font-size-marketplace">
                     { LocalizeText('catalog.marketplace.redeem.no_sold_items') }
                 </Text> }
             { (creditsWaiting > 0) &&
                 <Column center gap={ 1 } className="bg-muted rounded p-2">
-                    <Text>
-                        { LocalizeText('catalog.marketplace.redeem.get_credits', [ 'count', 'credits' ], [ soldOffers.length.toString(), creditsWaiting.toString() ]) }
-                    </Text>
+                    <Text>{ LocalizeText('catalog.marketplace.redeem.get_credits', [ 'count', 'credits' ], [ soldOffers.length.toString(), creditsWaiting.toString() ]) }</Text>
                     <Button className="mt-1" onClick={ redeemSoldOffers }>
                         { LocalizeText('catalog.marketplace.offer.redeem') }
                     </Button>
                 </Column> }
             <Column gap={ 1 } overflow="hidden">
-                <Text truncate shrink fontWeight="bold">
-                    { LocalizeText('catalog.marketplace.items_found', [ 'count' ], [ offers.length.toString() ]) }
+                <Text truncate shrink className="font-size-marketplace-small">
+                    { LocalizeText(offers.length === 0 ? 'catalog.marketplace.no_items' : 'catalog.marketplace.items_found', [ 'count' ], [ offers.length.toString() ]) }
                 </Text>
                 <Column overflow="auto" className="nitro-catalog-layout-marketplace-grid">
                     { (offers.length > 0) && offers.map(offer => <CatalogLayoutMarketplaceItemView key={ offer.offerId } offerData={ offer } type={ OWN_OFFER } onClick={ takeItemBack } />) }

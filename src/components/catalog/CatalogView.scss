@@ -293,6 +293,24 @@
     }
 }
 
+.marketplace-bg {
+    border-image-source: url(@/assets/flash/catalogue/marketplace_bg.png);
+    border-image-slice: 6 6 6 6 fill;
+    border-image-width: 6px 6px 6px 6px;
+}
+
+.search-marketplace {
+    height: 116px;
+}
+
+.font-size-marketplace {
+    font-size: 13px;
+}
+
+.font-size-marketplace-small {
+    font-size: 10px;
+}
+
 .nitro-catalog-layout-vip-gifts-grid {
     .layout-grid-item {
         height: 55px !important;
@@ -301,8 +319,39 @@
 }
 
 .nitro-catalog-layout-marketplace-post-offer {
-    width: $marketplace-post-offer-width;
-    height: $marketplace-post-offer-height;
+    width: 299px;
+
+    .image-preview {
+        width: 48px;
+        height: 48px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #F0F0F0;
+        border: 1px solid #5D5D5D;
+        border-radius: 8px;
+    }
+
+    .textarea-height {
+        height: 51px;
+    }
+}
+
+.nitro-catalog-layout-marketplace-confirm {
+    width: 279px;
+
+    .image-preview {
+        width: 48px;
+        height: 48px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #F0F0F0;
+        border: 1px solid #5D5D5D;
+        border-radius: 8px;
+    }
 }
 
 .nitro-catalog-layout-bundle-grid {
