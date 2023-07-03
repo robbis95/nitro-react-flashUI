@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { FaPlus } from 'react-icons/fa';
 import { IPurchasableOffer } from '../../../../../api';
 import { Flex, LayoutCurrencyIcon, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
@@ -26,7 +25,7 @@ export const CatalogPriceDisplayWidgetView: FC<CatalogPriceDisplayWidgetViewProp
                     <LayoutCurrencyIcon type={ -1 } />
                 </Flex> }
             { separator && (offer.priceInCredits > 0) && (offer.priceInActivityPoints > 0) &&
-                <FaPlus size="xs" color="black" className="fa-icon" /> }
+                <Text bold>+</Text> }
             { (offer.priceInActivityPoints > 0) &&
                 <Flex alignItems="center" gap={ 1 }>
                     <Text bold> { (offer.priceInActivityPoints * quantity) }</Text>

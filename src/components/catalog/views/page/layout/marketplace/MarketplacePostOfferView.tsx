@@ -1,7 +1,7 @@
 import { GetMarketplaceConfigurationMessageComposer, MakeOfferMessageComposer, MarketplaceConfigurationEvent } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { FurnitureItem, LocalizeText, ProductTypeEnum, SendMessageComposer } from '../../../../../../api';
-import { Base, Button, Column, Grid, LayoutFurniImageView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../../common';
+import { Button, Column, Flex, LayoutFurniImageView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../../common';
 import { CatalogPostMarketplaceOfferEvent } from '../../../../../../events';
 import { useCatalog, useMessageEvent, useNotification, useUiEvent } from '../../../../../../hooks';
 
@@ -16,13 +16,13 @@ export const MarketplacePostOfferView : FC<{}> = props =>
 
     const updateAskingPrice = (price: string) =>
     {
-        setTempAskingPrice(price);
+        setTempAskingPrice(Number(price) >= 10 ? '10' : price);
 
-        const newValue = parseInt(price);
+        const newValue = Number(price);
 
         if(isNaN(newValue) || (newValue === askingPrice)) return;
 
-        setAskingPrice(parseInt(price));
+        setAskingPrice(Number(price));
     }
 
     useMessageEvent<MarketplaceConfigurationEvent>(MarketplaceConfigurationEvent, event =>
@@ -58,9 +58,6 @@ export const MarketplacePostOfferView : FC<{}> = props =>
     if(!marketplaceConfiguration || !item) return null;
 
     const getFurniTitle = (item ? LocalizeText(item.isWallItem ? 'wallItem.name.' + item.type : 'roomItem.name.' + item.type) : '');
-    const getFurniDescription = (item ? LocalizeText(item.isWallItem ? 'wallItem.desc.' + item.type : 'roomItem.desc.' + item.type) : '');
-
-    const getCommission = () => Math.max(Math.ceil(((marketplaceConfiguration.commission * 0.01) * askingPrice)), 1);
 
     const postItem = () =>
     {
@@ -78,43 +75,28 @@ export const MarketplacePostOfferView : FC<{}> = props =>
     }
     
     return (
-        <NitroCardView className="nitro-catalog-layout-marketplace-post-offer" theme="primary">
+        <NitroCardView className="nitro-catalog-layout-marketplace-post-offer no-resize" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('inventory.marketplace.make_offer.title') } onCloseClick={ event => setItem(null) } />
             <NitroCardContentView overflow="hidden">
-                <Grid fullHeight>
-                    <Column center className="bg-muted rounded p-2" size={ 4 } overflow="hidden">
-                        <LayoutFurniImageView productType={ item.isWallItem ? ProductTypeEnum.WALL : ProductTypeEnum.FLOOR } productClassId={ item.type } extraData={ item.extra.toString() } />
-                    </Column>
-                    <Column size={ 8 } justifyContent="between" overflow="hidden">
-                        <Column grow gap={ 1 }>
-                            <Text fontWeight="bold">{ getFurniTitle }</Text>
-                            <Text truncate shrink>{ getFurniDescription }</Text>
-                        </Column>
-                        <Column overflow="auto">
-                            <Text italics>
-                                { LocalizeText('inventory.marketplace.make_offer.expiration_info', [ 'time' ], [ marketplaceConfiguration.offerTime.toString() ]) }
-                            </Text>
-                            <div className="input-group has-validation">
-                                <input className="form-control form-control-sm" type="number" min={ 0 } value={ tempAskingPrice } onChange={ event => updateAskingPrice(event.target.value) } placeholder={ LocalizeText('inventory.marketplace.make_offer.price_request') } />
-                                { ((askingPrice < marketplaceConfiguration.minimumPrice) || isNaN(askingPrice)) &&
-                                    <Base className="invalid-feedback d-block">
-                                        { LocalizeText('inventory.marketplace.make_offer.min_price', [ 'minprice' ], [ marketplaceConfiguration.minimumPrice.toString() ]) }
-                                    </Base> }
-                                { ((askingPrice > marketplaceConfiguration.maximumPrice) && !isNaN(askingPrice)) &&
-                                    <Base className="invalid-feedback d-block">
-                                        { LocalizeText('inventory.marketplace.make_offer.max_price', [ 'maxprice' ], [ marketplaceConfiguration.maximumPrice.toString() ]) }
-                                    </Base> }
-                                { (!((askingPrice < marketplaceConfiguration.minimumPrice) || (askingPrice > marketplaceConfiguration.maximumPrice) || isNaN(askingPrice))) &&
-                                    <Base className="invalid-feedback d-block">
-                                        { LocalizeText('inventory.marketplace.make_offer.final_price', [ 'commission', 'finalprice' ], [ getCommission().toString(), (askingPrice + getCommission()).toString() ]) }
-                                    </Base> }
-                            </div>
-                            <Button disabled={ ((askingPrice < marketplaceConfiguration.minimumPrice) || (askingPrice > marketplaceConfiguration.maximumPrice) || isNaN(askingPrice)) } onClick={ postItem }>
-                                { LocalizeText('inventory.marketplace.make_offer.post') }
-                            </Button>
-                        </Column>
-                    </Column>
-                </Grid>
+                <Column className="px-2">
+                    <Flex>
+                        <Flex className="image-preview">
+                            <LayoutFurniImageView productType={ item.isWallItem ? ProductTypeEnum.WALL : ProductTypeEnum.FLOOR } productClassId={ item.type } extraData={ item.extra.toString() } />
+                        </Flex>
+                        <Text bold className="px-2">{ getFurniTitle }</Text>
+                    </Flex>
+                    <Text className="font-size-marketplace">{ LocalizeText('inventory.marketplace.make_offer.expiration_info', [ 'time' ], [ marketplaceConfiguration.displayTime.toString() ] ) }</Text>
+                    <Flex justifyContent="end" gap={ 2 }>
+                        <Text bold>{ LocalizeText('inventory.marketplace.make_offer.price_request') }</Text>
+                        <input className="form-control form-control-sm w-25" type="number" min={ 0 } value={ tempAskingPrice } onChange={ event => updateAskingPrice(event.target.value) } />
+                    </Flex>
+                    <Text className="font-size-marketplace">{ LocalizeText('inventory.marketplace.make_offer.average_price', [ 'days', 'price', 'price_no_commission' ], [ marketplaceConfiguration.offerTime.toString(), marketplaceConfiguration.minimumPrice.toString(), marketplaceConfiguration.commission.toString() ] ) }</Text>
+                    <textarea className="form-control form-control-sm font-size-marketplace-small overflow-hidden textarea-height" value={ askingPrice >= marketplaceConfiguration.minimumPrice ? LocalizeText('sell.in.marketplace.revenue.label') + ': ' + (askingPrice + 1) : LocalizeText('shop.marketplace.invalid.price', [ 'minPrice', 'maxPrice' ], [ marketplaceConfiguration.minimumPrice.toString(), marketplaceConfiguration.maximumPrice.toString() ]) } readOnly></textarea>
+                    <Flex justifyContent="between">
+                        <Button className="w-30" onClick={ postItem } disabled={ ((askingPrice < marketplaceConfiguration.minimumPrice) || (askingPrice > marketplaceConfiguration.maximumPrice) || isNaN(askingPrice)) }>{ LocalizeText('inventory.marketplace.make_offer.post') }</Button>
+                        <Button className="w-30" onClick={ () => setItem(null) }>{ LocalizeText('generic.cancel') }</Button>
+                    </Flex>
+                </Column>
             </NitroCardContentView>
         </NitroCardView>
     )

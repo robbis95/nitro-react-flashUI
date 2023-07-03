@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LocalizeText } from '../../../../../api';
+import { LocalizeText, getTypePrice } from '../../../../../api';
 import { Base, Column, Flex, Grid, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 import { CatalogBadgeSelectorWidgetView } from '../widgets/CatalogBadgeSelectorWidgetView';
@@ -31,7 +31,7 @@ export const CatalogLayoutBadgeDisplayView: FC<CatalogLayoutProps> = props =>
                         <>
                             <Base position="relative" overflow="hidden">
                                 <CatalogViewProductWidgetView />
-                                <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                                <CatalogTotalPriceWidget className={ `credits-default-layout ${ getTypePrice(currentOffer.priceType) } py-1 px-2 bottom-2 end-2` } justifyContent="end" alignItems="end" />
                                 <Text bold variant="white" className="item-title" grow truncate>{ currentOffer.localizationName }</Text>
                             </Base>
                             <Column grow gap={ 1 }>

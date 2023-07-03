@@ -821,7 +821,7 @@
     }
 
     &.icon-tickets {
-        background-image: url('@/assets/images/icons/tickets.png');
+        background-image: url('@/assets/flash/modtools/tickets.png');
         width: 17px;
         height: 17px;
     }
@@ -932,6 +932,24 @@
         background-image: url('@/assets/flash/friendlist/friend_message.png');
         width: 16px;
         height: 14px;
+    }
+
+    &.icon-hc_gift_monthly {
+        background-image: url('@/assets/flash/habboclub/hc_gift_monthly.png');
+        width: 16px;
+        height: 14px;
+    }
+
+    &.icon-chevron_left_gift {
+        background-image: url('@/assets/flash/catalogue/chevron_left_gift.png');
+        width: 10px;
+        height: 10px;
+    }
+
+    &.icon-chevron_right_gift {
+        background-image: url('@/assets/flash/catalogue/chevron_right_gift.png');
+        width: 10px;
+        height: 10px;
     }
 
     &.spin {

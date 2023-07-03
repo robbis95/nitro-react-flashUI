@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { FaCaretLeft, FaCaretRight } from 'react-icons/fa';
+import { ChangeEvent, FC, useState } from 'react';
 import { LocalizeText } from '../../../../../api';
 import { Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
@@ -9,37 +8,42 @@ const MAX_VALUE: number = 100;
 
 export const CatalogSpinnerWidgetView: FC<{}> = props =>
 {
+    const [ quantityInput, setQuantityInput ] = useState<string>('1');
     const { currentOffer = null, purchaseOptions = null, setPurchaseOptions = null } = useCatalog();
     const { quantity = 1 } = purchaseOptions;
 
-    const updateQuantity = (value: number) =>
+    const updateQuantity = (value: string | number) =>
     {
-        if(isNaN(value)) value = 1;
+        value = Math.max(Number(value), MIN_VALUE);
+        value = Math.min(Number(value), MAX_VALUE);
 
-        value = Math.max(value, MIN_VALUE);
-        value = Math.min(value, MAX_VALUE);
-
-        if(value === quantity) return;
+        if(Number(value) === quantity) return;
 
         setPurchaseOptions(prevValue =>
         {
             const newValue = { ...prevValue };
 
-            newValue.quantity = value;
+            newValue.quantity = !value ? MIN_VALUE : Number(value);
 
             return newValue;
         });
+    }
+
+    const changeQuantity = (event: ChangeEvent<HTMLInputElement>) =>
+    {
+        const value = event.target.value;
+
+        setQuantityInput(Number(value) > 100 ? MAX_VALUE.toString() : value);
+        updateQuantity(value);
     }
 
     if(!currentOffer || !currentOffer.bundlePurchaseAllowed) return null;
 
     return (
         <>
-            <Text>{ LocalizeText('catalog.bundlewidget.spinner.select.amount') }</Text>
+            <Text variant="muted" className="mt-1">{ LocalizeText('catalog.bundlewidget.quantity') }</Text>
             <Flex alignItems="center" gap={ 1 }>
-                <FaCaretLeft className="text-black cursor-pointer fa-icon" onClick={ event => updateQuantity(quantity - 1) } />
-                <input type="number" className="form-control form-control-sm quantity-input" value={ quantity } onChange={ event => updateQuantity(event.target.valueAsNumber) } />
-                <FaCaretRight className="text-black cursor-pointer fa-icon" onClick={ event => updateQuantity(quantity + 1) } />
+                <input type="number" className="form-control form-control-sm quantity-input mt-2 ms-2" value={ quantityInput } onChange={ changeQuantity } />
             </Flex>
         </>
     );

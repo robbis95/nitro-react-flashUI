@@ -111,6 +111,8 @@
 
 .catalog-grid-active {
 
+    width: 44px;
+
     &.active {
         border-image-source: url(@/assets/flash/catalogue/item_grid_highlight.png);
         border-image-slice: 6 6 6 6 fill;
@@ -336,8 +338,8 @@
 .nitro-currency-icon {
     background-position: center;
     background-repeat: no-repeat;
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
 }
 
 .nitro-item-count {

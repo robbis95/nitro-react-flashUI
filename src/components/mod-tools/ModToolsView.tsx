@@ -1,7 +1,7 @@
 import { ILinkEventTracker, RoomEngineEvent, RoomId, RoomObjectCategory, RoomObjectType } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useRef, useState } from 'react';
 import { AddEventLinkTracker, CreateLinkEvent, GetRoomSession, ISelectedUser, RemoveLinkEventTracker } from '../../api';
-import { Base, Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
+import { Base, Button, DraggableWindowPosition, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
 import { useModTools, useObjectSelectedEvent, useRoomEngineEvent } from '../../hooks';
 import { ModToolsChatlogView } from './views/room/ModToolsChatlogView';
 import { ModToolsRoomView } from './views/room/ModToolsRoomView';
@@ -120,20 +120,24 @@ export const ModToolsView: FC<{}> = props =>
     return (
         <>
             { isVisible &&
-                <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools" windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
-                    <NitroCardHeaderView headerText={ 'Mod Tools' } onCloseClick={ event => setIsVisible(false) } />
+                <NitroCardView uniqueKey="mod-tools" className="nitro-mod-tools no-resize" windowPosition={ DraggableWindowPosition.TOP_LEFT } theme="primary-modtool" >
+                    <NitroCardHeaderView hideButtonClose headerText={ 'Mod Tools' } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardContentView className="text-black" gap={ 1 }>
-                        <Button gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-info/${ currentRoomId }`) } disabled={ (currentRoomId <= 0) } className="position-relative">
-                            <Base className="icon icon-small-room position-absolute start-1"/> Room Tool
+                        <Button className={ `btn btn-mod-tools position-relative ${ (currentRoomId <= 0) ? 'pe-none' : '' }` } gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-info/${ currentRoomId }`) }>
+                            <Base className="icon icon-small-room position-absolute start-1" />
+                            <Text overflow="hidden" variant="black" className={ `text-nowrap pe-4 me-3 ${ (currentRoomId <= 0) ? 'opacity-25' : '' }` }>Room Tool</Text>
                         </Button>
-                        <Button innerRef={ elementRef } gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-chatlog/${ currentRoomId }`) } disabled={ (currentRoomId <= 0) } className="position-relative">
-                            <Base className="icon icon-chat-history position-absolute start-1"/> Chatlog Tool
+                        <Button className={ `btn btn-mod-tools position-relative ${ (currentRoomId <= 0) ? 'pe-none' : '' }` } innerRef={ elementRef } gap={ 1 } onClick={ event => CreateLinkEvent(`mod-tools/toggle-room-chatlog/${ currentRoomId }`) }>
+                            <Base className="icon icon-chat-history position-absolute start-1" />
+                            <Text overflow="hidden" variant="black" className={ `text-nowrap pe-4 me-1 ${ (currentRoomId <= 0) ? 'opacity-25' : '' }` }>Chatlog Tool</Text>
                         </Button>
-                        <Button gap={ 1 } onClick={ () => CreateLinkEvent(`mod-tools/toggle-user-info/${ selectedUser.userId }`) } disabled={ !selectedUser } className="position-relative">
-                            <Base className="icon icon-user position-absolute start-1"/> User: { selectedUser ? selectedUser.username : '' }
+                        <Button className={ `btn btn-mod-tools position-relative ${ (!selectedUser) ? 'pe-none' : '' }` } gap={ 1 } onClick={ () => CreateLinkEvent(`mod-tools/toggle-user-info/${ selectedUser.userId }`) }>
+                            <Base className="icon icon-user position-absolute start-1" />
+                            <Text overflow="hidden" variant="black" className={ `text-nowrap pe-5 ${ !selectedUser ? 'me-5 opacity-25' : 'me-4' }` } style={ { marginLeft: '12px' } }>User: { selectedUser ? selectedUser.username : '' }</Text>
                         </Button>
-                        <Button gap={ 1 } onClick={ () => setIsTicketsVisible(prevValue => !prevValue) } className="position-relative">
-                            <Base className="icon icon-tickets position-absolute start-1"/> Report Tool
+                        <Button className="btn btn-mod-tools position-relative" gap={ 1 } onClick={ () => setIsTicketsVisible(prevValue => !prevValue) }>
+                            <Base className="icon icon-tickets position-absolute start-1" />
+                            <Text overflow="hidden" variant="black" className="text-nowrap pe-2 me-2">Ticket browser</Text>
                         </Button>
                     </NitroCardContentView>
                 </NitroCardView> }

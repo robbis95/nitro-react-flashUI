@@ -61,7 +61,7 @@ export const CatalogGridOfferView: FC<CatalogGridOfferViewProps> = props =>
             </LayoutCatalogGridItem>
             <Flex alignItems="end" justifyContent="end" fullWidth gap={ 0 } >
                 <Column gap={ 0 }>
-                    <CatalogPriceGridDisplayWidgetView offer={ offer } />
+                    <CatalogPriceGridDisplayWidgetView separator offer={ offer } />
                 </Column>
             </Flex>
         </Column>
