@@ -67,6 +67,7 @@ export const MarketplacePostOfferView : FC<{}> = props =>
         {
             SendMessageComposer(new MakeOfferMessageComposer(askingPrice, item.isWallItem ? 2 : 1, item.id));
             setItem(null);
+            setTempAskingPrice('');
         },
         () => 
         {

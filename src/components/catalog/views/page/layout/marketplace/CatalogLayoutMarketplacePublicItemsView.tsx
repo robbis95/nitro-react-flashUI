@@ -53,6 +53,9 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
             simpleAlert(LocalizeText('catalog.alert.notenough.credits.description'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.alert.notenough.title'));
             return;
         }
+        
+        setOfferData(offerData);
+    
     }, [ getCurrencyAmount, simpleAlert ]);
 
     useMessageEvent<MarketPlaceOffersEvent>(MarketPlaceOffersEvent, event =>
