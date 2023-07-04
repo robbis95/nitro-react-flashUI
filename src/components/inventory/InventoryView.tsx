@@ -129,11 +129,11 @@ export const InventoryView: FC<{}> = props =>
                     { (currentTab === TAB_FURNITURE ) &&
                             <InventoryFurnitureView roomSession={ roomSession } roomPreviewer={ roomPreviewer } isTrading={ isTrading } /> }
                     { (currentTab === TAB_PETS ) &&
-                            <InventoryPetView roomSession={ roomSession } roomPreviewer={ roomPreviewer } /> }
+                            <InventoryPetView roomSession={ roomSession } roomPreviewer={ roomPreviewer } isTrading={ isTrading } /> }
                     { (currentTab === TAB_BADGES ) &&
                             <InventoryBadgeView /> }
                     { (currentTab === TAB_BOTS ) &&
-                            <InventoryBotView roomSession={ roomSession } roomPreviewer={ roomPreviewer } /> }
+                            <InventoryBotView roomSession={ roomSession } roomPreviewer={ roomPreviewer } isTrading={ isTrading } /> }
                     { isTrading && <InventoryTradeView currentTab={ currentTab } setCurrentTab={ (e) => setCurrentTab(e) } cancelTrade={ onClose } /> }
                 </NitroCardContentView>
             </>
