@@ -1,6 +1,5 @@
 import { CrackableDataType, GroupInformationComposer, GroupInformationEvent, NowPlayingEvent, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter, RoomWidgetFurniInfoUsagePolicyEnum, SetObjectDataMessageComposer, SongInfoReceivedEvent, StringDataType } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
 import { AvatarInfoFurni, CreateLinkEvent, GetGroupInformation, GetNitroInstance, GetRoomEngine, LocalizeText, SendMessageComposer } from '../../../../../api';
 import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, Text, UserProfileIconView } from '../../../../../common';
 import { useMessageEvent, useRoom, useSoundEvent } from '../../../../../hooks';
@@ -332,7 +331,8 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                 <Column overflow="visible" className="container-fluid content-area" gap={ 1 }>
                     <Column gap={ 1 }>
                         <Flex alignItems="center" justifyContent="between" gap={ 1 }>
-                            <Text gfbold variant="white" wrap>{ avatarInfo.name }</Text>
+                            { !(isSongDisk) && <Text gfbold variant="white" wrap>{ avatarInfo.name }</Text> }
+                            { (songName.length > 0) && <Text gfbold variant="white" wrap>{ songName }</Text> }
                             <i className="infostand-close" onClick={ onClose } />
                         </Flex>
                         <hr className="m-0" />

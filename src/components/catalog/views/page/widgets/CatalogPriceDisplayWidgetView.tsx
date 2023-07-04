@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { IPurchasableOffer } from '../../../../../api';
-import { Flex, LayoutCurrencyIcon, Text } from '../../../../../common';
+import { Base, Flex, LayoutCurrencyIcon, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
 
 interface CatalogPriceDisplayWidgetViewProps
@@ -22,7 +22,7 @@ export const CatalogPriceDisplayWidgetView: FC<CatalogPriceDisplayWidgetViewProp
             { (offer.priceInCredits > 0) &&
                 <Flex alignItems="center" gap={ 1 }>
                     <Text bold>{ (offer.priceInCredits * quantity) }</Text>
-                    <LayoutCurrencyIcon type={ -1 } />
+                    <Base className="icon icon-credits" />
                 </Flex> }
             { separator && (offer.priceInCredits > 0) && (offer.priceInActivityPoints > 0) &&
                 <Text bold>+</Text> }
