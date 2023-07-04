@@ -112,7 +112,7 @@ export const InventoryView: FC<{}> = props =>
     if(!isVisible) return null;
 
     return (
-        <NitroCardView uniqueKey={ 'inventory' } className={ `${ isTrading ? 'nitro-inventory trading  no-resize' : 'nitro-inventory' }` } theme={ isTrading ? 'primary' : '' } >
+        <NitroCardView uniqueKey={ 'inventory' } className={ `${ isTrading ? 'nitro-inventory trading no-resize' : 'nitro-inventory' }` } theme={ isTrading ? 'primary' : '' } style={ { width: isTrading ? '490px' : '4px' } }>
             <NitroCardHeaderView headerText={ LocalizeText('inventory.title') } onCloseClick={ onClose } />
             <>
                 <NitroCardTabsView>
