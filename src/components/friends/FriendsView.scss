@@ -184,7 +184,7 @@
         min-height: 36px;
 
         &.friend-bar-item-active {
-            margin-bottom:26px;
+            margin-bottom: 26px;
         }
 
         &.find-friends {
@@ -213,6 +213,10 @@
             .friend-bar-text {
                 padding-top: 4px;
             }
+        }
+
+        .font-size-friend {
+            font-size: 12px;
         }
 
         .friend-bar-text {
@@ -245,6 +249,10 @@
                 width: 31px;
                 height: 34px;
                 background-image: url('@/assets/images/toolbar/friend-search.png');
+            }
+
+            &.friend-bar-item-active {
+                margin-bottom: 146px;
             }
         }
     }
