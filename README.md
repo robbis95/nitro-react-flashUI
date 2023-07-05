@@ -1,21 +1,17 @@
-# FlashUI (Nitro React client)
+## FlashUI (Nitro React Client)
 
-A modified UI for the Nitro React client from Billsonnn.
-Installation process is the same as for setting up the normal client.
+FlashUI is a customized user interface (UI) for the Nitro React client developed by Billsonnn. The installation process is the same as setting up the regular client.
 
-We recommend you to use the main-branch because thats the one that probably will be most stable.
+For optimal stability, we recommend using the main branch. The dev branch is more frequently updated but may contain bugs. If you encounter any issues within the dev branch, please report them on the Git repository.
 
-Dev branch will be more updated but their will be risk for bugs, if you find any issues within the dev-branch please report them here on the Git.
-
-If you ever see a branch with the name "bug-fixes" or something similar do not use it on your hotel because that is only a branch for developers, that branch is when we pull all the updates from original Nitro V2 and there might be issues that needs to be fixed first before its ready to use.
-
-Please join our Discord so that you are always being up-to-date with info [here.](https://discord.gg/KGYG5V2vf3)
+Please join our Discord community to stay up-to-date with the latest information by clicking [here](https://discord.gg/KGYG5V2vf3).
 
 ## Contribution
 
-Feel free to help out and contribute to make this UI replicate flash as much as possible, would be fun if the community could help out to make this UI great!
+We invite you to contribute and help us make this UI as close to replicating Flash as possible. It would be fantastic to have the community's assistance in creating an exceptional UI!
 
-Thanks to everyone that has helped out contributing to this UI:
+Special thanks to the following contributors for their valuable contributions to this UI:
+
 - Robbis
 - Live
 - Laynester
@@ -24,53 +20,54 @@ Thanks to everyone that has helped out contributing to this UI:
 - Habbobba
 - Tardelivinicius
 
-# Nitro Client installation
+Your dedication and expertise have played a crucial role in shaping this project. Thank you for your outstanding efforts and commitment to making FlashUI remarkable!
+
+## Nitro Client Installation
 
 Prerequisites:
-
--   [Git](https://git-scm.com/)
--   [NodeJS](https://nodejs.org/) >= 18
-    - If using NodeJS < 18 remove `--openssl-legacy-provider` from the package.json scripts
--   [Yarn](https://yarnpkg.com/) `npm i yarn -g`
+- [Git](https://git-scm.com/)
+- [NodeJS](https://nodejs.org/) version 18 or higher
+  - If using NodeJS version less than 18, please remove `--openssl-legacy-provider` from the package.json scripts
+- [Yarn](https://yarnpkg.com/) (install globally using `npm i yarn -g`)
 
 Installation:
 
--   First you should open terminal and navigate to the folder where you want to clone Nitro
--   Clone Nitro
-    -   `git clone https://github.com/robbis95/nitro-react-flashUI.git`
--   Install the dependencies
-    -   `yarn install`
-    -   This may take some time, please be patient
--   Rename a few files
-    -   Rename `public/renderer-config.json.example` to `public/renderer-config.json`
-    -   Rename `public/ui-config.json.example` to `public/ui-config.json`
--   Set your links
-    -   Open `public/renderer-config.json`
-        -   Update `socket.url, asset.url, image.library.url, & hof.furni.url`
-    -   Open `public/ui-config.json`
-        -   Update `camera.url, thumbnails.url, url.prefix, habbopages.url`
-    -   You can override any variable by passing it to `NitroConfig` in the index.html
+1. Open your terminal and navigate to the desired folder where you want to clone Nitro.
+2. Clone Nitro by running the following command:
+   ```
+   git clone https://github.com/robbis95/nitro-react-flashUI.git
+   ```
+3. Install the required dependencies by running:
+   ```
+   yarn install
+   ```
+   This process may take some time, so please be patient.
+4. Rename the following files:
+   - Rename `public/renderer-config.json.example` to `public/renderer-config.json`
+   - Rename `public/ui-config.json.example` to `public/ui-config.json`
+5. Set your links:
+   - Open `public/renderer-config.json` and update the values for `socket.url`, `asset.url`, `image.library.url`, and `hof.furni.url`.
+   - Open `public/ui-config.json` and update the values for `camera.url`, `thumbnails.url`, `url.prefix`, and `habbopages.url`.
+   - You can override any variable by passing it to `NitroConfig` in the `index.html` file.
 
 Usage:
 
--   To use Nitro you need `.nitro` assets generated, see [nitro-converter](https://git.krews.org/nitro/nitro-converter) for instructions
--   See [Morningstar Websockets](https://git.krews.org/nitro/ms-websockets) for instructions on configuring websockets on your server
+- To utilize Nitro, you need to generate `.nitro` assets. Refer to the [nitro-converter](https://git.krews.org/nitro/nitro-converter) for instructions on generating these assets.
+- For instructions on configuring websockets on your server, see [Morningstar Websockets](https://git.krews.org/nitro/ms-websockets).
 
 Development:
 
-Run Nitro in development mode when you are editing the files, this way you can see the changes in your browser instantly
-
+While editing the files, run Nitro in development mode to instantly see the changes in your browser. Execute the following command:
 ```
 yarn start
 ```
 
 Production:
 
-To build a production version of Nitro just run the following command
-
+To build a production-ready version of Nitro, execute the following command:
 ```
 yarn build:prod
 ```
 
--   A `dist` folder will be generated, these are the files that must be uploaded to your webserver
--   Consult your CMS documentation for compatibility with Nitro and how to add the production files
+- This will generate a `dist` folder containing the necessary files that should be uploaded to your web server.
+- Consult your CMS documentation to ensure compatibility with Nitro and for instructions on adding the production files.
