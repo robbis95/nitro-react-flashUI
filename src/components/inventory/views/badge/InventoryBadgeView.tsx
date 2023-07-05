@@ -49,9 +49,9 @@ export const InventoryBadgeView: FC<{}> = props =>
     }, []);
 
     return (
-        <div className="badge-wrapper">
-            <Grid gap={ 2 } className="badges-list">
-                <Column size={ 8 } overflow="hidden">
+        <div className="badge-wrapper calc-wrapper">
+            <Grid gap={ 1 }>
+                <Column overflow="hidden" className="size-list-badges">
                     <Flex gap={ 1 } className="position-relative">
                         <Flex fullWidth alignItems="center" position="relative">
                             <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('generic.search') } value={ searchValue } onChange={ event => setSearchValue(event.target.value) } />
@@ -66,7 +66,7 @@ export const InventoryBadgeView: FC<{}> = props =>
                         }) }
                     </AutoGrid>
                 </Column>
-                <Column className="justify-content-between" size={ 4 } overflow="auto">
+                <Column className="justify-content-between size-badges" overflow="auto">
                     <Column overflow="hidden">
                         <Text center bold>{ LocalizeText('inventory.badges.activebadges') }</Text>
                         <AutoGrid gap={ 1 } columnCount={ 5 }>
@@ -75,17 +75,20 @@ export const InventoryBadgeView: FC<{}> = props =>
                     </Column>
                 </Column>
             </Grid>
-            { !!selectedBadgeCode &&
-                <Flex className="bg-white pb-1 px-2 rounded mt-2" style={ { height: '50px' } } justifyContent={ 'between' } alignItems={ 'end' } gap={ 2 }>
-                    <Flex alignItems="start" gap={ 2 }>
-                        <LayoutBadgeImageView shrink badgeCode={ selectedBadgeCode } />
-                        <Text className="font-bold mt-2">{ LocalizeBadgeName(selectedBadgeCode) }</Text>
+            <Column gap={ 0 } position="absolute" className="bottom-2" style={ { width: '96%' } }>
+                { !!selectedBadgeCode &&
+                    <Flex className="bg-white pb-1 px-2 rounded mt-2" style={ { height: '50px' } } justifyContent={ 'between' } alignItems={ 'end' } gap={ 2 }>
+                        <Flex alignItems="start" gap={ 2 }>
+                            <LayoutBadgeImageView shrink badgeCode={ selectedBadgeCode } />
+                            <Text className="font-bold mt-2">{ LocalizeBadgeName(selectedBadgeCode) }</Text>
+                        </Flex>
+                        <Button className="btn btn-primary mb-1" style={ { fontSize: '12px' } } disabled={ !isWearingBadge(selectedBadgeCode) && !canWearBadges() } onClick={ event => toggleBadge(selectedBadgeCode) }>{ LocalizeText(isWearingBadge(selectedBadgeCode) ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge') }</Button>
                     </Flex>
-                    <Button className="btn btn-primary mb-1" style={ { fontSize: '12px' } } disabled={ !isWearingBadge(selectedBadgeCode) && !canWearBadges() } onClick={ event => toggleBadge(selectedBadgeCode) }>{ LocalizeText(isWearingBadge(selectedBadgeCode) ? 'inventory.badges.clearbadge' : 'inventory.badges.wearbadge') }</Button>
-                </Flex> }
-            <div className="nitro-progress-bar text-white mt-1">
-                <Text small center style={ { marginTop: '-1px' } }>{ LocalizeText('achievements.categories.score', [ 'score' ], [ achievementScore.toString() ]) }</Text>
-            </div>
+                }
+                <div className="nitro-progress-bar text-white mt-1">
+                    <Text small center style={ { marginTop: '-1px' } }>{ LocalizeText('achievements.categories.score', [ 'score' ], [ achievementScore.toString() ]) }</Text>
+                </div>
+            </Column>
         </div>
     );
 }

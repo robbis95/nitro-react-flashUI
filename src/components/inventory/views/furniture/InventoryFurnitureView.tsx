@@ -227,7 +227,7 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
         setQuantity(1);
     }, [ filteredGroupItems ]);
 
-    if(!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={ LocalizeText('inventory.empty.title') } desc={ LocalizeText('inventory.empty.desc') } />;
+    if(!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={ LocalizeText('inventory.empty.title') } desc={ LocalizeText('inventory.empty.desc') } isTrading={ isTrading } />;
 
     return (
         <Grid>
