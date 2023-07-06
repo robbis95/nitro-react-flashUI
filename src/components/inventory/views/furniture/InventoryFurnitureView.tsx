@@ -1,19 +1,19 @@
 import { IObjectData, IRoomSession, RoomObjectVariable, RoomPreviewer, TradingListAddItemComposer, TradingListAddItemsComposer, Vector3d } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
 import { DispatchUiEvent, FurniCategory, GetRoomEngine, GetSessionDataManager, GroupItem, IFurnitureItem, LocalizeText, NotificationAlertType, SendMessageComposer, UnseenItemCategory, attemptItemPlacement, getGuildFurniType } from '../../../../api';
-import { AutoGrid, Button, Column, Grid, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, LayoutRoomPreviewerView, Text } from '../../../../common';
+import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, LayoutRoomPreviewerView, Text } from '../../../../common';
 import { CatalogPostMarketplaceOfferEvent } from '../../../../events';
 import { useInventoryFurni, useInventoryTrade, useInventoryUnseenTracker, useNotification } from '../../../../hooks';
 import { MAX_ITEMS_TO_TRADE } from '../../constants';
 import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryFurnitureItemView } from './InventoryFurnitureItemView';
-import { InventoryFurnitureSearchView } from './InventoryFurnitureSearchView';
 
 interface InventoryFurnitureViewProps
 {
     roomSession: IRoomSession;
     roomPreviewer: RoomPreviewer;
     isTrading: boolean;
+    filteredGroupItems: GroupItem[];
 }
 
 const attemptPlaceMarketplaceOffer = (groupItem: GroupItem) =>
@@ -29,9 +29,8 @@ const attemptPlaceMarketplaceOffer = (groupItem: GroupItem) =>
 
 export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
 {
-    const { roomSession = null, roomPreviewer = null, isTrading = null } = props;
+    const { roomSession = null, roomPreviewer = null, isTrading = null, filteredGroupItems = [] } = props;
     const [ isVisible, setIsVisible ] = useState(false);
-    const [ filteredGroupItems, setFilteredGroupItems ] = useState<GroupItem[]>([]);
     const [ groupItem, setGroupItem ] = useState<GroupItem>(null);
     const [ quantity, setQuantity ] = useState<number>(1);
     const { groupItems = [], selectedItem = null, activate = null, deactivate = null } = useInventoryFurni();
@@ -227,19 +226,33 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
         setQuantity(1);
     }, [ filteredGroupItems ]);
 
+    
     if(!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={ LocalizeText('inventory.empty.title') } desc={ LocalizeText('inventory.empty.desc') } isTrading={ isTrading } />;
-
+    
+    const totalItems = !isTrading ? selectedItem.items.length : selectedItem.getUnlockedCount();
+    
     return (
-        <Grid>
-            <Column size={ 7 } overflow="hidden">
-                <InventoryFurnitureSearchView groupItems={ groupItems } setGroupItems={ setFilteredGroupItems } />
-                <AutoGrid columnCount={ 5 } className={ isTrading ? 'trading-inventory' : '' }>
+        <Grid className="mt-n1">
+            <Column size={ 7 } overflow="hidden" style={ { height: `calc(100% - ${ !isTrading ? '34px' : '5px' })` } }>
+                <AutoGrid gap={ 1 } columnCount={ 5 } className={ isTrading ? 'trading-inventory' : '' }>
                     { filteredGroupItems && (filteredGroupItems.length > 0) && filteredGroupItems.map((item, index) => <InventoryFurnitureItemView key={ index } groupItem={ item } isTrading={ isTrading } attemptItemOffer={ (e) => attemptItemOffer(e) } setGroupItem={ (e) => setGroupItem(e) } />) }
                 </AutoGrid>
             </Column>
             <Column size={ 5 } overflow="auto">
-                <Column overflow="hidden" position="relative">
+                <Column overflow="hidden" position="relative" className="cursor-pointer">
                     <LayoutRoomPreviewerView roomPreviewer={ roomPreviewer } height={ 140 } />
+                    { (selectedItem && (selectedItem.items[0].isTradable || !selectedItem.items[0].isTradable)) &&
+                        <Flex gap={ 2 } position="absolute" className="top-2 start-2">
+                            <Base className={ `icon ${ (selectedItem.items[0].isTradable && totalItems > 0) ? 'icon-tradeable' : 'icon-not-tradeable' }` } title={ LocalizeText((selectedItem.items[0].isTradable && totalItems > 0) ? 'inventory.furni.preview.tradeable_amount' : 'inventory.furni.preview.not_tradeable') } />
+                            { (selectedItem.items[0].isTradable && totalItems > 0) && <Text variant="black" className="text-shadow-around-text mt-n1">{ totalItems }</Text> }
+                        </Flex>
+                    }
+                    { (selectedItem && (selectedItem.items[0].recyclable || !selectedItem.items[0].recyclable)) &&
+                        <Flex gap={ 2 } position="absolute" className="top-4 start-2">
+                            <Base className={ `icon ${ (selectedItem.items[0].recyclable && totalItems > 0) ? 'icon-recyclable' : 'icon-not-recyclable' }` } title={ LocalizeText((selectedItem.items[0].recyclable && totalItems > 0) ? 'inventory.furni.preview.recyclable_amount' : 'inventory.furni.preview.not_recyclable') } />
+                            { (selectedItem.items[0].recyclable && totalItems > 0) && <Text variant="black" className="text-shadow-around-text">{ totalItems }</Text> }
+                        </Flex>
+                    }
                     { selectedItem && selectedItem.stuffData.isUnique &&
                         <LayoutLimitedEditionCompactPlateView className="top-2 end-2" position="absolute" uniqueNumber={ selectedItem.stuffData.uniqueNumber } uniqueSeries={ selectedItem.stuffData.uniqueSeries } /> }
                     { (selectedItem && selectedItem.stuffData.rarityLevel > -1) &&
@@ -247,16 +260,17 @@ export const InventoryFurnitureView: FC<InventoryFurnitureViewProps> = props =>
                 </Column>
                 { selectedItem &&
                     <Column grow justifyContent="between" gap={ 2 }>
-                        <Text grow truncate bold>{ selectedItem.name }</Text>
-                        <Column gap={ 1 }>
+                        <Column gap={ 1 } position={ !isTrading ? 'absolute' : 'relative' } className="bottom-1" style={ { width: !isTrading ? '39%' : '' } }>
+                            <Text grow truncate bold>{ selectedItem.name }</Text>
+                            { (selectedItem.description) && <Text grow truncate small>{ selectedItem.description }</Text> }
                             { (!isTrading) &&
                                 <>
                                     { !!roomSession &&
-                                        <Button onClick={ event => attemptItemPlacement(selectedItem) }>
+                                        <Button className="p-0 px-2" onClick={ event => attemptItemPlacement(selectedItem) }>
                                             { LocalizeText('inventory.furni.placetoroom') }
                                         </Button> }
                                     { (selectedItem && selectedItem.isSellable) &&
-                                        <Button onClick={ event => attemptPlaceMarketplaceOffer(selectedItem) }>
+                                        <Button className="p-0 px-2" onClick={ event => attemptPlaceMarketplaceOffer(selectedItem) }>
                                             { LocalizeText('inventory.marketplace.sell') }
                                         </Button> }
                                 </>

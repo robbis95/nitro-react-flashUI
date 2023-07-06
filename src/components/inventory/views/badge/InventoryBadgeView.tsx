@@ -4,26 +4,18 @@ import { AutoGrid, Button, Column, Flex, Grid, LayoutBadgeImageView, Text } from
 import { useAchievements, useInventoryBadges, useInventoryUnseenTracker } from '../../../../hooks';
 import { InventoryBadgeItemView } from './InventoryBadgeItemView';
 
-export const InventoryBadgeView: FC<{}> = props =>
+interface InventoryBadgeViewProps
 {
+    filteredBadgeCodes: string[];
+}
+
+export const InventoryBadgeView: FC<InventoryBadgeViewProps> = props =>
+{
+    const { filteredBadgeCodes = [] } = props;
     const [ isVisible, setIsVisible ] = useState(false);
-    const { badgeCodes = [], activeBadgeCodes = [], selectedBadgeCode = null, isWearingBadge = null, canWearBadges = null, toggleBadge = null, getBadgeId = null, activate = null, deactivate = null } = useInventoryBadges();
+    const { activeBadgeCodes = [], selectedBadgeCode = null, isWearingBadge = null, canWearBadges = null, toggleBadge = null, getBadgeId = null, activate = null, deactivate = null } = useInventoryBadges();
     const { isUnseen = null, removeUnseen = null } = useInventoryUnseenTracker();
     const { achievementScore = 0 } = useAchievements();
-    const [ searchValue, setSearchValue ] = useState('');
-
-    let search = searchValue?.toLocaleLowerCase().replace(' ', '');
-
-    const filterBadgeCodes = () =>
-    {
-        return badgeCodes.filter((badgeCode) =>
-        {
-            return LocalizeBadgeName(badgeCode).toLocaleLowerCase().includes(search);
-        });
-    };
-
-
-    const filteredBadgeCodes = filterBadgeCodes();
 
     useEffect(() =>
     {
@@ -49,14 +41,9 @@ export const InventoryBadgeView: FC<{}> = props =>
     }, []);
 
     return (
-        <div className="badge-wrapper calc-wrapper">
+        <div className="badge-wrapper calc-wrapper mt-n2">
             <Grid gap={ 1 }>
-                <Column overflow="hidden" className="size-list-badges">
-                    <Flex gap={ 1 } className="position-relative">
-                        <Flex fullWidth alignItems="center" position="relative">
-                            <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('generic.search') } value={ searchValue } onChange={ event => setSearchValue(event.target.value) } />
-                        </Flex>
-                    </Flex>
+                <Column overflow="hidden" className="size-list-badges mt-1">
                     <AutoGrid gap={ 1 } columnCount={ 5 }>
                         { filteredBadgeCodes && filteredBadgeCodes.length > 0 && filteredBadgeCodes.map((badgeCode, index) =>
                         {
@@ -66,7 +53,7 @@ export const InventoryBadgeView: FC<{}> = props =>
                         }) }
                     </AutoGrid>
                 </Column>
-                <Column className="justify-content-between size-badges" overflow="auto">
+                <Column className="justify-content-between size-badges position-absolute end-2 mt-n4" overflow="auto">
                     <Column overflow="hidden">
                         <Text center bold>{ LocalizeText('inventory.badges.activebadges') }</Text>
                         <AutoGrid gap={ 1 } columnCount={ 5 }>

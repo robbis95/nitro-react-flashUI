@@ -958,6 +958,30 @@
         height: 21px;
     }
 
+    &.icon-recyclable {
+        background-image: url('@/assets/flash/inventory/allow_recycle.png');
+        width: 21px;
+        height: 21px;
+    }
+
+    &.icon-not-recyclable {
+        background-image: url('@/assets/flash/inventory/not_allow_recycle.png');
+        width: 29px;
+        height: 21px;
+    }
+
+    &.icon-tradeable {
+        background-image: url('@/assets/flash/inventory/allow_trade.png');
+        width: 31px;
+        height: 15px;
+    }
+
+    &.icon-not-tradeable {
+        background-image: url('@/assets/flash/inventory/not_allow_trade.png');
+        width: 40px;
+        height: 16px;
+    }
+
     &.spin {
         animation: rotating 1s linear infinite;
     }
