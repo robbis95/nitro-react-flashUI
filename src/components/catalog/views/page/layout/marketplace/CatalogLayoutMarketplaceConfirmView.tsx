@@ -1,7 +1,7 @@
 import { BuyMarketplaceOfferMessageComposer } from '@nitrots/nitro-renderer';
 import { FC } from 'react';
 import { GetImageIconUrlForProduct, LocalizeText, MarketplaceOfferData, ProductTypeEnum, SendMessageComposer } from '../../../../../../api';
-import { Base, Button, Column, Flex, LayoutLimitedEditionStyledNumberView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../../common';
+import { Button, Column, Flex, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../../common';
 
 export interface CatalogLayoutMarketplaceConfirmViewProps
 {
@@ -27,14 +27,7 @@ export const CatalogLayoutMarketplaceConfirmView: FC<CatalogLayoutMarketplaceCon
             <NitroCardContentView overflow="hidden">
                 <Column className="px-2 py-2">
                     <Flex>
-                        <Flex className="image-preview">
-                            <Base fit className="unique-bg-override" style={ { backgroundImage: `url(${ GetImageIconUrlForProduct(((offerData.furniType === MarketplaceOfferData.TYPE_FLOOR) ? ProductTypeEnum.FLOOR : ProductTypeEnum.WALL), offerData.furniId, offerData.extraData) })`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center' } } />
-                            { (offerData.isUniqueLimitedItem ? offerData.stuffData.uniqueNumber : 0) > 0 &&
-                                <div className="position-absolute bottom-0 unique-item-counter">
-                                    <LayoutLimitedEditionStyledNumberView value={ offerData.isUniqueLimitedItem ? offerData.stuffData.uniqueNumber : 0 } />
-                                </div>
-                            }
-                        </Flex>
+                        <LayoutGridItem className="layout-marketplace image-preview" itemImage={ GetImageIconUrlForProduct(((offerData.furniType === MarketplaceOfferData.TYPE_FLOOR) ? ProductTypeEnum.FLOOR : ProductTypeEnum.WALL), offerData.furniId, offerData.extraData) } itemUniqueNumber={ offerData.stuffData.uniqueNumber } />
                         <Text bold className="mt-3 px-3">{ LocalizeText(((offerData.furniType === 2) ? 'wallItem' : 'roomItem') + `.name.${ offerData.furniId }`) }</Text>
                     </Flex>
                     <Text className="font-italic">{ LocalizeText('catalog.marketplace.confirm_header') }</Text>

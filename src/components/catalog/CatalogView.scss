@@ -311,6 +311,16 @@
     font-size: 10px;
 }
 
+.layout-grid-item {
+    
+    &.layout-marketplace {
+        background-color: transparent !important;
+        border: none !important;
+        border-color: none !important;
+        cursor: default;
+    }
+}
+
 .nitro-catalog-layout-vip-gifts-grid {
     .layout-grid-item {
         height: 55px !important;
@@ -322,15 +332,15 @@
     width: 299px;
 
     .image-preview {
-        width: 48px;
-        height: 48px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #F0F0F0;
-        border: 1px solid #5D5D5D;
-        border-radius: 8px;
+        width: 48px !important;
+        height: 48px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: #F0F0F0 !important;
+        border: 1px solid #5D5D5D !important;
+        border-radius: 8px !important;
     }
 
     .textarea-height {
@@ -342,15 +352,15 @@
     width: 279px;
 
     .image-preview {
-        width: 48px;
-        height: 48px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #F0F0F0;
-        border: 1px solid #5D5D5D;
-        border-radius: 8px;
+        width: 48px !important;
+        height: 48px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: #F0F0F0 !important;
+        border: 1px solid #5D5D5D !important;
+        border-radius: 8px !important;
     }
 }
 
