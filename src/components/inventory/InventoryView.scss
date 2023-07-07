@@ -1,10 +1,9 @@
 .nitro-inventory {
     height: $inventory-height;
     min-height: $inventory-height;
-    max-height: $inventory-height + 150px;
     width: $inventory-width;
     min-width: $inventory-width;
-    max-width: $inventory-width + 150px;
+    max-width: $inventory-width;
     color: #000;
 
     input {
@@ -15,9 +14,24 @@
     &.trading {
         width: 535px;
         min-height: $inventory-height + 290px !important;
+        max-width: $inventory-width + 15px !important;
+        min-width: $inventory-width + 15px !important;
 
         .trading-inventory {
-            max-height: 200px;
+            max-height: 240px;
+        }
+
+        .nitro-item-count {
+            top: 0px;
+            right: -2px;
+            background-color: white;
+            padding: 0px;
+            padding-left: 3px;
+            padding-right: 3px;
+            color: #306A83;
+            border: 1px solid #2F6982;
+            font-weight: normal !important;
+            font-family: Goldfish;
         }
     }
 
@@ -66,17 +80,56 @@
         border-left: 2px solid #B4B4B4;
         margin-top: 15px;
     }
+
+    .inventory-items {
+
+        border-image-source: url(@/assets/flash/inventory/item.png) !important;
+        border-image-slice: 6 6 6 6 fill !important;
+        border-image-width: 6px 6px 6px 6px !important;
+
+        &.active {
+            border-image-source: url(@/assets/flash/inventory/selected_item.png) !important;
+            border-image-slice: 6 6 6 6 fill !important;
+            border-image-width: 6px 6px 6px 6px !important;
+        }
+
+        &.unseen {
+            background-color: #9BCA64;
+        }
+
+        .nitro-item-count {
+            top: 0px;
+            right: -2px;
+            background-color: white;
+            padding: 0px;
+            padding-left: 3px;
+            padding-right: 3px;
+            color: #306A83;
+            border: 1px solid #2F6982;
+            font-weight: normal !important;
+            font-family: Goldfish;
+        }
+    }
 }
 
 .calc-wrapper {
     width: 96%;
-    height: calc(100% - 80px);
+    height: calc(100% - 100px);
 }
 
 .size-list-badges {
-    width: 315px;
+    width: 335px;
 }
 
 .size-badges {
     width: 145px;
+}
+
+.nitro-inventory-category-filter {
+    background-color: #C9C9C9;
+    height: 25px;
+}
+
+.text-shadow-around-text {
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 #ececec, 0 -1px white;
 }

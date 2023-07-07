@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react';
 import { GetImageIconUrlForProduct, LocalizeText, MarketPlaceOfferState, MarketplaceOfferData, ProductTypeEnum } from '../../../../../../api';
-import { Base, Button, Column, Flex, LayoutLimitedEditionStyledNumberView, Text } from '../../../../../../common';
+import { Button, Column, Flex, LayoutGridItem, Text } from '../../../../../../common';
 
 export interface MarketplaceItemViewProps
 {
@@ -48,12 +48,7 @@ export const CatalogLayoutMarketplaceItemView: FC<MarketplaceItemViewProps> = pr
     return (
         <Flex shrink center={ false } column={ false } alignItems="center" className="p-1 marketplace-bg">
             <Column style={ { width: 40, height: 40 } }>
-                <Base fit className="unique-bg-override" style={ { backgroundImage: `url(${ GetImageIconUrlForProduct(((offerData.furniType === MarketplaceOfferData.TYPE_FLOOR) ? ProductTypeEnum.FLOOR : ProductTypeEnum.WALL), offerData.furniId, offerData.extraData) })`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center' } } />
-                { (offerData.isUniqueLimitedItem ? offerData.stuffData.uniqueNumber : 0) > 0 &&
-                    <div className="position-absolute bottom-0 unique-item-counter">
-                        <LayoutLimitedEditionStyledNumberView value={ offerData.isUniqueLimitedItem ? offerData.stuffData.uniqueNumber : 0 } />
-                    </div>
-                }
+                <LayoutGridItem className="layout-marketplace" itemImage={ GetImageIconUrlForProduct(((offerData.furniType === MarketplaceOfferData.TYPE_FLOOR) ? ProductTypeEnum.FLOOR : ProductTypeEnum.WALL), offerData.furniId, offerData.extraData) } itemUniqueNumber={ offerData.stuffData.uniqueNumber } />
             </Column>
             <Column grow gap={ 0 }>
                 <Text small fontWeight="bold" className="mt-1 mb-2">{ getMarketplaceOfferTitle }</Text>

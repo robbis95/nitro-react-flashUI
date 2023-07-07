@@ -16,7 +16,7 @@ export const MarketplacePostOfferView : FC<{}> = props =>
 
     const updateAskingPrice = (price: string) =>
     {
-        setTempAskingPrice(Number(price) >= 10 ? '10' : price);
+        setTempAskingPrice(Number(price) >= marketplaceConfiguration.maximumPrice ? marketplaceConfiguration.maximumPrice.toString() : price);
 
         const newValue = Number(price);
 
@@ -92,7 +92,7 @@ export const MarketplacePostOfferView : FC<{}> = props =>
                         <input className="form-control form-control-sm w-25" type="number" min={ 0 } value={ tempAskingPrice } onChange={ event => updateAskingPrice(event.target.value) } />
                     </Flex>
                     <Text className="font-size-marketplace">{ LocalizeText('inventory.marketplace.make_offer.average_price', [ 'days', 'price', 'price_no_commission' ], [ marketplaceConfiguration.offerTime.toString(), marketplaceConfiguration.minimumPrice.toString(), marketplaceConfiguration.commission.toString() ] ) }</Text>
-                    <textarea className="form-control form-control-sm font-size-marketplace-small overflow-hidden textarea-height" value={ askingPrice >= marketplaceConfiguration.minimumPrice ? LocalizeText('sell.in.marketplace.revenue.label') + ': ' + (askingPrice + 1) : LocalizeText('shop.marketplace.invalid.price', [ 'minPrice', 'maxPrice' ], [ marketplaceConfiguration.minimumPrice.toString(), marketplaceConfiguration.maximumPrice.toString() ]) } readOnly></textarea>
+                    <textarea className="form-control form-control-sm font-size-marketplace-small overflow-hidden textarea-height" value={ askingPrice >= marketplaceConfiguration.minimumPrice ? LocalizeText('sell.in.marketplace.revenue.label') + ': ' + (askingPrice - 1) : LocalizeText('shop.marketplace.invalid.price', [ 'minPrice', 'maxPrice' ], [ marketplaceConfiguration.minimumPrice.toString(), marketplaceConfiguration.maximumPrice.toString() ]) } readOnly></textarea>
                     <Flex justifyContent="between">
                         <Button className="w-30" onClick={ postItem } disabled={ ((askingPrice < marketplaceConfiguration.minimumPrice) || (askingPrice > marketplaceConfiguration.maximumPrice) || isNaN(askingPrice)) }>{ LocalizeText('inventory.marketplace.make_offer.post') }</Button>
                         <Button className="w-30" onClick={ () => setItem(null) }>{ LocalizeText('generic.cancel') }</Button>
