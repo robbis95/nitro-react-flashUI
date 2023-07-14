@@ -356,6 +356,27 @@
     color: #fff;
 }
 
+.nitro-catalog .layout-catalog-grid-item .nitro-item-count, .nitro-catalog .layout-grid-item .nitro-item-count {
+    border-image-source: url(@/assets/flash/catalogue/item-counter-bg.png);
+    border-image-slice:6 6 6 6 fill;
+    border-image-width:6px 6px 6px 6px;
+    color: #CCCB65;
+    font-family: Goldfish;
+    top: 23px;
+    right: 3px;
+    font-size: 8.5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 6px;
+    padding-right: 3px;
+    z-index: 1;
+}
+
+.nitro-catalog .layout-catalog-grid-item .nitro-item-count:before, .nitro-catalog .layout-grid-item .nitro-item-count:before {
+    content: ' x';
+    display: inline;
+}
+
 .badge-wrapper {
     overflow: hidden;
 
