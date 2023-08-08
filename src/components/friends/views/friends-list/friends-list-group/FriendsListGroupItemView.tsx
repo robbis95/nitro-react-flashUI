@@ -58,11 +58,11 @@ export const FriendsListGroupItemView: FC<FriendsListGroupItemViewProps> = (prop
 
     switch (friend.relationshipStatus) {
       case MessengerFriend.RELATIONSHIP_HEART:
-        return 'heart';
+        return 'icon-heart';
       case MessengerFriend.RELATIONSHIP_SMILE:
-        return 'smile';
+        return 'icon-smile';
       case MessengerFriend.RELATIONSHIP_BOBBA:
-        return 'bobba';
+        return 'icon-bobba';
       default:
         return null;
     }
