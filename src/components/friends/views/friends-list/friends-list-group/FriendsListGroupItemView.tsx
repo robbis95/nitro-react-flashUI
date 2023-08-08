@@ -126,7 +126,7 @@ export const FriendsListGroupItemView: FC<FriendsListGroupItemViewProps> = (prop
           onMouseLeave={() => setShowHoverText('')}
         />
         {isRelationshipOpen(friend.id) && (
-          <Column position="absolute" className="select-relation">
+          <Column position="relative" className="select-relation">
             <Base
               pointer
               className="nitro-friends-spritesheet icon-none"
