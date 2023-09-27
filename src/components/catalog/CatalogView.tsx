@@ -10,20 +10,20 @@ import { CatalogHeaderView } from './views/page/common/CatalogHeaderView';
 import { GetCatalogLayout } from './views/page/layout/GetCatalogLayout';
 import { MarketplacePostOfferView } from './views/page/layout/marketplace/MarketplacePostOfferView';
 
-export const CatalogView: FC<{}> = props =>
+export const CatalogView: FC<{}> = props => 
 {
     const { isVisible = false, setIsVisible = null, rootNode = null, currentPage = null, navigationHidden = false, setNavigationHidden = null, activeNodes = [], searchResult = null, setSearchResult = null, openPageByName = null, openPageByOfferId = null, activateNode = null, getNodeById } = useCatalog();
 
-    useEffect(() =>
+    useEffect(() => 
     {
         const linkTracker: ILinkEventTracker = {
-            linkReceived: (url: string) =>
+            linkReceived: (url: string) => 
             {
                 const parts = url.split('/');
-        
+
                 if(parts.length < 2) return;
-        
-                switch(parts[1])
+
+                switch(parts[1]) 
                 {
                     case 'show':
                         setIsVisible(true);
@@ -35,27 +35,27 @@ export const CatalogView: FC<{}> = props =>
                         setIsVisible(prevValue => !prevValue);
                         return;
                     case 'open':
-                        if(parts.length > 2)
+                        if(parts.length > 2) 
                         {
-                            if(parts.length === 4)
+                            if(parts.length === 4) 
                             {
-                                switch(parts[2])
+                                switch(parts[2]) 
                                 {
                                     case 'offerId':
                                         openPageByOfferId(parseInt(parts[3]));
                                         return;
                                 }
                             }
-                            else
+                            else 
                             {
                                 openPageByName(parts[2]);
                             }
                         }
-                        else
+                        else 
                         {
                             setIsVisible(true);
                         }
-        
+
                         return;
                 }
             },
@@ -73,15 +73,17 @@ export const CatalogView: FC<{}> = props =>
                 <NitroCardView uniqueKey="catalog" className="nitro-catalog" style={ GetConfiguration('catalog.headers') ? { width: 710 } : {} }>
                     <NitroCardHeaderView headerText={ LocalizeText('catalog.title') } onCloseClick={ event => setIsVisible(false) } />
                     <NitroCardTabsView subClassName="w-100">
-                        { rootNode && (rootNode.children.length > 0) && rootNode.children.map(child =>
+                        { rootNode && (rootNode.children.length > 0) && rootNode.children.map((child, index) =>
                         {
                             if(!child.isVisible) return null;
-
+                            
+                            // Generate a unique key using the index of the map function
+                            const uniqueKey = `${ child.pageId }-${ index }`;
+                            
                             return (
-                                <NitroCardTabsItemView key={ child.pageId } isActive={ child.isActive } onClick={ event =>
+                                <NitroCardTabsItemView key={ uniqueKey } isActive={ child.isActive } onClick={ event => 
                                 {
                                     if(searchResult) setSearchResult(null);
-
                                     activateNode(child);
                                 } } >
                                     <Flex gap={ GetConfiguration('catalog.tab.icons') ? 1 : 0 } alignItems="center">
