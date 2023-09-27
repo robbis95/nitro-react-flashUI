@@ -1,6 +1,6 @@
 import { GetGuestRoomResultEvent, NavigatorSearchComposer, RateFlatMessageComposer, RoomDataParser } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { CreateLinkEvent, GetRoomEngine, LocalizeText, SendMessageComposer, SetLocalStorage, TryVisitRoom } from '../../../../api';
+import { CreateLinkEvent, GetLocalStorage, GetRoomEngine, LocalizeText, SendMessageComposer, SetLocalStorage, TryVisitRoom } from '../../../../api';
 import { Base, Column, Flex, Text, TransitionAnimation, TransitionAnimationTypes, classNames } from '../../../../common';
 import { useMessageEvent, useNavigator, useRoom } from '../../../../hooks';
 
@@ -64,8 +64,8 @@ export const RoomToolsWidgetView: FC<{}> = props =>
 
     const onChangeRoomHistory = (roomId: number, roomName: string) =>
     {
-        let newStorage = JSON.parse(window.localStorage.getItem('nitro.room.history'));
-
+        let newStorage = GetLocalStorage('nitro.room.history') as { roomId: number, roomName: string }[];
+        
         if (newStorage && newStorage.filter( (room: RoomDataParser) => room.roomId === roomId ).length > 0) return;
 
         if (newStorage && newStorage.length >= 10) newStorage.shift();
@@ -93,7 +93,7 @@ export const RoomToolsWidgetView: FC<{}> = props =>
     {
         const handleTabClose = () => 
         {
-            if (JSON.parse(window.localStorage.getItem('nitro.room.history'))) window.localStorage.removeItem('nitro.room.history');
+            if (GetLocalStorage('nitro.room.history')) window.localStorage.removeItem('nitro.room.history');
         };
     
         window.addEventListener('beforeunload', handleTabClose);
@@ -115,7 +115,7 @@ export const RoomToolsWidgetView: FC<{}> = props =>
 
     useEffect(() =>
     {
-        setRoomHistory(JSON.parse(window.localStorage.getItem('nitro.room.history')) ?? []);
+        setRoomHistory(GetLocalStorage('nitro.room.history') ?? []);
     }, [ ]);
 
     return (

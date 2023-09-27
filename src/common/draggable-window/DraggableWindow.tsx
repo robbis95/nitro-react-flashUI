@@ -253,7 +253,7 @@ export const DraggableWindow: FC<DraggableWindowProps> = props =>
     {
         if(!uniqueKey) return;
 
-        const localStorage = JSON.parse(window.localStorage.getItem(`nitro.windows.${ uniqueKey }`)) as WindowSaveOptions;
+        const localStorage = GetLocalStorage(`nitro.windows.${ uniqueKey }`) as WindowSaveOptions;
 
         if(!localStorage || !localStorage.offset) return;
 
