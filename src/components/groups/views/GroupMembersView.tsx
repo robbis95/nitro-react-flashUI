@@ -1,4 +1,4 @@
-import { GroupAdminGiveComposer, GroupAdminTakeComposer, GroupConfirmMemberRemoveEvent, GroupConfirmRemoveMemberComposer, GroupMemberParser, GroupMembersComposer, GroupMembersEvent, GroupMembershipAcceptComposer, GroupMembershipDeclineComposer, GroupMembersParser, GroupRank, GroupRemoveMemberComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
+import { GroupAdminGiveComposer, GroupAdminTakeComposer, GroupConfirmMemberRemoveEvent, GroupConfirmRemoveMemberComposer, GroupMemberParser, GroupMembersComposer, GroupMembersEvent, GroupMembershipAcceptComposer, GroupMembershipDeclineComposer, GroupMembersParser, GroupRank, GroupRemoveMemberComposer, GuildMemberMgmtFailedMessageEvent, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../../api';
@@ -14,7 +14,7 @@ export const GroupMembersView: FC<{}> = props =>
     const [ totalPages, setTotalPages ] = useState<number>(0);
     const [ searchQuery, setSearchQuery ] = useState<string>('');
     const [ removingMemberName, setRemovingMemberName ] = useState<string>(null);
-    const { showConfirm = null } = useNotification();
+    const { showConfirm = null, simpleAlert = null } = useNotification();
 
     const getRankDescription = (member: GroupMemberParser) =>
     {
@@ -94,6 +94,17 @@ export const GroupMembersView: FC<{}> = props =>
         }, null);
             
         setRemovingMemberName(null);
+    });
+
+    useMessageEvent<GuildMemberMgmtFailedMessageEvent>(GuildMemberMgmtFailedMessageEvent, event =>
+    {
+        const parser = event.getParser();
+
+        if (!parser) return null;
+
+        simpleAlert(LocalizeText(`group.membermgmt.fail.${ parser.reason }`), null, null, null, LocalizeText('group.membermgmt.fail.title'));
+
+        refreshMembers();
     });
 
     useEffect(() =>
