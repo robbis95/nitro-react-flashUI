@@ -1,8 +1,8 @@
 import { ClubOfferData, GetClubOffersMessageComposer, PurchaseFromCatalogComposer } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { CatalogPurchaseState, LocalizeText, SendMessageComposer } from '../../../../../api';
-import { AutoGrid, Button, Column, Flex, Grid, LayoutCurrencyIcon, LayoutGridItem, LayoutLoadingSpinnerView, Text } from '../../../../../common';
-import { CatalogEvent, CatalogPurchasedEvent, CatalogPurchaseFailureEvent } from '../../../../../events';
+import { CatalogPurchaseState, CreateLinkEvent, LocalizeText, SendMessageComposer } from '../../../../../api';
+import { AutoGrid, Base, Button, Column, Flex, LayoutCurrencyIcon, LayoutLoadingSpinnerView, Text } from '../../../../../common';
+import { CatalogEvent, CatalogPurchaseFailureEvent, CatalogPurchasedEvent } from '../../../../../events';
 import { useCatalog, usePurse, useUiEvent } from '../../../../../hooks';
 import { CatalogLayoutProps } from './CatalogLayout.types';
 
@@ -91,7 +91,7 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props =>
 
     const setOffer = useCallback((offer: ClubOfferData) =>
     {
-        setPurchaseState(CatalogPurchaseState.NONE);
+        setPurchaseState(CatalogPurchaseState.CONFIRM);
         setPendingOffer(offer);
     }, []);
 
@@ -129,12 +129,12 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props =>
     }, [ clubOffers ]);
 
     return (
-        <Column fullHeight>
-            <Flex fullHeight center overflow="hidden">
-                { currentPage.localization.getImage(1) && <img alt="" src={ currentPage.localization.getImage(1) } /> }
-                <Column className="px-2">
-                <Text bold>{LocalizeText('catalog.vip.extend.title')}</Text>
-                <Text small overflow="auto" dangerouslySetInnerHTML={ { __html: getSubscriptionDetails } } />
+        <Column fullHeight className="px-4" gap={ 0 }>
+            <Flex fullHeight overflow="hidden" gap={ 0 }>
+                { currentPage.localization.getImage(1) && <img alt="" src={ purse.clubDays > 0 ? currentPage.localization.getImage(1) : currentPage.localization.getImage(1).split('/').slice(0, -1).join('/') + '/clubcat_pic.gif' } /> }
+                <Column className="px-4 py-4" gap={ 0 }>
+                    <Text bold>{ purse.clubDays > 0 ? LocalizeText('catalog.vip.extend.title') : LocalizeText('catalog.vip.buy.title') }</Text>
+                    <Text small overflow="auto" dangerouslySetInnerHTML={ { __html: purse.clubDays > 0 ? getSubscriptionDetails : LocalizeText('catalog.vip.buy.info') } } />
                 </Column>
             </Flex>
             <Column fullHeight size={ 7 } overflow="hidden" justifyContent="between">
@@ -142,51 +142,42 @@ export const CatalogLayoutVipBuyView: FC<CatalogLayoutProps> = props =>
                     { clubOffers && (clubOffers.length > 0) && clubOffers.map((offer, index) =>
                     {
                         return (
-                            <LayoutGridItem key={ index } column={ false } center={ false } alignItems="center" justifyContent="between" itemActive={ pendingOffer === offer } className="p-1" onClick={ () => setOffer(offer) }>
-                                <i className="icon-hc-banner" />
-                                <Column justifyContent="end" gap={ 0 }>
-                                    <Text textEnd>{ getOfferText(offer) }</Text>
-                                    <Flex justifyContent="end" gap={ 1 }>
-                                        { (offer.priceCredits > 0) &&
-                                        <Flex alignItems="center" justifyContent="end" gap={ 1 }>
-                                            <Text>{ offer.priceCredits }</Text>
-                                            <LayoutCurrencyIcon type={ -1 } />
-                                        </Flex> }
-                                        { (offer.priceActivityPoints > 0) &&
-                                        <Flex alignItems="center" justifyContent="end" gap={ 1 }>
-                                            <Text>{ offer.priceActivityPoints }</Text>
-                                            <LayoutCurrencyIcon type={ offer.priceActivityPointsType } />
-                                        </Flex> }
+                            <Column key={ index } fullWidth className="club-content px-1 py-1">
+                                <Column className="content-title px-2 py-1">
+                                    <Flex>
+                                        <Base className="icon icon-catalogue-hc_small px-2 margin-image" />
+                                        <Text bold variant="white" className="margin-text">{ getOfferText(offer) }</Text>
                                     </Flex>
                                 </Column>
-                            </LayoutGridItem>
+                                <Column className="content-description">
+                                    <Flex alignItems="center" justifyContent="between">
+                                        <Flex alignItems="center" justifyContent="end" gap={ 1 }>
+                                            { (offer.priceCredits > 0) &&
+                                                <Flex alignItems="center" justifyContent="end" gap={ 1 }>
+                                                    <Text bold>{ offer.priceCredits }</Text>
+                                                    <LayoutCurrencyIcon type={ -1 } />
+                                                </Flex>
+                                            }
+                                            { (offer.priceActivityPoints > 0) && <Text bold>+</Text> }
+                                            { (offer.priceActivityPoints > 0) &&
+                                                <Flex alignItems="center" justifyContent="end" gap={ 1 }>
+                                                    <Text bold>{ offer.priceActivityPoints }</Text>
+                                                    <LayoutCurrencyIcon type={ offer.priceActivityPointsType } />
+                                                </Flex>
+                                            }
+                                        </Flex>
+                                        <Flex alignItems="center" justifyContent="end" gap={ 1 }>
+                                            { (offer.giftable) && <Button variant="success">{ LocalizeText('catalog.purchase_confirmation.gift') }</Button> }
+                                            { (!pendingOffer || pendingOffer !== offer) && <Button variant="success" onClick={ () => setOffer(offer) }>{ LocalizeText('buy') }</Button> }
+                                            { (pendingOffer && pendingOffer === offer) && getPurchaseButton() }
+                                        </Flex>
+                                    </Flex>
+                                </Column>
+                            </Column>
                         );
                     }) }
                 </AutoGrid>
-                            <Column size={ 5 } overflow="hidden">
-                { pendingOffer &&
-                    <Column fullWidth grow justifyContent="end">
-                        <Flex alignItems="end">
-                            <Column grow gap={ 0 }>
-                                <Text fontWeight="bold">{ getPurchaseHeader() }</Text>
-                                <Flex gap={ 1 }>
-                                { (pendingOffer.priceCredits > 0) &&
-                                    <Flex alignItems="center" justifyContent="end" gap={ 1 }>
-                                        <Text>{ pendingOffer.priceCredits }</Text>
-                                        <LayoutCurrencyIcon type={ -1 } />
-                                    </Flex> }
-                                { (pendingOffer.priceActivityPoints > 0) &&
-                                    <Flex alignItems="center" justifyContent="end" gap={ 1 }>
-                                        <Text>{ pendingOffer.priceActivityPoints }</Text>
-                                        <LayoutCurrencyIcon type={ pendingOffer.priceActivityPointsType } />
-                                    </Flex> }
-                                </Flex>  
-                            </Column>
-                            { getPurchaseButton() }
-                        </Flex>
-                    </Column> }
-            </Column>
-                <Text small center className="pb-2" dangerouslySetInnerHTML={ { __html: LocalizeText('catalog.vip.buy.hccenter') } }></Text>
+                <Text pointer small center underline className="pb-2" onClick={ () => CreateLinkEvent('habboUI/open/hccenter') } dangerouslySetInnerHTML={ { __html: LocalizeText('catalog.vip.buy.hccenter') } }></Text>
             </Column>
         </Column>
     );

@@ -2,7 +2,7 @@ import { GetRoomAdPurchaseInfoComposer, GetUserEventCatsMessageComposer, Purchas
 import { FC, useEffect, useState } from 'react';
 import { LocalizeText, SendMessageComposer } from '../../../../../api';
 import { Base, Button, Column, Text } from '../../../../../common';
-import { useCatalog, useMessageEvent, useNavigator, useRoomPromote } from '../../../../../hooks';
+import { useCatalog, useMessageEvent, useNavigator, useNotification, useRoomPromote } from '../../../../../hooks';
 import { CatalogLayoutProps } from './CatalogLayout.types';
 
 export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
@@ -16,6 +16,7 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
     const [ categoryId, setCategoryId ] = useState<number>(1);
     const { categories = null } = useNavigator();
     const { setIsVisible = null } = useCatalog();
+    const { simpleAlert = null } = useNotification();
     const { promoteInformation, isExtended, setIsExtended } = useRoomPromote();
 
     useEffect(() =>
@@ -30,7 +31,7 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
             setIsExtended(false); // This is from hook useRoomPromotte
         }
 
-    }, [ isExtended, eventName, eventDesc, categoryId ]);
+    }, [ isExtended, eventName, eventDesc, categoryId, roomId, promoteInformation.data.flatId, promoteInformation.data.eventName, promoteInformation.data.eventDescription, promoteInformation.data.categoryId, setIsExtended ]);
 
     const resetData = () =>
     {
@@ -44,6 +45,10 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
 
     const purchaseAd = () =>
     {
+        if (!eventName || eventName.length < 5) return simpleAlert(LocalizeText('roomad.alert.name.empty'), null, null, null, LocalizeText('roomad.error.title'));
+
+        if (!roomId || roomId === -1) return simpleAlert(LocalizeText('roomad.no.available.room'), null, null, null, LocalizeText('roomad.error.title'));
+
         const pageId = page.pageId;
         const offerId = page.offers.length >= 1 ? page.offers[0].offerId : -1;
         const flatId = roomId;
@@ -71,43 +76,36 @@ export const CatalogLayoutRoomAdsView: FC<CatalogLayoutProps> = props =>
         SendMessageComposer(new GetUserEventCatsMessageComposer());
     }, []);
 
-    return (<>
-        <Text bold center>{ LocalizeText('roomad.catalog_header') }</Text>
-        <Column size={ 12 } overflow="hidden" className="text-black">
-            <Base>{ LocalizeText('roomad.catalog_text', [ 'duration' ], [ '120' ]) }</Base>
-            <Base className="bg-muted rounded p-1">
-                <Column gap={ 2 }>
-                    <Text bold>{ LocalizeText('navigator.category') }</Text>
-                    <select className="form-select form-select-sm" value={ categoryId } onChange={ event => setCategoryId(parseInt(event.target.value)) } disabled={ extended }>
-                        { categories && categories.map((cat, index) => <option key={ index } value={ cat.id }>{ LocalizeText(cat.name) }</option>) }
-                    </select>
-                </Column>
-                <Column gap={ 1 }>
-                    <Text bold>{ LocalizeText('roomad.catalog_name') }</Text>
-                    <input type="text" className="form-control form-control-sm" maxLength={ 64 } value={ eventName } onChange={ event => setEventName(event.target.value) } readOnly={ extended } />
-                </Column>
-                <Column gap={ 1 }>
-                    <Text bold>{ LocalizeText('roomad.catalog_description') }</Text>
-                    <textarea className="form-control form-control-sm" maxLength={ 64 } value={ eventDesc } onChange={ event => setEventDesc(event.target.value) } readOnly={ extended } />
-                </Column>
-                <Column gap={ 1 }>
-                    <Text bold>{ LocalizeText('roomad.catalog_roomname') }</Text>
-                    <select className="form-select form-select-sm" value={ roomId } onChange={ event => setRoomId(parseInt(event.target.value)) } disabled={ extended }>
-                        <option value={ -1 } disabled>{ LocalizeText('roomad.catalog_roomname') }</option>
-                        { availableRooms && availableRooms.map((room, index) => <option key={ index } value={ room.roomId }>{ room.roomName }</option>) }
-                    </select>
-                </Column>
-                <Column gap={ 1 }>
-                    <Button variant={ (!eventName || !eventDesc || roomId === -1) ? 'danger' : 'success' } onClick={ purchaseAd } disabled={ (!eventName || !eventDesc || roomId === -1) }>{ extended ? LocalizeText('roomad.extend.event') : LocalizeText('buy') }</Button>
-                </Column>
-            </Base>
-        </Column>
-    </>
+    return (
+        <>
+            <Column size={ 12 } overflow="hidden" className="text-black px-2 mt-3">
+                <Text bold noWrap>{ LocalizeText('roomad.catalog_text', [ 'duration' ], [ '120' ]) }</Text>
+                <Base className="rounded p-1">
+                    <Column gap={ 2 }>
+                        <select className="form-select form-select-sm w-100" value={ categoryId } onChange={ event => setCategoryId(Number(event.target.value)) } disabled={ extended }>
+                            { categories && categories.map((cat, index) => <option key={ index } value={ cat.id }>{ LocalizeText(cat.name) }</option>) }
+                        </select>
+                    </Column>
+                    <Column gap={ 0 } className="mt-2">
+                        <Text small>{ LocalizeText('roomad.catalog_name') }</Text>
+                        <input type="text" className="form-control form-control-sm" maxLength={ 64 } value={ eventName } onChange={ event => setEventName(event.target.value) } readOnly={ extended } />
+                    </Column>
+                    <Column gap={ 0 } className="mt-2">
+                        <Text small>{ LocalizeText('roomad.catalog_description') }</Text>
+                        <textarea className="form-control form-control-sm height-roomads-description" maxLength={ 64 } value={ eventDesc } onChange={ event => setEventDesc(event.target.value) } readOnly={ extended } />
+                    </Column>
+                    <Column gap={ 0 } className="mt-2">
+                        <Text small>{ LocalizeText('roomad.catalog_roomname') }</Text>
+                        <select className="form-select form-select-sm w-100" value={ roomId } onChange={ event => setRoomId(Number(event.target.value)) } disabled={ extended }>
+                            <option value={ -1 } disabled>{ LocalizeText('roomad.catalog_roomname') }</option>
+                            { availableRooms && availableRooms.map((room, index) => <option key={ index } value={ room.roomId }>{ room.roomName }</option>) }
+                        </select>
+                    </Column>
+                    <Column className="mt-5" alignItems="end">
+                        <Button className="btn btn-success w-50" onClick={ purchaseAd }>{ extended ? LocalizeText('roomad.extend.event') : LocalizeText('buy') }</Button>
+                    </Column>
+                </Base>
+            </Column>
+        </>
     );
-}
-
-interface INavigatorCategory {
-    id: number;
-    name: string;
-    visible: boolean;
 }

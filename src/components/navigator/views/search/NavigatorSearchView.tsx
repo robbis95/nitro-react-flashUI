@@ -1,7 +1,6 @@
 import { FC, KeyboardEvent, useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
 import { INavigatorSearchFilter, LocalizeText, SearchFilterOptions } from '../../../../api';
-import { Button, Flex } from '../../../../common';
+import { Flex } from '../../../../common';
 import { useNavigator } from '../../../../hooks';
 
 export interface NavigatorSearchViewProps
@@ -64,7 +63,7 @@ export const NavigatorSearchView: FC<NavigatorSearchViewProps> = props =>
     }, [ searchResult ]);
 
     return (
-        <Flex fullWidth gap={ 1 }>
+        <Flex fullWidth gap={ 1 } className="mb-2">
             <Flex shrink>
                 <select className="form-select form-select-sm" value={ searchFilterIndex } onChange={ event => setSearchFilterIndex(parseInt(event.target.value)) }>
                     { SearchFilterOptions.map((filter, index) =>

@@ -1,11 +1,10 @@
 import { GiftReceiverNotFoundEvent, PurchaseFromCatalogAsGiftComposer } from '@nitrots/nitro-renderer';
 import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { ColorUtils, GetSessionDataManager, LocalizeText, MessengerFriend, ProductTypeEnum, SendMessageComposer } from '../../../../api';
-import { Base, Button, ButtonGroup, classNames, Column, Flex, FormGroup, LayoutCurrencyIcon, LayoutFurniImageView, LayoutGiftTagView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
+import { ColorUtils, GetConfiguration, GetSessionDataManager, LocalizeText, MessengerFriend, ProductTypeEnum, SendMessageComposer } from '../../../../api';
+import { Base, Button, ButtonGroup, Column, Flex, FormGroup, LayoutCurrencyIcon, LayoutFurniImageView, LayoutGiftTagView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../common';
 import { GiftColorButton } from '../../../../common/GiftColorButton';
 import { CatalogEvent, CatalogInitGiftEvent, CatalogPurchasedEvent } from '../../../../events';
-import { useCatalog, useFriends, useMessageEvent, useUiEvent } from '../../../../hooks';
+import { useCatalog, useFriends, useMessageEvent, useNotification, useUiEvent } from '../../../../hooks';
 
 export const CatalogGiftView: FC<{}> = props =>
 {
@@ -22,13 +21,13 @@ export const CatalogGiftView: FC<{}> = props =>
     const [ selectedColorId, setSelectedColorId ] = useState<number>(0);
     const [ maxBoxIndex, setMaxBoxIndex ] = useState<number>(0);
     const [ maxRibbonIndex, setMaxRibbonIndex ] = useState<number>(0);
-    const [ receiverNotFound, setReceiverNotFound ] = useState<boolean>(false);
     const { catalogOptions = null } = useCatalog();
     const { friends } = useFriends();
     const { giftConfiguration = null } = catalogOptions;
     const [ boxTypes, setBoxTypes ] = useState<number[]>([]);
     const [ suggestions, setSuggestions ] = useState([]);
     const [ isAutocompleteVisible, setIsAutocompleteVisible ] = useState(true);
+    const { simpleAlert = null } = useNotification();
 
     const onClose = useCallback(() =>
     {
@@ -99,6 +98,8 @@ export const CatalogGiftView: FC<{}> = props =>
         setIsAutocompleteVisible(false);
     }
 
+    const alertReceiverNotFound = () => simpleAlert(LocalizeText('catalog.gift_wrapping.receiver_not_found.info'), null, null, null, LocalizeText('catalog.gift_wrapping.receiver_not_found.title'));
+
     const handleAction = useCallback((action: string) =>
     {
         switch(action)
@@ -116,18 +117,14 @@ export const CatalogGiftView: FC<{}> = props =>
                 setSelectedRibbonIndex(value => (value === maxRibbonIndex ? 0 : value + 1));
                 return;
             case 'buy':
-                if(!receiverName || (receiverName.length === 0))
-                {
-                    setReceiverNotFound(true);
-                    return;
-                }
+                if(!receiverName || (receiverName.length === 0)) return alertReceiverNotFound();
 
                 SendMessageComposer(new PurchaseFromCatalogAsGiftComposer(pageId, offerId, extraData, receiverName, message, colourId , selectedBoxIndex, selectedRibbonIndex, showMyFace));
                 return;
         }
     }, [ colourId, extraData, maxBoxIndex, maxRibbonIndex, message, offerId, pageId, receiverName, selectedBoxIndex, selectedRibbonIndex, showMyFace ]);
 
-    useMessageEvent<GiftReceiverNotFoundEvent>(GiftReceiverNotFoundEvent, event => setReceiverNotFound(true));
+    useMessageEvent<GiftReceiverNotFoundEvent>(GiftReceiverNotFoundEvent, event => alertReceiverNotFound());
 
     useUiEvent([
         CatalogPurchasedEvent.PURCHASE_SUCCESS,
@@ -150,11 +147,6 @@ export const CatalogGiftView: FC<{}> = props =>
                 return;
         }
     });
-
-    useEffect(() =>
-    {
-        setReceiverNotFound(false);
-    }, [ receiverName ]);
 
     const createBoxTypes = useCallback(() =>
     {
@@ -211,26 +203,30 @@ export const CatalogGiftView: FC<{}> = props =>
     const priceText = 'catalog.gift_wrapping_new.' + (isBoxDefault ? 'freeprice' : 'price');
 
     return (
-        <NitroCardView uniqueKey="catalog-gift" className="nitro-catalog-gift" theme="primary">
+        <NitroCardView uniqueKey="catalog-gift" className="nitro-catalog-gift no-resize" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('catalog.gift_wrapping.title') } onCloseClick={ onClose } />
-            <NitroCardContentView className="text-black">
+            <NitroCardContentView className="text-black px-4">
                 <FormGroup column>
-                    <Text>{ LocalizeText('catalog.gift_wrapping.receiver') }</Text>
-                    <input type="text" className={ classNames('form-control form-control-sm', receiverNotFound && 'is-invalid') } value={ receiverName } onChange={ (e) => onTextChanged(e) } />
+                    <Flex grow gap={ 2 } alignItems="center">
+                        <input type="text" className="form-control form-control-sm" value={ receiverName } placeholder={ LocalizeText('catalog.gift_wrapping_new.name_hint') } onChange={ (e) => onTextChanged(e) } />
+                        <Base className="icon pencil-icon" />
+                    </Flex>
                     { (suggestions.length > 0 && isAutocompleteVisible) &&
-                        <Column className="autocomplete-gift-container">
+                        <Column gap={ 0 } className="autocomplete-gift-container">
                             { suggestions.map((friend: MessengerFriend) => (
-                                <Base key={ friend.id } className="autocomplete-gift-item" onClick={ (e) => selectedReceiverName(friend.name) }>{ friend.name }</Base>
+                                <Base key={ friend.id } className="autocomplete-gift-item px-2" onClick={ (e) => selectedReceiverName(friend.name) }>{ friend.name }</Base>
                             )) }
                         </Column>
                     }
-                    { receiverNotFound &&
-                        <Base className="invalid-feedback">{ LocalizeText('catalog.gift_wrapping.receiver_not_found.title') }</Base> }
                 </FormGroup>
                 <LayoutGiftTagView figure={ GetSessionDataManager().figure } userName={ GetSessionDataManager().userName } message={ message } editable={ true } onChange={ (value) => setMessage(value) } />
                 <Base className="form-check">
-                    <input className="form-check-input" type="checkbox" name="showMyFace" checked={ showMyFace } onChange={ (e) => setShowMyFace(value => !value) } />
-                    <label className="form-check-label">{ LocalizeText('catalog.gift_wrapping.show_face.title') }</label>
+                    { GetConfiguration('catalog.gifts.show.my.face') &&
+                        <>
+                            <input className="form-check-input" type="checkbox" name="showMyFace" checked={ showMyFace } onChange={ (e) => setShowMyFace(value => !value) } />
+                            <label className="form-check-label">{ LocalizeText('catalog.gift_wrapping.show_face.title') }</label>
+                        </>
+                    }
                 </Base>
                 <Flex alignItems="center" gap={ 2 }>
                     { selectedColorId &&
@@ -240,47 +236,47 @@ export const CatalogGiftView: FC<{}> = props =>
                     <Column gap={ 1 }>
                         <Flex gap={ 2 }>
                             <ButtonGroup>
-                                <Button variant="primary" onClick={ () => handleAction('prev_box') }>
-                                    <FaChevronLeft className="fa-icon" />
+                                <Button variant="primary" className="volter-button btn-sm" onClick={ () => handleAction('prev_box') }>
+                                    <Base className="flex-shrink-0 icon icon-chevron_left_gift" />
                                 </Button>
-                                <Button variant="primary" onClick={ () => handleAction('next_box') }>
-                                    <FaChevronRight className="fa-icon" />
+                                <Button variant="primary" className="volter-button btn-sm" onClick={ () => handleAction('next_box') }>
+                                    <Base className="flex-shrink-0 icon icon-chevron_right_gift" />
                                 </Button>
                             </ButtonGroup>
-                            <Column gap={ 1 }>
-                                <Text fontWeight="bold">{ LocalizeText(boxName) }</Text>
+                            <Column gap={ 0 }>
+                                <Text small fontWeight="bold">{ LocalizeText(boxName) }</Text>
                                 <Flex alignItems="center" gap={ 1 }>
-                                    { LocalizeText(priceText, [ 'price' ], [ giftConfiguration.price.toString() ]) }
-                                    <LayoutCurrencyIcon type={ -1 } />
+                                    <Text small>{ LocalizeText(priceText, [ 'price' ], [ giftConfiguration.price.toString() ]) }</Text>
+                                    { !isBoxDefault && <LayoutCurrencyIcon type={ -1 } /> }
                                 </Flex>
                             </Column>
                         </Flex>
-                        <Flex alignItems="center" gap={ 2 } className={ isColorable ? '' : 'opacity-50 pointer-events-none' }>
+                        <Flex alignItems="center" gap={ 2 } className={ isColorable ? '' : 'opacity-50' }>
                             <ButtonGroup>
-                                <Button variant="primary" onClick={ () => handleAction('prev_ribbon') }>
-                                    <FaChevronLeft className="fa-icon" />
+                                <Button variant="primary" className={ `volter-button btn-sm ${ !isColorable ? 'pe-none' : '' }` } onClick={ () => handleAction('prev_ribbon') }>
+                                    <Base className="flex-shrink-0 icon icon-chevron_left_gift" />
                                 </Button>
-                                <Button variant="primary" onClick={ () => handleAction('next_ribbon') }>
-                                    <FaChevronRight className="fa-icon" />
+                                <Button variant="primary" className={ `volter-button btn-sm ${ !isColorable ? 'pe-none' : '' }` } onClick={ () => handleAction('next_ribbon') }>
+                                    <Base className="flex-shrink-0 icon icon-chevron_right_gift" />
                                 </Button>
                             </ButtonGroup>
-                            <Text fontWeight="bold">{ LocalizeText(ribbonName) }</Text>
+                            <Text small fontWeight="bold">{ LocalizeText(ribbonName) }</Text>
                         </Flex>
                     </Column>
                 </Flex>
-                <Column gap={ 1 } className={ isColorable ? '' : 'opacity-50 pointer-events-none' }>
-                    <Text fontWeight="bold">
+                <Column gap={ 1 } className={ isColorable ? '' : 'opacity-50' }>
+                    <Text small fontWeight="bold">
                         { LocalizeText('catalog.gift_wrapping.pick_color') }
                     </Text>
-                    <ButtonGroup fullWidth className="gap-2">
-                        { colors.map(color => <GiftColorButton key={ color.id } variant="dark" active={ (color.id === selectedColorId) } disabled={ !isColorable } style={ { backgroundColor: color.color } } onClick={ () => setSelectedColorId(color.id) } />) }
+                    <ButtonGroup fullWidth className={ `justify-content-center gap-1 ${ !isColorable ? 'pe-none' : '' }` }>
+                        { colors.map(color => <GiftColorButton key={ color.id } variant="dark" active={ (color.id === selectedColorId) } disabled={ !isColorable } style={ { backgroundColor: color.color, borderRadius: '4px' } } onClick={ () => setSelectedColorId(color.id) } />) }
                     </ButtonGroup>
                 </Column>
-                <Flex justifyContent="between" alignItems="center">
-                    <Button variant="link" onClick={ onClose } className="text-black">
+                <Flex className="mt-2" justifyContent="between" alignItems="center">
+                    <Text underline pointer onClick={ onClose } className="text-black">
                         { LocalizeText('cancel') }
-                    </Button>
-                    <Button variant="success" onClick={ () => handleAction('buy') }>
+                    </Text>
+                    <Button variant="primary" onClick={ () => handleAction('buy') }>
                         { LocalizeText('catalog.gift_wrapping.give_gift') }
                     </Button>
                 </Flex>

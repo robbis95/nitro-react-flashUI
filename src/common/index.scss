@@ -64,7 +64,7 @@
             position: absolute;
             top: 1px;
             animation: MoveUpDown 1.7s linear infinite;
-            
+
             @keyframes MoveUpDown {
                 0%, 100% {
                   top: 1px;
@@ -110,6 +110,8 @@
 }
 
 .catalog-grid-active {
+
+    width: 44px;
 
     &.active {
         border-image-source: url(@/assets/flash/catalogue/item_grid_highlight.png);
@@ -336,8 +338,8 @@
 .nitro-currency-icon {
     background-position: center;
     background-repeat: no-repeat;
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
 }
 
 .nitro-item-count {
@@ -354,12 +356,59 @@
     color: #fff;
 }
 
+.nitro-catalog .layout-catalog-grid-item .nitro-item-count, .nitro-catalog .layout-grid-item .nitro-item-count {
+    border-image-source: url(@/assets/flash/catalogue/item-counter-bg.png);
+    border-image-slice:6 6 6 6 fill;
+    border-image-width:6px 6px 6px 6px;
+    color: #CCCB65;
+    font-family: Goldfish;
+    top: 23px;
+    right: 3px;
+    font-size: 8.5px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 6px;
+    padding-right: 3px;
+    z-index: 1;
+}
+
+.nitro-catalog .layout-catalog-grid-item .nitro-item-count:before, .nitro-catalog .layout-grid-item .nitro-item-count:before {
+    content: ' x';
+    display: inline;
+}
+
+.badge-wrapper {
+    overflow: hidden;
+
+    .badges-list {
+        height: 65% !important;
+    }
+
+    .badge-container {
+        background-color: #cacaca;
+        border-radius: 6px !important;
+        border: solid 1px #000 !important;
+        width: 42px;
+        height: 42px;
+        padding: 2px;
+
+        &.layout-grid-item.active {
+            background-color: #cacaca !important;
+            border: 1px solid #000 !important;
+            box-shadow: inset 0 0 0 2px white;
+            box-sizing: border-box;
+        }
+    }
+}
+
+
 .badge-image {
     position: relative;
     width: 40px;
     height: 40px;
     background-repeat: no-repeat;
     background-position: center;
+
 
     .badge-information {
         display: none;
@@ -383,22 +432,11 @@
         bottom: -15px;
         z-index: 100;
         font-size: 9px;
+        min-height: 80px;
     }
 
     .badge-desc {
         font-family: Goldfish;
-
-        &:before {
-            position: absolute;
-            content: ' ';
-            width: 0;
-            height: 0;
-            border-left: 10px solid $white;
-            border-bottom: 10px solid transparent;
-            border-top: 10px solid transparent;
-            top: 10px;
-            right: -10px;
-        }
     }
 }
 
@@ -465,7 +503,6 @@
         width: 100%;
         background-color: $black;
         background-repeat: no-repeat;
-        background-position: center;
         overflow: hidden;
 
         &.border-0 {
@@ -693,4 +730,42 @@
 .notification-height {
     max-height: 85px;
 }
+
+.remove-outline {
+    outline: 0;
+}
+
+.input-error {
+    background-color: #F18F9B;
+}
+
+.nitro-input-error-popup {
+    user-select: none;
+    position: absolute;
+    width: auto;
+    height: 21px;
+    background: white;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid black;
+    margin-left: 20px;
+    margin-top: -10px;
+
+    &:before {
+        border: 10px solid white;
+        content: '';
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        position: absolute;
+        bottom: -20px;
+        left: calc(50% - 15px);
+    }
+}
+
+.text-stroke {
+    color: black !important;
+    text-shadow: -1px -1px 1px #4d4d4d, 1px -1px 1px #4d4d4d, -1px 1px 1px #4d4d4d, 1px 1px 1px #4d4d4d;
+}
+
 @import './card/NitroCardView';

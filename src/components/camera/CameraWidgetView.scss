@@ -10,12 +10,29 @@
         height: 20px;
 
             &:hover {
-            background-image: url("@/assets/flash/boxes/card/close_hover.png");
+                background-image: url("@/assets/flash/boxes/card/close_hover.png");
 
             &:active {
-            background-image: url("@/assets/flash/boxes/card/close_click.png");
+                background-image: url("@/assets/flash/boxes/card/close_click.png");
             }
 
+        }
+    }
+
+    .info-camera {
+        top: 8px;
+        right: 32px;
+        cursor: pointer;
+        background-image: url("@/assets/flash/boxes/card/questionmark.png");
+        width: 19px;
+        height: 20px;
+
+            &:hover {
+                background-image: url("@/assets/flash/boxes/card/questionmark_hover.png");
+
+            &:active {
+                background-image: url("@/assets/flash/boxes/card/questionmark_click.png");
+            }
         }
     }
 

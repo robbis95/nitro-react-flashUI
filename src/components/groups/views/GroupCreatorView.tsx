@@ -1,8 +1,8 @@
-import { GroupBuyComposer, GroupBuyDataComposer, GroupBuyDataEvent } from '@nitrots/nitro-renderer';
+import { GroupBuyComposer, GroupBuyDataComposer, GroupBuyDataEvent, GuildEditFailedMessageEvent, HabboClubLevelEnum } from '@nitrots/nitro-renderer';
 import { FC, useEffect, useState } from 'react';
-import { HasHabboClub, IGroupData, LocalizeText, SendMessageComposer } from '../../../api';
+import { CreateLinkEvent, GetSessionDataManager, HasHabboClub, IGroupData, LocalizeText, SendMessageComposer } from '../../../api';
 import { Base, Button, Column, Flex, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
-import { useMessageEvent } from '../../../hooks';
+import { useMessageEvent, useNotification } from '../../../hooks';
 import { GroupTabBadgeView } from './tabs/GroupTabBadgeView';
 import { GroupTabColorsView } from './tabs/GroupTabColorsView';
 import { GroupTabCreatorConfirmationView } from './tabs/GroupTabCreatorConfirmationView';
@@ -23,6 +23,7 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
     const [ groupData, setGroupData ] = useState<IGroupData>(null);
     const [ availableRooms, setAvailableRooms ] = useState<{ id: number, name: string }[]>(null);
     const [ purchaseCost, setPurchaseCost ] = useState<number>(0);
+    const { simpleAlert = null } = useNotification();
 
     const onCloseClose = () =>
     {
@@ -95,6 +96,17 @@ export const GroupCreatorView: FC<GroupCreatorViewProps> = props =>
 
         setAvailableRooms(rooms);
         setPurchaseCost(parser.groupCost);
+    });
+
+    useMessageEvent<GuildEditFailedMessageEvent>(GuildEditFailedMessageEvent, event =>
+    {
+        const parser = event.getParser();
+        
+        if (!parser) return null;
+
+        GetSessionDataManager().clubLevel === HabboClubLevelEnum.NO_CLUB 
+            ? CreateLinkEvent('habboUI/open/hccenter')
+            : simpleAlert(LocalizeText(`group.edit.fail.${ parser.reason }`), null, null, null, LocalizeText('group.edit.fail.title'));
     });
 
     useEffect(() =>

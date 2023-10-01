@@ -54,6 +54,34 @@
 
 }
 
+.btn-gray {
+  border-image-source: url("@/assets/flash/buttons/button_gray.png");
+  color: #fff;
+  font-family: ubuntuBold;
+
+  &:hover {
+    border-image-source: url("@/assets/flash/buttons/button_gray_hover.png");
+  }
+
+  &:active {
+    border-image-source: url("@/assets/flash/buttons/button_gray_active.png");
+  }
+}
+
+.btn-mod-tools {
+  border-image-source: url("@/assets/flash/modtools/button.png");
+  color: #fff;
+  font-family: ubuntuBold;
+
+  &:hover {
+    border-image-source: url("@/assets/flash/modtools/button_hover.png");
+  }
+
+  &:active {
+    border-image-source: url("@/assets/flash/modtools/button_active.png");
+  }
+}
+
 // scss-docs-end btn-variant-loops
 
 
@@ -168,6 +196,10 @@
   &:active {
     border-image-source: url(@/assets/flash/buttons/volter_normal_btn_active.png);
   }
+
+  &.active {
+    border-image-source: url(@/assets/flash/buttons/volter_normal_btn_active.png);
+  }
 }
 
 .notification-buttons {
@@ -197,6 +229,9 @@
   outline: 1px solid #000;
   border: 3px solid #fff;
   min-height: 22px;
-  min-width: 23px;
+  min-width: 27px;
 
+  &.active {
+    border: 5px solid #fff;
+  }
 }

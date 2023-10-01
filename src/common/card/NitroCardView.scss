@@ -49,6 +49,22 @@ $nitro-card-tabs-height: 35px;
 
                 }
             }
+
+            .nitro-card-header-info-habbopages {
+                cursor: pointer;
+                background-image: url("@/assets/flash/boxes/card/questionmark.png");
+                width: 19px;
+                height: 20px;
+                right: 32px;
+
+                    &:hover {
+                        background-image: url("@/assets/flash/boxes/card/questionmark_hover.png");
+        
+                    &:active {
+                        background-image: url("@/assets/flash/boxes/card/questionmark_click.png");
+                    }
+                }
+            }
         }
 
         .nitro-card-tabs {
@@ -80,11 +96,12 @@ $nitro-card-tabs-height: 35px;
 
 
             .nitro-card-header-text {
+                position: absolute;
                 color: $black;
                 min-height: 21px;
-                font-size: 10px;
-                margin-top: 3px;
+                font-size: 12px;
                 text-shadow: 0px 1px 0px #fff, 1px 0px 1px #aaaaaa;
+                left: 8px;
             }
 
             .nitro-card-header-close {
@@ -252,7 +269,7 @@ $nitro-card-tabs-height: 35px;
             border: 1px solid #000;
             -webkit-box-shadow: inset 0px 1px 0px 0px #555555;
             box-shadow: inset 0px 1px 0px 0px #555555;
-            background-size: 1px 18px;
+            background-size: 1px 21px;
             margin-top: -1px;
         }
 
@@ -263,7 +280,7 @@ $nitro-card-tabs-height: 35px;
             border: 1px solid #000;
             -webkit-box-shadow: inset 0px 1px 0px 0px #dc8530;
             box-shadow: inset 0px 1px 0px 0px #dc8530;
-            background-size: 1px 18px;
+            background-size: 1px 21px;
         }
 
         .friend-headers {
@@ -273,15 +290,23 @@ $nitro-card-tabs-height: 35px;
             border-bottom: none;
             -webkit-box-shadow: inset 0px 1px 0px 0px #59bfff;
             box-shadow: inset 0px 1px 0px 0px #59bfff;
-            background-size: 1px 18px;
+            background-size: 1px 21px;
         }
 
         .nitro-card-accordion-set-content {
             background: #fff;
         }
 
+        .nitro-card-accordion-set-content-gray {
+            background: #B6B6B6;
+        }
+
         .friend-tab:nth-of-type(odd) {
             background: #eeeeee;
+        }
+
+        .friend-tab-search:nth-of-type(odd) {
+            background: #9F9F9F;
         }
 
         .friend-active {
@@ -294,6 +319,15 @@ $nitro-card-tabs-height: 35px;
 
         .friend-active-tab {
             border-image-source: url("@/assets/flash/friendlist/friend_active_bg.png");
+            border-image-slice: 7 7 7 7 fill;
+            border-image-width: 7px 7px 7px 7px;
+            border-image-repeat: repeat repeat;
+            max-height: 100%;
+            width: 100%
+        }
+
+        .friend-active_search-tab {
+            border-image-source: url("@/assets/flash/friendlist/friend_active_search_bg.png");
             border-image-slice: 7 7 7 7 fill;
             border-image-width: 7px 7px 7px 7px;
             border-image-repeat: repeat repeat;
@@ -360,6 +394,21 @@ $nitro-card-tabs-height: 35px;
                 &:active {
                     background-image: url(@/assets/flash/friendlist/profile_friend_clicked.png);
                 }
+            }
+        }
+
+        .search-friend-icon {
+            background-image: url('@/assets/flash/friendlist/search_friend.png');
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 22px;
+
+            &:hover {
+                background-image: url('@/assets/flash/friendlist/search_friend_hover.png');
+            }
+
+            &:active {
+                background-image: url('@/assets/flash/friendlist/search_friend_clicked.png');
             }
         }
 

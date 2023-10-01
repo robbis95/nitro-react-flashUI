@@ -62,7 +62,7 @@
     padding: 6px 5px;
     border-image-source: url(@/assets/flash/notifications/notifications_bg.png);
     border-image-slice: 9 9 9 9 fill;
-    border-image-width: 9px 9px 9px 9px;
+    border-image-width: 9px 9px 10px 9px;
     font-size: $font-size-sm;
     padding-right: 3px;
     padding-left: 0px;
@@ -98,5 +98,19 @@
             margin-right: auto;
             margin-left: auto;
         }
+    }
+}
+
+.club-gift
+{
+    max-height: 89px;
+    
+    .gray-button
+    {
+        padding-top: .25rem;
+        padding-bottom: .25rem;
+        padding-left: .5rem;
+        padding-right: .5rem;
+        font-size: .75rem;
     }
 }

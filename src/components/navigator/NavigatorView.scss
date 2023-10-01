@@ -4,6 +4,11 @@
     max-width: $navigator-width;
     min-height: $navigator-min-height;
 
+    &.expanded {
+        max-width: $navigator-width + 153px;
+        min-width: $navigator-width + 153px;
+    }
+
     .nav-form {
         width: 275px;
     }
@@ -47,6 +52,20 @@
 
 .nitro-room-info {
     width: $room-info-width;
+    resize: none;
+}
+
+.text-tag {
+    font-size: 10px;
+    background-color: #CEE9FA;
+}
+
+.text-tag:hover {
+    background-color: #449FCF;
+}
+
+.text-embed {
+    font-size: 10px;
 }
 
 .nitro-room-link {
@@ -67,7 +86,7 @@
 
 
 .badge-empty {
-    background-image: url(@/assets/flash/navigator/badge_empty.png);
+    background-image: url('@/assets/flash/navigator/badge_empty.png');
     background-repeat: no-repeat;
     width: 40px;
     height: 19px;
@@ -75,7 +94,7 @@
 }
 
 .badge-success {
-    background-image: url(@/assets/flash/navigator/badge_success.png);
+    background-image: url('@/assets/flash/navigator/badge_success.png');
     background-repeat: no-repeat;
     width: 40px;
     height: 19px;
@@ -83,7 +102,7 @@
 }
 
 .badge-danger {
-    background-image: url(@/assets/flash/navigator/badge_danger.png);
+    background-image: url('@/assets/flash/navigator/badge_danger.png');
     background-repeat: no-repeat;
     width: 40px;
     height: 19px;
@@ -91,7 +110,7 @@
 }
 
 .badge-warning {
-    background-image: url(@/assets/flash/navigator/badge_warning.png);
+    background-image: url('@/assets/flash/navigator/badge_warning.png');
     background-repeat: no-repeat;
     width: 40px;
     height: 19px;
@@ -109,34 +128,34 @@
 }
 
 .minus-icon {
-    background-image: url(@/assets/flash/navigator/minus.png);
+    background-image: url('@/assets/flash/navigator/minus.png');
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
 }
 
 .plus-icon {
-    background-image: url(@/assets/flash/navigator/plus.png);
+    background-image: url('@/assets/flash/navigator/plus.png');
     background-repeat: no-repeat;
     width: 18px;
     height: 18px;
 }
 
 .nav-avatar-icon {
-    background-image: url(@/assets/flash/navigator/avatar_icon.png);
+    background-image: url('@/assets/flash/navigator/avatar_icon.png');
     background-repeat: no-repeat;
     height: 8px;
     width: 7px;
 }
 
 .nav-thumbnail {
-    border-image-source: url(@/assets/flash/navigator/thumbnail_bg.png);
+    border-image-source: url('@/assets/flash/navigator/thumbnail_bg.png');
     border-image-slice: 7 7 7 7 fill;
     border-image-width: 7px 7px 7px 7px;
 }
 
 .nav-create-room {
-    background-image: url(@/assets/flash/navigator/create_room.png);
+    background-image: url('@/assets/flash/navigator/create_room.png');
     background-repeat: no-repeat;
     height: 60px;
     width: 189px;
@@ -145,14 +164,23 @@
 }
 
 .nav-random-room {
-    background-image: url(@/assets/flash/navigator/random_room.png);
+    background-image: url('@/assets/flash/navigator/random_room.png');
     background-repeat: no-repeat;
     height: 60px;
     width: 189px;
     float: right;
     margin-left: 15px;
     cursor: pointer;
+}
 
+.nav-promote-room {
+    background-image: url('@/assets/flash/navigator/promote_room.png');
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 189px;
+    float: right;
+    margin-left: 15px;
+    cursor: pointer;
 }
 
 .nav-bottom {
@@ -222,7 +250,7 @@
     image-rendering: pixelated;
 
     .room-info-bg {
-        border-image-source: url(@/assets/flash/navigator/white_bg.png);
+        border-image-source: url('@/assets/flash/navigator/white_bg.png');
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
@@ -232,4 +260,32 @@
 .navigator-search-button {
     right: 10px;
     top: 11px;
+}
+
+.nitro-navigator-search-saves-result {
+    background-color: #fff;
+    width: 141px;
+    min-height: 494px;
+    max-height: 350px;
+    border-radius: 10px;
+
+    .bg-orange {
+        background-color: #FAA700;
+    }
+}
+
+.nitro-navigator-search-delete {
+    cursor: pointer;
+    background-image: url("@/assets/flash/navigator/saves-search/delete_search.png");
+    width: 18px;
+    height: 18px;
+
+    &:hover {
+        background-image: url("@/assets/flash/navigator/saves-search/delete_search_hover.png");
+
+        &:active {
+            background-image: url("@/assets/flash/navigator/saves-search/delete_search_click.png");
+        }
+
+    }
 }

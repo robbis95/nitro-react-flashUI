@@ -1,7 +1,7 @@
 import { EditEventMessageComposer } from '@nitrots/nitro-renderer';
 import { FC, useState } from 'react';
 import { LocalizeText, SendMessageComposer } from '../../../../../api';
-import { Button, Column, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../common';
+import { Column, LayoutInputErrorView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../../../common';
 
 interface RoomPromoteEditWidgetViewProps
 {
@@ -19,24 +19,23 @@ export const RoomPromoteEditWidgetView: FC<RoomPromoteEditWidgetViewProps> = pro
 
     const updatePromote = () =>
     {
+        if (!newEventName) return;
+        
         SendMessageComposer(new EditEventMessageComposer(eventId, newEventName, newEventDescription));
-        setIsEditingPromote(false);
     }
 
     return (
-        <NitroCardView className="nitro-guide-tool" theme="primary-slim">
+        <NitroCardView className="nitro-guide-tool no-resize" theme="primary">
             <NitroCardHeaderView headerText={ LocalizeText('navigator.eventsettings.editcaption') } onCloseClick={ () => setIsEditingPromote(false) } />
             <NitroCardContentView className="text-black">
-                <Column>
+                <Column gap={ 0 }>
                     <Text bold>{ LocalizeText('navigator.eventsettings.name') }</Text>
-                    <input type="text" className="form-control form-control-sm" placeholder={ LocalizeText('navigator.eventsettings.name') } maxLength={ 64 } value={ newEventName } onChange={ event => setNewEventName(event.target.value) } />
+                    <input type="text" className={ `remove-outline ${ (newEventName.length < 3) ? 'input-error' : '' }` } maxLength={ 64 } value={ newEventName } onChange={ event => setNewEventName(event.target.value) } onBlur={ updatePromote } />
+                    { (newEventName.length < 3) && <LayoutInputErrorView text={ LocalizeText('navigator.eventsettings.nameerr') } /> }
                 </Column>
-                <Column>
+                <Column gap={ 0 }>
                     <Text bold>{ LocalizeText('navigator.eventsettings.desc') }</Text>
-                    <textarea className="form-control form-control-sm" placeholder={ LocalizeText('navigator.eventsettings.desc') } maxLength={ 64 } value={ newEventDescription } onChange={ event => setNewEventDescription(event.target.value) }></textarea>
-                </Column>
-                <Column>
-                    <Button fullWidth disabled={ !newEventName || !newEventDescription } variant={ (!newEventName || !newEventDescription) ? 'danger' : 'success' } onClick={ event => updatePromote() }>{ LocalizeText('navigator.eventsettings.edit') }</Button>
+                    <textarea className="remove-outline" rows={ 6 } maxLength={ 64 } value={ newEventDescription } onChange={ event => setNewEventDescription(event.target.value) } onBlur={ updatePromote }></textarea>
                 </Column>
             </NitroCardContentView>
         </NitroCardView>

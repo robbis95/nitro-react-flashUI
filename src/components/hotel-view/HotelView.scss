@@ -2,7 +2,7 @@
     display: block;
 	position: fixed;
 	width: 100%;
-	height: calc(100% - 55px);
+	height: calc(100% - 51px);
 	background: rgba($black, 1);
 	color:#fff;
 	
@@ -19,6 +19,7 @@
 		width: 100%;
 		background-position: left;
 		background-repeat: repeat-x;
+		background-size: contain;
 	}
 
 	.drape {

@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { ProductTypeEnum } from '../../../../../api';
-import { Base, Column, Flex, Grid, Text } from '../../../../../common';
+import { getTypePrice } from '../../../../../api';
+import { Base, Column, Flex, Text } from '../../../../../common';
 import { useCatalog } from '../../../../../hooks';
-import { CatalogHeaderView } from '../../catalog-header/CatalogHeaderView';
 import { CatalogAddOnBadgeWidgetView } from '../widgets/CatalogAddOnBadgeWidgetView';
 import { CatalogItemGridWidgetView } from '../widgets/CatalogItemGridWidgetView';
 import { CatalogLimitedItemWidgetView } from '../widgets/CatalogLimitedItemWidgetView';
 import { CatalogPurchaseWidgetView } from '../widgets/CatalogPurchaseWidgetView';
+import { CatalogSelectItemWidgetView } from '../widgets/CatalogSelectItemWidgetView';
 import { CatalogSpinnerWidgetView } from '../widgets/CatalogSpinnerWidgetView';
 import { CatalogTotalPriceWidget } from '../widgets/CatalogTotalPriceWidget';
 import { CatalogViewProductWidgetView } from '../widgets/CatalogViewProductWidgetView';
@@ -28,7 +28,7 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
                     <>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
-                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                            <CatalogTotalPriceWidget className={ `credits-default-layout ${ getTypePrice(currentOffer.priceType) } py-1 px-2 bottom-2 end-2` } justifyContent="end" alignItems="end" />
                             <CatalogLimitedItemWidgetView fullWidth position="absolute" className="top-1" />
                             <CatalogAddOnBadgeWidgetView position="absolute" className="bg-muted rounded top-1 end-1" />
                         </Base>
@@ -37,16 +37,18 @@ export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
                         </Column>
                     </> }
             </Column>
-            <Column className="grid-bg item-picker p-2" size={ 7 } overflow="hidden">
-                <CatalogItemGridWidgetView />
+            <Column>
+                <Column position="absolute" className="grid-bg p-2" size={ 7 } overflow="hidden" style={ { height: 'calc(100% - 480px)', width: '64%' } }>
+                    <CatalogItemGridWidgetView />
+                </Column>
+                <Flex gap={ 1 } position="absolute" className="quanity-container bottom-5">
+                    <CatalogSpinnerWidgetView />
+                </Flex>
+                <Flex gap={ 2 } position="absolute" className="purchase-buttons align-items-end bottom-3" style={ { width: '64%' } }>
+                    <CatalogPurchaseWidgetView />
+                </Flex>
+                <CatalogSelectItemWidgetView />
             </Column>
-            <Flex gap={ 1 } className="quanity-container mt-2">
-                <CatalogSpinnerWidgetView />
-            </Flex>
-            <Flex gap={ 2 } className="purchase-buttons align-items-end mt-2">
-                <CatalogPurchaseWidgetView />
-            </Flex>
-
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { IMarketplaceSearchOptions, LocalizeText, MarketplaceOfferData, Marketpl
 import { Button, ButtonGroup, Column, Text } from '../../../../../../common';
 import { useMessageEvent, useNotification, usePurse } from '../../../../../../hooks';
 import { CatalogLayoutProps } from '../CatalogLayout.types';
+import { CatalogLayoutMarketplaceConfirmView } from './CatalogLayoutMarketplaceConfirmView';
 import { CatalogLayoutMarketplaceItemView, PUBLIC_OFFER } from './CatalogLayoutMarketplaceItemView';
 import { SearchFormView } from './CatalogLayoutMarketplaceSearchFormView';
 
@@ -20,6 +21,7 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
     const [ searchType, setSearchType ] = useState(MarketplaceSearchType.BY_ACTIVITY);
     const [ totalItemsFound, setTotalItemsFound ] = useState(0);
     const [ offers, setOffers ] = useState(new Map<number, MarketplaceOfferData>());
+    const [ offerData, setOfferData ] = useState<MarketplaceOfferData>(null);
     const [ lastSearch, setLastSearch ] = useState<IMarketplaceSearchOptions>({ minPrice: -1, maxPrice: -1, query: '', type: 3 });
     const { getCurrencyAmount = null } = usePurse();
     const { simpleAlert = null, showConfirm = null } = useNotification();
@@ -51,15 +53,10 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
             simpleAlert(LocalizeText('catalog.alert.notenough.credits.description'), NotificationAlertType.DEFAULT, null, null, LocalizeText('catalog.alert.notenough.title'));
             return;
         }
-
-        const offerId = offerData.offerId;
-
-        showConfirm(LocalizeText('catalog.marketplace.confirm_header'), () =>
-        {
-            SendMessageComposer(new BuyMarketplaceOfferMessageComposer(offerId));
-        },
-        null, null, null, LocalizeText('catalog.marketplace.confirm_title'));
-    }, [ getCurrencyAmount, simpleAlert, showConfirm ]);
+        
+        setOfferData(offerData);
+    
+    }, [ getCurrencyAmount, simpleAlert ]);
 
     useMessageEvent<MarketPlaceOffersEvent>(MarketPlaceOffersEvent, event =>
     {
@@ -135,27 +132,26 @@ export const CatalogLayoutMarketplacePublicItemsView: FC<CatalogLayoutMarketplac
     return (
         <>
             <ButtonGroup>
-                <Button active={ (searchType === MarketplaceSearchType.BY_ACTIVITY) } onClick={ () => setSearchType(MarketplaceSearchType.BY_ACTIVITY) }>
+                <Button className="volter-button" active={ (searchType === MarketplaceSearchType.BY_ACTIVITY) } onClick={ () => setSearchType(MarketplaceSearchType.BY_ACTIVITY) }>
                     { LocalizeText('catalog.marketplace.search_by_activity') }
                 </Button>
-                <Button active={ (searchType === MarketplaceSearchType.BY_VALUE) } onClick={ () => setSearchType(MarketplaceSearchType.BY_VALUE) }>
+                <Button className="volter-button" active={ (searchType === MarketplaceSearchType.BY_VALUE) } onClick={ () => setSearchType(MarketplaceSearchType.BY_VALUE) }>
                     { LocalizeText('catalog.marketplace.search_by_value') }
                 </Button>
-                <Button active={ (searchType === MarketplaceSearchType.ADVANCED) } onClick={ () => setSearchType(MarketplaceSearchType.ADVANCED) }>
+                <Button className="volter-button" active={ (searchType === MarketplaceSearchType.ADVANCED) } onClick={ () => setSearchType(MarketplaceSearchType.ADVANCED) }>
                     { LocalizeText('catalog.marketplace.search_advanced') }
                 </Button>
             </ButtonGroup>
             <SearchFormView sortTypes={ getSortTypes } searchType={ searchType } onSearch={ requestOffers } />
             <Column gap={ 1 } overflow="hidden">
-                <Text truncate shrink fontWeight="bold">
-                    { LocalizeText('catalog.marketplace.items_found', [ 'count' ], [ offers.size.toString() ]) }
-                </Text>
+                <Text truncate shrink className="font-size-marketplace-small">{ LocalizeText('catalog.marketplace.items_found', [ 'count' ], [ offers.size.toString() ]) }. { LocalizeText('catalog.marketplace.items_shown', [ 'count' ], [ '250' ]) }.</Text>
                 <Column className="nitro-catalog-layout-marketplace-grid" overflow="auto">
                     { 
                         Array.from(offers.values()).map( (entry, index) => <CatalogLayoutMarketplaceItemView key={ index } offerData={ entry } type={ PUBLIC_OFFER } onClick={ purchaseItem } />)
                     }
                 </Column>
             </Column>
+            { offerData && <CatalogLayoutMarketplaceConfirmView offerData={ offerData } setOfferData={ setOfferData } /> }
         </>
     );
 }

@@ -40,32 +40,50 @@ export const SearchFormView: FC<SearchFormViewProps> = props =>
 
         setSortType(sortType);
 
+        if(searchType === MarketplaceSearchType.ADVANCED) (setSearchQuery(''), setMin(0), setMax(0));
         if(searchType === MarketplaceSearchType.BY_ACTIVITY || MarketplaceSearchType.BY_VALUE === searchType) onSearch({ minPrice: -1, maxPrice: -1, query: '', type: sortType });
     }, [ onSearch, searchType, sortTypes ]);
 
     return (
-        <Column gap={ 1 }>
-            <Flex alignItems="center" gap={ 1 }>
-                <Text className="col-3">{ LocalizeText('catalog.marketplace.sort_order') }</Text>
-                <select className="form-select form-select-sm" value={ sortType } onChange={ event => onSortTypeChange(parseInt(event.target.value)) }>
-                    { sortTypes.map(type => <option key={ type } value={ type }>{ LocalizeText(`catalog.marketplace.sort.${ type }`) }</option>) }
-                </select>
-            </Flex>
+        <Column gap={ 1 } className="marketplace-bg search-marketplace">
+            { searchType !== MarketplaceSearchType.ADVANCED &&
+                <Column className="mt-4" justifyContent="center" alignItems="center">
+                    <Text variant="muted" className="font-size-marketplace">{ LocalizeText('catalog.marketplace.sort_order') }</Text>
+                    <select className="form-select form-select-sm w-50" value={ sortType } onChange={ event => onSortTypeChange(parseInt(event.target.value)) }>
+                        { sortTypes.map(type => <option key={ type } value={ type }>{ LocalizeText(`catalog.marketplace.sort.${ type }`) }</option>) }
+                    </select>
+                </Column>
+            }
             { searchType === MarketplaceSearchType.ADVANCED &&
                 <>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <Text className="col-3">{ LocalizeText('catalog.marketplace.search_name') }</Text>
-                        <input className="form-control form-control-sm" type="text" value={ searchQuery } onChange={ event => setSearchQuery(event.target.value) }/>
-                    </Flex>
-                    <Flex alignItems="center" gap={ 1 }>
-                        <Text className="col-3">{ LocalizeText('catalog.marketplace.search_price') }</Text>
-                        <Flex fullWidth gap={ 1 }>
-                            <input className="form-control form-control-sm" type="number" min={ 0 } value={ min } onChange={ event => setMin(event.target.valueAsNumber) } />
-                            <input className="form-control form-control-sm" type="number" min={ 0 } value={ max } onChange={ event => setMax(event.target.valueAsNumber) } />
+                    <Column gap={ 1 } className="mt-1 px-2">
+                        <Flex alignItems="center">
+                            <Text variant="muted" className="col-4 font-size-marketplace">{ LocalizeText('catalog.marketplace.search_name') }</Text>
+                            <input className="form-control form-control-sm" type="text" value={ searchQuery } onChange={ event => setSearchQuery(event.target.value) }/>
                         </Flex>
-                    </Flex>
-                    <Button variant="secondary" className="mx-auto" onClick={ onClickSearch }>{ LocalizeText('generic.search') }</Button>
-                </> }
+                        <Flex alignItems="center">
+                            <Text variant="muted" className="col-4 font-size-marketplace">{ LocalizeText('catalog.marketplace.search_price') }</Text>
+                            <Flex justifyContent="center">
+                                <Flex justifyContent="start">
+                                    <input className="form-control form-control-sm w-75" type="number" min={ 0 } value={ min } onChange={ event => setMin(event.target.valueAsNumber) } />
+                                </Flex>
+                                <Flex justifyContent="end">
+                                    <input className="form-control form-control-sm w-75" type="number" min={ 0 } value={ max } onChange={ event => setMax(event.target.valueAsNumber) } />
+                                </Flex>
+                            </Flex>
+                        </Flex>
+                        <Flex alignItems="center">
+                            <Text variant="muted" className="col-4 font-size-marketplace">{ LocalizeText('catalog.marketplace.sort_order') }</Text>
+                            <select className="form-select form-select-sm w-100" value={ sortType } onChange={ event => onSortTypeChange(parseInt(event.target.value)) }>
+                                { sortTypes.map(type => <option key={ type } value={ type }>{ LocalizeText(`catalog.marketplace.sort.${ type }`) }</option>) }
+                            </select>
+                        </Flex>
+                        <Flex justifyContent="end">
+                            <Button variant="secondary" className="w-25 h-25" onClick={ onClickSearch }>{ LocalizeText('generic.search') }</Button>
+                        </Flex>
+                    </Column>
+                </>
+            }
         </Column>
     );
 }

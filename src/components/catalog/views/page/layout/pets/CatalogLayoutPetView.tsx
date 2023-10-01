@@ -1,8 +1,8 @@
 import { ApproveNameMessageComposer, ApproveNameMessageEvent, ColorConverter, GetSellablePetPalettesComposer, PurchaseFromCatalogComposer, SellablePetPaletteData } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { FaFillDrip } from 'react-icons/fa';
-import { DispatchUiEvent, GetPetAvailableColors, GetPetIndexFromLocalization, LocalizeText, SendMessageComposer } from '../../../../../../api';
-import { AutoGrid, Base, Button, Column, Flex, Grid, LayoutGridItem, LayoutPetImageView, Text } from '../../../../../../common';
+import { DispatchUiEvent, GetPetAvailableColors, GetPetIndexFromLocalization, LocalizeText, SendMessageComposer, getTypePrice } from '../../../../../../api';
+import { AutoGrid, Base, Button, Column, Flex, LayoutGridItem, LayoutPetImageView, Text } from '../../../../../../common';
 import { CatalogPurchaseFailureEvent } from '../../../../../../events';
 import { useCatalog, useMessageEvent } from '../../../../../../hooks';
 import { CatalogAddOnBadgeWidgetView } from '../../widgets/CatalogAddOnBadgeWidgetView';
@@ -205,26 +205,26 @@ export const CatalogLayoutPetView: FC<CatalogLayoutProps> = props =>
                     <>
                         <Base position="relative" overflow="hidden">
                             <CatalogViewProductWidgetView />
-                            <CatalogTotalPriceWidget className="credits-default-layout credits-bg py-1 px-2 bottom-1 end-1" justifyContent="end" alignItems="end" />
+                            <CatalogTotalPriceWidget className={ `credits-default-layout ${ getTypePrice(currentOffer.priceType) } py-1 px-2 bottom-2 end-2` } justifyContent="end" alignItems="end" />
                             <CatalogAddOnBadgeWidgetView position="absolute" className="bg-muted rounded bottom-1 end-1" />
                             { ((petIndex > -1) && (petIndex <= 7)) &&
                                 <Button position="absolute" className="bottom-1 start-1" onClick={ event => setColorsShowing(!colorsShowing) }>
                                     <FaFillDrip className="fa-icon" />
                                 </Button> }
                         </Base>
-                                    <Column size={ 7 } overflow="hidden">
-                        <AutoGrid className="grid-bg group-furni-picker p-2" columnCount={ 7 }>
-                            { !colorsShowing && (sellablePalettes.length > 0) && sellablePalettes.map((palette, index) =>
-                            {
-                                return (
-                                    <LayoutGridItem key={ index } itemActive={ (selectedPaletteIndex === index) } onClick={ event => setSelectedPaletteIndex(index) }>
-                                        <LayoutPetImageView typeId={ petIndex } paletteId={ palette.paletteId } direction={ 2 } headOnly={ true } />
-                                    </LayoutGridItem>
-                                );
-                            }) }
-                            { colorsShowing && (sellableColors.length > 0) && sellableColors.map((colorSet, index) => <LayoutGridItem itemHighlight key={ index } itemActive={ (selectedColorIndex === index) } itemColor={ ColorConverter.int2rgb(colorSet[0]) } className="clear-bg" onClick={ event => setSelectedColorIndex(index) } />) }
-                        </AutoGrid>
-            </Column>
+                        <Column size={ 7 } overflow="hidden">
+                            <AutoGrid className="grid-bg group-furni-picker p-2" columnCount={ 7 }>
+                                { !colorsShowing && (sellablePalettes.length > 0) && sellablePalettes.map((palette, index) =>
+                                {
+                                    return (
+                                        <LayoutGridItem key={ index } itemActive={ (selectedPaletteIndex === index) } onClick={ event => setSelectedPaletteIndex(index) }>
+                                            <LayoutPetImageView typeId={ petIndex } paletteId={ palette.paletteId } direction={ 2 } headOnly={ true } />
+                                        </LayoutGridItem>
+                                    );
+                                }) }
+                                { colorsShowing && (sellableColors.length > 0) && sellableColors.map((colorSet, index) => <LayoutGridItem itemHighlight key={ index } itemActive={ (selectedColorIndex === index) } itemColor={ ColorConverter.int2rgb(colorSet[0]) } className="clear-bg" onClick={ event => setSelectedColorIndex(index) } />) }
+                            </AutoGrid>
+                        </Column>
                         <Column grow gap={ 1 }>
                             <Text truncate>{ petBreedName }</Text>
                             <Column grow gap={ 1 }>

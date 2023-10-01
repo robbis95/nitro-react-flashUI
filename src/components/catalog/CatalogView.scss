@@ -1,7 +1,9 @@
 .nitro-catalog {
     width: $catalog-width;
     height: $catalog-height;
-    min-width: 528px;
+    min-width: $catalog-width;
+    max-width: $catalog-width;
+    min-height: $catalog-height - 39px;
 
     font[size='16'] {
         font-size: 20px;
@@ -14,12 +16,12 @@
     }
 
     .avatar-image {
-        background-position: -2px -34px !important;
+        background-position: -27px -37px!important;
     }
 
     .catalog-default-image {
         max-height: 250px;
-        height: 250px;
+        height: 243px;
     }
 
     .grid-price-view {
@@ -37,9 +39,8 @@
 
     .quantity-input {
         min-height: 17px;
-        width: 28px;
+        width: 34px;
         padding: 0 4px;
-        text-align: right;
     }
 
     .grid-bg {
@@ -50,6 +51,12 @@
 
     .credits-bg {
         border-image-source: url(@/assets/flash/catalogue/credits_bg.png);
+        border-image-slice: 6 6 6 6 fill;
+        border-image-width: 6px 6px 6px 6px;
+    }
+
+    .duckets-bg {
+        border-image-source: url(@/assets/flash/catalogue/duckets_bg.png);
         border-image-slice: 6 6 6 6 fill;
         border-image-width: 6px 6px 6px 6px;
     }
@@ -66,9 +73,21 @@
         left: 10px;
     }
 
+    .selectproduct-title {
+		position: absolute;
+		font-size: 11px;
+		color: #62615f;
+	}
+
     .item-picker {
         max-height: 150px;
         min-height: 150px;
+    }
+
+    .item-not-picker {
+        width: calc(100% - 216px);
+        max-height: 30px;
+        min-height: 30px;   
     }
 
     .group-furni-picker {
@@ -78,6 +97,7 @@
 
     .quanity-container {
         height: 20px;
+        font-size: 13px;
     }
 
     .catalog-image-column {
@@ -109,11 +129,12 @@
 }
 
 .trophy-text {
-    height: 150px;
+    height: 120px;
 }
 
 .nitro-catalog-gift {
-    width: 325px;
+    width: 362px;
+    height: 470px;
 
     .gift-preview {
         width: 80px;
@@ -122,6 +143,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #F0F0F0;
+        border: 1px solid #5D5D5D;
+        border-radius: 8px;
     }
 
     .gift-color {
@@ -269,6 +293,34 @@
     }
 }
 
+.marketplace-bg {
+    border-image-source: url(@/assets/flash/catalogue/marketplace_bg.png);
+    border-image-slice: 6 6 6 6 fill;
+    border-image-width: 6px 6px 6px 6px;
+}
+
+.search-marketplace {
+    height: 116px;
+}
+
+.font-size-marketplace {
+    font-size: 13px;
+}
+
+.font-size-marketplace-small {
+    font-size: 10px;
+}
+
+.layout-grid-item {
+    
+    &.layout-marketplace {
+        background-color: transparent !important;
+        border: none !important;
+        border-color: none !important;
+        cursor: default;
+    }
+}
+
 .nitro-catalog-layout-vip-gifts-grid {
     .layout-grid-item {
         height: 55px !important;
@@ -277,8 +329,39 @@
 }
 
 .nitro-catalog-layout-marketplace-post-offer {
-    width: $marketplace-post-offer-width;
-    height: $marketplace-post-offer-height;
+    width: 299px;
+
+    .image-preview {
+        width: 48px !important;
+        height: 48px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: #F0F0F0 !important;
+        border: 1px solid #5D5D5D !important;
+        border-radius: 8px !important;
+    }
+
+    .textarea-height {
+        height: 51px;
+    }
+}
+
+.nitro-catalog-layout-marketplace-confirm {
+    width: 279px;
+
+    .image-preview {
+        width: 48px !important;
+        height: 48px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background-color: #F0F0F0 !important;
+        border: 1px solid #5D5D5D !important;
+        border-radius: 8px !important;
+    }
 }
 
 .nitro-catalog-layout-bundle-grid {
@@ -309,14 +392,13 @@
 
 .autocomplete-gift-container {
     background: #fff;
-    padding: 8px;
     list-style-type: none;
-    min-width: 307px;
+    min-width: 264px;
     border-radius: 0.2rem;
     position: absolute;
     font-size: 0.7875rem;
-    top: 81px;
-    left: 8px;
+    top: 65px;
+    left: 31px;
     border: 1px solid #b6c1ce;
     margin: 0;
     border-radius: 2px;
@@ -329,10 +411,50 @@
     .autocomplete-gift-item {
         width: 100%;
         box-sizing: border-box;
+        
         &:hover {
-            background-color: #ebf4ff;
+            background-color: #CCD1DA !important;
+        }
+
+        &:nth-child(odd) {
+            background-color: #EEEEEE;
+        }
+
+        &:nth-child(even) {
+            background-color: #FFFFFF;
         }
     }
+}
+
+.club-content {
+    height: 73px;
+    background-color: #DEDEDE;
+    border-radius: 12px;
+    border: 1px solid #959595;
+
+    .content-title {
+        height: 25px;
+        background-color: #959595;
+        border-radius: 6px;
+    
+        .margin-image {
+            margin-right: 27px;
+        }
+
+        .margin-text {
+            margin-top: -2px;
+        }
+    }
+}
+
+.height-roomads-description {
+    height: 137px;
+}
+
+.color-trophy {
+    width: 38px;
+    height: 30px;
+    margin-right: 4px;
 }
 
 @import './views/targeted-offer/Offer.scss';

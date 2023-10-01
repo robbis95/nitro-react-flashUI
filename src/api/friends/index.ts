@@ -1,5 +1,7 @@
+export * from './FriendListTabs';
 export * from './GetGroupChatData';
 export * from './IGroupChatData';
+export * from './MessengerFollowFriendFailedType';
 export * from './MessengerFriend';
 export * from './MessengerGroupType';
 export * from './MessengerIconState';
