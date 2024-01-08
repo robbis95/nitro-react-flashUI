@@ -209,7 +209,7 @@ const useFriendsState = () =>
             {
                 const index = newValue.findIndex(existing => (existing.requesterUserId === request.requesterUserId));
 
-                if(index > 0)
+                if(index >= 0)
                 {
                     newValue[index] = CloneObject(newValue[index]);
                     newValue[index].populate(request);
