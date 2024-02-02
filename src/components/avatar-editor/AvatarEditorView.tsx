@@ -1,7 +1,7 @@
 import { AvatarEditorFigureCategory, FigureSetIdsMessageEvent, GetWardrobeMessageComposer, IAvatarFigureContainer, ILinkEventTracker, SetClothingChangeDataMessageComposer, UserFigureComposer, UserWardrobePageEvent } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { FaDice, FaTrash, FaUndo } from 'react-icons/fa';
-import { AddEventLinkTracker, AvatarEditorAction, AvatarEditorUtilities, BodyModel, FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, HeadModel, IAvatarEditorCategoryModel, LegModel, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, SetLocalStorage, TorsoModel, generateRandomFigure } from '../../api';
+import { AddEventLinkTracker, AvatarEditorAction, AvatarEditorUtilities, BodyModel, FigureData, GetAvatarRenderManager, GetClubMemberLevel, GetConfiguration, GetLocalStorage, GetSessionDataManager, HeadModel, IAvatarEditorCategoryModel, LegModel, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, SetLocalStorage, TorsoModel, generateRandomFigure } from '../../api';
 import { Button, ButtonGroup, Column, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
 import { useMessageEvent } from '../../hooks';
 import { AvatarEditorFigurePreviewView } from './views/AvatarEditorFigurePreviewView';
@@ -29,8 +29,8 @@ export const AvatarEditorView: FC<{}> = props =>
     const [ genderFootballGate, setGenderFootballGate ] = useState<string>(null);
     const [ objectFootballGate, setObjectFootballGate ] = useState<number>(null);
     
-    const DEFAULT_MALE_FOOTBALL_GATE = JSON.parse(window.localStorage.getItem('nitro.look.footballgate.M')) || 'ch-3109-92-1408.lg-3116-82-1408.sh-3115-1408-1408';
-    const DEFAULT_FEMALE_FOOTBALL_GATE = JSON.parse(window.localStorage.getItem('nitro.look.footballgate.F')) || 'ch-3112-1408-1408.lg-3116-71-1408.sh-3115-1408-1408';
+    const DEFAULT_MALE_FOOTBALL_GATE = (GetLocalStorage('nitro.look.footballgate.M') || 'ch-3109-92-1408.lg-3116-82-1408.sh-3115-1408-1408') as string;
+    const DEFAULT_FEMALE_FOOTBALL_GATE = (GetLocalStorage('nitro.look.footballgate.F') || 'ch-3112-1408-1408.lg-3116-71-1408.sh-3115-1408-1408') as string;
     const maxWardrobeSlots = useMemo(() => GetConfiguration<number>('avatar.wardrobe.max.slots', 10), []);
 	
     const onClose = () =>

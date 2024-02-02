@@ -1,9 +1,9 @@
-import { FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
+import { FollowFriendFailedEvent, FollowFriendMessageComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
+import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, MessengerFollowFriendFailedType, RemoveLinkEventTracker, ReportType, SendMessageComposer } from '../../../../api';
 import { ButtonGroup, Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, LayoutItemCountView, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../../../common';
 import { LayoutMessengerGrid } from '../../../../common/layout/LayoutMessengerGrid';
-import { useHelp, useMessenger } from '../../../../hooks';
+import { useHelp, useMessageEvent, useMessenger, useNotification } from '../../../../hooks';
 import { FriendsMessengerThreadView } from './messenger-thread/FriendsMessengerThreadView';
 
 export const FriendsMessengerView: FC<{}> = props =>
@@ -12,6 +12,7 @@ export const FriendsMessengerView: FC<{}> = props =>
     const [ lastThreadId, setLastThreadId ] = useState(-1);
     const [ messageText, setMessageText ] = useState('');
     const { visibleThreads = [], activeThread = null, getMessageThread = null, sendMessage = null, setActiveThreadId = null, closeThread = null } = useMessenger();
+    const { simpleAlert = null } = useNotification();
     const { report = null } = useHelp();
     const messagesBox = useRef<HTMLDivElement>();
 
@@ -33,6 +34,29 @@ export const FriendsMessengerView: FC<{}> = props =>
 
         send();
     }
+
+    useMessageEvent<FollowFriendFailedEvent>(FollowFriendFailedEvent, event =>
+    {
+        const parser = event.getParser();
+
+        if (!parser) return null;
+
+        switch(parser.errorCode)
+        {
+            case MessengerFollowFriendFailedType.NOT_IN_FRIEND_LIST:
+                simpleAlert(LocalizeText('friendlist.followerror.notfriend'), null, null, null, LocalizeText('friendlist.alert.title'), null);
+                break;
+            case MessengerFollowFriendFailedType.FRIEND_OFFLINE:
+                simpleAlert(LocalizeText('friendlist.followerror.offline'), null, null, null, LocalizeText('friendlist.alert.title'), null);
+                break;
+            case MessengerFollowFriendFailedType.FRIEND_NOT_IN_ROOM:
+                simpleAlert(LocalizeText('friendlist.followerror.hotelview'), null, null, null, LocalizeText('friendlist.alert.title'), null);
+                break;
+            case MessengerFollowFriendFailedType.FRIEND_BLOCKED_STALKING:
+                simpleAlert(LocalizeText('friendlist.followerror.prevented'), null, null, null, LocalizeText('friendlist.alert.title'), null);
+                break;
+        }
+    });
 
     useEffect(() =>
     {

@@ -1,7 +1,7 @@
-import { GroupAdminGiveComposer, GroupAdminTakeComposer, GroupConfirmMemberRemoveEvent, GroupConfirmRemoveMemberComposer, GroupMemberParser, GroupMembersComposer, GroupMembersEvent, GroupMembershipAcceptComposer, GroupMembershipDeclineComposer, GroupMembersParser, GroupRank, GroupRemoveMemberComposer, ILinkEventTracker } from '@nitrots/nitro-renderer';
+import { GroupAdminGiveComposer, GroupAdminTakeComposer, GroupConfirmMemberRemoveEvent, GroupConfirmRemoveMemberComposer, GroupMemberParser, GroupMembersComposer, GroupMembersEvent, GroupMembershipAcceptComposer, GroupMembershipDeclineComposer, GroupMembersParser, GroupRank, GroupRemoveMemberComposer, GuildMemberMgmtFailedMessageEvent, HabboGroupJoinFailedMessageEvent, HabboGroupJoinFailedMessageParser, ILinkEventTracker } from '@nitrots/nitro-renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { AddEventLinkTracker, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../../api';
+import { AddEventLinkTracker, CreateLinkEvent, GetSessionDataManager, GetUserProfile, LocalizeText, RemoveLinkEventTracker, SendMessageComposer } from '../../../api';
 import { Base, Button, Column, Flex, Grid, LayoutAvatarImageView, LayoutBadgeImageView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../../common';
 import { useMessageEvent, useNotification } from '../../../hooks';
 
@@ -14,7 +14,7 @@ export const GroupMembersView: FC<{}> = props =>
     const [ totalPages, setTotalPages ] = useState<number>(0);
     const [ searchQuery, setSearchQuery ] = useState<string>('');
     const [ removingMemberName, setRemovingMemberName ] = useState<string>(null);
-    const { showConfirm = null } = useNotification();
+    const { showConfirm = null, simpleAlert = null } = useNotification();
 
     const getRankDescription = (member: GroupMemberParser) =>
     {
@@ -94,6 +94,28 @@ export const GroupMembersView: FC<{}> = props =>
         }, null);
             
         setRemovingMemberName(null);
+    });
+
+    useMessageEvent<GuildMemberMgmtFailedMessageEvent>(GuildMemberMgmtFailedMessageEvent, event =>
+    {
+        const parser = event.getParser();
+
+        if (!parser) return null;
+
+        simpleAlert(LocalizeText(`group.membermgmt.fail.${ parser.reason }`), null, null, null, LocalizeText('group.membermgmt.fail.title'));
+
+        refreshMembers();
+    });
+
+    useMessageEvent<HabboGroupJoinFailedMessageEvent>(HabboGroupJoinFailedMessageEvent, event =>
+    {
+        const parser = event.getParser();
+
+        if (!parser) return null;
+
+        parser.reason == HabboGroupJoinFailedMessageParser.INSUFFICIENT_SUBSCRIPTION_LEVEL 
+            ? CreateLinkEvent('habboUI/open/hccenter')
+            : simpleAlert(LocalizeText(`group.joinfail.${ parser.reason }`), null, null, null, LocalizeText('group.joinfail.title'));
     });
 
     useEffect(() =>
