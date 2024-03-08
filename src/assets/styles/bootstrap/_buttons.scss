@@ -3,87 +3,75 @@
 //
 
 .btn {
-  border-image-source: url("@/assets/flash/buttons/button.png");
-  border-image-slice: 4 4 4 4 fill;
-  border-image-width: 4px 4px 4px 4px;
-  padding: .375rem .75rem;
-  min-height: 22px;
-  color: #000;
-  font-size: 13px;
-  cursor: pointer;
+  display: inline-block;
+  font-family: $btn-font-family;
+  font-weight: $btn-font-weight;
+  line-height: $btn-line-height;
+  color: $body-color;
+  text-align: center;
+  text-decoration: if($link-decoration == none, null, none);
+  white-space: $btn-white-space;
+  vertical-align: middle;
+  cursor: if($enable-button-pointers, pointer, null);
+  user-select: none;
+  background-color: transparent;
+  border: $btn-border-width solid transparent;
+  @include button-size(
+    $btn-padding-y,
+    $btn-padding-x,
+    $btn-font-size,
+    $btn-border-radius
+  );
+  @include transition($btn-transition);
 
   &:hover {
-    border-image-source: url("@/assets/flash/buttons/button_hover.png");
+    color: $body-color;
+    text-decoration: if($link-hover-decoration == underline, none, null);
   }
 
-  &:active {
-    border-image-source: url("@/assets/flash/buttons/button_active.png");
+  .btn-check:focus + &,
+  &:focus {
+    outline: 0;
+    box-shadow: $btn-focus-box-shadow;
+  }
 
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active {
+    @include box-shadow($btn-active-box-shadow);
+
+    &:focus {
+      @include box-shadow($btn-focus-box-shadow, $btn-active-box-shadow);
+    }
   }
 
   &:disabled,
   &.disabled,
   fieldset:disabled & {
     pointer-events: none;
-    border-image-source: url("@/assets/flash/buttons/button_inactive.png");
-    border-image-slice: 4 4 4 4 fill;
-    border-image-width: 4px 4px 4px 4px;
-    color: #b1b1ac;
+    opacity: $btn-disabled-opacity;
+    @include box-shadow(none);
   }
 }
-
 
 //
 // Alternate buttons
 //
 
 // scss-docs-start btn-variant-loops
-
-.btn-success {
-  border-image-source: url("@/assets/flash/buttons/button_success.png");
-  color: #fff;
-  font-family: ubuntuBold;
-
-  &:hover {
-    border-image-source: url("@/assets/flash/buttons/button_success_hover.png");
-  }
-
-  &:active {
-    border-image-source: url("@/assets/flash/buttons/button_success_active.png");
-  }
-
-}
-
-.btn-gray {
-  border-image-source: url("@/assets/flash/buttons/button_gray.png");
-  color: #fff;
-  font-family: ubuntuBold;
-
-  &:hover {
-    border-image-source: url("@/assets/flash/buttons/button_gray_hover.png");
-  }
-
-  &:active {
-    border-image-source: url("@/assets/flash/buttons/button_gray_active.png");
+@each $color, $value in $theme-colors {
+  .btn-#{$color} {
+    @include button-variant($value, $value);
   }
 }
 
-.btn-mod-tools {
-  border-image-source: url("@/assets/flash/modtools/button.png");
-  color: #fff;
-  font-family: ubuntuBold;
-
-  &:hover {
-    border-image-source: url("@/assets/flash/modtools/button_hover.png");
-  }
-
-  &:active {
-    border-image-source: url("@/assets/flash/modtools/button_active.png");
+@each $color, $value in $theme-colors {
+  .btn-outline-#{$color} {
+    @include button-outline-variant($value);
   }
 }
-
 // scss-docs-end btn-variant-loops
-
 
 //
 // Link buttons
@@ -117,13 +105,12 @@
   // No need for an active state here
 }
 
-
 //
 // Button Sizes
 //
 
 .btn-toggle {
-  border-image-source: url("@/assets/flash/buttons/toggle_bg.png");
+  border-image-source: url("@/assets/images/buttons/toggle_bg.png");
   border-image-slice: 6 6 6 6 fill;
   border-image-width: 6px 6px 6px 6px;
   cursor: pointer;
@@ -134,76 +121,72 @@
     height: 8px;
 
     &.left {
-      background-image: url("@/assets/flash/buttons/toggle_left.png");
+      background-image: url("@/assets/images/buttons/toggle_left.png");
     }
 
     &.right {
-      background-image: url("@/assets/flash/buttons/toggle_right.png");
+      background-image: url("@/assets/images/buttons/toggle_right.png");
     }
   }
 }
 
 .infostand-buttons {
-  border-image-source: url(@/assets/flash/room/infostand_buttons.png);
+  border-image-source: url(@/assets/images/room/infostand_buttons.png);
   border-image-slice: 3 3 3 3 fill;
   border-image-width: 3px 3px 3px 3px;
-  font-family: Goldfish;
   font-size: 9px;
   color: #ffffff;
   height: 25px;
   margin-top: 5px;
 
   &:hover {
-    border-image-source: url(@/assets/flash/room/infostand_buttons_hover.png);
+    border-image-source: url(@/assets/images/room/infostand_buttons_hover.png);
   }
 
   &:active {
-    border-image-source: url(@/assets/flash/room/infostand_buttons_active.png);
+    border-image-source: url(@/assets/images/room/infostand_buttons_active.png);
   }
 }
 
 .volter-bold-button {
-  border-image-source: url(@/assets/flash/buttons/volter_bold_btn.png);
+  border-image-source: url(@/assets/images/buttons/volter_bold_btn.png);
   border-image-slice: 6 6 6 6 fill;
   border-image-width: 6px 6px 6px 6px;
-  font-family: Goldfish-bold;
   font-size: 9px;
   height: 20px;
   margin-top: 5px;
 
   &:hover {
-    border-image-source: url(@/assets/flash/buttons/volter_bold_btn_hover.png);
+    border-image-source: url(@/assets/images/buttons/volter_bold_btn_hover.png);
   }
 
   &:active {
-    border-image-source: url(@/assets/flash/buttons/volter_bold_btn_active.png);
+    border-image-source: url(@/assets/images/buttons/volter_bold_btn_active.png);
   }
 }
 
 .volter-button {
-  border-image-source: url(@/assets/flash/buttons/volter_normal_btn.png);
+  border-image-source: url(@/assets/images/buttons/volter_normal_btn.png);
   border-image-slice: 4 4 4 4 fill;
   border-image-width: 4px 4px 4px 4px;
-  font-family: Goldfish;
   font-size: 9px;
   height: 20px;
   margin-top: 5px;
 
   &:hover {
-    border-image-source: url(@/assets/flash/buttons/volter_normal_btn_hover.png);
+    border-image-source: url(@/assets/images/buttons/volter_normal_btn_hover.png);
   }
 
   &:active {
-    border-image-source: url(@/assets/flash/buttons/volter_normal_btn_active.png);
+    border-image-source: url(@/assets/images/buttons/volter_normal_btn_active.png);
   }
-
   &.active {
-    border-image-source: url(@/assets/flash/buttons/volter_normal_btn_active.png);
+    border-image-source: url(@/assets/images/buttons/volter_normal_btn_active.png);
   }
 }
 
 .notification-buttons {
-  border-image-source: url(@/assets/flash/room/infostand_buttons.png);
+  border-image-source: url(@/assets/images/room/infostand_buttons.png);
   border-image-slice: 3 3 3 3 fill;
   border-image-width: 3px 3px 3px 3px;
   color: #ffffff;
@@ -213,11 +196,11 @@
   border-radius: 13px;
 
   &:hover {
-    border-image-source: url(@/assets/flash/room/infostand_buttons_hover.png);
+    border-image-source: url(@/assets/images/room/infostand_buttons_hover.png);
   }
 
   &:active {
-    border-image-source: url(@/assets/flash/room/infostand_buttons_active.png);
+    border-image-source: url(@/assets/images/room/infostand_buttons_active.png);
   }
 }
 
@@ -229,9 +212,24 @@
   outline: 1px solid #000;
   border: 3px solid #fff;
   min-height: 22px;
-  min-width: 27px;
+  min-width: 23px;
 
-  &.active {
-    border: 5px solid #fff;
-  }
+}
+
+.btn-lg {
+  @include button-size(
+    $btn-padding-y-lg,
+    $btn-padding-x-lg,
+    $btn-font-size-lg,
+    $btn-border-radius-lg
+  );
+}
+
+.btn-sm {
+  @include button-size(
+    $btn-padding-y-sm,
+    $btn-padding-x-sm,
+    $btn-font-size-sm,
+    $btn-border-radius-sm
+  );
 }
