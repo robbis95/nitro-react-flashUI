@@ -11,18 +11,17 @@
   @include font-size($popover-font-size);
   // Allow breaking very long words so they don't overflow the popover's bounds
   word-wrap: break-word;
-  border-image-source: url(@/assets/flash/navigator/info_bg.png);
-  border-image-slice: 6 6 6 6 fill;
-  border-image-width: 6px 6px 6px 6px;
-  image-rendering: pixelated;
+  background-color: $popover-bg;
+  background-clip: padding-box;
+  border: $popover-border-width solid $popover-border-color;
+  @include border-radius($popover-border-radius);
+  @include box-shadow($popover-box-shadow);
 
   .popover-arrow {
     position: absolute;
     display: block;
-    width: 11px;
-    height: 18px;
-    background-image: url(@/assets/flash/navigator/info_pointer.png);
-
+    width: $popover-arrow-width;
+    height: $popover-arrow-height;
 
     &::before,
     &::after {
@@ -41,13 +40,13 @@
 
     &::before {
       bottom: 0;
-      border-width: $popover-arrow-height ($popover-arrow-width * .5) 0;
+      border-width: $popover-arrow-height ($popover-arrow-width * 0.5) 0;
       border-top-color: $popover-arrow-outer-color;
     }
 
     &::after {
       bottom: $popover-border-width;
-      border-width: $popover-arrow-height ($popover-arrow-width * .5) 0;
+      border-width: $popover-arrow-height ($popover-arrow-width * 0.5) 0;
       border-top-color: $popover-arrow-color;
     }
   }
@@ -55,13 +54,22 @@
 
 .bs-popover-end {
   > .popover-arrow {
-    left: -7px;
+    left: subtract(-$popover-arrow-height, $popover-border-width);
     width: $popover-arrow-height;
     height: $popover-arrow-width;
 
+    &::before {
+      left: 0;
+      border-width: ($popover-arrow-width * 0.5) $popover-arrow-height
+        ($popover-arrow-width * 0.5) 0;
+      border-right-color: $popover-arrow-outer-color;
+    }
+
     &::after {
       left: $popover-border-width;
-
+      border-width: ($popover-arrow-width * 0.5) $popover-arrow-height
+        ($popover-arrow-width * 0.5) 0;
+      border-right-color: $popover-arrow-color;
     }
   }
 }
@@ -72,13 +80,15 @@
 
     &::before {
       top: 0;
-      border-width: 0 ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5);
+      border-width: 0 ($popover-arrow-width * 0.5) $popover-arrow-height
+        ($popover-arrow-width * 0.5);
       border-bottom-color: $popover-arrow-outer-color;
     }
 
     &::after {
       top: $popover-border-width;
-      border-width: 0 ($popover-arrow-width * .5) $popover-arrow-height ($popover-arrow-width * .5);
+      border-width: 0 ($popover-arrow-width * 0.5) $popover-arrow-height
+        ($popover-arrow-width * 0.5);
       border-bottom-color: $popover-arrow-color;
     }
   }
@@ -90,7 +100,7 @@
     left: 50%;
     display: block;
     width: $popover-arrow-width;
-    margin-left: -$popover-arrow-width * .5;
+    margin-left: -$popover-arrow-width * 0.5;
     content: "";
     border-bottom: $popover-border-width solid $popover-header-bg;
   }
@@ -104,13 +114,15 @@
 
     &::before {
       right: 0;
-      border-width: ($popover-arrow-width * .5) 0 ($popover-arrow-width * .5) $popover-arrow-height;
+      border-width: ($popover-arrow-width * 0.5) 0 ($popover-arrow-width * 0.5)
+        $popover-arrow-height;
       border-left-color: $popover-arrow-outer-color;
     }
 
     &::after {
       right: $popover-border-width;
-      border-width: ($popover-arrow-width * .5) 0 ($popover-arrow-width * .5) $popover-arrow-height;
+      border-width: ($popover-arrow-width * 0.5) 0 ($popover-arrow-width * 0.5)
+        $popover-arrow-height;
       border-left-color: $popover-arrow-color;
     }
   }
